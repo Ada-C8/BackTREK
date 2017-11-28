@@ -19,6 +19,7 @@ const render = function render(tripList) {
     // use template to append trip row to table in the DOM
     $('#trip-list').append(tripTemplate(trip.attributes));
   });
+  console.log(this)
 };
 
 $(document).ready( () => {
@@ -29,4 +30,6 @@ $(document).ready( () => {
   tripList.on('update', render, tripList)
 
   tripList.fetch(); // will automatically call render
+
+  $('td').on('click', function() {console.log('click')})
 });
