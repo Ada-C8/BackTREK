@@ -7,10 +7,30 @@
 </head>
 <body>
   <header>
-
+    <a id='load-trips' href='#'>All Trips</a>
   </header>
   <main>
-
+    <table>
+      <thead>
+        <tr id='trip-headers'>
+          <script type="text/template" id="trip-headers-template">
+            <th><%- header %></th>
+          </script>
+        </tr>
+      </thead>
+      <tbody id='all-trips'>
+        <script type="text/template" id="all-trips-template">
+          <tr>
+            <td><%- id %></td>
+            <td><%- name %></td>
+            <td><%- category %></td>
+            <td><%- continent %></td>
+            <td><%- weeks %></td>
+            <td><%- cost %></td>
+          </tr>
+        </script>
+      </tbody>
+    </table>
   </main>
   <footer>
 
