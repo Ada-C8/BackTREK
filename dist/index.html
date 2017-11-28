@@ -12,17 +12,17 @@
   <main>
     <table>
       <thead>
-        <tr id='trip-headers'>
+        <tr id='trip-headers' class='content'>
           <script type="text/template" id="trip-headers-template">
             <th><%- header %></th>
           </script>
         </tr>
       </thead>
-      <tbody id='all-trips'>
+      <tbody id='all-trips' class='content'>
         <script type="text/template" id="all-trips-template">
           <tr>
             <td><%- id %></td>
-            <td><%- name %></td>
+            <td><a id=<%- id %> class='trip' href='#'><%- name %></a></td>
             <td><%- category %></td>
             <td><%- continent %></td>
             <td><%- weeks %></td>
@@ -31,6 +31,14 @@
         </script>
       </tbody>
     </table>
+    <div id='show-trip' class='content'>
+      <script type="text/template" id="show-trip-template">
+        <h3><%- name %></h3>
+        <h5><%- weeks %> week<%- plural %></h5>
+        <h5><%- cost %></h5>
+        <p><%- about %></p>
+      </script>
+    </div>
   </main>
   <footer>
 
