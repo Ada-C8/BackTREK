@@ -1,7 +1,7 @@
 import Backbone from 'backbone';
 import Trip from '../models/trip';
 
-const TripList = Backbone.Collection.extend({
+const TripsList = Backbone.Collection.extend({
   model: Trip,
   url: 'https://trektravel.herokuapp.com/trips/',
  //  parse: function(response) {
@@ -9,4 +9,4 @@ const TripList = Backbone.Collection.extend({
  // } // may or may not need this parsing functionality
 });
 
-export default TripList;
+export default TripsList;

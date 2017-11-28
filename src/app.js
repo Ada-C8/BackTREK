@@ -6,8 +6,8 @@ import _ from 'underscore';
 import './css/foundation.css';
 import './css/style.css';
 
-import TripList from './collections/trip_list';
-import Trip from './models/trip';
+import TripsList from './app/collections/trips_list.js';
+import Trip from './app/models/trip.js';
 
 
 const rawTripData = [
@@ -26,7 +26,9 @@ const rawTripData = [
   }
 ]
 
-const tripList = new TripList(rawTripData);
+const tripsList = new TripsList();
+tripsList.fetch();
+
 
 let tripTemplate;
 
@@ -35,6 +37,8 @@ let tripsTemplate;
 
 $(document).ready( () => {
   $('main').html('<h1>Hello World!</h1>');
+
+  tripsTemplate = _.template($('#trips-template').html());
 
   tripTemplate = _.template($('#trip-template').html());
 });
