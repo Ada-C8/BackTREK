@@ -1,2 +1,76 @@
 
 /* Your styles go here! */
+html {
+  font-family: serif;
+  min-width: 100%;
+}
+
+body {
+  background-image: url(http://www.pxleyes.com/images/contests/fog/fullsize/Foggy-mountains-4d4d29a753b0e_hires.jpg);
+  filter: grayscale(100%);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+a, a:visited {
+  color: black;
+  font-weight: 400;
+}
+
+.view-all-trips {
+  font-weight: 400;
+  cursor: pointer;
+}
+
+header {
+  display: block;
+  text-align: center;
+  width: 100%;
+  text-transform: uppercase;
+  font-style: italic;
+}
+
+.logo {
+  font-size: 6rem;
+}
+
+.trips, .show {
+  margin-top: 3rem;
+  text-align: left;
+  width: 50%;
+  margin-right: 25%;
+  margin-left: 25%;
+}
+
+.trips, .show p {
+  font-family: 'Spectral SC', serif;
+}
+
+.trips td a{
+  float: left;
+  font-style: italic;
+  text-decoration: none;
+}
+
+.show h1, .show h3 {
+  text-transform: uppercase;
+  font-style: italic;
+}
+
+.reservation-form {
+  width: 120%;
+  margin-right: 25%;
+}
+
+.reservation-form label, button {
+  text-transform: uppercase;
+  font-style: italic;
+}
+
+@media screen and (max-width: 480px) {
+  .reservation-form span{
+    display: block;
+    float: left;
+  }
+}
