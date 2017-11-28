@@ -1,2 +1,152 @@
+body#foundation-override {
+  font-family: 'Trirong', serif;
+  font-weight: 400;
+  background-image: url(https://source.unsplash.com/HC6Gkb9x4Ro/2144×1424);
+  background-size: cover;
+  height: 100vh;
+  width: 100%;
+}
 
-/* Your styles go here! */
+body {
+  text-align: center;
+}
+
+header {
+  height: 15vh;
+  padding-top: 5vh;
+}
+
+footer {
+  height: 0vh;
+}
+
+#list ul, li {
+  list-style: none;
+  font-family: 'Zilla Slab Highlight', sans-serif;
+  font-weight: 500;
+  font-size: 1.6rem;
+  margin-left: 0;
+}
+
+li:nth-child(odd) {
+  color: white;
+}
+li:nth-child(even) {
+  opacity: 0.5%;
+}
+
+#foundation-override h1 {
+  font-family: 'Bungee', sans-serif;
+  font-weight: 900;
+  font-size: 3rem;
+}
+
+#foundation-override h3 {
+  font-family: 'Bungee', sans-serif;
+  font-size: 2.5rem;
+}
+
+#foundation-override h4 {
+  font-family: 'Trirong', serif;
+  font-weight: 500;
+  font-style: italic;
+  font-size: 1.6rem;
+}
+
+footer h6 {
+  font-family: 'Bungee', sans-serif;
+  font-weight: 500;
+  font-size: .8rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+footer a {
+  color: lightblue;
+}
+
+.hide {
+  display: none;
+}
+
+.home {
+  height: 90vh;
+  padding-top: 35vh;
+  color: white;
+}
+
+#foundation-override .home h1 {
+  font-size: 10rem;
+}
+
+footer.home {
+  height: 80vh;
+  padding: 0;
+
+}
+
+.scrollbox {
+  height: 80vh;
+  overflow: auto;
+  overflow-x: hidden;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+#trip-detail {
+  background-color: rgba(255, 255, 255, .8);
+}
+
+#confirmation {
+  max-height: 10vh;
+  overflow: auto;
+  overflow-x: hidden;
+}
+
+#details {
+  max-height: 50vh;
+  overflow: auto;
+  overflow-x: hidden;
+}
+
+#about {
+  text-align: justify;
+}
+
+#reservation-form {
+  max-width: 85%;
+  max-height: 30vh;
+  margin: 5vh auto;
+}
+
+#list-wrapper {
+  padding-bottom: 5vh;
+}
+.fields label {
+  margin-bottom: 16px; /* To match Foundation input field */
+  font-family: 'Bungee';
+}
+
+#reservation-form .button {
+  font-size: 1.2rem;
+  width: 100%;
+}
+
+#reservation-form button[type="submit"] {
+  color: white;
+  font-family: 'Bungee';
+}
+
+#form-submit {
+  padding: 0;
+}
+
+.failure {
+  background-color: red;
+  color: white;
+  font-size: 2rem;
+}
+
+.success {
+  background-color: green;
+  color: white;
+  font-size: 2rem;
+}
