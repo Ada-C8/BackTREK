@@ -7,9 +7,9 @@ import './css/foundation.css';
 import './css/style.css';
 
 // modules I've created:
-import TripList from './collections/trip_list';
+import TripList from './app/collections/trip_list';
 
-const TRIP_FIELDS = ['name', 'category', 'continent', 'budget', 'weeks', 'description'];
+const TRIP_FIELDS = ['name', 'category', 'continent', 'cost', 'weeks'];
 
 const  tripList = new TripList();
 let tripTemplate;

@@ -19,51 +19,48 @@
       <ul>
       </ul>
     </section>
-
+    <!--  need to add a 'add a trip' form -->
     <section class="columns large-8 small-12">
       <h2>Trips</h2>
-
       <table>
         <thead>
           <th class="sort name">Name</th>
           <th class="sort category">Category</th>
           <th class="sort continent">Continent</th>
-          <th class="sort budget">Budget</th>
+          <th class="sort cost">Cost</th>
           <th class="sort weeks">Number of Weeks</th>
-          <th class="sort description">Description</th>
         </thead>
         <tbody id="trip-list">
         </tbody>
       </table>
     </section>
+  </main>
+  <footer>
+&copy; 2017, Lauren Lee & Ada Developers Academy
+  </footer>
 
-    <script id="trip-template" type="text/template">
-      <!-- Add Template for Song fields here -->
-      <tr class="trip">
-        <td>
-          <%- name %>
-        </td>
-        <td>
-          <%- category %>
-        </td>
-        <td>
-          <%- continent %>
-        </td>
-        <td>
-          <%- budget %>
-        </td>
-        <td>
-          <%- weeks %>
-        </td>
-        <td>
-          <%- description %>
-        </td>
-      </tr>
-    </script>
+  <script id="trip-template" type="text/template">
+    <!-- Add Template for Song fields here -->
+    <tr class="trip">
+      <td>
+        <%- name %>
+      </td>
+      <td>
+        <%- category %>
+      </td>
+      <td>
+        <%- continent %>
+      </td>
+      <td>
+        $<%- cost %>
+      </td>
+      <td>
+        <%- weeks %>
+      </td>
+    </tr>
+  </script>
 
-    <footer>
 
-    </footer>
-    <script src="app.bundle.js" type="text/javascript"></script>
-  </body>
-  </html>
+  <script src="app.bundle.js" type="text/javascript"></script>
+</body>
+</html>
