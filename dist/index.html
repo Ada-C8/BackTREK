@@ -8,6 +8,7 @@
 <body>
   <header>
     <a id='load-trips' href='#'>All Trips</a>
+    <a id='add-trip' href='#'>Add Trip</a>
   </header>
   <main>
     <table>
@@ -39,6 +40,14 @@
         <p><%- about %></p>
       </script>
     </div>
+    <form id='add-trip-form' class='content'>
+      <script type="text/template" id="add-trip-template">
+        <section>
+          <label><%- field %></label>
+          <input type='text' id=<%- field %> name=<%- field %> />
+        </section>
+      </script>
+    </form>
   </main>
   <footer>
 
