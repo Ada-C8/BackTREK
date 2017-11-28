@@ -2,15 +2,54 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>My JavaScript App</title>
+  <title>BackTREK</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
   <header>
-
+    <h1>Welcome to BackTREK</h1>
   </header>
   <main>
+    <section id="allTripsButton">
+      <button class="button" id="trips_button"> See All Trips </button>
+    </section>
 
+
+    <section>
+        <h2>Trips!</h2>
+        <table>
+          <thead>
+            <th class="sort name">Name</th>
+            <th class="sort continent">Continent</th>
+            <th class="sort category">Category</th>
+            <th class="sort weeks">Weeks</th>
+            <th class="sort cost">Cost</th>
+
+          </thead>
+          <tbody id="trip-list">
+          </tbody>
+        </table>
+      </section>
+
+    <script type="text/template" id="trip-template">
+      <tr class="trip">
+        <td>
+          <%- name %>
+        </td>
+        <td>
+          <%- continent %>
+        </td>
+        <td>
+          <%- category %>
+        </td>
+        <td>
+          <%- weeks %>
+        </td>
+        <td>
+          <%- cost %>
+        </td>
+      </tr>
+    </script>
   </main>
   <footer>
 
