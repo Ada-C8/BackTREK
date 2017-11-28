@@ -9,5 +9,5 @@ import './css/style.css';
 console.log('it loaded!');
 
 $(document).ready( () => {
-  $('main').html('<h1>Hello World!</h1>');
+  // $('main').html('<h1>Hello World!</h1>');
 });
