@@ -8,6 +8,7 @@ import './css/style.css';
 
 console.log('it loaded!');
 
+let tripTemplate;
 $(document).ready( () => {
-  // $('main').html('<h1>Hello World!</h1>');
+  tripTemplate = _.template($('#trip-template').html());
 });
