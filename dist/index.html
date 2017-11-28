@@ -1,60 +1,67 @@
 <!DOCTYPE html>
-  <head>
-    <meta charset="utf-8" />
-    <title>Trek</title>
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="./style.css">
-    <link href="https://fonts.googleapis.com/css?family=Spectral+SC" rel="stylesheet">
-  </head>
-  <body>
+<head>
+  <meta charset="utf-8" />
+  <title>Trek</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- <link rel="stylesheet" type="text/css" href="../src/css/style.css"> -->
+  <link href="https://fonts.googleapis.com/css?family=Spectral+SC" rel="stylesheet">
+</head>
+<body>
 
-    <header>
-      <div class="logo">Trek</div>
-      <div class="view-all-trips">View All Trips</div>
-    </header>
+  <header>
+    <div class="logo">Trek</div>
+    <div class="view-all-trips">View All Trips</div>
+  </header>
 
-    <table class="trips">
-    </table>
+  <table class="trips">
+  <thead>
+    <th class="sort name">Title</th>
+    <th class="sort continent">Continent</th>
+    <th class="sort weeks">Weeks</th>
+  </thead>
+  <tbody id="trip-list">
+  </tbody>
+</table>
 
-    <section class="show">
-      <section class="trip-info">
-      </section>
+<section class="show">
+  <section class="trip-info">
+  </section>
 
-      <form class="reservation-form" method="post">
-        <span>
-          <label>Name</label>
-          <input type="text" id="name" name="name"></input>
-        </span>
-        <span>
-          <label>Email</label>
-          <input type="text" id="email" name="email"></input>
-        </span>
-        <span>
-          <button type="submit">Reserve Your Spot!</button>
-        </span>
-      </form>
+  <form class="reservation-form" method="post">
+    <span>
+      <label>Name</label>
+      <input type="text" id="name" name="name"></input>
+    </span>
+    <span>
+      <label>Email</label>
+      <input type="text" id="email" name="email"></input>
+    </span>
+    <span>
+      <button type="submit">Reserve Your Spot!</button>
+    </span>
+  </form>
 
-      <section class="message">
-      </section>
-    </section>
+  <section class="message">
+  </section>
+</section>
 
-    <script type="text/template" id="book-template">
-  <tr class="book">
+<script type="text/template" id="trip-template">
+  <tr class="trip">
     <td>
-      <%- title %>
+      <%- name %>
     </td>
     <td>
-      <%- author %>
+      <%- continent %>
     </td>
     <td>
-      <%- publication_year %>
+      <%- weeks %>
     </td>
   </tr>
 </script>
 
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-    <script src="app.bundle.js" type="text/javascript"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="app.bundle.js" type="text/javascript"></script>
 
-    <script type="text/javascript" src="index.js"></script>
-  </body>
+<!-- <script type="text/javascript" src="app.js"></script> -->
+</body>
 </html>
