@@ -6,12 +6,25 @@ import _ from 'underscore';
 import './css/foundation.css';
 import './css/style.css';
 
-import Trip from './models/trip'
+import Trip from './app/models/trip'
 
 console.log('it loaded!');
 
-const ALL_TRIPS_URL = 'https://ada-backtrek-api.herokuapp.com'; 
+const newTrip = new Trip({
+  name: "Here to There",
+  continent: "Here",
+  category: "There",
+  duration: "4",
+  cost: "45",
+})
+
+console.log(newTrip.get('name'));
+console.log(newTrip.get('cost'));
 
 $(document).ready( () => {
-  $('main').html('<h1>Hello World!</h1>');
+  // $('main').html('<h1>Hello World!</h1>');
+
+  $('#all-trips').click(function() {
+    buildAllTrips();
+  });
 });
