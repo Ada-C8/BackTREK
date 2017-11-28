@@ -46,7 +46,9 @@ const showTrip = function showTrip(event) {
 const addTripForm = function addTripForm() {
   $('.content').empty();
   fields.forEach((item) => {
-    $('#add-trip-form').append(addTripTemplate({field: item, lowercaseField: item}));
+    if (item !== 'id') {
+      $('#add-trip-form').append(addTripTemplate({field: item, lowercaseField: item}));
+    }
   });
   $('#add-trip-form').append('<section><button type="submit" class="button">Submit</button></section></form>');
 }
@@ -54,7 +56,41 @@ const addTripForm = function addTripForm() {
 const saveTrip = function saveTrip(event) {
   event.preventDefault();
   // TODO: save the trip to the API
+  const tripData = {};
+  fields.forEach((field) => {
+    tripData[field] = $(`input[name=${field}]`).val();
+  });
+  const trip = new Trip(tripData);
+  trip.save({}, {
+    success: successfulSave,
+    error: failedSave,
+  })
 }
+
+const successfulSave = function successfulSave(model, response) {
+  fields.forEach((field) => {
+    $(`input[name=${field}]`).val('');
+  });
+  $('#status-messages ul').empty();
+  $('#status-messages ul').append(`<li>${model.get('name')} added!</li>`);
+  $('#status-messages').show();
+}
+
+const failedSave = function failedSave(model, response) {
+  $('#status-messages ul').empty();
+  const errors = response.responseJSON.errors;
+  for (let key in errors) {
+    errors[key].forEach((issue) => {
+      $('#status-messages ul').append(`<li>${key}: ${issue}</li>`);
+    })
+  }
+  $('#status-messages').show();
+}
+
+const clearMessages = function clearMessages() {
+  $('#status-messages ul').empty();
+  $('#status-messages').hide();
+};
 
 $(document).ready( () => {
   allTripsTemplate = _.template($('#all-trips-template').html());
@@ -65,5 +101,6 @@ $(document).ready( () => {
   $('#all-trips').on('click', '.trip', showTrip);
   $('#add-trip').on('click', addTripForm);
   $('#add-trip-form').on('submit', saveTrip);
+  $('#status-messages').on('click', '.clear', clearMessages);
   tripList.fetch();
 });
