@@ -16,12 +16,12 @@ const tripList = new TripList();
 
 const render = function render(tripList) {
   console.log(tripList);
-  const $trips = $('#trips')
+  const $trips = $('#trips-list')
   $trips.empty();
   tripList.forEach((trip) => {
     $trips.append(tripTemplate(trip.attributes));
-    console.log(trip.attributes);
-    // console.log('trip loaded!');
+    // console.log(trip.attributes);
+    // // console.log('trip loaded!');
     // console.log(trip);
   });
 }

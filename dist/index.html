@@ -10,7 +10,7 @@
     <h1>Camino de Aventura</h1>
   </header>
   <main class="row">
-    <section class="trips column small-12 large-6">
+    <section class="column small-12 large-6">
       <table>
         <thead>
           <th class="sort name">Name</th>
@@ -33,21 +33,11 @@
   </footer>
   <script type = "text/template" id="trip-template">
     <tr class="trip" data-id="<%- id %>">
-      <td>
-        <%- name %>
-      </td>
-      <td>
-        <%- category %>
-      </td>
-      <td>
-        <%- continent %>
-      </td>
-      <td>
-        <%- weeks %>
-      </td>
-      <td>
-        <%- cost %>
-      </td>
+      <td><%- name %></td>
+      <td><%- category %></td>
+      <td><%- continent %></td>
+      <td><%- weeks %></td>
+      <td><%- cost %></td>
     </tr>
 
   </script>
