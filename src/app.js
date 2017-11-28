@@ -8,7 +8,7 @@ import './css/style.css';
 
 //models and collections
 import Trip from './models/trip';
-
+import TripList from './collections/trip_list';
 
 console.log('it loaded!');
 
