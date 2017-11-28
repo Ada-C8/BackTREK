@@ -6,8 +6,16 @@ import _ from 'underscore';
 import './css/foundation.css';
 import './css/style.css';
 
-console.log('it loaded!');
+// Models
+import Trip from './app/models/trip';
+
+const paris = new Trip({
+  name: 'Paris Adventure',
+  category: 'Urban',
+  continent: 'Europe',
+  cost: 100
+});
 
 $(document).ready( () => {
-
+  console.log(paris);
 });
