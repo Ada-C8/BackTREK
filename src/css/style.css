@@ -1,2 +1,6 @@
 
 /* Your styles go here! */
+#trip-table {
+  /* Hide by default */
+  display: none;
+}
