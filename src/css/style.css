@@ -30,8 +30,8 @@ h2 {
   font-size: 20px;
 }
 
-h3:hover {
-  text-decoration: underline;
+main {
+  height: 80%
 }
 
 .centerbutton {
@@ -49,7 +49,7 @@ h3:hover {
   font-weight: bold;
 }
 
-#trips {
+#trips-table {
   background-color: rgba(245, 245, 245, 0.9);
   margin: 0;
 }
