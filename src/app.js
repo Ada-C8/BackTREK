@@ -6,6 +6,10 @@ import _ from 'underscore';
 import './css/foundation.css';
 import './css/style.css';
 
+//models and collections
+import Trip from './models/trip';
+
+
 console.log('it loaded!');
 
 $(document).ready( () => {
