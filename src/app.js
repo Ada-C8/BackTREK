@@ -31,27 +31,57 @@ const render = function render(tripList) {
   tripListElement.empty();
 
   tripList.forEach((trip) => {
-    console.log(`Rendering trip ${ trip.get('name') }`);
+    // console.log(`Rendering ${ trip.get('name') }`);
     const generatedHTML = tripTemplate(trip.attributes);
     tripListElement.append($(generatedHTML));
+
+    // console.log(`Rendering trip *** ${ trip }`); //testing custom method toString()
   });
   $('th.sort').removeClass('current-sort-field');
   $(`th.sort.${ tripList.comparator }`).addClass('current-sort-field');
 };
 
-const addTripHandler = function(event) {
-  event.preventDefault();
+const readFormData = function readFormData() {
   const tripData = {};
-  TRIP_FIELDS.forEach((field) => {
+  TRIP_FIELDS.forEAch((field) => {
     const inputElement = $(`#add-trip-form input[name=${ field }]`);
     const value = inputElement.val();
-    tripData[field] = value;
-
+    if (value != '') { //dont take empty strings so that backbone can fill in default values
+      tripDarta[field] = value;
+    }
     inputElement.val('');
   });
-  console.log("read trip data");
+  console.log("Read trip data");
   console.log(tripData);
-  const trip = tripList.add(tripData);
+  return tripData;
+};
+
+const handleValidationFailures = function handleValidationFailures(errors) {
+  for (let field in errors) {
+    for (let problem of errors[field]) {
+      reportStatus('error', `${field}: ${problem}`);
+    }
+  }
+};
+const addTripHandler = function(event) {
+  event.preventDefault();
+  const trip = tripList.add(readFormData);
+  // const tripData = {};
+  // TRIP_FIELDS.forEach((field) => {
+    // const inputElement = $(`#add-trip-form input[name=${ field }]`);
+    // const value = inputElement.val();
+    // // tripData[field] = value;
+    //
+    // if (value != '') { //dont take empty strings so that backbone can fill in default values
+    //   tripDarta[field] = value;
+    // }
+    //
+    // inputElement.val('');
+  // });
+  // console.log("read trip data");
+  // console.log(tripData);
+  //
+  // const trip = tripList.add(tripData);
   trip.save({}, {
     success: (model, response) => {
       console.log('successfully saved trip!');
@@ -60,12 +90,14 @@ const addTripHandler = function(event) {
     error: (model, response) => {
       console.log('failed to save trip.');
       console.log(response);
-      const errors = response.responseJSON["errors"];
-      for (let field in errors) {
-        for (let problem of errors[field]){
-          reportStatus('error', `${field}: ${problem}`);
-        }
-      }
+      tripList.remove(model); // triggers an update (and rerender) server-side validation failed
+      handleValidationFailures(response.responseJSON["errors"]);
+      // const errors = response.responseJSON["errors"];
+      // for (let field in errors) {
+      //   for (let problem of errors[field]){
+      //     reportStatus('error', `${field}: ${problem}`);
+
+
     },
   });
 };
@@ -73,10 +105,9 @@ const addTripHandler = function(event) {
 $(document).ready( () => {
   tripTemplate = _.template($('#trip-template').html());
   tripList.on('update', render);
-
-
   tripList.on('sort', render);
-  tripList.fetch();
+  tripList.fetch(); //overrides anything youve added
+
   $('#add-trip-form').on('submit', addTripHandler);
   TRIP_FIELDS.forEach((field) => {
     const headerElement = $(`th.sort.${ field }`);
