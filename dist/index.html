@@ -39,13 +39,16 @@
     <div id='show-trip' class='content'>
       <script type="text/template" id="show-trip-template">
         <h3><%- name %></h3>
+        <a id='reserve' tripId=<%- id %> href='#'>Reserve</a>
         <h5><%- weeks %> week<%- plural %></h5>
         <h5><%- cost %></h5>
         <p><%- about %></p>
       </script>
     </div>
+    <form id='reserve-trip-form' class='content'>
+    </form>
     <form id='add-trip-form' class='content'>
-      <script type="text/template" id="add-trip-template">
+      <script type="text/template" id="form-template">
         <section>
           <label><%- field %></label>
           <input type='text' id=<%- field %> name=<%- field %> />

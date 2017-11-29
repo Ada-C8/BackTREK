@@ -14,11 +14,12 @@ const tripList = new TripList();
 let allTripsTemplate;
 let tripHeadersTemplate;
 let showTripTemplate;
-let addTripTemplate;
+let formTemplate;
 
 const url = 'https://ada-backtrek-api.herokuapp.com/trips';
 const tableFields = ['id', 'name', 'continent', 'category', 'weeks', 'cost'];
 const addTripFields = ['name', 'continent', 'category', 'weeks', 'cost', 'about'];
+const reservationFields = ['name', 'age', 'email'];
 
 const loadTrips = function loadTrips() {
   $('.content').empty();
@@ -47,7 +48,7 @@ const showTrip = function showTrip(event) {
 const addTripForm = function addTripForm() {
   $('.content').empty();
   addTripFields.forEach((item) => {
-    $('#add-trip-form').append(addTripTemplate({field: item, lowercaseField: item}));
+    $('#add-trip-form').append(formTemplate({field: item, lowercaseField: item}));
   });
   $('#add-trip-form').append('<section><button type="submit" class="button">Submit</button></section></form>');
 }
@@ -56,7 +57,7 @@ const saveTrip = function saveTrip(event) {
   event.preventDefault();
   const tripData = {};
   addTripFields.forEach((field) => {
-    tripData[field] = $(`input[name=${field}]`).val();
+    tripData[field] = $(`#add-trip-form input[name=${field}]`).val();
   });
   const trip = new Trip(tripData);
   trip.save({}, {
@@ -68,7 +69,7 @@ const saveTrip = function saveTrip(event) {
 const successfulTripSave = function successfulSave(trip, response) {
   tripList.add(trip);
   addTripFields.forEach((field) => {
-    $(`input[name=${field}]`).val('');
+    $(`#add-trip-form input[name=${field}]`).val('');
   });
   $('#status-messages ul').empty();
   $('#status-messages ul').append(`<li>${trip.get('name')} added!</li>`);
@@ -92,15 +93,25 @@ const clearMessages = function clearMessages() {
   $('#status-messages').hide();
 };
 
+const reserveForm = function reserveForm(event) {
+  $('.content').empty();
+  // TODO: add trip ID so we can submit reservations
+  reservationFields.forEach((item) => {
+    $('#reserve-trip-form').append(formTemplate({field: item, lowercaseField: item}));
+  });
+  $('#reserve-trip-form').append('<section><button type="submit" class="button">Submit</button></section></form>');
+};
+
 $(document).ready( () => {
   allTripsTemplate = _.template($('#all-trips-template').html());
   tripHeadersTemplate = _.template($('#trip-headers-template').html());
   showTripTemplate = _.template($('#show-trip-template').html());
-  addTripTemplate = _.template($('#add-trip-template').html());
+  formTemplate = _.template($('#form-template').html());
   $('#load-trips').on('click', loadTrips);
   $('#all-trips').on('click', '.trip', showTrip);
   $('#add-trip').on('click', addTripForm);
   $('#add-trip-form').on('submit', saveTrip);
+  $('#show-trip').on('click', '#reserve', reserveForm);
   $('#status-messages').on('click', '.clear', clearMessages);
   tripList.on('update', loadTrips);
   tripList.fetch();
