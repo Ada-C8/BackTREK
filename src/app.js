@@ -33,16 +33,18 @@ $(document).ready( () => {
   tripList.on('update', render, tripList);
   tripList.fetch();
   $('#show-all').on('click', function(){
+    $('#trip-description').empty();
     $('#all-trips').show();
   })
 
   $('#trip-list').on('click', 'tr', function(){
+    $('#trip-description').empty();
     const url = new Trip(this).url()
     console.log(url)
     $.get(url, response => {
       const thisTrip = response
       console.log(thisTrip.about)
-      $('#trip-description').append(`<p>${thisTrip.about}<p>`);
+      $('#trip-description').append(`<h2>${thisTrip.name}</h2><p>${thisTrip.about}<p>`);
     })
 
   })
