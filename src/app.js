@@ -41,11 +41,37 @@ const render = function render(tripList) {
   })
   $('#trip-table').show();
 
+  // $('.trip').on('click', function(event) {
+  //   let tripId = $(this).attr('data-id');
+  //
+  //   console.log($(this).attr('data-id'));
+  //   //get trip via tripId from tripList
+  //   tripList.get(tripId).fetch();
+  //
+  //   console.log(tripList.get(tripId));
+  // });
   $('.trip').on('click', function(event) {
-    $(this).attr('data-id');
-    console.log($(this).attr('data-id'));
-  });
-};
+    console.log('in the trip click');
+
+    // get the id of the trip you clicked on
+    let tripId = $(this).attr('data-id')
+
+    // fetch the trip details of the trip you clicked on from the api
+    // let tripDetails = tripList.get(tripId).fetch();
+    //
+    // console.log(`all trip details: ${tripDetails}`);
+    //
+    // console.log(`trip details: ${tripDetails['about']}`);
+
+    //fetch returns a hash, make a template that you then populate with variable.name
+    let trip = tripList.get(tripId)
+        trip.fetch({
+          success: function(model) {
+            console.log(`in the fetch and about is: ${model.get('about')}`);
+          } // function
+        }); // fetch
+  })
+}; //render
 
 
 $(document).ready( () => {
