@@ -28,12 +28,17 @@ const render = function render(trips) {
     // jquery search has to look through the whole document
     // it will be faster (esp. with a lot of books) to do
     tripTableElement.append(generatedHTML);
+    tripTableElement.attr('trip-id', `${trip.attributes.id}`);
+    // console.log(`${trip.attributes.id}`)
+    // data-id=${trip.id}
   });
 
-  // provide visual feedback for sorting
-  $('th.sort').removeClass('current-sort-field');
-  $(`th.sort.${ trips.comparator }`).addClass('current-sort-field');
+  // // provide visual feedback for sorting
+  // $('th.sort').removeClass('current-sort-field');
+  // $(`th.sort.${ trips.comparator }`).addClass('current-sort-field');
 };
+
+const showTrip =
 
 
 
@@ -46,6 +51,4 @@ $(document).ready( () => {
 
   trips.fetch();
 
-
-  // $('main').html('<h1>Hello World!</h1>');
 });

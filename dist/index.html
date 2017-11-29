@@ -8,10 +8,13 @@
 </head>
 <body>
   <header>
-
+    <h1>Trek: Plan Your Next Trip</h1>
   </header>
   <main>
-
+    <div class="row">
+      <button class="large-3 medium-4 small-6 columns button large-centered small-centered medium-centered" id="load-trips"> View Trips </button>
+    </div>
+    <div id="show-trip"></div>
     <section class="columns large-8 small-12">
       <h2>Trips!</h2>
 
@@ -35,7 +38,7 @@
 
   <script type="text/template" id="trip-template">
     <tr class="trip">
-      <td>
+      <td data-id="">
         <%- id %>
       </td>
       <td>
@@ -54,6 +57,15 @@
         <%- cost %>
       </td>
     </tr>
+  </script>
+
+  <script type="text/template" id="show-trip-template">
+        <h2> <%- name %> </h2>
+        <p> <%- about %> </p>
+        <p> <strong>Continent:</strong> <%- continent %></p>
+        <p> <strong>Category: </strong><%- category %> </p>
+        <p> <strong>Weeks: </strong> <%- weeks %></p>
+        <p> <strong>Cost: </strong><%- cost %> </p>
   </script>
 </body>
 </html>
