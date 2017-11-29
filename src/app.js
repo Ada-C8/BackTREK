@@ -12,6 +12,7 @@ import TripList from './app/collections/trip_list';
 
 const tripList = new TripList();
 let tripTemplate;
+let trip = new Trip();
 
 const render = function render(tripList) {
   $('#trip-list').empty(); // clear it so it doesn't continually add on
@@ -19,8 +20,18 @@ const render = function render(tripList) {
     // use template to append trip row to table in the DOM
     $('#trip-list').append(tripTemplate(trip.attributes));
   });
-  console.log(this)
 };
+
+const events = {
+  successfulGetTrip(trip, response) {
+    console.log('got it!')
+    console.log(trip)
+  },
+  failedGetTrip(trip, response) {
+
+  },
+};
+
 
 $(document).ready( () => {
   tripTemplate = _.template($('#trip-row-template').html());
@@ -31,5 +42,9 @@ $(document).ready( () => {
 
   tripList.fetch(); // will automatically call render
 
-  $('td').on('click', function() {console.log('click')})
+  $('#trip-list').on('click', 'tr', function() {
+    const id = $(this).attr('id');
+    trip = tripList.get(id);
+    trip.fetch({success: events.successfulGetTrip, error: events.failedGetTrip});
+  })
 });
