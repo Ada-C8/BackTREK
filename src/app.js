@@ -48,6 +48,7 @@ const events = {
       success: events.successfulSave,
       error: events.failedSave
     })
+    this.reset();
   },
 
   successfulSave(trip, response) {
@@ -74,7 +75,39 @@ const events = {
     }
     $('#status-messages').show();
     trip.destroy();
-  }
+  },
+
+  sortTrips(event) {
+    console.log(event); //this is so we can see what got clicked on
+    console.log(this);
+    //this is what we do to get the second word, the regex is for whitespace
+    const classes = $(this).attr('class').split(/\s+/);
+
+    // this allows us to sort the table based on the column and then sort back to the original.
+    // looping through the classes ...
+    classes.forEach((className) => {
+      if (fields.includes (className)) {
+        if (className === tripList.comparator) {
+          tripList.models.reverse();
+          tripList.trigger('sort', tripList);
+        }
+        else {
+          tripList.comparator = className;
+          tripList.sort();
+        }
+      }
+
+    });
+
+    // this removes the class when we click on anothe table head. both do the same thing
+    $('.sort-field').removeClass('sort-field');
+    // $('th.sort').removeClass('current-sort-field');
+    $(this).addClass('sort-field');
+    //if you set comparator equal to the fields, it  will...
+    // tripList.comparator = classes[1];
+    // // this sorts it but now need to put it in the DOM
+    // tripList.sort();
+  },
 
 };
 
@@ -82,6 +115,9 @@ const events = {
 $(document).ready( () => {
   // $('main').html('<h1>backTrek!</h1>');
   tripTemplate = _.template($('#trip-template').html());
+
+  $('.sort').click(events.sortTrips);
+  tripList.on('sort', render, tripList);
 
   $('#add-trip-form').submit(events.addTrip);
 
