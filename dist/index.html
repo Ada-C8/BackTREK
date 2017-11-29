@@ -34,7 +34,7 @@
               <div class="col-sm-12 col-md-5 form-group">
                 <select class="form-control" id="search-select">
                   <option name="name">Name</option>
-                  <option name="location">Location</option>
+                  <option name="continent">Place</option>
                   <option name="weeks">Weeks</option>
                 </select>
               </div>
@@ -50,9 +50,9 @@
             <table id="trip-table" class="table">
               <thead>
                 <tr>
-                  <th>Name</th>
-                  <th>Location</th>
-                  <th>Weeks</th>
+                  <th class="sort name">Name</th>
+                  <th class="sort continent">Place</th>
+                  <th class="sort weeks">Weeks</th>
                 </tr>
               </thead>
 
@@ -69,7 +69,8 @@
             </div>
           </div>
 
-          <div class="row details-wrap"></div>
+          <div id="trip-details" class="row details-wrap">
+          </div>
 
         </section>
       </div>
@@ -82,11 +83,11 @@
 
   <script type="text/template" id="trip-template">
     <tr class="trip-item">
-      <td>
-        <%- name %>
+      <td id="trip<%- id %>">
+        <a class="trip-title" data-id="<%- id %>"><%- name %></a>
       </td>
       <td>
-        <%- location %>
+        <%- continent %>
       </td>
       <td>
         <%- weeks %>
@@ -95,17 +96,25 @@
   </script>
 
   <script type="text/template" id="detail-template">
-    <tr class="trip-details">
-      <td>
-        <%- name %>
-      </td>
-      <td>
-        <%- location %>
-      </td>
-      <td>
-        <%- weeks %>
-      </td>
-    </tr>
+    <div class="col-sm-12">
+      <h2 class="detail-name"><%- name %></h2>
+    </div>
+    <div class="col-sm-12 col-md-6">
+      <h3 class="detail-continent"><%- continent ></h3>
+    </div>
+    <div class="col-sm-12 col-md-6">
+      <h3 class="detail-weeks"><%- weeks ></h3>
+    </div>
+    <div class="col-sm-12 col-md-6">
+      <h3 class="detail-category"><%- category ></h3>
+    </div>
+    <div class="col-sm-12 col-md-6">
+      <h3 class="detail-cost"><%- cost ></h3>
+    </div>
+    <div class="col-12">
+      <p class="detail-about"><%- about ></p>
+    </div>
+
   </script>
 
   <script src="app.bundle.js" type="text/javascript"></script>
