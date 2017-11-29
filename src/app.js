@@ -13,8 +13,8 @@ import TripList from './app/collections/trip_list';
 const fields = ['id', 'name', 'continent', 'category', 'weeks', 'cost'];
 
 const events = {
-  showDetails(trip){
-
+  showDetails(id){
+    console.log(id);
   }
 }
 
@@ -36,8 +36,8 @@ $(document).ready( () => {
   tripList.on('update', render, tripList);
   tripList.fetch();
 
-  $('#trip-list').on('click', '.trip', ()=>{
-    console.log('clicked on a trip');
+  $('#trip-list').on('click', '.trip', function callback() {
+      events.showDetails($(this).data('id'));
   });
 
   const zanzibar = new Trip({ id: 1 }).fetch();
