@@ -10,15 +10,15 @@ import './css/style.css';
 import Trip from './app/models/trip';
 import TripList from './app/collections/trip_list';
 
-const rawTripData = [
-  {
-    name: "Kinkakuji",
-    continent: "Asia",
-    category: "historical",
-    weeks: 1,
-    cost: 100
-  },
-];
+const fields = ['id', 'name', 'continent', 'category', 'weeks', 'cost'];
+
+const events = {
+  showDetails(trip){
+
+  }
+}
+
+
 
 const tripList = new TripList();
 let tripTemplate;
@@ -35,4 +35,9 @@ $(document).ready( () => {
   tripTemplate = _.template($('#trip-template').html());
   tripList.on('update', render, tripList);
   tripList.fetch();
+
+  $('#trip-list').on('click', '.trip', ()=>{
+    console.log('clicked on a trip');
+  });
+
 });
