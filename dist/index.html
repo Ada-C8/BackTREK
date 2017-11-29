@@ -10,11 +10,46 @@
 
   </header>
   <main>
+    <section class="columns large-8 small-12">
+           <h2>Available trips!</h2>
+
+           <table>
+             <thead>
+               <th class="sort name">Name</th>
+               <th class="sort continent">Continent</th>
+               <th class="sort category">Category</th>
+               <th class="sort weeks">Weeks</th>
+               <th class="sort cost">Cost</th>
+             </thead>
+             <tbody id="trip-list">
+             </tbody>
+           </table>
+         </section>
 
   </main>
   <footer>
 
   </footer>
   <script src="app.bundle.js" type="text/javascript"></script>
+  <script type="text/template" id="trip-template">
+    <tr class="trip">
+      <td>
+        <%- name %>
+      </td>
+      <td>
+        <%- continent %>
+      </td>
+      <td>
+        <%- category %>
+      </td>
+      <td>
+        <%- weeks %>
+      </td>
+      <td>
+        <%- cost %>
+      </td>
+    </tr>
+  </script>
+
 </body>
 </html>
