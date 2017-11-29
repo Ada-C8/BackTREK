@@ -9,13 +9,15 @@ import './css/style.css';
 import Trip from './app/models/trip';
 import TripList from './app/collections/trip_list';
 
+// let modal = require('jquery-modal')($);
+
 const tripList = new TripList();
 const trip = new Trip();
 
 let tripListTemplate;
 let tripTemplate;
 
-const getTrip = function getTrip(tripId) {
+const addTripForm = function addTripForm() {
 
 };
 
@@ -30,34 +32,35 @@ const render = function render(tripList) {
   console.log(tripList);
 };
 
-const loadTrip = function loadTrip(trip) {
-  console.log('clicked');
-  const $tripDetail = $('#trip-detail');
-
-  $tripDetail.empty();
-  console.log(this);
-  console.log(typeof this);
-  // console.log(tripList);
-  // $tripDetail.append(tripTemplate(this));
-  // $tripDetail.append(tripTemplate(trip));
-};
-
 const events = {
   getTrip(event) {
     const tripId = event.currentTarget.id;
     const url = `${tripList.url}/${tripId}`;
-    let trip = new Trip();
-    $.get(url, (response) => {
-      const $tripDetail = $('#trip-detail');
 
-      $tripDetail.empty();
-      $tripDetail.append(tripTemplate(response));
-    }).fail(function() {
-      console.log("failure");
+    // let trip = new Trip({id: tripId});
+
+    let trip = new Trip({id: tripId});
+    console.log(trip.fetch());
+    trip.fetch({
+      success: function(response) {
+        console.log(response.attributes);
+
+        const $tripDetail = $('#trip-detail');
+
+        $tripDetail.empty();
+        $tripDetail.append(tripTemplate(response.attributes));
+      },
+      // how is this handled???
+      error: function(response) {
+        console.log(response.attributes);
+      }
     });
+  },
 
-
+  addTrip() {
+    
   }
+
 };
 
 $(document).ready( () => {
@@ -66,7 +69,9 @@ $(document).ready( () => {
   tripTemplate = _.template($('#trip-template').html());
 
   tripList.on('update', render, tripList);
-  $('#trip-list').on('click', 'tr', events.getTrip, this);
+  $('#trip-list').on('click focus', 'tr', events.getTrip, this);
+
+  // $('#add-trip').click(events.addTrip);
 
 
   tripList.fetch();
