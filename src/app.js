@@ -42,7 +42,7 @@ const render = function render(tripList) {
   });
   $('th.sort').removeClass('current-sort-field');
   $(`th.sort.${ tripList.comparator }`).addClass('current-sort-field');
-
+//// individual trip detail below /////
   $('.trip').on('click',function(event) {
     let tripId = $(this).attr('data-id');
     let trip = tripList.get(tripId)
