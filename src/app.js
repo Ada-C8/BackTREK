@@ -35,6 +35,10 @@ const getTripList = function getTripList() {
   tripList.fetch({success: events.successfulGetTripList, error: events.failedGetTripList});
 }
 
+const addTrip = function addTrip() {
+  $('#form-modal').show();
+}
+
 const events = {
   successfulGetTrip(trip, response) {
     $('#trip-info').empty();
@@ -61,4 +65,6 @@ $(document).ready( () => {
   tripList.on('update', render, tripList)
 
   $('#trip-list').on('click', 'tr', getTrip);
+  $('#add-trip').on('click', addTrip);
+  $('#form-modal').on('click', function () {$('#form-modal').hide();})
 });
