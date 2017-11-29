@@ -17,10 +17,10 @@ const rawTripData = [
     category: "historical",
     weeks: 1,
     cost: 100
-  }
+  },
 ];
 
-const tripList = new TripList(rawTripData);
+const tripList = new TripList();
 let tripTemplate;
 
 const render = function render(tripList) {
@@ -33,6 +33,6 @@ const render = function render(tripList) {
 
 $(document).ready( () => {
   tripTemplate = _.template($('#trip-template').html());
-  console.log(tripList);
-  render(tripList);
+  tripList.on('update', render, tripList);
+  tripList.fetch();
 });
