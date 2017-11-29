@@ -10,11 +10,45 @@
     <nav class="row center">
       <h1>Don't Trip. Trek.</h1>
       <button id="show-all" class="button column small-12 large-3">Show All Treks</button>
+      <button id="new-trip" class="button column small-12 large-3">Create New Trip</button>
     </nav>
   </header>
   <main>
     <section id="all-trips" class="columns large-6 small-12">
       <h2>Trips!</h2>
+
+      <article id="newTripForm" class="form">
+        <form action="" method=post>
+          <section>
+            <label>Name</label>
+            <input type="text" id="name" name="name"></input>
+          </section>
+          <section>
+            <label>Continent</label>
+            <input type="text" id="continent" name="continent"></input>
+          </section>
+
+          <section>
+            <label>Weeks</label>
+            <input type="text" id="weeks" name="weeks"></input>
+          </section>
+
+          <section>
+            <label>About</label>
+            <input type="text" id="about" name="about"></input>
+          </section>
+
+          <section>
+            <label>Cost</label>
+            <input type="text" id="cost" name="cost"></input>
+          </section>
+
+          <section class="button">
+            <button type="submit">Reserve Spot!</button>
+          </section>
+
+        </form>
+      </article>
 
       <table class="large-12 small-12 float-left">
         <thead>
