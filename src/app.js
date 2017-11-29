@@ -12,7 +12,6 @@ import TripList from './app/collections/trip_list';
 console.log('it loaded!');
 
 const tripList = new TripList();
-// console.log(tripList.at(2).get('name'));
 
 let tripTemplate;
 
@@ -21,7 +20,7 @@ const render = function render(tripList) {
   tripListElement.empty();
 
   tripList.forEach((trip) => {
-    console.log(`Rendering trip ${trip.get('name')}`);
+    // console.log(`Rendering trip ${trip.get('name')}`);
     let tripHTML = tripTemplate(trip.attributes);
     tripListElement.append($(tripHTML));
   });
