@@ -13,6 +13,7 @@ import TripList from './app/collections/trip_list';
 //selectors from the DOM
 const $tripsList = $('#trips-list')
 const $tripDescription = $('#trip-description')
+const $newTripBtn = $('#newTripBtn')
 
 //templates
 let tripTemplate;
@@ -30,6 +31,11 @@ const render = function render(tripList) {
   });
 }
 
+const newTrip = function newTrip() {
+  console.log('button clicked!');
+}
+
+
 $(document).ready( () => {
   tripTemplate = _.template($('#trip-template').html());
 
@@ -42,6 +48,9 @@ $(document).ready( () => {
       $tripDescription.append(tripDetailsTemplate(trip.attributes));
     });
   });
+
+  $newTripBtn.on('click', newTrip);
+
 
   // Data Events
   tripList.on('update', render, tripList);
