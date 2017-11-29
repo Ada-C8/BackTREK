@@ -1,4 +1,3 @@
-/* Your styles go here! */
 
 #trip-table {
   display: none;
@@ -7,4 +6,8 @@
 
 #individual-trip-details {
   display: none;
+}
+
+#individual-trip-details h3 {
+  text-align: center;
 }

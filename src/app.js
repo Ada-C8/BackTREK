@@ -59,15 +59,7 @@ const render = function render(tripList) {
 
     // get the id of the trip you clicked on
     let tripId = $(this).attr('data-id')
-
-    // fetch the trip details of the trip you clicked on from the api
-    // let tripDetails = tripList.get(tripId).fetch();
-    //
-    // console.log(`all trip details: ${tripDetails}`);
-    //
-    // console.log(`trip details: ${tripDetails['about']}`);
-
-    //fetch returns a hash, make a template that you then populate with variable.name
+    // fetch the trip details of the trip you clicked on from the api; fetch returns a hash
     let trip = tripList.get(tripId)
       trip.fetch({
         success: function(model) {
@@ -76,14 +68,13 @@ const render = function render(tripList) {
 
           const individualtripListElement = $('#individual-trip-details');
 
-          individualtripListElement.html('') //will clear out previous list when you render again
+          individualtripListElement.html(''); //will clear out previous list when you render again
 
           const generatedHTMLTripDetails = individualTripTemplate(model.attributes);
           individualtripListElement.append(generatedHTMLTripDetails);
 
           $('#individual-trip-details').show();
 
-        //
         //   const TRIP_DETAILS = ['name', 'continent', 'category', 'weeks', 'cost', 'about'];
         //
         //   TRIP_DETAILS.forEach((detail) => {
