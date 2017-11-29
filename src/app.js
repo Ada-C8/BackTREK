@@ -38,6 +38,7 @@ const tripList = new TripList();
 // };
 const events = {
   allTrips(event) {
+    $('#all-trips').empty();
     const tripsTable = `<h2>All Trips</h2>
       <table>
         <thead>
@@ -58,15 +59,12 @@ const events = {
     console.log('called TripInfo');
     console.log(this.id);
     const trip = new Trip({id: this.id});
-    // const fetched = trip.fetch();
 
     trip.fetch({
-      success: function (trip, response) {
-        console.log(response);
-        console.log(trip);
+      success: function (trip,response) {
+        // trip is the Backbone model instance, response is the JSON object
+        $('#trip-details').empty();
         $('#trip-details').append(showTemplate(trip.attributes));
-        // trip is the Backbone model instance
-        // response is the JSON object
       },
     })
 
@@ -82,6 +80,7 @@ const events = {
 };
 const render= function render(tripList) {
   $('#trip-list').empty();
+  tripList.fetch();
   tripList.forEach((trip) => {
     const tripCost= (trip.attributes.cost);
     trip.set('cost', tripCost.toFixed(2));

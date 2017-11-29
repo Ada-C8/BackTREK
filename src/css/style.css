@@ -1,2 +1,6 @@
 
 /* Your styles go here! */
+
+#trip-details ul {
+  list-style: none;
+}

@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-  <header>
+  <header class = "columns small-12">
     <h2>backTREK</h2>
     <section id= "main-buttons">
       <button id = "all-trips-btn" class = "button">
@@ -31,7 +31,7 @@
           </tbody>
         </table> -->
     </section>
-    <section id = "trip-details">
+    <section class= "columns small-12 large-4" id = "trip-details">
 
     </section>
   </main>
@@ -66,18 +66,21 @@
     <h3><%- name %></h3>
     <ul>
       <li>
-        <%- id %>
+        ID: <%- id %>
       </li>
       <li>
-        <%- continent %>
+        Continent: <%- continent %>
       </li>
       <li>
-        <%- category %>
+        Category: <%- category %>
       </li>
       <li>
-        $<%- cost %>
+        Cost: $<%- cost %>
       </li>
     </ul>
+    <p>
+      <strong>About:</strong>
+    </p>
     <p>
       <%- about %>
     </p>
