@@ -15,6 +15,7 @@ const TRIP_FIELDS = ['name', 'category', 'continent', 'cost', 'weeks'];
 const  tripList = new TripList();
 let tripTemplate;
 let individualTripTemplate;
+// let reserveTemplate;
 
 console.log('it loaded!');
 
@@ -59,6 +60,22 @@ const render = function render(tripList) {
 
         $('#individual-trip-detail').show();
         $('#reserve').show();
+        $('#reserve').on('click', function(event) {
+          let tripID = $(this).attr('data-id');
+          console.log(this);
+          let individualURL =  `https://ada-backtrek-api.herokuapp.com/trips/${tripID}`;
+          console.log(individualURL);
+
+          let formInfo = `<form class="add-reservation" action="${individualURL}/reservations">
+          <label for="name">Name:</label><input type="text" name="name"></input>
+          <label for="age">Age:</label><input type="number" name="age"></input>
+          <label for="email">Email:</label><input type="text" name="email"></input>
+          <input type="submit" value="Make Reservation"</input></form>`;
+          $(this).after(formInfo).hide();
+
+          // $('#reserve-trip-template').show();
+          // console.log(event);
+        });
       }
     }); // fetch
   });
@@ -111,10 +128,11 @@ const addTripHandler = function(event) {
 };
 
 $(document).ready( () => {
-  $('#reserve').hide();
-  
   individualTripTemplate = _.template($('#individual-trip-template').html());
   tripTemplate = _.template($('#trip-template').html());
+
+  // reserveTemplate = _.template($('#reserve-trip-template').html());
+
   tripList.on('update', render);
   tripList.on('sort', render);
   tripList.fetch(); //overrides anything youve added
@@ -129,4 +147,5 @@ $(document).ready( () => {
     });
   });
   $('#status-messages button.clear').on('click', clearStatus);
+  $('#reserve').hide();
 });
