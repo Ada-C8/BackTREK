@@ -16,7 +16,7 @@ let tripDetailTemplate;
 const tripList = new TripList();
 
 const render = function render(tripList) {
-  const tripListElement = $('#trip-list tbody');
+  const tripListElement = $('#trip-list ul');
   tripList.forEach((trip) => {
     const generatedHTML = $(tripTemplate(trip.attributes));
     generatedHTML.on('click', show);
@@ -25,10 +25,15 @@ const render = function render(tripList) {
 };
 
 const show = function show(e) {
-  const trip = $(e.target).closest('tr');
-  const id = trip[0].id;
-  const generatedHTML = tripDetailTemplate(trip);
-  trip.html(generatedHTML);
+  const tripElement = $(e.target).closest('li');
+  const id = tripElement[0].id;
+  const trip = tripList.get(id);
+  trip.fetch({
+    success: () => {
+      const generatedHTML = tripDetailTemplate(trip.attributes);
+      tripElement.append(generatedHTML);
+    }
+  });
 };
 
 $(document).ready( () => {

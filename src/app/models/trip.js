@@ -9,10 +9,6 @@ const Trip = Backbone.Model.extend({
     about: 'no info',
     cost: 0,
   },
-
-  // initialize(attributes) {
-  //   console.log(attributes);
-  // },
 });
 
 export default Trip;
