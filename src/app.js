@@ -32,11 +32,16 @@ const renderTrips = function renderTrips(list) {
   })
 };
 
-// render individual trip
+// render INDIVIDUAL TRIP!!!
 const renderTrip = function renderTrip(trip) {
   const tripElement = $('#trip-detail');
 
-  const generatedHTML = tripTemplate(trip.attributes);
+  const generatedHTML = $(tripTemplate(trip.attributes));
+  generatedHTML.on('click', '.button', function(event) {
+    event.preventDefault();
+    console.log('in the make reservation handler');
+
+  });
   tripElement.html(generatedHTML);
 };
 
@@ -80,52 +85,37 @@ const addTripHandler = function(event) {
 };
 
 
-const addReservationHandler = function(event) {
-  event.preventDefault();
-  console.log('in the reservation handler');
+// const addReservationHandler = function(event) {
+//   event.preventDefault();
+//   console.log('in the reservation handler');
+//
+//   const reservationData = {};
+//
+//   RES_FIELDS.forEach((field) => {
+//     const inputElement = $(`#makeReservation input[name="${ field }"]`);
+//     const value = inputElement.val();
+//     reservationData[field] = value;
+//
+//     inputElement.val('');
+//     console.log('reading reservation data');
+//     console.log(reservationData);
+//
+//     // NOTE ///this will not work as it is currently written --- write a model?
+//     // const reservation = new Reservation(reservationData);
+//
+//     reservation.save({}, {
+//       success: (model, response) => {
+//         reportStatus('success', 'Successfully add a trip!');
+//       },
+//       error: (model, response) => {
+//         console.log('failed to save trip!');
+//
+//         // NOTE // Need to handle errors that come in
+//       }
+//     })
+//   });
+// };
 
-  const reservationData = {};
-
-  RES_FIELDS.forEach((field) => {
-    const inputElement = $(`#makeReservation input[name="${ field }"]`);
-    const value = inputElement.val();
-    reservationData[field] = value;
-
-    inputElement.val('');
-    console.log('reading reservation data');
-    console.log(reservationData);
-
-    // NOTE ///this will not work as it is currently written --- write a model?
-    // const reservation = new Reservation(reservationData);
-
-    reservation.save({}, {
-      success: (model, response) => {
-        reportStatus('success', 'Successfully add a trip!');
-      },
-      error: (model, response) => {
-        console.log('failed to save trip!');
-
-        // NOTE // Need to handle errors that come in
-      }
-    })
-  });
-};
-
-
-let reserveTrip = function reserveTrip(id, formData) {
-  reserveURL = (baseURL+'/'+ id + '/reservations');
-  console.log(reserveURL);
-  $.post(reserveURL, formData, (response) => {
-    $('#makeReservation').html('<p> Reservation added! </p>');
-    console.log(response);
-  })
-  .fail(function(response){
-    $('#fail').html('<p>Request was unsuccessful</p>')
-  })
-  .always(function(){
-    console.log('always even if we have success or failure');
-  });
-};
 
 ///NOTE //// Bug to fix
 //
@@ -143,7 +133,6 @@ $(document).ready(() => {
   tripTemplate = _.template($('#trip-template').html());
 
   //backbone
-  // tripsList.on('update', renderTrips);
   tripsList.fetch();
 
   // jquery
@@ -155,36 +144,28 @@ $(document).ready(() => {
   });
 
   $('.see-trips-button').on('click', function() {
-    console.log('in the function to see trips')
     tripsList.on('update', renderTrips);
     tripsList.fetch();
-
-
-  })
+  });
 
   // add trip
-  // $('#add-trip-form').on('submit', addTripHandler);
-  //
-  // //reserve a spot on a trip
-  // $('#makeReservation').on('submit', function(event) {
-  //   // event.preventDefault();
-  //   console.log('in the make reservation handler');
-  //
-  //   const reservation = new Trip({ id: $(this).data("id")});
-  //
-  //   console.log(reservation);
-  //
+  $('#add-trip-form').on('submit', addTripHandler);
 
-  $('#makeReservation').on('submit', function(event){
-    console.log('in the make reservation event handler');
-    // this helps not to refresh the page
-    // event.preventDefault();
-    // const tripID = $('#trip-template').data("id");
+    // const reservation = new Trip({ id: $(this).data("id")});
+    //
+    // console.log(reservation);
+    //
 
-    // this is a jQuery function that will take our form and turn it into query params
-    // let formData = $('#makeReservation').serialize();
-    // reserveTrip(tripID, formData);
-  });
+    // $('#makeReservation').on('submit', function(event){
+    //   console.log('in the make reservation event handler');
+    //   // this helps not to refresh the page
+    //   event.preventDefault();
+    //   const tripID = $('#trip-template').data("id");
+    //
+    //   // this is a jQuery function that will take our form and turn it into query params
+    //   const formData = $('#makeReservation').serialize();
+    //   reserveTrip(tripID, formData);
+
 
 
 });
@@ -195,7 +176,7 @@ $(document).ready(() => {
 // 5. create a button to see a list of trips
 
 // 3. figure out how to make the reservation - is it a separate model, how to take in the id to post to the write place
-  // Dan shared url root could be useful for creating a reservation
+// Dan shared url root could be useful for creating a reservation
 // 4. work on error handling
 // 6. ask about the API error handling -- i did not have a problem adding a new trip -- no backlash for empty fields
 // 7. check out client side validation work on the code
@@ -237,6 +218,22 @@ $(document).ready(() => {
 //     }
 //   });
 // });
+
+//
+// let reserveTrip = function reserveTrip(id, formData) {
+//   reserveURL = (baseURL+'/'+ id + '/reservations');
+//   console.log(reserveURL);
+//   $.post(reserveURL, formData, (response) => {
+//     $('#makeReservation').html('<p> Reservation added! </p>');
+//     console.log(response);
+//   })
+//   .fail(function(response){
+//     $('#fail').html('<p>Request was unsuccessful</p>')
+//   })
+//   .always(function(){
+//     console.log('always even if we have success or failure');
+//   });
+// };
 
 
 // done
