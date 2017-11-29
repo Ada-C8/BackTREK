@@ -2,9 +2,12 @@
 import $ from 'jquery';
 import _ from 'underscore';
 
+import 'jquery-modal';
+
 // CSS
 import './css/foundation.css';
 import './css/style.css';
+
 
 import Trip from './app/models/trip';
 import TripList from './app/collections/trip_list';
@@ -28,6 +31,8 @@ let showTemplate;
 //
 // };
 
+const reservationFields = ['name', 'age', 'email'];
+
 const events = {
   allTrips(event) {
     const $tripList = $('#trip-list');
@@ -39,17 +44,23 @@ const events = {
     });
   },
   showTrip(id) {
-
     const $showTrip = $('#show_trip');
     $showTrip.empty();
-
     event.preventDefault();
     const trip = new Trip({id: id});
     trip.fetch({}).done(() => { $showTrip.append(showTemplate(trip.attributes)); });
+  },
+  makeReservation(event) {
+    event.preventDefault();
+    const reservationInfo = {};
+    reservationFields.forEach( (field) => {
+      const val = $(`input[name=${field}]`).val();
+        if (val !== '') {
+          reservationInfo[field] = val;
+        }
+    });
+    console.log('Reservation Added!');
 
-    // console.log(trip.attributes.id);
-
-    // console.log(tripInfo.responseJSON);
 
   },
 };
@@ -62,18 +73,15 @@ $(document).ready( () => {
   showTemplate = _.template($('#show-template').html());
 
   tripList.fetch();
+
   $('#trips_button').click(events.allTrips);
-  $('#all_trips_section tr').click(events.showTrip);
 
   $('#all_trips_section').on('click', 'tr', function() {
     $('.current-select-row').removeClass('current-select-row');
     const tripID = $(this).attr('data-id');
     console.log(this);
     $(this).addClass('current-select-row');
-
-    // console.log(tripID);
     events.showTrip(tripID);
   });
-  // console.log(tripList);
 
 });
