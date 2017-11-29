@@ -11,8 +11,32 @@
   </header>
   <main>
 
+    <aside class="columns large-4 small-12">
+        <h2>Add a Trip</h2>
+        <form id="add-trip-form">
+          <label for="name">Name</label>
+          <input type="text" name="name"></input>
 
-    <section class="columns large-8 small-12">
+          <label for="continent">Continent</label>
+          <input type="text" name="continent"></input>
+
+          <label for="category">Category</label>
+          <input type="text" name="category"></input>
+
+          <label for="weeks">Weeks</label>
+          <input type="text" name="weeks"></input>
+
+          <label for="cost">Cost</label>
+          <input type="text" name="cost"></input>
+
+          <label for="about">Description</label>
+          <input type="text" name="about"></input>
+
+          <input type="submit" value="Create Trip!" class="button"></input>
+        </form>
+      </aside>
+
+    <section class="large-6 columns">
       <h2>All Trips</h2>
 
         <table>
@@ -28,18 +52,25 @@
           </tbody>
         </table>
     </section>
+
+    <section class="large-6 columns" id="trip-detail">
+
+    </section>
+
+
   </main>
   <footer>
 
   </footer>
 
   <script type="text/template" id="trip-template">
-      <tr class="trip">
+      <tr class="trip" data-id="<%- id%>">
+        <!-- <button id="view-trip"> View Trips </button> -->
         <td>
           <%- id %>
         </td>
         <td>
-          <%- name %>
+          <strong> <%- name %> </strong>
         </td>
         <td>
           <%- continent %>
@@ -52,6 +83,9 @@
         </td>
         <td>
           <%- cost %>
+        </td>
+        <td>
+          <%- about %>
         </td>
       </tr>
     </script>
@@ -76,9 +110,7 @@
           <li>
             Cost: <%- cost %>
           </li>
-          <li>
-            Description: <%- description %>
-          </li>
+
         </ul>
       </script>
 
