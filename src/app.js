@@ -1,4 +1,5 @@
 // Vendor Modules
+// import ‘jquery-modal’
 import $ from 'jquery';
 import _ from 'underscore';
 
@@ -22,13 +23,8 @@ const render = function(tripList) {
   })
 }
 
-const updateHandler = (list) => {
-
-}
-
-tripList.on('update', updateHandler)
-
 $(document).ready( () => {
+  $('#bookingForm').hide();
   $('#all-trips').hide();
   tripList.on('update', render, tripList);
   tripList.fetch();
@@ -39,14 +35,14 @@ $(document).ready( () => {
 
   $('#trip-list').on('click', 'tr', function(){
     $('#trip-description').empty();
-    const url = new Trip(this).url()
-    console.log(url)
-    $.get(url, response => {
-      const thisTrip = response
-      console.log(thisTrip.about)
-      $('#trip-description').append(`<h2>${thisTrip.name}</h2><p>${thisTrip.about}<p>`);
-      $('#bookingForm').show();
-    })
+    const tripTemplate = _.template($('#description-template').html());
+    const trip = new Trip(this)
+    trip.fetch({}, ).done(() => {$('#trip-description').html($(tripTemplate(trip.attributes)))})
+
+
+    $('#bookingForm form').remove('action')
+    $('#bookingForm form').attr('action', `https://trektravel.herokuapp.com/trips/${trip.id}/reservations`)
+    $('#bookingForm').show();
 
   })
 });
