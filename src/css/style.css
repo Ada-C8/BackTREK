@@ -5,6 +5,9 @@ body {
   margin-top: 13%;
   background-color: white;
 }
+#reserve {
+  margin-left: 43%;
+}
 #trip-list {
   list-style: none;
   margin-left: 0;

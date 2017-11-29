@@ -42,7 +42,8 @@ const render = function render(tripList) {
   });
   $('th.sort').removeClass('current-sort-field');
   $(`th.sort.${ tripList.comparator }`).addClass('current-sort-field');
-//// individual trip detail below /////
+
+  //// individual trip detail below /////
   $('.trip').on('click',function(event) {
     let tripId = $(this).attr('data-id');
     let trip = tripList.get(tripId)
@@ -57,6 +58,7 @@ const render = function render(tripList) {
         individualTripListElement.append(generatedHTMLTripDetails);
 
         $('#individual-trip-detail').show();
+        $('#reserve').show();
       }
     }); // fetch
   });
@@ -109,6 +111,8 @@ const addTripHandler = function(event) {
 };
 
 $(document).ready( () => {
+  $('#reserve').hide();
+  
   individualTripTemplate = _.template($('#individual-trip-template').html());
   tripTemplate = _.template($('#trip-template').html());
   tripList.on('update', render);
