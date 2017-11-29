@@ -2,19 +2,81 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>My JavaScript App</title>
+  <title>trekback</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
   <header>
+    <img src="https://cybernetics.social/assets/arrow-gif-slower.gif" alt="clear" id="lil-guy" class="float-right"/>
+
+    <h1>Welcome to Backbone Trek</h1>
 
   </header>
-  <main>
+    <main class="clearfix">
+      <section id="status-messages">
+        <button class="clear float-right">
+        </button>
+        <ul>
+        </ul>
+      </section>
+    </main>
+    <button id="load-trips" class="dropdown button small-12">Load Trips</button>
+    <section class="row">
+      <section id="trip-list" class="small-12 columns">
 
-  </main>
+      </section>
+    </section>
+
+
   <footer>
 
   </footer>
+  <script type="text/template" id="trip-button-template">
+    <article id='trip-<%- id %>'>
+      <button class="dropdown button small-12"><%- name %></button>
+    </article>
+  </script>
+  <script type="text/template" id="trip-template">
+    <section class="row"><section id='info-tripid' class="panel small-10 small-centered columns">
+      <p>
+        ID:
+      </p>
+      <p>
+        CONTINENT:
+      </p>
+      <p>
+        COST:
+      </p>
+      <p>
+        CATEGORY:
+      </p>
+      <p>
+        WEEKS:
+      </p>
+      <p>
+        ABOUT:
+      </p>
+      <form action="https:https://ada-backtrek-api.herokuapp.com/trips/id/reservations" method="post" id="form-tripid">
+        <section>
+          <label>Name</label>
+          <input type="text" id="name" placeholder="identification required"/>
+        </section>
+        <section>
+          <label>Email</label>
+          <input type="text" id="email" placeholder="electronic document transmission"/>
+        </section>
+        <section>
+          <label>Age</label>
+          <input type="text" id="email" placeholder="age in relation to orbital period of Earth around solar body"/>
+        </section>
+        <section>
+          <button type="submit" class="button round">Reserve a Spot for ${trip.name}</button>
+        </section>
+      </form>
+    </section>
+
+    </section>
+  </script>
   <script src="app.bundle.js" type="text/javascript"></script>
 </body>
 </html>
