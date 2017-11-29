@@ -23,12 +23,15 @@ const render = function render(trips) {
   const tripTableElement = $('#trip-list');
   tripTableElement.html('');
   trips.forEach((trip) => {
+    console.log(trip)
     const generatedHTML = tripTemplate(trip.attributes);
     // $('#book-list').append($(bookHTML));
     // jquery search has to look through the whole document
     // it will be faster (esp. with a lot of books) to do
     tripTableElement.append(generatedHTML);
-    tripTableElement.attr('trip-id', `${trip.attributes.id}`);
+    // console.log(trip.attributes.id);
+
+    // $('#trip-list ').attr('trip-id').val(`${trip.attributes.id}`);
     // console.log(`${trip.attributes.id}`)
     // data-id=${trip.id}
   });
@@ -38,8 +41,14 @@ const render = function render(trips) {
   // $(`th.sort.${ trips.comparator }`).addClass('current-sort-field');
 };
 
-const showTrip =
+const showTrip = function showTrip(id) {
+  // console.log(parseInt(id));
+  const trip = trips.findWhere({id: parseInt(id)});
+  console.log(trip);
 
+  // $('#show-trip').html(id);
+  // $('#show-trip').show();
+};
 
 
 $(document).ready( () => {
@@ -50,5 +59,20 @@ $(document).ready( () => {
   trips.on('sort', render);
 
   trips.fetch();
+  // console.log(trips);
+
+  $('#trip-list').on('click', 'tr td', function () {
+    let tripId = $(this).attr('data-id');
+    console.log(`this is the trip id ${$(this).attr('data-id')}`);
+    // render();
+    showTrip(tripId);
+  });
+
+  //   $('#trips table').on('click', 'tr .id', function () {
+  //   let tripID = $(this).attr('data-id');
+  //   console.log(`this is the trip id${$(this).attr('data-id')}`);
+  //   loadTrip(tripID);
+  // });
+
 
 });

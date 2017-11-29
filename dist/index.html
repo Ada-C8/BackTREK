@@ -38,7 +38,7 @@
 
   <script type="text/template" id="trip-template">
     <tr class="trip">
-      <td data-id="">
+      <td data-id=<%- id %> >
         <%- id %>
       </td>
       <td>
@@ -60,12 +60,12 @@
   </script>
 
   <script type="text/template" id="show-trip-template">
-        <h2> <%- name %> </h2>
-        <p> <%- about %> </p>
-        <p> <strong>Continent:</strong> <%- continent %></p>
-        <p> <strong>Category: </strong><%- category %> </p>
-        <p> <strong>Weeks: </strong> <%- weeks %></p>
-        <p> <strong>Cost: </strong><%- cost %> </p>
+    <h2> <%- name %> </h2>
+    <p> <%- about %> </p>
+    <p> <strong>Continent:</strong> <%- continent %></p>
+    <p> <strong>Category: </strong><%- category %> </p>
+    <p> <strong>Weeks: </strong> <%- weeks %></p>
+    <p> <strong>Cost: </strong><%- cost %> </p>
   </script>
 </body>
 </html>
