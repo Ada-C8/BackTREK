@@ -5,6 +5,10 @@
   display: none;
 }
 
-.trip-not-found, .list-not-found {
+#trip-not-found, #list-not-found {
   display: none;
 }
+
+/*.site-title, .add-trip-button {
+  display: inline-block;
+}*/

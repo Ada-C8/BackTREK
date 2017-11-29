@@ -41,13 +41,13 @@ const events = {
     $('#trip-info').append(tripDetailsTemplate(trip.attributes))
   },
   failedGetTrip(trip, response) {
-    $('.trip-not-found').show();
+    $('#trip-not-found').show();
   },
   successfulGetTripList(tripList, response) {
     $('#trip-table').show();
   },
   failedGetTripList(tripList, response) {
-    $('.list-not-found').show();
+    $('#list-not-found').show();
   }
 };
 
