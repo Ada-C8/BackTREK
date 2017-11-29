@@ -1,6 +1,6 @@
 import Backbone from 'backbone';
 
-const trip = Backbone.Model.extend({
+const Trip = Backbone.Model.extend({
 
 });
 
