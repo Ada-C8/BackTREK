@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <title>My Trek Transporter</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation-float.css" >
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation-float.css" > -->
 
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 </head>
@@ -13,11 +13,51 @@
 
   </header>
   <main>
+    <aside class="side-bar">
 
+    </aside>
+
+    <section class="columns large-8 small-12">
+       <h2>Trips</h2>
+
+       <table>
+         <thead>
+           <th class="sort title">Title</th>
+           <th class="sort continent">Continent</th>
+           <th class="sort category">Category</th>
+           <th class="sort weeks">Weeks</th>
+           <th class="sort id">ID</th>
+         </thead>
+         <tbody id="trips-list">
+         </tbody>
+       </table>
+     </section>
   </main>
   <footer>
 
   </footer>
+
+  <script type="text/template" id="trips-template">
+    <tr class="trip">
+      <td>
+        <%- title %>
+      </td>
+
+      <td>
+        <%- continent %>
+      </td>
+      <td>
+        <%- category %>
+      </td>
+      <td>
+        <%- weeks %>
+      </td>
+      <td>
+        <%- id %>
+      </td>
+    </tr>
+  </script>
+
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
   <script src="app.bundle.js" type="text/javascript"></script>
 </body>
