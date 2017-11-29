@@ -95,12 +95,15 @@ const clearMessages = function clearMessages() {
 
 const reserveForm = function reserveForm(event) {
   $('.content').empty();
-  // TODO: add trip ID so we can submit reservations
+  const tripId = $(event.currentTarget.attributes.tripid).val();
+  $('#reserve-trip-form').attr('tripid', tripId);
   reservationFields.forEach((item) => {
     $('#reserve-trip-form').append(formTemplate({field: item, lowercaseField: item}));
   });
   $('#reserve-trip-form').append('<section><button type="submit" class="button">Submit</button></section></form>');
 };
+
+// TODO: add a way to save a reservation and the submit listener that calls the function
 
 $(document).ready( () => {
   allTripsTemplate = _.template($('#all-trips-template').html());
