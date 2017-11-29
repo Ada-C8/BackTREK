@@ -80,8 +80,42 @@ const addTripHandler = function(event) {
 };
 
 
+const addReservationHandler = function(event) {
+  event.preventDefault();
+  console.log('in the reservation handler');
+
+  const reservationData = {};
+
+  RES_FIELDS.forEach((field) => {
+      const inputElement = $(`#makeReservation input[name="${ field }"]`);
+      const value = inputElement.val();
+      reservationData[field] = value;
+
+      inputElement.val('');
+  console.log('reading reservation data');
+  console.log(reservationData);
+
+// NOTE ///this will not work as it is currently written --- write a model?
+  const reservation = new Reservation(reservationData);
+
+  reservation.save({}, {
+    success: (model, response) => {
+      reportStatus('success', 'Successfully add a trip!');
+    },
+    error: (model, response) => {
+      console.log('failed to save trip!');
+
+      // NOTE // Need to handle errors that come in
+    }
+  })
+
+
+
+  });
+};
+
 ///NOTE //// Bug to fix
-// 
+//
 // app.js:66 Uncaught ReferenceError: reportStatus is not defined
 //     at success (app.js:66)
 //     at Object.options.success (backbone.js:638)
@@ -107,31 +141,42 @@ $(document).ready(() => {
     trip.fetch();
   });
 
-  // user can create a new trip
 
-  // $('#add-trip-button').on('click', function(event) {
-  //   const biancasTrip = {
-  //     name: "Bianca's trip to Spain",
-  //     continent: "Europe",
-  //     about: "Enjoy tapas!",
-  //     category: "Culture",
-  //     weeks: 6,
-  //     cost: 2300
-  //   };
-  //
-  //   const trip = new Trip(biancasTrip);
-  //
-  //   trip.save({}, {
-  //     success: (model, response) => {
-  //       tripsList.add(model);
-  //     }
-  //   });
-  // });
-
-
+// add trip
   $('#add-trip-form').on('submit', addTripHandler);
 
-  //reserve a spot on a trip
-
+//reserve a spot on a trip
+  $('#makeReservation').on('submit', addReservationHandler);
 
 });
+
+
+
+
+
+
+
+
+// old code for adding a trip -- hard coded to see if it would work 
+
+
+// user can create a new trip
+
+// $('#add-trip-button').on('click', function(event) {
+//   const biancasTrip = {
+//     name: "Bianca's trip to Spain",
+//     continent: "Europe",
+//     about: "Enjoy tapas!",
+//     category: "Culture",
+//     weeks: 6,
+//     cost: 2300
+//   };
+//
+//   const trip = new Trip(biancasTrip);
+//
+//   trip.save({}, {
+//     success: (model, response) => {
+//       tripsList.add(model);
+//     }
+//   });
+// });
