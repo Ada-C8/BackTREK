@@ -11,8 +11,28 @@
     <h1>BackTrek</h1>
   </header>
   <main>
-    <ul id="trip-list"></ul>
+    
+    <section class="columns large-8 small-12">
+      <h2>Trip Options</h2>
+
+      <table>
+        <thead>
+          <th class="sort name">Trip Name</th>
+          <th class="sort continent">Destination</th>
+          <th class="sort category">Category</th>
+          <th class="sort weeks">Trip Duration</th>
+          <th class="sort cost">Cost</th>
+        </thead>
+        <tbody id="trip-list">
+        </tbody>
+      </table>
+    </section>
   </main>
+
+
+  <footer>
+
+  </footer>
 
     <script id="trip-template" type="text/template">
       <tr class="trip">
@@ -31,10 +51,6 @@
         <td>
           <%- cost %>
         </td>
-  
     </script>
-  <footer>
-
-  </footer>
-</body>
+  </body>
 </html>
