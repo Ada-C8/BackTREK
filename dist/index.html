@@ -34,6 +34,11 @@
     </aside>
 <!-- ADD TRIP -->
 
+<!-- SINGLE TRIP -->
+    <section id="trip" class="columns large-8 small-12">
+    </section>
+<!-- SINGLE TRIP -->
+
 <!-- TRIP LIST -->
     <section class="columns large-8 small-12">
       <h2>TREK</h2>
@@ -54,12 +59,19 @@
 
   </main>
 
-  <footer>
 
+  <footer>
   </footer>
 
-<!-- TEMPLATE -->
+<!-- SINGLE TRIP TEMPLATE -->
   <script type="text/template" id="trip-template">
+    <h2><%- name %></h2>
+    <p><%- about %></p>
+  </script>
+<!-- SINGLE TRIP TEMPLATE -->
+
+<!-- TRIPS TEMPLATE -->
+  <script type="text/template" id="trips-template">
     <tr class="trip">
       <td>
         <%- name %>
@@ -78,7 +90,7 @@
       </td>
     </tr>
   </script>
-<!-- TEMPLATE -->
+<!-- TRIPS TEMPLATE -->
 
   <script src="app.bundle.js" type="text/javascript"></script>
 </body>
