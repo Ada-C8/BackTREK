@@ -66,6 +66,14 @@ $(document).ready(() => {
 
   tripList.fetch();
 
+
+  // clicking on a single trip in the list
+  $('#trip-list').on('click', 'tr', function() {
+    console.log('clicked');
+    let tripID = $(this).data('id');
+    console.log(tripID);
+  })
+
   // $('#add-trip-form').on('submit', addTripHandler);
   //
   // TRIP_FIELDS.forEach((field) => {
