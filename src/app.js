@@ -8,7 +8,7 @@ import './css/style.css';
 
 import TripList from 'app/collections/trip_list';
 
-const TRIP_FIELDS = ['name', 'continent', 'category', 'weeks', 'cost'];
+// const TRIP_FIELDS = ['name', 'continent', 'category', 'weeks', 'cost'];
 
 const tripList = new TripList();
 
@@ -32,9 +32,7 @@ $(document).ready( () => {
 
   console.log(`About to fetch data from ${ tripList.url }`);
 
-
-
-  tripList.on('update', render, tripList);
+  // tripList.on('update', render, tripList);
 
   tripList.fetch({
     success: function(list, resp) {
@@ -46,8 +44,9 @@ $(document).ready( () => {
       console.log('error');
     }
   });
-  console.log(`fetched`);
 
-  // render(tripList);
-  console.log(tripList);
+  $('#trips').on('click', (event) => {
+    console.log('CLICKED!');
+    render(tripList);
+  })
 });
