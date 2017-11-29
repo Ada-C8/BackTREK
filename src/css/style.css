@@ -49,7 +49,7 @@ main {
   font-weight: bold;
 }
 
-#trips-table {
+#trips-table, #trip-details {
   background-color: rgba(245, 245, 245, 0.9);
   margin: 0;
 }

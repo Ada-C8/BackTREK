@@ -6,7 +6,7 @@ const TripList = Backbone.Collection.extend({
 
   url:'https://ada-backtrek-api.herokuapp.com/trips',
   parse: function(response) {
-    console.log(response);
+    // console.log(response);
     return response;
   },
 
