@@ -4,3 +4,7 @@
   /* Hide by default */
   display: none;
 }
+
+.trip-not-found, .list-not-found {
+  display: none;
+}

@@ -11,8 +11,8 @@ import Trip from './app/models/trip';
 import TripList from './app/collections/trip_list';
 
 // Vars that need to be defined up front
-let tripTemplate;
-let detailsTemplate;
+let tripRowTemplate;
+let tripDetailsTemplate;
 let trip = new Trip();
 const tripList = new TripList();
 
@@ -21,14 +21,8 @@ const render = function render(tripList) {
   $('#trip-list').empty(); // clear it so it doesn't continually add on
   tripList.forEach((trip) => {
     // use template to append trip row to table in the DOM
-    $('#trip-list').append(tripTemplate(trip.attributes));
+    $('#trip-list').append(tripRowTemplate(trip.attributes));
   });
-};
-
-const renderTripDetails = function renderTripDetails(trip) {
-  console.log('triggered renderTripDetails');
-  $('#trip-info').empty();
-  $('#trip-info').append(detailsTemplate(trip.attributes))
 };
 
 const getTrip = function getTrip() {
@@ -37,32 +31,34 @@ const getTrip = function getTrip() {
   trip.fetch({success: events.successfulGetTrip, error: events.failedGetTrip});
 };
 
+const getTripList = function getTripList() {
+  tripList.fetch({success: events.successfulGetTripList, error: events.failedGetTripList});
+}
+
 const events = {
   successfulGetTrip(trip, response) {
-    console.log('got it!')
-    console.log(trip)
     $('#trip-info').empty();
-    $('#trip-info').append(detailsTemplate(trip.attributes))
-    // trip.trigger('selected'); // trigger 'sync' eventHandler
-
+    $('#trip-info').append(tripDetailsTemplate(trip.attributes))
   },
   failedGetTrip(trip, response) {
-
+    $('.trip-not-found').show();
   },
+  successfulGetTripList(tripList, response) {
+    $('#trip-table').show();
+  },
+  failedGetTripList(tripList, response) {
+    $('.list-not-found').show();
+  }
 };
 
 
 $(document).ready( () => {
-  tripTemplate = _.template($('#trip-row-template').html());
-  detailsTemplate = _.template($('#trip-details-template').html());
+  tripRowTemplate = _.template($('#trip-row-template').html());
+  tripDetailsTemplate = _.template($('#trip-details-template').html());
 
-  $('#explore-trips').on('click', function() {$('#trip-table').show()});
+  $('#explore-trips').on('click', getTripList);
 
   tripList.on('update', render, tripList)
 
-  tripList.fetch(); // will automatically call render
-
-  trip.on('selected', renderTripDetails, trip) // listening for 'selected'. will render tripdetails
-
-  $('#trip-list').on('click', 'tr', getTrip)
+  $('#trip-list').on('click', 'tr', getTrip);
 });
