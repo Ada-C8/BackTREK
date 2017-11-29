@@ -84,9 +84,33 @@ h1 {
   color: #fff;
   text-shadow: 0 0 .8rem #075B69;
 }
-/*section {
-  display: inline-block;
-  width: 50%;
-  height: auto;
 
-}*/
+/*TRIPS TABLE*/
+.trips table {
+  /*margin-bottom: 5rem; */
+  border-collapse: separate;
+  border-spacing: 0 .4rem;
+}
+
+.trips th {
+  text-align: center;
+}
+
+.trips table tr td, .trips table tr th {
+  padding: .8rem;
+  font-size: 1.2rem;
+}
+
+.trips table thead, .trips table tbody {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.trips table td {
+  text-align: center;
+}
+
+.trips table tr:hover {
+  text-shadow: 0 0 1rem #075B69;
+  box-shadow: 0 0 1rem #075B69;
+  cursor: pointer;
+}
