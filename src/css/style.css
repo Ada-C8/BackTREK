@@ -1,2 +1,92 @@
+/*COLORS*/
+/*light-blue: #B8E2F7*/
+/*dark-blue: #236384*/
 
-/* Your styles go here! */
+
+/*GENERAL*/
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Berkshire Swash';
+}
+
+body {
+  font-family: 'Barlow', sans-serif;
+  font-size: 16px;
+
+  position: relative;
+  background: -webkit-linear-gradient(left top, #B8E2F7, #236384); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(bottom right, #B8E2F7, #236384); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(bottom right, #B8E2F7, #236384); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(to bottom right, #B8E2F7, #236384); /* Standard syntax */
+
+  background: url(../../images/backTrek.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+
+  min-height: 100%;
+}
+
+h1 {
+  font-family: 'Berkshire Swash';
+  font-size: 6rem;
+  padding-top: 8rem;
+}
+
+#title {
+  color: #fff;
+}
+
+#trips {
+  display: block;
+  margin: 1.5rem auto;
+}
+
+@-webkit-keyframes glowing {
+  0% { background-color: #D4F3FD; -webkit-box-shadow: 0 0 3px #D4F3FD; }
+  50% { background-color: #034A62  ; -webkit-box-shadow: 0 0 40px #034A62  ; }
+  100% { background-color: #D4F3FD; -webkit-box-shadow: 0 0 3px #D4F3FD; }
+}
+
+@-moz-keyframes glowing {
+  0% { background-color: #D4F3FD; -moz-box-shadow: 0 0 3px #D4F3FD; }
+  50% { background-color: #034A62  ; -moz-box-shadow: 0 0 40px #034A62  ; }
+  100% { background-color: #D4F3FD; -moz-box-shadow: 0 0 3px #D4F3FD; }
+}
+
+@-o-keyframes glowing {
+  0% { background-color: #D4F3FD; box-shadow: 0 0 3px #D4F3FD; }
+  50% { background-color: #034A62  ; box-shadow: 0 0 40px #034A62  ; }
+  100% { background-color: #D4F3FD; box-shadow: 0 0 3px #D4F3FD; }
+}
+
+@keyframes glowing {
+  0% { background-color: #D4F3FD; box-shadow: 0 0 3px #D4F3FD; }
+  50% { background-color: #034A62  ; box-shadow: 0 0 40px #034A62  ; }
+  100% { background-color: #D4F3FD; box-shadow: 0 0 3px #D4F3FD; }
+}
+
+.blue {
+  background: -webkit-linear-gradient(left top, #B8E2F7, #236384); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(bottom right, #B8E2F7, #236384); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(bottom right, #B8E2F7, #236384); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(to bottom right, #B8E2F7, #236384); /* Standard syntax */
+  text-shadow: 0 0 .8rem #075B69;
+  -webkit-animation: glowing 1500ms infinite;
+  -moz-animation: glowing 1500ms infinite;
+  -o-animation: glowing 1500ms infinite;
+  animation: glowing 1500ms infinite;
+}
+
+/*CLASSES*/
+.white-text {
+  font-family: 'Berkshire Swash';
+  color: #fff;
+  text-shadow: 0 0 .8rem #075B69;
+}
+/*section {
+  display: inline-block;
+  width: 50%;
+  height: auto;
+
+}*/
