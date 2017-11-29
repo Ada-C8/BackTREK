@@ -13,8 +13,6 @@ import Trip from './app/models/trip';
 
 // practice data
 
-// [{name :"Cairo to Zanzibar","continent":"Africa","category":"everything","weeks":5,"cost":9599.99},{"id":2,"name":"Everest Base Camp Trek","continent":"Asia","category":"adventure","weeks":2,"cost":967.5},{"id":3,"name":"Golden Triangle","continent":"Asia","category":"historical","weeks":1,"cost":590.53},
-
 const testTrip = new Trip({
     name: "Cairo",
     continent: "Africa",
@@ -26,15 +24,27 @@ const testTrip = new Trip({
   // console.log(testTrip.cid);
   console.log(testTrip.attributes);
 
-
-
-
-
-
-
-
+//
+let tripTemplate;
 
 
 $(document).ready( () => {
-  $('main').html('<h1>Hello World!</h1>');
-});
+  // $('main').html('<h1>Hello World!</h1>');
+
+  tripTemplate = _.template($('#trip-template').html() );
+
+  const tripHTML = tripTemplate(testTrip.attributes);
+  console.log(tripHTML);
+  $('#trip-list').append(tripHTML);
+
+}); // end document ready
+
+// const generatedHTML = bookTemplate(myBook.atributes);
+// $('#book-list').append(generatedHTML);
+
+
+
+
+
+
+//
