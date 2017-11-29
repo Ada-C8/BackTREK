@@ -14,27 +14,30 @@ console.log('it loaded!');
 const tripList = new TripList();
 // let tripTemplate;
 
-const showAllTrips= () => {
-  const tripsTable = `<h2>All Trips</h2>
+// const allTrips= () => {
+//   const tripsTable = `<h2>All Trips</h2>
+//     <table>
+//       <thead>
+//         <th class="sort id">ID</th>
+//         <th class="sort name">name</th>
+//         <th class="sort continent">Continent</th>
+//         <th class="sort category">Category</th>
+//         <th class="sort weeks">Weeks</th>
+//         <th class="sort cost">Cost</th>
+//       </thead>
+//       <tbody id="trip-list">
+//       </tbody>
+//     </table>`;
+//   $('#all-trips').append(tripsTable);
+//   render(tripList);
+// };
 
-    <table>
-      <thead>
-        <th class="sort id">ID</th>
-        <th class="sort name">name</th>
-        <th class="sort continent">Continent</th>
-        <th class="sort category">Category</th>
-        <th class="sort weeks">Weeks</th>
-        <th class="sort cost">Cost</th>
-      </thead>
-      <tbody id="trip-list">
-      </tbody>
-    </table>
-</section>`;
-  $('#all-trips').append(tripsTable);
-};
-
+// const tripInfo= () => {
+//   console.log('called TripInfo');
+//   console.log(this);
+// };
 const events = {
-  showAllTrips(event){
+  allTrips(event) {
     const tripsTable = `<h2>All Trips</h2>
       <table>
         <thead>
@@ -48,12 +51,35 @@ const events = {
         <tbody id="trip-list">
         </tbody>
       </table>`;
-    const table =
     $('#all-trips').append(tripsTable);
     render(tripList);
   },
+  tripInfo(event) {
+    console.log('called TripInfo');
+    console.log(this.id);
+    const trip = new Trip({id: this.id});
+    // const fetched = trip.fetch();
 
-}
+    trip.fetch({
+      success: function (trip, response) {
+        console.log(response);
+        console.log(trip);
+        $('#trip-details').append(showTemplate(trip.attributes));
+        // trip is the Backbone model instance
+        // response is the JSON object
+      },
+    })
+
+    // trip.fetch({
+    //   success: function(){
+    //     $('#content').html(new usersView({
+    //       collection: users
+    //     }).render().el);
+    //   },
+    // });
+
+  },
+};
 const render= function render(tripList) {
   $('#trip-list').empty();
   tripList.forEach((trip) => {
@@ -63,13 +89,15 @@ const render= function render(tripList) {
   });
 };
 let tripTemplate;
+let showTemplate;
 $(document).ready( () => {
   tripTemplate = _.template($('#trip-template').html());
   tripList.fetch();
+  showTemplate = _.template($('#show-template').html());
   // $('#all-trips-btn').on('click', () => {
-  //   showAllTrips();
+  //   allTrips();
   // });
-  $('#all-trips-btn').click(events.showAllTrips);
+  $('#all-trips-btn').click(events.allTrips);
   $('#all-trips').on('update', render);
-
+  $('#all-trips').on('click', 'tr', events.tripInfo);
 });

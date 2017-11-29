@@ -9,7 +9,7 @@
   <header>
     <h2>backTREK</h2>
     <section id= "main-buttons">
-      <button id = "all-trips-btn">
+      <button id = "all-trips-btn" class = "button">
         See All Trips
       </button>
     </section>
@@ -31,14 +31,16 @@
           </tbody>
         </table> -->
     </section>
+    <section id = "trip-details">
 
+    </section>
   </main>
   <footer>
 
   </footer>
   <script src="app.bundle.js" type="text/javascript"></script>
   <script type= "text/template" id = "trip-template">
-    <tr class="book">
+    <tr class="trip" id= <%- id %> >
         <td>
           <%- id %>
         </td>
@@ -58,6 +60,27 @@
           <%- cost %>
         </td>
     </tr>
+  </script>
+
+  <script type= "text/template" id = "show-template">
+    <h3><%- name %></h3>
+    <ul>
+      <li>
+        <%- id %>
+      </li>
+      <li>
+        <%- continent %>
+      </li>
+      <li>
+        <%- category %>
+      </li>
+      <li>
+        $<%- cost %>
+      </li>
+    </ul>
+    <p>
+      <%- about %>
+    </p>
   </script>
 </body>
 </html>
