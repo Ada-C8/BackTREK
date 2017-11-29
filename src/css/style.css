@@ -1,2 +1,5 @@
-
 /* Your styles go here! */
+
+#trip-table {
+  display: none;
+}
