@@ -9,9 +9,66 @@
   <header>
 
   </header>
-  <main>
+  <section id="summary"></section>
 
-  </main>
+  <table>
+    <thead>
+      <th class="sort name">name</th>
+      <th class="sort id">id</th>
+      <th class="sort continent">continent</th>
+      <th class="sort category">category</th>
+      <th class="sort weeks">weeks</th>
+    </thead>
+    <tbody id="trip-list">
+    </tbody>
+  </table>
+
+  <script type="text/template" id="trip-template">
+    <tr class="trip">
+      <td>
+        <%- name %>
+      </td>
+      <td>
+        <%- id %>
+      </td>
+      <td>
+        <%- continent %>
+      </td>
+      <td>
+        <%- category %>
+      </td>
+      <td>
+        <%- weeks %>
+      </td>
+    </tr>
+  </script>
+
+  <script type="text/template" id="info-template">
+    <section class="info">
+      <p>
+        <%- name %>
+      </p>
+      <p>
+        <%- continent %>
+      </p>
+      <p>
+        <%- about %>
+      </p>
+      <p>
+        <%- category %>
+      </p>
+      <p>
+        <%- weeks %>
+      </p>
+      <p>
+        <%- cost %>
+      </p>
+      <p>
+        <%- id %>
+      </p>
+    </section>
+
+  </script>
   <footer>
 
   </footer>
