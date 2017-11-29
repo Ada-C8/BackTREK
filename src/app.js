@@ -2,8 +2,8 @@
 import $ from 'jquery';
 import _ from 'underscore';
 
-import Trip from './models/trip';
-import TripList from './collections/trip_list';
+import Trip from './app/models/trip';
+import TripList from './app/collections/trip_list';
 
 // CSS
 import './css/foundation.css';
@@ -17,14 +17,15 @@ const render = function render(tripList) {
   $tripList.empty();
 
   tripList.forEach((trip) => {
-    $tripList.append(tripTemplate(trip.attributes));
+    $('#trip-list').append(tripTemplate(trip.attributes));
   });
 };
 
-const continents = ['Africa', 'Antarctica', 'Asia', 'Australasia', 'Europe', 'South America', 'North America', 'Null'];
+// const continents = ['Africa', 'Antarctica', 'Asia', 'Australasia', 'Europe', 'South America', 'North America', 'Null'];
 
 $(document).ready( () => {
   tripTemplate = _.template($('#trip-template').html());
-
   tripList.fetch();
+  tripList.on('update', render, tripList);
+
 });
