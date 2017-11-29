@@ -27,6 +27,7 @@
 
 <section class="show">
   <section id="trip-info">
+    Oh hi, here it is hard-coded in all its glory.
   </section>
 
   <form class="reservation-form" method="post">
@@ -50,10 +51,7 @@
 <script type="text/template" id="trip-template">
   <tr class="trip">
     <td>
-      <a><%- name %></a>
-      <% console.log('id') %>
-
-
+      <a href=javascript:void(0) onclick=renderOneTrip> <%- name %></a>
     </td>
     <td>
       <%- continent %>
@@ -65,7 +63,7 @@
 </script>
 
 <script type="text/template" id="single-trip-template">
-  <p>
+  <p class="trip">
     <%- name %>
   </p>
 

@@ -23,22 +23,27 @@ const renderTrips = function renderTrips(tripList) {
   });
 };
 
-// let singleTripTemplate;
+let singleTripTemplate;
 
-// let trip;
 
-// const renderOneTrip = function renderOneTrip() {
-//   trip = new Trip();
-//   trip.fetch();
-//   console.log(trip);
-//   const $tripInfo = $('#trip-info');
-//   $tripInfo.empty();
-//   $tripInfo.append(singleTripTemplate(trip.attributes));
-// };
+const renderOneTrip = function renderOneTrip() {
+  let trip;
+  console.log('in render one trip');
+  trip = new Trip({id: 25});
+  trip.fetch().done();
+  console.log(trip.attributes);
+  const $tripInfo = $('#trip-info');
+  // $tripInfo.empty();
+  $('#trip-list').hide();
+  $('#trip-info').append(singleTripTemplate(trip.attributes));
+  $('#trip-info').append('<p>i appended this</p>');
+
+  $tripInfo.show();
+};
 
 $(document).ready(() => {
   tripTemplate = _.template($('#trip-template').html());
-  // singleTripTemplate = _.template($('#single-trip-template').html());
+  singleTripTemplate = _.template($('#single-trip-template').html());
 
 
 $('.reservation-form').hide();
@@ -46,10 +51,14 @@ $('.reservation-form').hide();
   // $('.view-all-trips').on('click', function(){
     tripList.on('update', renderTrips, tripList);
     // trip.on('update', renderOneTrip, trip);
+    $('#trip-info').append('<p>this is what i appended in document ready first</p>');
 
-    let specialTrip = new Trip({id: 25});
-    specialTrip.fetch().done();
-    console.log(specialTrip.attributes);
+    renderOneTrip();
+    $('#trip-info').append('<p>this is what i appended in document ready last</p>');
+
+    // let specialTrip = new Trip({id: 25});
+    // specialTrip.fetch().done();
+    // console.log(specialTrip.attributes);
   // });
 
 
