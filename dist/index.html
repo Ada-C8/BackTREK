@@ -13,25 +13,30 @@
 
   </header>
   <main>
-    <aside class="side-bar">
+    <h1>Trek Transporter</h1>
 
+    <aside class="side-bar">
+      <h2> some side-bar things </h2>
     </aside>
 
     <section class="columns large-8 small-12">
-       <h2>Trips</h2>
+
 
        <table>
          <thead>
-           <th class="sort title">Title</th>
+            <h2>Trips</h2>
+           <th class="sort name">Title</th>
            <th class="sort continent">Continent</th>
            <th class="sort category">Category</th>
            <th class="sort weeks">Weeks</th>
            <th class="sort id">ID</th>
+
          </thead>
          <tbody id="trips-list">
          </tbody>
        </table>
      </section>
+
   </main>
   <footer>
 
@@ -40,7 +45,7 @@
   <script type="text/template" id="trips-template">
     <tr class="trip">
       <td>
-        <%- title %>
+        <%- name %>
       </td>
 
       <td>
@@ -55,8 +60,24 @@
       <td>
         <%- id %>
       </td>
+      <div class="trip-show">
+
+      </div>
     </tr>
   </script>
+
+
+  <script type="text/template" id="trips-description-template">
+    <div class="trip-description">
+
+    <h4>Description</h4>
+      <article>
+        <%- description %>
+      </article>
+
+    </div>
+  </script>
+
 
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
   <script src="app.bundle.js" type="text/javascript"></script>
