@@ -8,23 +8,21 @@ import TripList from './app/collections/tripList';
 import './css/foundation.css';
 import './css/style.css';
 
+
 console.log('it loaded!');
-
-const tripList = new TripList();
-
-const getAllTrips = {
-  getAllTrips() {
-    const $tripList = $('#tripSection');
-    $tripList.empty();
-    event.preventDefault();
-    tripList.forEach((trip) => {
-      $tripList.append(tripTemplate(trip.attributes));
-    });
-}};
 
 $(document).ready( () => {
   const tripTemplate = _.template($('#tripTemplate').html());
+  const tripList = new TripList();
   tripList.fetch();
-  $('#tripButton').on('click', getAllTrips);
-  console.log(tripList);
+
+  $('#tripButton').on('click', () => {
+    tripList.fetch();
+    tripList.forEach((trip) => {
+      console.log('button working');
+      const thisTrip = tripTemplate(trip.attributes);
+      console.log($(thisTrip));
+        //$('#tripSection').append($(thisTrip));
+    });
+  });
 });
