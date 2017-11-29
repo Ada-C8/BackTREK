@@ -38,31 +38,34 @@
     </section>
   </main>
   <footer>
-&copy; 2017, Lauren Lee & Ada Developers Academy
+    &copy; 2017, Lauren Lee & Ada Developers Academy
   </footer>
 
   <script id="trip-template" type="text/template">
-    <!-- Add Template for Song fields here -->
     <tr class="trip">
-      <td>
-        <%- name %>
-      </td>
-      <td>
-        <%- category %>
-      </td>
-      <td>
-        <%- continent %>
-      </td>
-      <td>
-        $<%- cost %>
-      </td>
-      <td>
-        <%- weeks %>
-      </td>
-    </tr>
-  </script>
+      <!-- <% const TRIP_FIELDS = ['name', 'category', 'continent', 'cost', 'weeks']; %>
+      <% TRIP_FIELDS.forEach((field) => { %>
+      <td> <%- field %>
+    </td>
+    <% }); %> -->
+    <td>
+      <%- name %>
+    </td>
+    <td>
+      <%- category %>
+    </td>
+    <td>
+      <%- continent %>
+    </td>
+    <td>
+      $<%- cost %>
+    </td>
+    <td>
+      <%- weeks %>
+    </td>
+  </tr>
+</script>
 
-
-  <script src="app.bundle.js" type="text/javascript"></script>
+<script src="app.bundle.js" type="text/javascript"></script>
 </body>
 </html>
