@@ -32,8 +32,8 @@
         </table>
       </div>
       <div class="right column">
-        <h2>Featured Trip</h2>
         <section id="trip-info">
+          <h2>Featured Trip</h2>
           <h4>Under the Tuscan Sun</h4>
           <p>
             Drink wine, farm olives, restore a villa, and fall in love!
@@ -55,6 +55,14 @@
       <td><%- cost %></td>
       <td><%- weeks %></td>
     </tr>
+  </script>
+  <script id="trip-details-template" type="text/template">
+    <h4><%- name %></h4>
+    <p><strong>continent: </strong><%- continent %></p>
+    <p><strong>category: </strong><%- category %></p>
+    <p><strong>cost: </strong><%- cost %></p>
+    <p><strong>weeks: </strong><%- weeks %></p>
+    <p><strong>description: </strong><%- about %></p>
   </script>
 </body>
 </html>
