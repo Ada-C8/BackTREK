@@ -4,17 +4,79 @@
   <meta charset="utf-8">
   <title>My JavaScript App</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="app.bundle.js" type="text/javascript"></script>
+
 </head>
 <body>
-  <header>
-
+  <header class="row">
+    <h1 class="small-4 column align-self-left">BackTREK</h1>
+    <button class="button small-3 medium-3 large-2 column align-self-right">Add Trip</button>
   </header>
-  <main>
+  <main class="grid-x grid-x-padding">
+    <h2 class="small-12 cell">Trips</h2>
+    <section class="all-trips small-12 medium-5 large-6 cell">
+      <table>
+        <thead>
+          <tr>
+            <th class="sort name">Name</th>
+            <th class="sort continent">Continent</th>
+            <th class="sort category">Category</th>
+            <th class="sort weeks">Weeks</th>
+            <th class="sort cost">Cost</th>
+          </tr>
+        </thead>
+        <tbody id="trip-list">
+        </tbody>
+      </table>
+    </section>
 
+    <section id="trip-detail" class="small-12 medium-5 large-6 cell">
+
+    </section>
   </main>
   <footer>
 
   </footer>
-  <script src="app.bundle.js" type="text/javascript"></script>
+
+  <script type="text/template" id="trip-list-template">
+    <tr class="trip" id=<%- id %>>
+      <td>
+        <a><%- name %></a>
+      </td>
+      <td>
+        <%- continent %>
+      </td>
+      <td>
+        <%- category %>
+      </td>
+      <td>
+        <%- weeks %>
+      </td>
+      <td>
+        <%- cost %>
+      </td>
+    </tr>
+  </script>
+
+  <script type="text/template" id="trip-template">
+    <h3><%- name %></h3>
+    <p>
+      <%- about %>
+    </p>
+    <p>
+      <%- continent %>
+    </p>
+    <p>
+      <%- category %>
+    </p>
+    <p>
+      <%- weeks %>
+    </p>
+    <p>
+      <%- cost %>
+    </p>
+  </script>
+
+
 </body>
 </html>
