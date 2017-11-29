@@ -36,6 +36,12 @@
         </tbody>
       </table>
     </section>
+    <!-- individual trip display -->
+    <section class="columns large-8 small-12">
+      <h2>Trip Name</h2>
+    <<ul id="individual-trip-detail"></ul>
+    </section>
+
   </main>
   <footer>
     &copy; 2017, Lauren Lee & Ada Developers Academy
@@ -64,6 +70,26 @@
       <%- weeks %>
     </td>
   </tr>
+</script>
+<!-- individual trip -->
+<script id="individual-trip-template" type="text/template">
+  <tr class="indidivudal-trip">
+  <td>
+    <%- name %>
+  </td>
+  <td>
+    <%- category %>
+  </td>
+  <td>
+    <%- continent %>
+  </td>
+  <td>
+    $<%- cost %>
+  </td>
+  <td>
+    <%- weeks %>
+  </td>
+</tr>
 </script>
 
 <script src="app.bundle.js" type="text/javascript"></script>

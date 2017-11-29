@@ -7,7 +7,7 @@ import './css/foundation.css';
 import './css/style.css';
 
 // modules I've created:
-import Trip from './models/trip';
+import Trip from './app/models/trip';
 import TripList from './app/collections/trip_list';
 
 const TRIP_FIELDS = ['name', 'category', 'continent', 'cost', 'weeks'];
@@ -40,6 +40,10 @@ const render = function render(tripList) {
   });
   $('th.sort').removeClass('current-sort-field');
   $(`th.sort.${ tripList.comparator }`).addClass('current-sort-field');
+
+  // $('.trip').on('click',function(event) {
+  //   let tripId = $(this).attr('data-id');
+  // }) /// Ander's showing the details of a trip
 };
 
 const readFormData = function readFormData() {
