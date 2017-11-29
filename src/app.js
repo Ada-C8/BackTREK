@@ -93,17 +93,31 @@ const render = function render(tripList) {
 
 
 $(document).ready( () => {
-  // $('main').html('<h1>Hello World!</h1>');
+  // compile templates for all trips and individual trips
   tripTemplate = _.template($('#trip-template').html());
 
   individualTripTemplate = _.template($('#individual-trip-template').html());
 
-  $('')
+  // addTripFormTemplate = _.template($('#add-trip-form-template').html());
 
+  // Register update listener first, to avoid the race condition
   tripList.on('update', render);
+
+  // Listen for user click on add trip button
+  $('#add-trip').on('click', function() {
+    console.log('#add-trip clicked');
+    // Make form available to user
+    $('#add-trip-form').show();
+  });
+
+  // Listen for when user submits trip form
+  // $('#add-trip').on('click', addBookHandler);
+  // tripList.on('update', render);
 
   $('#all-trips').on('click', function() {
     console.log('#all-trip has been clicked, in event handler');
+    // When fetch gets back from the API call, it will add books
+    // to the list and then trigger an 'update' event
     tripList.fetch();
     console.log('#all-trip has been clicked, in event handler, after fetch()');
   });
