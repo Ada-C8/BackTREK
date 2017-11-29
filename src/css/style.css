@@ -1,7 +1,126 @@
-[type='text'] {
-  width: initial;
+:root {
+--white: #fefefe;
+--dkwhite: #f0f0f0;
+--black: #333333;
+--peach: #fec0aa;
+--ltblue: #98C1D9;
+--indigo: #223843;
+--grey: grey;
 }
 
+body {
+  background-color: var(--white);
+}
+
+h1 {
+  /* website title */
+  color: var(--peach);
+  display: inline-block;
+}
+
+h4 {
+  /* list headers */
+  display: inline-block;
+  color: var(--white);
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+}
+
+h6 {
+  /* list data */
+  display: inline-block;
+  overflow: hidden;
+}
+
+ul {
+  list-style: none;
+}
+
+.button {
+  background-color: var(--ltblue);
+  border-radius: 1rem;
+}
+
+.button:hover {
+  background-color: var(--blue);
+}
+
+/**********/
+/* HEADER */
+/**********/
+
+header {
+  background-color: var(--indigo);
+}
+
+.add-trip {
+  float: right;
+}
+
+/* SEARCH */
+
+form {
+  overflow: auto;
+}
+
+[type="submit"] {
+  width: 100%;
+}
+
+/*************/
+/* TRIP LIST */
+/*************/
+
+.intro-button {
+  display: block;
+  float: none;
+  font-size: 8vh;
+  height: 30vh;
+  padding-top: 8vh;
+  margin: 1rem auto;
+}
+
+.trip-list ul {
+  margin: auto;
+  width: 95%;
+}
+
+.headers {
+  background-color: var(--peach);
+  overflow: auto;
+}
+
+.trip-row {
+  background-color: var(--white);
+}
+
+.trip-row:nth-of-type(odd) {
+  background-color: var(--dkwhite);
+}
+
+.name-col {
+  width: 30%;
+}
+
+.cont-col {
+  width: 18%;
+}
+
+.cat-col {
+  width: 18%;
+}
+
+.weeks-col {
+  width: 12%;
+}
+
+.cost-col {
+  width: 10%;
+}
+
+/* TRIP DISPLAY */
+
 .show {
-  background-color: pink;
+  background-color: var(--indigo);
 }

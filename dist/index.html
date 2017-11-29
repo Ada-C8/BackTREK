@@ -8,31 +8,38 @@
 <body>
   <header>
     <h1>backTREK</h1>
+    <a class="button add-trip small-12 medium-4 columns">Add Trip</a>
     <form id="trip-search">
-      <select name="category">
-        <option value="name">Trip Name</option>
-        <option value="category">Category</option>
-        <option value="continent">Continent</option>
-      </select>
-      <input type="text" />
+      <div class="form-holder category-holder small-12 medium-4 columns">
+        <select name="category">
+          <option value="name">Trip Name</option>
+          <option value="category">Category</option>
+          <option value="continent">Continent</option>
+        </select>
+      </div>
 
-      <input type="submit" class="button" />
+      <div class="form-holder text-holder small-12 medium-6 columns">
+        <input type="text"/>
+      </div>
+
+      <div class="form-holder submit-holder small-12 medium-2 columns">
+        <input type="submit" class="button" />
+      </div>
     </form>
-    <a class="button">Add Trip</a>
   </header>
   <main>
     <section id="intro-button">
-      <a class="button" id="show-trips">Show Trips</a>
+      <a class="button intro-button small-10 medium-5 columns" id="show-trips">Show Trips</a>
     </section>
-    <section id="trip-list">
+    <section id="trip-list" class="trip-list">
       <ul>
-          <li class="headers">
-            <h4>Name</h4>
-            <h4>Continent</h4>
-            <h4>Category</h4>
-            <h4>Duration</h4>
-            <h4>Cost</h4>
-          </li>
+        <li class="headers">
+          <h4 class="name-col">Name</h4>
+          <h4 class="cont-col">Continent</h4>
+          <h4 class="cat-col">Category</h4>
+          <h4 class="weeks-col">Duration</h4>
+          <h4 class="cost-col">Cost</h4>
+        </li>
       </ul>
     </section>
   </main>
@@ -42,19 +49,19 @@
 
   <script id="trip-template" type="text/template">
     <li id="<%- id %>" class="trip-row">
-      <h6>
+      <h6 class="name-col">
         <%- name %>
       </h6>
-      <h6>
+      <h6 class="cont-col">
         <%- continent %>
       </h6>
-      <h6>
+      <h6 class="cat-col">
         <%- category %>
       </h6>
-      <h6>
+      <h6 class="weeks-col">
         <%- weeks %> weeks
       </h6>
-      <h6>
+      <h6 class="cost-col">
         $<%- cost.toFixed(2) %>
       </h6>
     </li>
