@@ -11,6 +11,52 @@
   </header>
   <main>
 
+    <section class="columns large-8 small-12">
+      <h2>Trip Options!</h2>
+
+      <table>
+        <thead>
+          <th class="sort name">Name</th>
+          <th class="sort continent">Continent</th>
+          <th class="sort category">Category</th>
+          <th class="sort weeks">Weeks</th>
+          <th class="sort cost">Cost</th>
+        </thead>
+        <tbody id="trip-list">
+        </tbody>
+      </table>
+    </section>
+
+    <script type="text/template" id="trip-template">
+  <tr class="trip">
+    <td>
+      <%- name %>
+    </td>
+    <td>
+      <%- continent %>
+    </td>
+    <td>
+      <%- category %>
+    </td>
+    <td>
+      <%- weeks %>
+    </td>
+    <td>
+      <%- cost %>
+    </td>
+  </tr>
+</script>
+
+
+<script type="text/template" id="details-template">
+<h2>
+  <%- name %>
+</h2>
+<p>
+  <%- about %>
+</p>
+</script>
+
   </main>
   <footer>
 
