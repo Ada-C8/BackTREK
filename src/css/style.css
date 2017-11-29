@@ -5,7 +5,7 @@
 --peach: #fec0aa;
 --ltblue: #98C1D9;
 --indigo: #223843;
---grey: grey;
+--grey: #E3E4E8;
 }
 
 body {
@@ -14,14 +14,13 @@ body {
 
 h1 {
   /* website title */
-  color: var(--peach);
+  color: var(--white);
   display: inline-block;
 }
 
 h4 {
   /* list headers */
   display: inline-block;
-  color: var(--white);
   margin: 0;
   overflow: hidden;
   padding: 0;
@@ -38,12 +37,12 @@ ul {
 }
 
 .button {
-  background-color: var(--ltblue);
   border-radius: 1rem;
+  background-color: var(--ltblue);
 }
 
 .button:hover {
-  background-color: var(--blue);
+  background-color: var(--peach);
 }
 
 /**********/
@@ -87,7 +86,7 @@ form {
 }
 
 .headers {
-  background-color: var(--peach);
+  background-color: var(--grey);
   overflow: auto;
 }
 
@@ -122,5 +121,4 @@ form {
 /* TRIP DISPLAY */
 
 .show {
-  background-color: var(--indigo);
 }
