@@ -1,3 +1,4 @@
+/* eslint-disable */
 // Vendor Modules
 import $ from 'jquery';
 import _ from 'underscore';
@@ -5,23 +6,70 @@ import _ from 'underscore';
 // CSS
 import './css/foundation.css';
 import './css/style.css';
+import Trip from './app/models/trip';
+import TripList from './app/collections/trip_list';
 
 let tripsTemplate ;
-const fields = ['id', 'name', 'continent', 'category','weeks','cost'];
+let headerTemplate;
+let showTripTemplate;
+let formTemplate;
 
-const loadTrips = function loadTrips() {
+const tripFields = ['id', 'name', 'continent', 'category','weeks','cost'];
+
+const loadTrips = function loadTrips(trips) {
   $('#trip-list').empty();
-  const url = 'https://ada-backtrek-api.herokuapp.com/trips';
-  $.get(url, (response) => {
-    console.log(response);
-    response.forEach((trip) => {
-      $('#trip-list').append(tripsTemplate(trip));
-    });
+  $('#trip-list-headers').empty();
+
+  tripFields.forEach((field) => {
+    $('#trip-list-headers').append(headerTemplate({header: field}))
+  });
+
+  trips.forEach((trip) => {
+    $('#trip-list').append(tripsTemplate(trip.attributes));
   });
 };
 
+const loadTrip = function loadTrip(trip) {
+  $('#tripDetails').empty();
+  $('#tripDetails').append(showTripTemplate(trip.attributes));
+};
 
 $(document).ready( () => {
   tripsTemplate = _.template($('#trip-list-template').html());
-  $('#load-trips').on('click', loadTrips);
+  headerTemplate = _.template($('#trip-headers-template').html());
+  showTripTemplate = _.template($('#trip-details-template').html());
+
+  const tripList = new TripList();
+  tripList.on('update', loadTrips);
+  tripList.fetch();
+
+  $('#trip-list').on('click', '.trip', function(event){
+    let tripId = $(this).data("id");
+    const trip = new Trip({id: tripId});
+    trip.on('change', loadTrip);
+    trip.fetch();
+  });
+
+  $('#add-trip-form').submit(function(event) {
+    event.preventDefault();
+
+    const tripData = {};
+    const fields = ['name', 'continent', 'category','weeks','cost'];
+
+    fields.forEach(function(field){
+      tripData[field] = $(`input[name=${field}]`).val();
+    });
+
+    const trip = new Trip(tripData);
+    trip.save({}, {
+      success: (model, response) => {
+        tripList.add(model);
+        $('#messages').html("Success")
+      },
+      error: (model, response) => {
+
+      }
+    });
+  });
+  //formTemplate = _.template($('').html());
 });

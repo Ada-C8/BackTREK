@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html>
 <head>
   <meta charset="utf-8">
@@ -7,7 +8,8 @@
 </head>
 <body>
   <header>
-    <a id='load-trips' href='#'>Show All Trips</a>
+    <h1>BackBoneTREK</h1>
+    <a id="load-trips" href="#">Show All Trips</a>
   </header>
   <main>
 
@@ -18,18 +20,63 @@
     </section>
     <!-- END ERROR AND SUCCESS MESSAGES -->
 
+    <!-- ADD TRIP FORM  -->
+    <form id="add-trip-form">
+      <label for="name">Name</label>
+      <input type="text" name="name"></input>
+
+      <label for="Category">Category</label>
+      <input type="text" name="category"></input>
+
+      <label for="Continent">Continent</label>
+      <input type="text" name="continent"></input>
+
+      <label for="Weeks">Weeks</label>
+      <input type="number" name="weeks"></input>
+
+      <label for="Cost">Cost</label>
+      <input type="number" name="cost"></input>
+
+      <input type="submit" value="Create Trip" class="button"></input>
+    </form>
+    <!-- END ADD TRIP FORM  -->
+
+    <!-- RESERVE TRIP FORM  -->
+    <form id="reserve-trip-form">
+      <label for="name">Name</label>
+      <input type="text" name="name"></input>
+
+      <input type="submit" value="Reserve This Trip" class="button"></input>
+    </form>
+    <!-- END RESERVE TRIP FORM  -->
+
+     <!-- SHOW TRIP -->
+    <div id="tripDetails">
+      <script type="text/template" id="trip-details-template">
+        <h1><%- name %></h1>
+        <p><%- about %></p>
+        <p><%- continent %></p>
+        <p><%- category %></p>
+        <p><%- weeks %></p>
+        <p><%- cost %></p>
+      </script>
+    </div>
     <!-- TABLE RENDERS ALL TRIPS  -->
     <table>
       <thead>
-        Table head here
-      </thead>
+      <tr id='trip-list-headers'>
+       <script type="text/template" id="trip-headers-template">
+         <th><%- header %></th>
+       </script>
+     </tr>
+   </thead>
       <tbody id='trip-list'>
         <script type="text/template" id="trip-list-template">
-          <tr class="trip">
+          <tr class="trip" data-id="<%- id %>">
             <td><%- id %></td>
             <td><%- name %></td>
-            <td><%- category %></td>
             <td><%- continent %></td>
+            <td><%- category %></td>
             <td><%- weeks %></td>
             <td><%- cost %></td>
           </tr>
