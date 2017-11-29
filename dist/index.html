@@ -29,8 +29,7 @@
           <label for="cost">Cost</label>
           <input type="text" name="cost"></input>
 
-          <label for="about">Description</label>
-          <input type="text" name="about"></input>
+
 
           <input type="submit" value="Create Trip!" class="button"></input>
         </form>
@@ -53,9 +52,25 @@
         </table>
     </section>
 
-    <section class="large-6 columns" id="trip-detail">
 
+    <section class="large-6 columns" id="trip-detail">
+      <aside>
+        <form id="reservation-form">
+            <label for="name">Name:</label>
+            <input type="text" name="name"></input>
+
+            <label for="age">Age:</label>
+            <input type="number" name="age"></input>
+
+            <label for ="email">Email:</label>
+            <input type="text" name="email"></input>
+
+            <input id="submit" class="button" type="submit" value="Reserve"></input>
+        </aside>
+
+      </div>
     </section>
+
 
 
   </main>
@@ -65,7 +80,7 @@
 
   <script type="text/template" id="trip-template">
       <tr class="trip" data-id="<%- id%>">
-        <!-- <button id="view-trip"> View Trips </button> -->
+
         <td>
           <%- id %>
         </td>
@@ -84,13 +99,12 @@
         <td>
           <%- cost %>
         </td>
-        <td>
-          <%- about %>
-        </td>
+
       </tr>
     </script>
 
     <script type="text/template" id="single-trip-template">
+      <button class="button" id="reservation-button"> Reserve a spot! </button>
         <ul class="single-trip">
           <li>
             ID: <%- id %>

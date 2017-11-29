@@ -14,7 +14,7 @@ import Trip from './app/models/trip';
 // {"id":1,"name":"Cairo to Zanzibar","continent":"Africa","category":"everything","weeks":5,"cost":9599.99}
 
 //
-const TRIP_FIELDS = ['id', 'name', 'continent', 'category', 'weeks', 'cost', 'about'];
+const TRIP_FIELDS = ['id', 'name', 'continent', 'category', 'weeks', 'cost'];
 
 const tripList = new TripList();
 //
@@ -87,6 +87,9 @@ TRIP_FIELDS.forEach((field) => {
 
 
 $(document).ready(() => {
+
+  $('#reservation-form').hide()
+
   tripTemplate = _.template($('#trip-template').html());
 
   console.log(`About to fetch data from ${ tripList.url }`);
@@ -129,10 +132,14 @@ $(document).ready(() => {
     trip.on('change', renderSingleTrip);
     trip.fetch();
 
-
-
   });
-
+  // $('#reservation-form').on('submit', function(event) {
+  //   console.log("Clicked the button");
+  // }
+  $('#reservation-button').on('click', function(event) {
+    $('#reservation-form').show();
+    console.log('attempting to show the reservation form');
+  });
 
 
 });
