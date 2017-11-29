@@ -27,7 +27,7 @@ const render = function render(tripList) {
 const show = function show(e) {
   const tripElement = $(e.target).closest('li');
   const id = tripElement[0].id;
-  const trip = tripList.get(id);
+  const trip = tripList.findWhere({id: 2});
   trip.fetch({
     success: () => {
       const generatedHTML = tripDetailTemplate(trip.attributes);
