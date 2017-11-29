@@ -24,12 +24,12 @@
 <!-- <button class="button" id="add-trip-button">Add Trip!</button> -->
 
 <form method="post" id="add-trip-form">
-  <div class="large-7 columns">
+  <div class="large-5 columns">
   <label for="name">Name</label>
   <input type="text" name="name"></input>
   </div>
 
-  <div class="large-5 columns">
+  <div class="large-4 columns">
   <label for="continent">Continent</label>
   <input type="text" name="continent"></input>
   </div>
@@ -39,23 +39,25 @@
   <input type="text" name="about"></input>
   </div>
 
-  <div class="large-10 columns">
+  <div class="large-3 columns">
   <label for="category">Category</label>
   <input type="text" name="category"></input>
   </div>
 
-  <div class="large-10 columns">
+  <div class="large-3 columns">
   <label for="weeks">Weeks</label>
   <input type="text" name="weeks"></input>
   </div>
 
-  <div class="large-10 columns">
+  <div class="large-3 columns">
   <label for="cost">Cost</label>
   <input type="text" name="cost"></input>
   </div>
 
   <input type="submit" value="Add Trip!" class="button radius small-6 text-center columns"></input>
 </form>
+
+<button class="see-trips-button">See trips</button>
 
 <section class="left table large-6 columns ">
 
@@ -98,10 +100,13 @@
       </tr>
     </script>
 
-    <script id="trip-template" type="text/template">
+    <script id="trip-template" type="text/template" >
       <h1><%- name %> </h1>
-      <p><%- continent %></p>
-      <p><%- about %></p>
+      <p><strong>Continent:</strong> <%- continent %></p>
+      <p><strong>About:</strong> <%- about %></p>
+      <p><strong>Category:</strong> <%- category %> </p>
+      <p><strong>Weeks: </strong><%- weeks %> weeks </p>
+      <p><strong>Cost:</strong> $<%- cost %></p>
 
       <h2>Claim your Spot!</h2>
       <form method="post" id="makeReservation">
@@ -120,7 +125,9 @@
         <input type="text" name="email"></input>
         </div>
 
-        <input type="submit" value="Make Reservation" class="button radius small-6 small-centered text-center columns"></input>
+        <button class-"button">Make reservation</button>
+
+        <!-- <input type="submit" value="Make Reservation" class="button radius small-6 small-centered text-center columns"></input> -->
       </form>
     </script>
 

@@ -1,2 +1,6 @@
 
 /* Your styles go here! */
+
+tr:hover {
+  color: blue;
+}

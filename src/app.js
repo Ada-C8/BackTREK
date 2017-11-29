@@ -87,30 +87,43 @@ const addReservationHandler = function(event) {
   const reservationData = {};
 
   RES_FIELDS.forEach((field) => {
-      const inputElement = $(`#makeReservation input[name="${ field }"]`);
-      const value = inputElement.val();
-      reservationData[field] = value;
+    const inputElement = $(`#makeReservation input[name="${ field }"]`);
+    const value = inputElement.val();
+    reservationData[field] = value;
 
-      inputElement.val('');
-  console.log('reading reservation data');
-  console.log(reservationData);
+    inputElement.val('');
+    console.log('reading reservation data');
+    console.log(reservationData);
 
-// NOTE ///this will not work as it is currently written --- write a model?
-  const reservation = new Reservation(reservationData);
+    // NOTE ///this will not work as it is currently written --- write a model?
+    // const reservation = new Reservation(reservationData);
 
-  reservation.save({}, {
-    success: (model, response) => {
-      reportStatus('success', 'Successfully add a trip!');
-    },
-    error: (model, response) => {
-      console.log('failed to save trip!');
+    reservation.save({}, {
+      success: (model, response) => {
+        reportStatus('success', 'Successfully add a trip!');
+      },
+      error: (model, response) => {
+        console.log('failed to save trip!');
 
-      // NOTE // Need to handle errors that come in
-    }
+        // NOTE // Need to handle errors that come in
+      }
+    })
+  });
+};
+
+
+let reserveTrip = function reserveTrip(id, formData) {
+  reserveURL = (baseURL+'/'+ id + '/reservations');
+  console.log(reserveURL);
+  $.post(reserveURL, formData, (response) => {
+    $('#makeReservation').html('<p> Reservation added! </p>');
+    console.log(response);
   })
-
-
-
+  .fail(function(response){
+    $('#fail').html('<p>Request was unsuccessful</p>')
+  })
+  .always(function(){
+    console.log('always even if we have success or failure');
   });
 };
 
@@ -130,7 +143,7 @@ $(document).ready(() => {
   tripTemplate = _.template($('#trip-template').html());
 
   //backbone
-  tripsList.on('update', renderTrips);
+  // tripsList.on('update', renderTrips);
   tripsList.fetch();
 
   // jquery
@@ -141,23 +154,67 @@ $(document).ready(() => {
     trip.fetch();
   });
 
+  $('.see-trips-button').on('click', function() {
+    console.log('in the function to see trips')
+    tripsList.on('update', renderTrips);
+    tripsList.fetch();
 
-// add trip
-  $('#add-trip-form').on('submit', addTripHandler);
 
-//reserve a spot on a trip
-  $('#makeReservation').on('submit', addReservationHandler);
+  })
+
+  // add trip
+  // $('#add-trip-form').on('submit', addTripHandler);
+  //
+  // //reserve a spot on a trip
+  // $('#makeReservation').on('submit', function(event) {
+  //   // event.preventDefault();
+  //   console.log('in the make reservation handler');
+  //
+  //   const reservation = new Trip({ id: $(this).data("id")});
+  //
+  //   console.log(reservation);
+  //
+
+  $('#makeReservation').on('submit', function(event){
+    console.log('in the make reservation event handler');
+    // this helps not to refresh the page
+    // event.preventDefault();
+    // const tripID = $('#trip-template').data("id");
+
+    // this is a jQuery function that will take our form and turn it into query params
+    // let formData = $('#makeReservation').serialize();
+    // reserveTrip(tripID, formData);
+  });
+
 
 });
 
 
+// GAME PLAN
+
+// 5. create a button to see a list of trips
+
+// 3. figure out how to make the reservation - is it a separate model, how to take in the id to post to the write place
+  // Dan shared url root could be useful for creating a reservation
+// 4. work on error handling
+// 6. ask about the API error handling -- i did not have a problem adding a new trip -- no backlash for empty fields
+// 7. check out client side validation work on the code
+// 1. figure out the modal situation
+
+
+/// WAVE 3 /////////
+// sorting by...
+// Name
+// Category
+// Continent
+// Weeks
+// Cost
+// user needs to be given some sort of visual feedback that the data has been sorted
+// filtering --- the challenging piece of the project
 
 
 
-
-
-
-// old code for adding a trip -- hard coded to see if it would work 
+// old code for adding a trip -- hard coded to see if it would work
 
 
 // user can create a new trip
@@ -180,3 +237,9 @@ $(document).ready(() => {
 //     }
 //   });
 // });
+
+
+// done
+
+// Wednesday
+// // 2. flesh out the details section of html
