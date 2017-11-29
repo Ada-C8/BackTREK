@@ -10,16 +10,24 @@ import './css/style.css';
 import Trip from './app/models/trip';
 import TripList from './app/collections/trip_list';
 
-const tripList = new TripList();
+// Vars that need to be defined up front
 let tripTemplate;
 let trip = new Trip();
+const tripList = new TripList();
 
+// Callback functions
 const render = function render(tripList) {
   $('#trip-list').empty(); // clear it so it doesn't continually add on
   tripList.forEach((trip) => {
     // use template to append trip row to table in the DOM
     $('#trip-list').append(tripTemplate(trip.attributes));
   });
+};
+
+const getTrip = function getTrip() {
+  const id = $(this).attr('id');
+  trip = tripList.get(id);
+  trip.fetch({success: events.successfulGetTrip, error: events.failedGetTrip});
 };
 
 const events = {
@@ -42,9 +50,5 @@ $(document).ready( () => {
 
   tripList.fetch(); // will automatically call render
 
-  $('#trip-list').on('click', 'tr', function() {
-    const id = $(this).attr('id');
-    trip = tripList.get(id);
-    trip.fetch({success: events.successfulGetTrip, error: events.failedGetTrip});
-  })
+  $('#trip-list').on('click', 'tr', getTrip)
 });
