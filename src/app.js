@@ -11,11 +11,13 @@ console.log('it loaded!');
 import TripList from './app/collections/trip_list';
 
 
-const TRIP_FIELDS = ['id', 'name', 'continent', 'category', 'weeks', 'cost'];
+// const TRIP_FIELDS = ['id', 'name', 'continent', 'category', 'weeks', 'cost'];
 
 const trips = new TripList();
 
 let tripTemplate;
+
+let showTripTemplate;
 
 
 const render = function render(trips) {
@@ -25,9 +27,7 @@ const render = function render(trips) {
   trips.forEach((trip) => {
     console.log(trip)
     const generatedHTML = tripTemplate(trip.attributes);
-    // $('#book-list').append($(bookHTML));
-    // jquery search has to look through the whole document
-    // it will be faster (esp. with a lot of books) to do
+
     tripTableElement.append(generatedHTML);
     // console.log(trip.attributes.id);
 
@@ -43,8 +43,32 @@ const render = function render(trips) {
 
 const showTrip = function showTrip(id) {
   // console.log(parseInt(id));
+  $('#show-trip').html('');
+
+  const singleTrip = $('#show-trip');
   const trip = trips.findWhere({id: parseInt(id)});
-  console.log(trip);
+  // console.log(trip.url);
+  // let result = trip.fetch();
+  trip.fetch( {
+    success: (model, response) => {
+        console.log('Successfully found book!');
+        // reportStatus('success', 'Successfully saved book!');
+        console.log(response);
+
+        const generatedHTML = showTripTemplate(response);
+        singleTrip.append(generatedHTML);
+
+
+      },
+  })
+  // console.log(result);
+  // // trips.fetch(trip.url)
+  // const generatedHTML = showTripTemplate(result.responseJSON);
+  //
+  //
+  //
+  //
+  // singleTrip.append(generatedHTML);
 
   // $('#show-trip').html(id);
   // $('#show-trip').show();
@@ -54,6 +78,7 @@ const showTrip = function showTrip(id) {
 $(document).ready( () => {
 
   tripTemplate = _.template($('#trip-template').html());
+  showTripTemplate = _.template($('#show-trip-template').html());
 
   trips.on('update', render)
   trips.on('sort', render);
