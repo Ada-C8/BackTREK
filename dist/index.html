@@ -11,6 +11,7 @@
   </header>
   <main>
     <section id='showAllTrips'>
+      <button id='tripButton'>See Available Trips! </button>
     </section>
 
     <section>
@@ -19,8 +20,6 @@
             <th> Name </th>
             <th> Destination </th>
             <th> Continent </th>
-            <th> About </th>
-            <th> Category </th>
             <th> Weeks </th>
             <th> Cost </th>
           </thead>
@@ -28,6 +27,16 @@
           </tbody>
         </table>
     </section>
+
+    <script type='text/template' id='tripTemplate'>
+        <tr>
+            <td> <%- name %> </td>
+            <td> <%- destination %> </td>
+            <td> <%- continent %> </td>
+            <td> <%- weeks %> </td>
+            <td> <%- cost %> </td>
+        </tr>
+    </script>
   </main>
   <footer>
 

@@ -1,15 +1,19 @@
 // Vendor Modules
 import $ from 'jquery';
 import _ from 'underscore';
+import Trip from './app/models/trip';
+import TripList from './app/collections/tripList';
 
 // CSS
 import './css/foundation.css';
 import './css/style.css';
 
-const url =  'https://ada-backtrek-api.herokuapp.com';
-
 console.log('it loaded!');
 
+const tripList = new TripList();
+
 $(document).ready( () => {
-  $('main').html('<h1>Hello World!</h1>');
+  const tripTemplate = _.template($('#tripTemplate').html());
+
+
 });
