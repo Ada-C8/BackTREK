@@ -10,16 +10,6 @@ import './css/style.css';
 
 console.log('it loaded!');
 
-
-
-// const render = function render(tripList) {
-//   tripList.forEach((trip) => {
-//     const tripTemplate = _.template($('#trip-template').html());
-//     const tripHTML = tripTemplate(trip.attributes);
-//     $('#trip-list').append(tripHTML);
-//   });
-// };
-
 // const trip = new Trip({
 //   id: 4,
 //   name: 'Cairo to Zanzibar',
@@ -34,14 +24,13 @@ console.log('it loaded!');
 // console.log(trip.get('name'))
 
 const tripList = new TripList();
-tripList.fetch().done(function() {
-  console.log('done');
-  render(tripList);
-});
 
-let currentTrip = new Trip();
+// tripList.fetch().done(function() {
+//   console.log('done');
+//   render(tripList);
+//   let currentTrip = new Trip();
+// });
 
-// console.log(tripList);
 
 const render = function render(tripList) {
   console.log(tripList);
@@ -51,68 +40,50 @@ const render = function render(tripList) {
       console.log(currentTrip.attributes);
       const tripTemplate =  _.template($('#trip-template').html());
       const tripHTML = tripTemplate(currentTrip.attributes);
-      let id = currentTrip.get('id')
+
       $('#trip-list').append(tripHTML);
-      console.log(`.current-trip-${id}`)
+      let id = currentTrip.get('id')
+      console.log(`.current-trip-${id}`);
+
       // $(`.details ${id}`).ahide()
       // $(`.hide ${id}`).hide()
     });
   });
 };
 
+const tripDetailHandler = function (event){
+  console.log(event.target.parentElement.id);
+  let id = event.target.parentElement.id;
+  $(`.details-${id}`).toggleClass('hide');
+  $(`.button-${id}`).toggleClass('hide');
+}
+
+const reserveFormUpdate = function (event){
+  console.log(event.target.parentElement.className);
+  let id = event.target.parentElement.className
+
+  let currentTrip = new Trip({id: id});
+  currentTrip.fetch().done(function() {
+    const nameTemplate =  _.template($('#name-template').html());
+    console.log(nameTemplate)
+    const nameHTML = nameTemplate(currentTrip.attributes);
+    console.log(nameHTML)
+    $('.form-container').removeClass('hide');
+    $('#trip-name').text(nameHTML);
+  });
+}
 
 
-// const trip = new Trip();
-// trip.fetch().done(function() {
-//   console.log('done trip');
-//   console.log(trip.attributes)
-// });
-
-
-// console.log(tripList.at[0])
-
-//
-// tripList.forEach((trip) => {
-//   console.log(`${ trip.get('name') }`);
-//   console.log('in here?')
-// });
-//
-// const trip = new Trip({
-//   id: 400,
-//   name: 'Cairo to Zanzibar',
-//   continent: 'Africa',
-//   category: 'everything',
-//   weeks: 5,
-//   cost: 9599.99
-// });
 
 $(document).ready( () => {
-  // $('main').html('<h1>Hello World!</h1>');
-  // $('trip').append(trip);
-  render(tripList)
-
-  $('#trip-list').on('click', 'button',  function(event) {
-    console.log(event.target.parentElement.id);
-    let id = event.target.parentElement.id;
-    $(`.details-${id}`).toggleClass('hide');
-    $(`.button-${id}`).toggleClass('hide');
-    // $(`.close-${id}`).toggleClass('hide');
+  tripList.fetch().done(function() {
+    console.log('done');
+    render(tripList);
+    let currentTrip = new Trip();
   });
-  // let atrip = new Trip({
-  //    id: 1,
-  // });
-  // let atrip = new Trip({
-  //   id: 400,
-  //   name: 'around the world in 80 days',
-  //   continent: 'Africa',
-  //   category: 'everything',
-  //   weeks: 5,
-  //   cost: 9599.99
-  // });
-  // // atrip.save({}, );
-  // console.log(atrip.attributes)
-  // // atrip.set({url: `/${atrip.id}`});
-  // atrip.fetch();
-  // console.log(`i am something? ${atrip.attributes}`)
+
+  $('#trip-list').on('click', 'button', tripDetailHandler);
+
+  $('#trip-list').on('click', '.reserve', reserveFormUpdate)
 
 });

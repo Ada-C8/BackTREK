@@ -4,3 +4,21 @@
 ul {
   list-style: None;
 }
+
+.sticky {
+  position: fixed;
+  top: 200px;
+  right: 10px;
+}
+
+.add-trips {
+  margin: 5%;
+}
+
+.form-container{
+  background-color: lightgrey;
+}
+
+tr :hover {
+  background-color: grey;
+}
