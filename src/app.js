@@ -22,9 +22,19 @@ const $tripDescription = $('#trip-description')
 const render = function render(tripList) {
   $tripsList.empty();
   tripList.forEach((trip) => {
+    // console.log(trip);
+    // console.log(trip.attributes.category);
     $tripsList.append(tripTemplate(trip.attributes));
   });
 }
+
+// const renderTrip = function tripRender(trip) {
+//   console.log('rendering a change for at trip!')
+//   console.log(this);
+//   console.log(trip);
+//   $tripDescription.empty();
+//   $tripDescription.append(tripDetailsTemplate(trip.attributes));
+// }
 
 $(document).ready( () => {
   tripTemplate = _.template($('#trip-template').html());
@@ -33,16 +43,21 @@ $(document).ready( () => {
 
   // User Events
   $tripsList.on('click', 'tr', function getTrip() {
-    console.log(this);
     const tripID = $(this).attr('data-id');
-    console.log(tripID);
-    const trip = new Trip({ id: tripID}).fetch();
-    console.log(trip);
-    // $tripDescription.append(tripDetailsTemplate);
+
+    const trip = new Trip({ id: tripID })
+
+    console.log(`aaaa${tripID}`)
+    trip.fetch().done(() => {
+      console.log(trip.attributes);
+      console.log(trip.attributes.category);
+      $tripDescription.append(tripDetailsTemplate(trip.attributes));
+    });
   });
 
   // Data Events
   tripList.on('update', render, tripList);
+
 
   tripList.fetch();
 
