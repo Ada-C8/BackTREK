@@ -6,6 +6,8 @@ import _ from 'underscore';
 import './css/foundation.css';
 import './css/style.css';
 
+const url =  'https://ada-backtrek-api.herokuapp.com';
+
 console.log('it loaded!');
 
 $(document).ready( () => {
