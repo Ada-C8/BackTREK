@@ -72,24 +72,28 @@
   </footer>
 
   <!-- _Underscore Templates -->
-  <script type="text/template" id="trip-listing-template">
+  <script type="text/template" id="trip-list-template">
     <tr id="<%- id %>" class="trip">
-      <td>
+      <td class="name">
         <%- name %>
       </td>
-      <td>
-        <%- category %>
+      <td class="category">
       </td>
-      <td>
+      <td class="continent">
         <%- continent %>
       </td>
-      <td>
+      <td class="weeks">
         <%- weeks %>
       </td>
-      <td>
-        <%- cost %>
+      <td class="cost">
       </td>
     </tr>
+  </script>
+
+  <script type="text/template" id="trip-detail-template">
+    <h3><%- attributes.name %></h3>
+    <h4><%- attributes.weeks %> <%- sPluralize('week', attributes.weeks) %> | <%- attributes.continent %> | <%- capitalize(attributes.category) %></h4>
+    <div id="about"><%- changed.about %></div>
   </script>
   <!-- END _Underscore Templates -->
 

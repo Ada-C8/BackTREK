@@ -41,7 +41,7 @@ li:nth-child(even) {
   font-size: 3rem;
 }
 
-#foundation-override h3 {
+#foundation-override h3, {
   font-family: 'Bungee', sans-serif;
   font-size: 2.5rem;
 }
@@ -51,6 +51,13 @@ li:nth-child(even) {
   font-weight: 500;
   font-style: italic;
   font-size: 1.6rem;
+}
+
+#foundation-override th {
+  font-family: 'Bungee', sans-serif;
+  font-weight: 500;
+  font-size: 1.2rem;
+  text-align: center;
 }
 
 footer h6 {
