@@ -21,6 +21,10 @@ const tableFields = ['id', 'name', 'continent', 'category', 'weeks', 'cost'];
 const addTripFields = ['name', 'continent', 'category', 'weeks', 'cost', 'about'];
 const reservationFields = ['name', 'age', 'email'];
 
+const fetchTrips = function fetchTrips() {
+  tripList.fetch();
+}
+
 const loadTrips = function loadTrips() {
   $('.content').empty();
   tableFields.forEach((field) => {
@@ -110,12 +114,11 @@ $(document).ready( () => {
   tripHeadersTemplate = _.template($('#trip-headers-template').html());
   showTripTemplate = _.template($('#show-trip-template').html());
   formTemplate = _.template($('#form-template').html());
-  $('#load-trips').on('click', loadTrips);
+  $('#load-trips').on('click', fetchTrips);
+  tripList.on('update', loadTrips);
   $('#all-trips').on('click', '.trip', showTrip);
   $('#add-trip').on('click', addTripForm);
   $('#add-trip-form').on('submit', saveTrip);
   $('#show-trip').on('click', '#reserve', reserveForm);
   $('#status-messages').on('click', '.clear', clearMessages);
-  tripList.on('update', loadTrips);
-  tripList.fetch();
 });
