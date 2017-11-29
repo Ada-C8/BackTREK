@@ -39,6 +39,15 @@ const loadTrips = function loadTrips() {
   tripList.on('update', render, tripList);
 };
 
+const getTripDetails = function getTripDetails(attrID) {
+  console.log('View Trip Row clicked');
+
+  const trip = new Trip({ id: attrID });
+  trip.fetch();
+
+  console.log(trip)
+};
+
 $(document).ready( () => {
   $('#all-trips-table').hide();
   tripTemplate = _.template($('#trip-template').html());
@@ -48,5 +57,12 @@ $(document).ready( () => {
   $('#all-trips').on('click', function() {
     $('#all-trips-table').show();
     loadTrips();
+  });
+
+  // To view a single Trip
+  $('#all-trips-table').on('click', '.trip', function() {
+    //console.log('Button trip details clicked');
+    let tripID = $(this).attr('data-id');
+    getTripDetails(tripID);
   });
 });

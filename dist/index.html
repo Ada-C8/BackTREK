@@ -9,8 +9,8 @@
   <header>
     <h2>BackTREK</h2>
     <nav>
-      <button id="all-trips" class="button">ALL TRIPS</button>
       <button href="index.html" class="button">HOME</button>
+      <button id="all-trips" class="button">ALL TRIPS</button>
     </nav>
 
   </header>
@@ -39,7 +39,7 @@
 
   </footer>
   <script type="text/template" id="trip-template">
-    <tr class="trip">
+    <tr class="trip" data-id="<%- id %>" >
       <td>
         <%- name %>
       </td>
