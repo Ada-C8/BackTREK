@@ -24,16 +24,28 @@ const render = function render(tripList) {
   });
 };
 
+const clearShow = function clearShow() {
+  $('.trip-row').removeClass('show');
+  $('.trip-details').remove();
+};
+
 const show = function show(e) {
   const tripElement = $(e.target).closest('li');
-  const id = tripElement[0].id;
-  const trip = tripList.findWhere({id: 2});
-  trip.fetch({
-    success: () => {
-      const generatedHTML = tripDetailTemplate(trip.attributes);
-      tripElement.append(generatedHTML);
-    }
-  });
+  if (tripElement.hasClass('show')) {
+    clearShow();
+  } else {
+    const id = tripElement[0].id;
+    const trip = tripList.findWhere({id: 2});
+    trip.fetch({
+      success: () => {
+        clearShow();
+        $('.trip-row').removeClass('show');
+        $('.trip-details').remove();
+        const generatedHTML = tripDetailTemplate(trip.attributes);
+        tripElement.append(generatedHTML).addClass('show');
+      }
+    });
+  }
 };
 
 $(document).ready( () => {
