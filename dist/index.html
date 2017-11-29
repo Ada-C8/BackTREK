@@ -41,7 +41,23 @@
         <p><strong>Category:</strong> <%- category %></p>
         <p><strong>Length:</strong> <%- weeks %> week(s)</p>
         <p><strong>Cost:</strong> <%- cost %></p>
+
+        <h2>Reserve Your Spot</h2>
+        <form id="reserve-trip-form">
+          <label for="title">Name</label>
+          <input type="text" name="name"></input>
+
+          <label for="author">Age</label>
+          <input type="text" name="age"></input>
+
+          <label for="publication_year">Email</label>
+          <input type="number" name="email"></input>
+
+          <input type="submit" value="Reserve it!" class="button"></input>
+        </form>
       </script>
+
+
 
     <script type="text/template" id="trip-template">
       <tr class="trip"  data-id=<%- id %> >
