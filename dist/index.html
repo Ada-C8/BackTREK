@@ -38,8 +38,7 @@
     </section>
     <!-- individual trip display -->
     <section class="columns large-8 small-12">
-      <h2>Trip Name</h2>
-    <<ul id="individual-trip-detail"></ul>
+    <ul id="individual-trip-detail"></ul>
     </section>
 
   </main>
@@ -48,7 +47,7 @@
   </footer>
 
   <script id="trip-template" type="text/template">
-    <tr class="trip">
+      <tr class="trip" data-id="<%- id %>">
       <!-- <% const TRIP_FIELDS = ['name', 'category', 'continent', 'cost', 'weeks']; %>
       <% TRIP_FIELDS.forEach((field) => { %>
       <td> <%- field %>
@@ -73,23 +72,24 @@
 </script>
 <!-- individual trip -->
 <script id="individual-trip-template" type="text/template">
-  <tr class="indidivudal-trip">
-  <td>
-    <%- name %>
-  </td>
-  <td>
+  <h2><%- name %> </h2>
+  <ol class="indidivudal-trip">
+  <ul>
     <%- category %>
-  </td>
-  <td>
+  </ul>
+  <ul>
     <%- continent %>
-  </td>
-  <td>
+  </ul>
+  <ul>
     $<%- cost %>
-  </td>
-  <td>
+  </ul>
+  <ul>
     <%- weeks %>
-  </td>
-</tr>
+  </ul>
+  <ul>
+    <%- about %>
+  </ul>
+</ol>
 </script>
 
 <script src="app.bundle.js" type="text/javascript"></script>

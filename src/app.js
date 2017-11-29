@@ -14,6 +14,8 @@ const TRIP_FIELDS = ['name', 'category', 'continent', 'cost', 'weeks'];
 
 const  tripList = new TripList();
 let tripTemplate;
+let individualTripTemplate;
+
 console.log('it loaded!');
 
 const clearStatus = function clearStatus() {
@@ -41,9 +43,23 @@ const render = function render(tripList) {
   $('th.sort').removeClass('current-sort-field');
   $(`th.sort.${ tripList.comparator }`).addClass('current-sort-field');
 
-  // $('.trip').on('click',function(event) {
-  //   let tripId = $(this).attr('data-id');
-  // }) /// Ander's showing the details of a trip
+  $('.trip').on('click',function(event) {
+    let tripId = $(this).attr('data-id');
+    let trip = tripList.get(tripId)
+    trip.fetch({
+      success: function() {
+        console.log(trip.attributes); // has the about
+        const individualTripListElement = $('#individual-trip-detail');
+        individualTripListElement.html('');
+
+        const generatedHTMLTripDetails = individualTripTemplate(trip.attributes);
+
+        individualTripListElement.append(generatedHTMLTripDetails);
+
+        $('#individual-trip-detail').show();
+      }
+    }); // fetch
+  });
 };
 
 const readFormData = function readFormData() {
@@ -93,6 +109,7 @@ const addTripHandler = function(event) {
 };
 
 $(document).ready( () => {
+  individualTripTemplate = _.template($('#individual-trip-template').html());
   tripTemplate = _.template($('#trip-template').html());
   tripList.on('update', render);
   tripList.on('sort', render);
