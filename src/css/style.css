@@ -1,2 +1,6 @@
 
 /* Your styles go here! */
+
+ul {
+  list-style: None;
+}
