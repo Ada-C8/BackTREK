@@ -38,8 +38,8 @@
 
   </footer>
   <script src="app.bundle.js" type="text/javascript"></script>
-  <script type="text/template" id="trip-template">
-    <tr>
+  <script type="text/template" id="trips-template">
+    <tr data-id=<%- id %>>
       <td><%- name %></td>
       <td><%- continent %></td>
       <td><%- category %></td>
@@ -58,6 +58,14 @@
         <th>Duration</th>
         <th>Cost</th>
       </tr>
+  </script>
+  <script type="text/template" id="trip-template">
+    <li><h3><%- response.name %></h3></li>
+    <li><strong>Continent: </strong><%- response.continent %></li>
+    <li><strong>About: </strong><%- response.about %></li>
+    <li><strong>Category: </strong><%- response.category %></li>
+    <li><strong>Duration on weeks: </strong><%- response.weeks %></li>
+    <li><strong>Cost: </strong><%- response.cost %></li>
   </script>
 </body>
 </html>

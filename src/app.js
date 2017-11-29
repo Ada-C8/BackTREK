@@ -7,6 +7,7 @@ import './css/foundation.css';
 import './css/style.css';
 
 // CLASSES
+import Trip from 'app/models/trip';
 import TripList from 'app/collections/trip_list';
 
 console.log('it loaded!');
@@ -15,12 +16,13 @@ console.log('it loaded!');
 const TRIP_FIELDS = ['name', 'continent', 'category', 'weeks', 'cost'];
 // create variable for using in document.ready
 const tripList = new TripList();
-// create variable and set it in document.ready
+
 
 //define templates
-let tripTemplate;
+let tripsTemplate;
 let backTemplate;
 let headTemplate;
+let tripTemplate;
 
 const getTrips = function(tripList) {
   let back = backTemplate();
@@ -29,16 +31,20 @@ const getTrips = function(tripList) {
   const tripTableElement = $('#trip-list');
   tripTableElement.html('');
   for (let trip of tripList.models) {
-    const generatedHTML = tripTemplate(trip.attributes);
+    const generatedHTML = tripsTemplate(trip.attributes);
     tripTableElement.append(generatedHTML);
   }
 
-  // $('.trips thead').html(tableHead);
-  // $('.back').html(back);
+  $('.trips thead').html(tableHead);
+  $('.back').html(back);
   // $('#trips').toggle();
+  $('#trips').hide();
 } // end of getTrips
 
-const getTrip = function() {
+const getTrip = function(id) {
+  let listItem = tripTemplate();
+  $('#trip').html(listItem);
+
 
 } // end of getTrip
 
@@ -46,9 +52,10 @@ const getTrip = function() {
 
 $(document).ready( () => {
   //templates
-  tripTemplate = _.template($('#trip-template').html());
+  tripsTemplate = _.template($('#trips-template').html());
   backTemplate = _.template($('#back-button').html());
   headTemplate = _.template($('#tripsHead').html());
+  tripTemplate = _.template($('#trip-template').html());
 
   //get all trips on click
   $('.trips').on('click', '#trips', function() {
@@ -59,9 +66,18 @@ $(document).ready( () => {
 
   //go back from trips
   $('body').on('click', '.back, #title', function() {
-    $('.trips table').html('');
+    $('.trips thead').html('');
+    $('.trips tbody').html('');
     $('.back').html('');
-    // $('#trips').toggle();
+    $('#trips').show();
+  })
+
+  //get trip info
+  $('.trips').on('click', 'table tr', function() {
+    let tripID = $(this).attr('data-id');
+    const trip = new Trip({ id: tripID });
+    console.log(tripID);
+    trip.fetch();
   })
 
 
