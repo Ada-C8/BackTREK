@@ -43,13 +43,12 @@ $(document).ready( () => {
 
   tripList.on('update', render);
   //so the fetch will trigged update and then render will render the data into the template.
-
+  $('.name').on('click', 'td', () => {
+    console.log("you clicked something");
+  })
   // const tripList = new TripList();
   // render(tripList);
   // The render function takes the place of the final part of the function for a single item. i.e. the part that goes through each item and turns it into html
-
-
-
 }); // end document ready
 
 
