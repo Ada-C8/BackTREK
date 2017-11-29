@@ -1,2 +1,9 @@
-
-/* Your styles go here! */
+table {
+  display: none;
+}
+.active {
+  display: block;
+}
+button {
+  font-size: 3em;
+}

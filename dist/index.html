@@ -9,6 +9,7 @@
   <header>
 
   </header>
+  <button class='all-trips'>View All Trips</button>
   <section id="summary"></section>
 
   <table>
@@ -24,16 +25,10 @@
   </table>
 
   <script type="text/template" id="trip-template">
-    <tr class="trip">
-      <td>
-        <%- name %>
-      </td>
-      <td>
-        <%- id %>
-      </td>
-      <td>
-        <%- continent %>
-      </td>
+    <tr class="trip" data-id="<%- id %>">
+      <td><%- name %></td>
+      <td><%- id %></td>
+      <td> <%- continent %></td>
       <td>
         <%- category %>
       </td>
@@ -45,9 +40,7 @@
 
   <script type="text/template" id="info-template">
     <section class="info">
-      <p>
-        <%- name %>
-      </p>
+      <p><%- name %></p>
       <p>
         <%- continent %>
       </p>
