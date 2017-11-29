@@ -1,20 +1,52 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <title>My JavaScript App</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body>
-  <header>
+  <head>
+    <meta charset="utf-8">
+    <title>My JavaScript App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <header>
+      <h1>Trek!</h1>
+    </header>
+    <main>
+      <section>
+        <h2>Trips!</h2>
+        <table>
+          <thead>
+            <th class="sort name">Name</th>
+            <th class="sort continent">Continent</th>
+            <th class="sort category">Category</th>
+            <th class="sort weeks">Weeks</th>
+            <th class="sort cost">Cost</th>
+          </thead>
+          <tbody id="trip-list">
+          </tbody>
+        </table>
+      </section>
+    </main>
+    <footer>
 
-  </header>
-  <main>
-
-  </main>
-  <footer>
-
-  </footer>
-  <script src="app.bundle.js" type="text/javascript"></script>
-</body>
+    </footer>
+    <script type="text/template" id="trip-template">
+      <tr class="book">
+        <td>
+          <%- name %>
+        </td>
+        <td>
+          <%- continent %>
+        </td>
+        <td>
+          <%- category %>
+        </td>
+        <td>
+          <%- weeks %>
+        </td>
+        <td>
+          <%- cost %>
+        </td>
+      </tr>
+    </script>
+    <script src="app.bundle.js" type="text/javascript"></script>
+  </body>
 </html>
