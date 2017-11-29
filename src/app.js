@@ -14,26 +14,31 @@ tripList.fetch();
 
 let tripTemplate;
 const renderTrips = function renderTrips(tripList) {
-  const $tripList = $('#trip-list');
-  $tripList.empty();
+  $('.reservation-form').hide();
+  $('#trip-info').hide();
+  $('#trip-list').empty();
+  console.log('here i am rendering trips');
   tripList.forEach((trip) => {
-    $tripList.append(tripTemplate(trip.attributes));
+    $('#trip-list').append(tripTemplate(trip.attributes));
   });
+  $('#trip-list').show();
+
+
 };
 
 let singleTripTemplate;
 const renderOneTrip = function renderOneTrip(id) {
   $('#trip-list').hide();
   $('#trip-info').empty();
+  $('#trip-info').show();
+
+  $('.reservation-form').show();
 
   let trip;
   trip = new Trip({id: id});
   trip.fetch().done(() => {
     $('#trip-info').append(singleTripTemplate(trip.attributes));
   });
-  // console.log(trip);
-  // console.log(trip.attributes.id);
-  // console.log(trip.attributes.name);
 };
 
 $(document).ready(() => {
@@ -41,19 +46,18 @@ $(document).ready(() => {
   singleTripTemplate = _.template($('#single-trip-template').html());
 
 $('.reservation-form').hide();
+$('#trip-list').hide();
 
-    tripList.on('update', renderTrips, tripList);
-    // trip.on('update', renderOneTrip, trip);
-
-    // $('.see-trip').on('click', function(){
-    //   console.log('catz');
-    //
-    //   console.log(this);
-    // });
   $('#trip-list').on('click', 'tr', function (){
     const tripID = $(this).attr('data-id');
     renderOneTrip(tripID);
   });
+
+  $('#view-all-trips').on('click', function (){
+    renderTrips(tripList);
+  });
+
+  // tripList.on('update', renderTrips, tripList);
 
 
 });
