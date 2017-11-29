@@ -5,7 +5,6 @@
   <title>TrekBACK</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://fonts.googleapis.com/css?family=Bungee|Zilla+Slab+Highlight|Trirong:400,500i,900" rel="stylesheet">
-  <link href="style.css" media="screen" rel="stylesheet" type="text/css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.1/css/foundation-flex.css" />
 </head>
 
@@ -20,6 +19,18 @@
   <main class="row">
     <div id="list-wrapper" class="small-12 column small-order-2 large-order-1">
       <section id="list" class="scrollbox hide">
+        <table>
+          <thead>
+            <th class="sort name">Name</th>
+            <th class="sort category">Category</th>
+            <th class="sort continent">Continent</th>
+            <th class="sort weeks">Weeks</th>
+            <th class="sort cost">Cost</th>
+          </thead>
+          <tbody id="trip-list">
+            <!--  template goes here -->
+          </tbody>
+        </table>
 
       </section>
     </div>
@@ -59,6 +70,29 @@
       </h6>
     </div>
   </footer>
+
+  <!-- _Underscore Templates -->
+  <script type="text/template" id="trip-listing-template">
+    <tr id="<%- id %>" class="trip">
+      <td>
+        <%- name %>
+      </td>
+      <td>
+        <%- category %>
+      </td>
+      <td>
+        <%- continent %>
+      </td>
+      <td>
+        <%- weeks %>
+      </td>
+      <td>
+        <%- cost %>
+      </td>
+    </tr>
+  </script>
+  <!-- END _Underscore Templates -->
+
   <script
   src="https://code.jquery.com/jquery-3.2.1.min.js"
   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
