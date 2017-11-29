@@ -36,9 +36,15 @@ const render = function render(tripList) {
   //will clear out previous list when you render again
   tripList.forEach((trip) => {
     const generatedHTML = tripTemplate(trip.attributes);
+    console.log(trip.attributes);
     tripTableElement.append(generatedHTML);
   })
   $('#trip-table').show();
+
+  $('.trip').on('click', function(event) {
+    $(this).attr('data-id');
+    console.log($(this).attr('data-id'));
+  });
 };
 
 
