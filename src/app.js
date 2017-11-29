@@ -48,7 +48,6 @@ const events = {
     event.preventDefault();
     const tripData = {};
     tripFields.forEach( (field) => {
-      console.log(field)
       let val = $(`input[name=${field}]`).val();
       if (field === 'cost') {
         val = parseFloat(val);
@@ -59,10 +58,10 @@ const events = {
       if (val != '') {
         tripData[field] = val;
       }
-      console.log(val);
     });
 
     const trip = new Trip(tripData);
+
     trip.save({}, {
       success: events.successfulSave,
       error: events.failedSave
@@ -93,10 +92,13 @@ const events = {
     console.log('success!');
     console.log(trip);
     console.log(response);
+    tripList.add(trip);
+
     $('#status-messages ul').empty();
     $('#status-messages ul').append(`<li>${trip.get('name')} added!</li>`);
     $('#status-messages ul').show();
-    // tripList.add(trip);
+    $('#new-trip-form').hide();
+    $('#trips-table').show();
   },
 
   failedSave(trip, response) {
@@ -121,6 +123,7 @@ $(document).ready(() => {
 
 $('.reservation-form').hide();
 $('#trips-table').hide();
+$('#new-trip-form').hide();
 
   $('#trip-list').on('click', 'tr', function (){
     const tripID = $(this).attr('data-id');
@@ -129,6 +132,13 @@ $('#trips-table').hide();
 
   $('#view-all-trips').on('click', function (){
     renderTrips(tripList);
+  });
+
+  $('#make-a-trip').on('click', function (){
+    $('.reservation-form').hide();
+    $('#trips-table').hide();
+    $('#trip-info').hide();
+    $('#new-trip-form').show();
   });
 
   $('#new-trip-form').submit(events.addTrip);
