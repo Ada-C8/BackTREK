@@ -12,8 +12,19 @@ console.log('it loaded!');
 
 const tripList = new TripList();
 
+const getAllTrips = {
+  getAllTrips() {
+    const $tripList = $('#tripSection');
+    $tripList.empty();
+    event.preventDefault();
+    tripList.forEach((trip) => {
+      $tripList.append(tripTemplate(trip.attributes));
+    });
+}};
+
 $(document).ready( () => {
   const tripTemplate = _.template($('#tripTemplate').html());
-
-
+  tripList.fetch();
+  $('#tripButton').on('click', getAllTrips);
+  console.log(tripList);
 });
