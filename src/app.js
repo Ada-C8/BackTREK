@@ -6,6 +6,8 @@ import _ from 'underscore';
 import './css/foundation.css';
 import './css/style.css';
 
+import BookList from './collections/book_list';
+
 console.log('it loaded!');
 
 $(document).ready( () => {
