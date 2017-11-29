@@ -37,7 +37,13 @@ $(document).ready( () => {
   })
 
   $('#trip-list').on('click', 'tr', function(){
-    const myId = $(this).attr('id');
-    console.log(myId);
+    const url = new Trip(this).url()
+    console.log(url)
+    $.get(url, response => {
+      const thisTrip = response
+      console.log(thisTrip.about)
+      $('#trip-description').append(`<p>${thisTrip.about}<p>`);
+    })
+
   })
 });
