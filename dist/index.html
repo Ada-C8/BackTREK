@@ -12,7 +12,9 @@
   <main>
     <h1>BACKTREK</h1>
       <p id="all-trips" class="button">List Trips</p>
+
       <section class="row">
+        <!-- Table for all trips -->
         <section class="columns large-6 small-12">
           <table id="trip-table">
             <thead>
@@ -26,6 +28,14 @@
             <tbody id="trip-list">
             </tbody>
           </table>
+      </section>
+
+      <!-- Individual trip details -->
+      <section class="columns large-6 small-12">
+          <ul id="individual-trip-details">
+
+          </ul>
+        <h4></h4>
       </section>
     </section>
   </main>
@@ -52,6 +62,27 @@
           <%- cost %>
         </td>
       </tr>
+    </script>
+
+    <script type="text/template" id="individual-trip-template">
+      <li>
+        <%- name %>
+      </li>
+      <li>
+        <%- continent %>
+      </li>
+      <li>
+        <%- category %>
+      </li>
+      <li>
+        <%- weeks %>
+      </li>
+      <li>
+        <%- cost %>
+      </li>
+      <li>
+        <%- about %>
+      </li>
     </script>
 
   <script src="app.bundle.js" type="text/javascript"></script>
