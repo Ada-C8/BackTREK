@@ -29,7 +29,15 @@ const render = function render(tripList) {
   });
 };
 
-
+// let trip = {
+//   "id":4,
+//   "name":"Egypt \u0026 Jordan Adventure",
+//   "continent":"Africa",
+//   "about":"A wide-ranging adventure showcasing the regions natural wonders and fascinating cultures, offering the perfect combination of guided excursions and free time to explore at your own pace. Our expert local leaders will share with you the archaeological and historical secrets of the ancient sites of Petra, Luxor, and the Great Pyramids of Giza. Whether its haggling in Cairos bustling bazaars or snapping a desert sunset, Egypt and Jordan will be etched into your memory like a hieroglyph.",
+//   "category":"historical",
+//   "weeks":1,
+//   "cost":855.53
+// }
 
 $(document).ready( () => {
   tripTemplate = _.template($('#trip-template').html());

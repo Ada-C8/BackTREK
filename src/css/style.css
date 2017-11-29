@@ -1,2 +1,11 @@
-
 /* Your styles go here! */
+/****************/
+/*   Whole doc  */
+/****************/
+
+#right{
+  background-color: lightblue;
+}
+#left{
+  background-color: lightyellow;
+}

@@ -10,20 +10,44 @@
       <h1>Trek!</h1>
     </header>
     <main>
-      <section>
-        <h2>Trips!</h2>
-        <table>
-          <thead>
-            <th class="sort name">Name</th>
-            <th class="sort continent">Continent</th>
-            <th class="sort category">Category</th>
-            <th class="sort weeks">Weeks</th>
-            <th class="sort cost">Cost</th>
-          </thead>
-          <tbody id="trip-list">
-          </tbody>
-        </table>
-      </section>
+      <div id='main-content' class='row'>
+        <div id='left' class='small-6 columns'>
+          <section>
+            <h2>Trips!</h2>
+            <table>
+              <thead>
+                <th class="sort name">Name</th>
+                <th class="sort continent">Continent</th>
+                <th class="sort category">Category</th>
+                <th class="sort weeks">Weeks</th>
+                <th class="sort cost">Cost</th>
+              </thead>
+              <tbody id="trip-list">
+              </tbody>
+            </table>
+          </section>
+        </div>
+        <div id="right" class='small-6 columns'>
+          <div id="trip-details">
+            <section id="trip-details-list">
+              <h2>Trip Details</h2>
+            </section>
+          </div>
+          <hr>
+          <div id="reserve">
+            <h2>Reserve</h2>
+            <form id='reserve-form'>
+              <label for="name">Name:</label>
+              <input type="text" name="name"></input>
+
+              <label for="email">Email:</label>
+              <input type="text" name="email"></input>
+
+              <input id='myBtn' type="submit" class='button' value="Reserve a spot!"></input>
+            </form>
+          </div>
+        </div>
+      </div>
     </main>
     <footer>
 
@@ -46,6 +70,18 @@
           <%- cost %>
         </td>
       </tr>
+    </script>
+    <script src="app.bundle.js" type="text/javascript"></script>
+    <script type="text/template" id="trip-details-template">
+      <tr class="book">
+        <h3><%- name %></h3>
+        <ul>
+          <li>Continent: <%- continent %></li>
+          <li>Category: <%- category %></li>
+          <li>Weeks: <%- weeks %></li>
+          <li>Cost: $<%- cost %></li>
+          <li>About:<p><%- about %></p></li>
+        </ul>
     </script>
     <script src="app.bundle.js" type="text/javascript"></script>
   </body>
