@@ -3,7 +3,36 @@ const Trip = Backbone.Model.extend({
   defaults: {
     name: 'Unknown'
   },
-  // intitialize method (set up code that needs to be run)... use to debug 
+  validate(attributes) {
+    // not calling this.get
+    // format of errors, same as rails!
+    // {
+    //   name: ['cannot be blank', 'already taken'],
+    //   category: ['cannot be blank'],
+    //   continent: ['cannot be blank']
+    // }
+    const errors = {};
+    if (!attributes.name) {
+      errors.name = ['cannot be blank'];
+    }
+    if (!attributes.category) {
+      errors.category = ['cannot be blank'];
+    }
+    if (!attributes.continent)  {
+      errors.continent = ['cannot be blank'];
+    }
+    if (!attributes.cost) {
+      errors.cost = ['cannot be blank'];
+    }
+    if (!attributes.weeks) {
+      errors.weeks = ['cannot be blank'];
+    }
+    if (Object.keys(errors).length < 1) {
+      return false;
+    }
+    return errors;
+  },
+  // intitialize method (set up code that needs to be run)... use to debug
   // initialize(attributes) {
   //   console.log(`trip initialized with name ${ this.get('name') }`);
   //   console.log(attributes);

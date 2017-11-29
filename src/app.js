@@ -7,6 +7,7 @@ import './css/foundation.css';
 import './css/style.css';
 
 // modules I've created:
+import Trip from './models/trip';
 import TripList from './app/collections/trip_list';
 
 const TRIP_FIELDS = ['name', 'category', 'continent', 'cost', 'weeks'];
@@ -65,23 +66,14 @@ const handleValidationFailures = function handleValidationFailures(errors) {
 };
 const addTripHandler = function(event) {
   event.preventDefault();
-  const trip = tripList.add(readFormData);
-  // const tripData = {};
-  // TRIP_FIELDS.forEach((field) => {
-    // const inputElement = $(`#add-trip-form input[name=${ field }]`);
-    // const value = inputElement.val();
-    // // tripData[field] = value;
-    //
-    // if (value != '') { //dont take empty strings so that backbone can fill in default values
-    //   tripDarta[field] = value;
-    // }
-    //
-    // inputElement.val('');
-  // });
-  // console.log("read trip data");
-  // console.log(tripData);
-  //
-  // const trip = tripList.add(tripData);
+  // const trip = tripList.add(readFormData);
+  const trip = Trip(readFormData);
+  if (!trip.isValid()) {
+    handleValidationFailures(trip.validationError);
+    return;
+  }
+  tripList.add(trip);
+
   trip.save({}, {
     success: (model, response) => {
       console.log('successfully saved trip!');
@@ -92,12 +84,6 @@ const addTripHandler = function(event) {
       console.log(response);
       tripList.remove(model); // triggers an update (and rerender) server-side validation failed
       handleValidationFailures(response.responseJSON["errors"]);
-      // const errors = response.responseJSON["errors"];
-      // for (let field in errors) {
-      //   for (let problem of errors[field]){
-      //     reportStatus('error', `${field}: ${problem}`);
-
-
     },
   });
 };
