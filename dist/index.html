@@ -8,27 +8,31 @@
 <body>
   <header>
     BackTREK
+    <button id="load-trips" class="button">
+        ▶
+        &nbsp;&nbsp;
+        Search Trips
+
+    </button>
+
   </header>
   <main>
     <section class="columns large-8 small-12">
-      <button id="load-trips" class="button">
-          ▶
-          &nbsp;&nbsp;
-          Search Trips
 
-        </button>
-      <table>
-        <thead>
-          <th class="sort name">Name</th>
-          <th class="sort continent">Continent</th>
-          <th class="sort category">Category</th>
-          <th class="sort weeks">Weeks</th>
-          <th class="sort cost">Cost</th>
-        </thead>
+      <div id="trips">
+        <table>
+          <thead>
+            <th class="sort name">Name</th>
+            <th class="sort continent">Continent</th>
+            <th class="sort category">Category</th>
+            <th class="sort weeks">Weeks</th>
+            <th class="sort cost">Cost</th>
+          </thead>
 
-        <tbody id="trip-list">
-        </tbody>
-      </table>
+          <tbody id="trip-list">
+          </tbody>
+        </table>
+      </div>
     </section>
 
 
