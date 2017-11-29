@@ -60,7 +60,7 @@ const addBookHandler = function(event) {
 };
 
 $(document).ready(() => {
-  tripTemplate = _.template($('#trip-template').html());
+  tripTemplate = _.template($('#trips-template').html());
 
   console.log(`About to fetch data from ${ tripList.url }`);
 
