@@ -13,14 +13,39 @@
   <main>
     <div class="row">
       <button class="large-3 medium-4 small-6 columns button large-centered small-centered medium-centered" id="load-trips"> View Trips </button>
+      <button class="large-4 medium-4 small-6 columns button"> Add Trip </button>
     </div>
     <div id="show-trip"></div>
+    <div id="add-trip">
+      <h2>Add a Trip</h2>
+      <form id="add-trip-form">
+        <label for="name">Name</label>
+        <input type="text" name="name"></input>
+
+        <label for="about">About</label>
+        <input type="text" name="about"></input>
+
+        <label for="continent">Continent</label>
+        <input type="text" name="continent"></input>
+
+        <label for="category">Category</label>
+        <input type="text" name="category"></input>
+
+        <label for="weeks">Weeks</label>
+        <input type="number" name="weeks"></input>
+
+        <label for="cost">Cost</label>
+        <input type="number" name="cost"></input>
+
+        <input type="submit" value="Add trip!" class="button"></input>
+      </form>
+    </div>
     <section class="columns large-8 small-12">
       <h2>Trips!</h2>
 
       <table>
         <thead>
-          <th class="sort id">ID</th>
+          <!-- <th class="sort id">ID</th> -->
           <th class="sort name">Name</th>
           <th class="sort continent">Continent</th>
           <th class="sort category">Category</th>
@@ -38,34 +63,49 @@
 
   <script type="text/template" id="trip-template">
     <tr class="trip">
-      <td data-id=<%- id %> >
-        <%- id %>
-      </td>
-      <td>
-        <%- name %>
-      </td>
-      <td>
-        <%- continent %>
-      </td>
-      <td>
-        <%- category %>
-      </td>
-      <td>
-        <%- weeks %>
-      </td>
-      <td>
-        <%- cost %>
-      </td>
-    </tr>
+      <!-- <td data-id=<%- id %> >
+      <%- id %>
+    </td> -->
+    <td data-id=<%- id %> >
+      <%- name %>
+    </td>
+    <td>
+      <%- continent %>
+    </td>
+    <td>
+      <%- category %>
+    </td>
+    <td>
+      <%- weeks %>
+    </td>
+    <td>
+      <%- cost %>
+    </td>
+  </tr>
+</script>
+
+<script type="text/template" id="show-trip-template">
+  <h2> <%- name %> </h2>
+  <p> <%- about %> </p>
+  <p> <strong>Continent:</strong> <%- continent %></p>
+  <p> <strong>Category: </strong><%- category %> </p>
+  <p> <strong>Weeks: </strong> <%- weeks %></p>
+  <p> <strong>Cost: </strong><%- cost %> </p>
+  <section>
+    <form id="reserve-trip-form">
+      <label for="name">Name:</label>
+      <input type="text" name="name"></input>
+      <label for="email">Email:</label>
+      <input type="text" name="email"></input>
+      <label for="age">Age:</label>
+      <input type="number" name="age"></input>
+      <div class="row">
+        <div class="columns small-3 medium-4 large-8 small-centered medium-centered" id="reserve-button">
+          <input type="submit" value="Reserve a Spot!" id="submit" class="button"></input>
+        </div>
+      </form>
+    </section>
   </script>
 
-  <script type="text/template" id="show-trip-template">
-    <h2> <%- name %> </h2>
-    <p> <%- about %> </p>
-    <p> <strong>Continent:</strong> <%- continent %></p>
-    <p> <strong>Category: </strong><%- category %> </p>
-    <p> <strong>Weeks: </strong> <%- weeks %></p>
-    <p> <strong>Cost: </strong><%- cost %> </p>
-  </script>
 </body>
 </html>
