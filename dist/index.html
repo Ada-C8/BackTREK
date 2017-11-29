@@ -47,7 +47,8 @@
 </section>
 
 <script type="text/template" id="trip-template">
-  <tr class="trip-row" data-id='cts' >
+  <tr id="trip-row" data-id=<%- id %> >
+
     <td class="see-trip">
       <%- name %>
     </td>
@@ -58,7 +59,9 @@
       <%- weeks %>
     </td>
   </tr>
+
 </script>
+
 
 <script type="text/template" id="single-trip-template">
   <p class="trip">
