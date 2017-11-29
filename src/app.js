@@ -33,7 +33,6 @@ const fields = ['name', 'continent', 'about', 'category', 'weeks', 'cost'];
 const events = {
   addTrip(event) {
     event.preventDefault();
-  //first thing need to do when someone adds a book is to get the values from the form
     const tripData = {};
     fields.forEach((field) => {
       tripData[field] = $(`input[name=${field}]`).val();
@@ -96,19 +95,10 @@ const events = {
           tripList.sort();
         }
       }
-
     });
-
-    // this removes the class when we click on anothe table head. both do the same thing
     $('.sort-field').removeClass('sort-field');
-    // $('th.sort').removeClass('current-sort-field');
     $(this).addClass('sort-field');
-    //if you set comparator equal to the fields, it  will...
-    // tripList.comparator = classes[1];
-    // // this sorts it but now need to put it in the DOM
-    // tripList.sort();
   },
-
 };
 
 
