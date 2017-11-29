@@ -33,13 +33,16 @@
           <label for="category">Category</label>
           <input type="text" name="category"></input>
 
+          <label for="about">About</label>
+          <input type="text" name="about"></input>
+
           <label for="weeks">Duration</label>
           <input type="integer" name="weeks"></input>
 
           <label for="cost">Cost</label>
           <input type="float" name="cost"></input>
 
-          <input type="submit" value="Add Trip!" class="button"></input>
+          <input type="submit" value="Add Trip" class="button"></input>
         </form>
       </aside>
 
@@ -48,6 +51,7 @@
         <thead>
           <th class="sort name">Trip</th>
           <th class="sort continent">Destination</th>
+          <th class="sort category">Category</th>
           <th class="sort weeks">Duration</th>
           <th class="sort cost">Cost</th>
         </thead>
@@ -55,13 +59,28 @@
         </tbody>
       </table>
     </section>
+
+    <section id="one-trip" class="columns large-8 small-12">
+
+    </section>
   </main>
   <footer>
 
   </footer>
 
+  <form id="reserve-trip-form">
+    <label for="name">Name</label>
+    <input type="text" name="name"></input>
+    <label for="age">Age</label>
+    <input type="integer" name="age"></input>
+    <label for="email">email</label>
+    <input type="text" name="emai"></input>
+
+    <input type="submit" value="Reserve Trip" class="button"></input>
+  </form>
+
   <script type="text/template" id="trip-template">
-    <tr class="trip">
+    <tr id="trip-row">
       <td>
         <%- name %>
       </td>
@@ -80,7 +99,7 @@
       </td>
     </tr>
     </script>
-    
+
     <script type="text/template" id="one-trip-template">
       <h1><%- name %></h1>
       <p><%- continent %></p>
@@ -88,7 +107,7 @@
       <p><%- weeks %></p>
       <p><%- cost %></p>
       <p><%- about %></p>
-      </script>
+    </script>
 
 </body>
 </html>

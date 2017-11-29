@@ -10,20 +10,29 @@ import Trip from './app/models/trip';
 import TripList from './app/collections/trip_list';
 
 const tripList = new TripList();
-// tripList.fetch();
 
 let tripTemplate;
 let oneTripTemplate;
 
 const render = function render(tripList) {
+
   const $tripList = $('#trip-list');
   $tripList.empty();
   tripList.forEach((trip) => {
+
     $tripList.append(tripTemplate(trip.attributes));
   });
 };
-
-const fields = ['name', 'continent', 'category', 'weeks', 'cost'];
+const renderOneTrip = function renderOneTrip(trip) {
+  const $trip = $('#one-trip');
+  $trip.empty();
+  trip.fetch().then(function () {
+    $trip.append(oneTripTemplate(trip.attributes));
+    $trip.append($('#reserve-trip-form'));
+    $('#reserve-trip-form').show();
+  });
+}
+const fields = ['name', 'continent', 'category', 'weeks', 'cost', 'about'];
 
 const events = {
   addTrip(event) {
@@ -65,7 +74,6 @@ const events = {
   failedSave(trip, response) {
     $('#status-messages ul').empty();
     $('#status-messages ul').append(`<li>${trip.get('name')} failed to be added</li>`);
-    console.log(response);
     for(let key in response.responseJSON.erros) {
       response.responseJSON.erros[key].forEach((error) => {
         $('#status-messages ul').append(`<li>${key}: ${error}</li>`);
@@ -82,18 +90,19 @@ $(document).ready(() => {
   oneTripTemplate = _.template($('#one-trip-template').html());
 
   $('#add-trip-form').submit(events.addTrip);
+
   $('.sort').click(events.sortTrips);
-  // $('#all_trip-button').on('click', render, tripList);
+
   $('#all_trips').on('click', () => {
-    // render(tripList);
     $('#all-trip-table').show();
   });
-  $('#all-trip-table').on('click', '.trip', (event) => {
 
-    // let OTUrl = '';
-    // OTUrl += event['target']['href'];
-    // $.get(OTUrl, GetOneTrip);
+  $('#all-trip-table').on('click', '#trip-row', (event) => {
+    const tripName = event['currentTarget']['cells'][0]['innerText']
+    const trip = tripList.findWhere({name: tripName});
+    renderOneTrip(trip);
   });
+
   tripList.on('update', render, tripList);
   tripList.on('sort', render, tripList);
 
