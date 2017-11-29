@@ -30,7 +30,7 @@ const render = function(tripList) {
 // 3. error messages
 // 4.
 const reservationFields = ['name', 'age', 'email']
-const tripFields = ['name', 'continent', 'about', 'weeks', 'cost', ]
+const tripFields = ['name', 'continent', 'about', 'weeks', 'cost', 'category'];
 const events = {
     addTrip: function(event) {
       console.log("I want to make a new trip");
@@ -39,7 +39,21 @@ const events = {
       tripFields.forEach((field) => {
         const value = $(`input[name=${field}]`).val();
         if (value != "") {
-          tripData[field] = val;
+          tripData[field] = value
+        }
+        const trip = new Trip(tripData);
+        console.log(trip);
+
+        if (trip.isValid()){
+          console.log("SUCCESSSSSSS")
+          tripList.add(trip)
+          // trip.save({}, {
+          //   success: events.successfulSave,
+          //   error: events.failedSave,
+          // });
+        } else {
+          console.log("What's on book is invalid on the client side")
+          console.log(trip)
         }
       });
 
@@ -68,11 +82,12 @@ $(document).ready( () => {
   $('#all-trips').hide();
   tripList.on('update', render, tripList); // renders the trip list each time update is called.
   tripList.fetch(); //fetches the trip list from the API
+
   $('#show-all').on('focus', function(){
     $('#trip-description').empty(); // removes any previously appended info from the trip description section
     $('#newTripForm').hide()
     $('#all-trips').show(); // shows all trips.
-  })
+  });
 
   $('#trip-list').on('focus', 'tr', function(){ // when you focus a row in the table
     $('#trip-description').empty();
@@ -84,12 +99,12 @@ $(document).ready( () => {
     $('#bookingForm form').remove('action') // takes off any previously appended action links
     $('#bookingForm form').attr('action', `https://trektravel.herokuapp.com/trips/${trip.id}/reservations`) //appends a new one.
     $('#bookingForm').show(); //shows the form.
-  })
+  });
 
   // $('#bookingForm').submit(events.reserveSpot(this.get('id')));
   $('#new-trip').on('focus', function(){
     $('#newTripForm').show();
-  })
+  });
 
   $('#newTripForm').submit(events.addTrip);
 
