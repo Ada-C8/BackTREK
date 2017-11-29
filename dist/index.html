@@ -9,13 +9,13 @@
   <header>
     <h1>Welcome to BackTREK</h1>
   </header>
-  <main>
+  <main class="row">
     <section id="allTripsButton">
       <button class="button" id="trips_button"> See All Trips </button>
     </section>
 
 
-    <section>
+    <section class="small-12 large-5 columns" id="all_trips_section">
         <h2>Trips!</h2>
         <table>
           <thead>
@@ -24,15 +24,27 @@
             <th class="sort category">Category</th>
             <th class="sort weeks">Weeks</th>
             <th class="sort cost">Cost</th>
-
           </thead>
           <tbody id="trip-list">
           </tbody>
         </table>
       </section>
 
+      <section class="small-12 large-6 columns" id="show_trip">
+      </section>
+
+      <script type="text/template" id="show-template">
+
+        <h1><%- name %></h1>
+        <p>Description: <%- about %></p>
+        <p>Continent: <%- continent %></p>
+        <p>Category: <%- category %></p>
+        <p>Length: <%- weeks %>week(s)</p>
+        <p>Cost:<%- cost %></p>
+      </script>
+
     <script type="text/template" id="trip-template">
-      <tr class="trip">
+      <tr class="trip"  data-id=<%- id %> >
         <td>
           <%- name %>
         </td>
