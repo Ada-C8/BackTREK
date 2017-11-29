@@ -26,11 +26,13 @@ const render = function render(tripList) {
   });
 }
 
-
 $(document).ready( () => {
   tripTemplate = _.template($('#trip-template').html());
 
+  // User Events
+  // ('').on('click', )
 
+  // Data Events
   tripList.on('update', render, tripList);
 
   tripList.fetch();
