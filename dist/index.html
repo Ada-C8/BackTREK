@@ -3,8 +3,6 @@
   <meta charset="utf-8" />
   <title>Trek</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="app.bundle.js" type="text/javascript"></script>
-
   <link rel="stylesheet" type="text/css" href="../src/css/style.css">
   <link href="https://fonts.googleapis.com/css?family=Spectral+SC" rel="stylesheet">
 </head>
@@ -49,9 +47,9 @@
 </section>
 
 <script type="text/template" id="trip-template">
-  <tr class="trip">
-    <td>
-      <a href=javascript:void(0) onclick=renderOneTrip> <%- name %></a>
+  <tr class="trip-row" data-id='cts' >
+    <td class="see-trip">
+      <%- name %>
     </td>
     <td>
       <%- continent %>
@@ -73,8 +71,6 @@
 </script>
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-<!-- <script src="app.bundle.js" type="text/javascript"></script> -->
-
-<!-- <script type="text/javascript" src="app.js"></script> -->
+<script src="app.bundle.js" type="text/javascript"></script>
 </body>
 </html>
