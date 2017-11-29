@@ -70,6 +70,7 @@ $(document).ready( () => {
   tripList.fetch(); //fetches the trip list from the API
   $('#show-all').on('focus', function(){
     $('#trip-description').empty(); // removes any previously appended info from the trip description section
+    $('#newTripForm').hide()
     $('#all-trips').show(); // shows all trips.
   })
 
