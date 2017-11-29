@@ -17,11 +17,12 @@ let showTripTemplate;
 let addTripTemplate;
 
 const url = 'https://ada-backtrek-api.herokuapp.com/trips';
-const fields = ['id', 'name', 'continent', 'category', 'weeks', 'cost'];
+const tableFields = ['id', 'name', 'continent', 'category', 'weeks', 'cost'];
+const addTripFields = ['name', 'continent', 'category', 'weeks', 'cost', 'about'];
 
 const loadTrips = function loadTrips() {
   $('.content').empty();
-  fields.forEach((field) => {
+  tableFields.forEach((field) => {
     $('#trip-headers').append(tripHeadersTemplate({header: field}))
   });
   tripList.forEach((trip) => {
@@ -45,38 +46,37 @@ const showTrip = function showTrip(event) {
 
 const addTripForm = function addTripForm() {
   $('.content').empty();
-  fields.forEach((item) => {
-    if (item !== 'id') {
-      $('#add-trip-form').append(addTripTemplate({field: item, lowercaseField: item}));
-    }
+  addTripFields.forEach((item) => {
+    $('#add-trip-form').append(addTripTemplate({field: item, lowercaseField: item}));
   });
   $('#add-trip-form').append('<section><button type="submit" class="button">Submit</button></section></form>');
 }
 
 const saveTrip = function saveTrip(event) {
   event.preventDefault();
-  // TODO: save the trip to the API
   const tripData = {};
-  fields.forEach((field) => {
+  addTripFields.forEach((field) => {
     tripData[field] = $(`input[name=${field}]`).val();
   });
   const trip = new Trip(tripData);
   trip.save({}, {
-    success: successfulSave,
-    error: failedSave,
+    success: successfulTripSave,
+    error: failedTripSave,
   })
 }
 
-const successfulSave = function successfulSave(model, response) {
-  fields.forEach((field) => {
+const successfulTripSave = function successfulSave(trip, response) {
+  tripList.add(trip);
+  addTripFields.forEach((field) => {
     $(`input[name=${field}]`).val('');
   });
   $('#status-messages ul').empty();
-  $('#status-messages ul').append(`<li>${model.get('name')} added!</li>`);
+  $('#status-messages ul').append(`<li>${trip.get('name')} added!</li>`);
   $('#status-messages').show();
 }
 
-const failedSave = function failedSave(model, response) {
+const failedTripSave = function failedSave(trip, response) {
+  trip.destroy
   $('#status-messages ul').empty();
   const errors = response.responseJSON.errors;
   for (let key in errors) {
@@ -102,5 +102,6 @@ $(document).ready( () => {
   $('#add-trip').on('click', addTripForm);
   $('#add-trip-form').on('submit', saveTrip);
   $('#status-messages').on('click', '.clear', clearMessages);
+  tripList.on('update', loadTrips);
   tripList.fetch();
 });
