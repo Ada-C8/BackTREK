@@ -6,6 +6,7 @@ import _ from 'underscore';
 import './css/foundation.css';
 import './css/style.css';
 
+let tripTemplate = _.template($('#trip-template').html());
 
 $(document).ready( () => {
 
