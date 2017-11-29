@@ -47,9 +47,9 @@
 
   <script id="trip-template" type="text/template">
     <tr>
-      <th>
+      <td>
         <%- name %>
-      </th>
+      </td>
       <td>
         <%- continent %>
       </td>
@@ -57,10 +57,10 @@
         <%- category %>
       </td>
       <td>
-        <%- weeks %>
+        <%- weeks %> weeks
       </td>
       <td>
-        <%- cost %>
+        $<%- cost.toFixed(2) %>
       </td>
     </tr>
   </script>

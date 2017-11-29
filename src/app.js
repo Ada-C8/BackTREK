@@ -12,10 +12,20 @@ import TripList from './app/collections/trip-list';
 
 let tripTemplate;
 
-let tripList = new TripList();
+const tripList = new TripList();
+
+const render = function render(tripList) {
+  const tripListElement = $('#trip-list tbody');
+  tripList.forEach((trip) => {
+    const generatedHTML = tripTemplate(trip.attributes);
+    tripListElement.append(generatedHTML);
+  });
+};
 
 $(document).ready( () => {
   tripTemplate = _.template($('#trip-template').html());
   tripList.fetch();
-  console.log(tripList);
+  render(tripList);
+
+  tripList.on('update', render);
 });
