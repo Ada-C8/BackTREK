@@ -39,6 +39,7 @@ const events = {
     });
   },
   showTrip(id) {
+
     const $showTrip = $('#show_trip');
     $showTrip.empty();
 
@@ -65,7 +66,11 @@ $(document).ready( () => {
   $('#all_trips_section tr').click(events.showTrip);
 
   $('#all_trips_section').on('click', 'tr', function() {
+    $('.current-select-row').removeClass('current-select-row');
     const tripID = $(this).attr('data-id');
+    console.log(this);
+    $(this).addClass('current-select-row');
+
     // console.log(tripID);
     events.showTrip(tripID);
   });

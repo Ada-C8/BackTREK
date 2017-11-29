@@ -1,2 +1,7 @@
 
 /* Your styles go here! */
+
+.current-select-row, .current-select-row:nth-of-type(even), .current-select-row:nth-of-type(odd) {
+  background-color: darkgrey;
+  color: white;
+}
