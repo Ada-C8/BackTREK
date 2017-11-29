@@ -7,9 +7,37 @@
 </head>
 <body>
   <header>
-
+    <a id='load-trips' href='#'>Show All Trips</a>
   </header>
   <main>
+
+    <!-- SUCCESS AND ERROR MESSAGES HERE -->
+    <section id="messages">
+      <ul>
+      </ul>
+    </section>
+    <!-- END ERROR AND SUCCESS MESSAGES -->
+
+    <!-- TABLE RENDERS ALL TRIPS  -->
+    <table>
+      <thead>
+        Table head here
+      </thead>
+      <tbody id='trip-list'>
+        <script type="text/template" id="trip-list-template">
+          <tr class="trip">
+            <td><%- id %></td>
+            <td><%- name %></td>
+            <td><%- category %></td>
+            <td><%- continent %></td>
+            <td><%- weeks %></td>
+            <td><%- cost %></td>
+          </tr>
+        </script>
+      </tbody>
+    </table>
+
+    <!-- END TRIP LIST TABLE  -->
 
   </main>
   <footer>
