@@ -46,7 +46,7 @@
   </footer>
 
   <script id="trip-template" type="text/template">
-    <tr>
+    <tr id="<%- id %>" class="trip-row">
       <td>
         <%- name %>
       </td>
@@ -64,6 +64,14 @@
       </td>
     </tr>
   </script>
+
+  <script id="trip-detail-template" type="text/template">
+    <td colspan="5" class="trip-details">
+      <h5>hi</h5>
+      <strong>hiii</strong>
+    </td>
+  </script>
+
   <script src="app.bundle.js" type="text/javascript"></script>
 </body>
 </html>
