@@ -33,28 +33,29 @@
 </footer>
 <script src="app.bundle.js" type="text/javascript"></script>
 <script type="text/template" id="trip-template">
-  <li>
+  <li id="<%-id%>">
     <ul id="currentTrip">
-      <li id="<%-id%>">
-        <%- name %>
+      <li>
+        <h3><%- name %></h3>
       </li>
       <li>
-        <%- continent %>
+        <strong>Continent:</strong> <%- continent %>
       </li>
       <li>
-        <%- category %>
+        <strong>Category:</strong> <%- category %>
       </li>
       <li>
-        <%- weeks %>
+        <strong>Weeks:</strong> <%- weeks %>
       </li>
       <li>
-        <%- cost %>
+        <strong>Cost:</strong> <%- cost %>
       </li>
-      <li class="current-trip">
-        <%- about %>
+      <li class="details-<%-id%> hide">
+        <strong>Details:</strong> <%- about %>
       </li>
     </ul>
-    <button class="<%-id%>"> show details </button>
+    <button class=" button button-<%-id%>"> Show details </button>
+    <button class=" button button-<%-id%> hide"> Hide details </button>
   </li>
 
 </script>

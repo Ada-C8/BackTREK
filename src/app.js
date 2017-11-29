@@ -53,7 +53,9 @@ const render = function render(tripList) {
       const tripHTML = tripTemplate(currentTrip.attributes);
       let id = currentTrip.get('id')
       $('#trip-list').append(tripHTML);
-      $(`.current-trip`).hide()
+      console.log(`.current-trip-${id}`)
+      // $(`.details ${id}`).ahide()
+      // $(`.hide ${id}`).hide()
     });
   });
 };
@@ -88,10 +90,13 @@ $(document).ready( () => {
   // $('main').html('<h1>Hello World!</h1>');
   // $('trip').append(trip);
   render(tripList)
-  $('#trip-list').on('click', 'li',  function(event) {
-    console.log(event.target.id)
-    let id = event.target.id
-    $(`.current-trip`).show()
+
+  $('#trip-list').on('click', 'button',  function(event) {
+    console.log(event.target.parentElement.id);
+    let id = event.target.parentElement.id;
+    $(`.details-${id}`).toggleClass('hide');
+    $(`.button-${id}`).toggleClass('hide');
+    // $(`.close-${id}`).toggleClass('hide');
   });
   // let atrip = new Trip({
   //    id: 1,
