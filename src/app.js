@@ -21,14 +21,14 @@ const renderTrips = function renderTrips(tripList) {
   tripList.forEach((trip) => {
     $('#trip-list').append(tripTemplate(trip.attributes));
   });
-  $('#trip-list').show();
+  $('#trips-table').show();
 
 
 };
 
 let singleTripTemplate;
 const renderOneTrip = function renderOneTrip(id) {
-  $('#trip-list').hide();
+  $('#trips-table').hide();
   $('#trip-info').empty();
   $('#trip-info').show();
 
@@ -41,12 +41,87 @@ const renderOneTrip = function renderOneTrip(id) {
   });
 };
 
+const tripFields = ['name', 'cost', 'weeks', 'continent', 'about', 'category']
+
+const events = {
+  addTrip(event) {
+    event.preventDefault();
+    const tripData = {};
+    tripFields.forEach( (field) => {
+      console.log(field)
+      let val = $(`input[name=${field}]`).val();
+      if (field === 'cost') {
+        val = parseFloat(val);
+      }
+      if (field === 'weeks') {
+        val = parseInt(val);
+      }
+      if (val != '') {
+        tripData[field] = val;
+      }
+      console.log(val);
+    });
+
+    const trip = new Trip(tripData);
+    trip.save({}, {
+      url: 'https://ada-backtrek-api.herokuapp.com/trips/new',
+      success: events.successfulSave,
+      error: events.failedSave
+    });
+
+  },
+
+  // sortBooks(event) {
+  //   console.log(event);
+  //   console.log(this);
+  //   const classes = $(this).attr('class').split(/\s+/);
+  //
+  //   bookList.comparator = classes[1];
+  //
+  //   if (classes.includes('current-sort-field')) {
+  //     $(this).removeClass('current-sort-field');
+  //     bookList.set(bookList.models.reverse());
+  //     render(bookList);
+  //
+  //   } else {
+  //     $('.current-sort-field').removeClass('current-sort-field');
+  //     $(this).addClass('current-sort-field');
+  //     bookList.sort();
+  //   };
+  // },
+
+  successfulSave(trip, response){
+    console.log('success!');
+    console.log(trip);
+    console.log(response);
+    $('#status-messages ul').empty();
+    $('#status-messages ul').append(`<li>${trip.get('name')} added!</li>`);
+    $('#status-messages ul').show();
+    // tripList.add(trip);
+  },
+
+  failedSave(trip, response) {
+    console.log('error');
+    console.log(trip);
+    console.log(response);
+    trip.destroy();
+    $('#status-messages ul').empty();
+    $('#status-messages ul').append('<li>Your book was unable to be added.</li>');
+    $('#status-messages ul').show();
+  },
+
+};
+
+
+
+
+
 $(document).ready(() => {
   tripTemplate = _.template($('#trip-template').html());
   singleTripTemplate = _.template($('#single-trip-template').html());
 
 $('.reservation-form').hide();
-$('#trip-list').hide();
+$('#trips-table').hide();
 
   $('#trip-list').on('click', 'tr', function (){
     const tripID = $(this).attr('data-id');
@@ -57,7 +132,10 @@ $('#trip-list').hide();
     renderTrips(tripList);
   });
 
-  // tripList.on('update', renderTrips, tripList);
+  $('#new-trip-form').submit(events.addTrip);
+
+
+    tripList.on('update', renderTrips, tripList);
 
 
 });

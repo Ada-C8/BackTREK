@@ -35,7 +35,7 @@ header {
   font-size: 6rem;
 }
 
-.trips, .show {
+#trips-table, .show, #new-trip-form  {
   margin-top: 3rem;
   text-align: left;
   width: 50%;
@@ -43,11 +43,11 @@ header {
   margin-left: 25%;
 }
 
-.trips, .show p {
+#trips-table, .show p {
   font-family: 'Spectral SC', serif;
 }
 
-.trips td a{
+#trips-table td a{
   float: left;
   font-style: italic;
   text-decoration: none;
