@@ -40,4 +40,6 @@ $(document).ready( () => {
     console.log('clicked on a trip');
   });
 
+  const zanzibar = new Trip({ id: 1 }).fetch();
+  console.log(zanzibar);
 });
