@@ -14,6 +14,23 @@ const tripList = new TripList();
 const TRIP_FIELDS = ["id", "name", "continent", "category", "weeks", "cost"];
 
 let tripTemplate;
+let detailsTemplate;
+
+const renderDetails = function renderDetails(trip){
+  const detailsElement = $('#trip-details');
+
+  // clears between clicks
+  // api call is really slow
+  trip.fetch({
+    success: (model) => {
+      console.log(model);
+      const generatedHTML = $(detailsTemplate(trip.attributes));
+      detailsElement.html('');
+      detailsElement.append(generatedHTML);
+    }
+  });
+
+};
 
 const render = function render(tripList) {
   // iterate through the bookList, generate HTML
@@ -24,23 +41,23 @@ const render = function render(tripList) {
   tripTableElement.html('');
 
   tripList.forEach((trip) => {
-    const generatedHTML = tripTemplate(trip.attributes);
+    const generatedHTML = $(tripTemplate(trip.attributes));
+    generatedHTML.on('click', (event) => {
+      // console.log(`clicked on ${trip}`);
+      //
+      // console.log(trip);
+      renderDetails(trip);
+
+    });
     tripTableElement.append(generatedHTML);
   });
 };
 
-// let trip = {
-//   "id":4,
-//   "name":"Egypt \u0026 Jordan Adventure",
-//   "continent":"Africa",
-//   "about":"A wide-ranging adventure showcasing the regions natural wonders and fascinating cultures, offering the perfect combination of guided excursions and free time to explore at your own pace. Our expert local leaders will share with you the archaeological and historical secrets of the ancient sites of Petra, Luxor, and the Great Pyramids of Giza. Whether its haggling in Cairos bustling bazaars or snapping a desert sunset, Egypt and Jordan will be etched into your memory like a hieroglyph.",
-//   "category":"historical",
-//   "weeks":1,
-//   "cost":855.53
-// }
 
 $(document).ready( () => {
+  detailsTemplate = _.template($('#details-template').html());
   tripTemplate = _.template($('#trip-template').html());
+
 
   // adding new models to a collection triggers an update event
   tripList.on('update', render);
