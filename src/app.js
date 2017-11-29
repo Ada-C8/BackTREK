@@ -72,6 +72,8 @@ $(document).ready(() => {
     console.log('clicked');
     let tripID = $(this).data('id');
     console.log(tripID);
+    const singleTrip = new Trip({id: tripID});
+    console.log(singleTrip.url());
   })
 
   // $('#add-trip-form').on('submit', addTripHandler);
