@@ -45,6 +45,7 @@ $(document).ready( () => {
       const thisTrip = response
       console.log(thisTrip.about)
       $('#trip-description').append(`<h2>${thisTrip.name}</h2><p>${thisTrip.about}<p>`);
+      $('#bookingForm').show();
     })
 
   })
