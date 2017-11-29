@@ -10,23 +10,9 @@ import Trip from './app/models/trip'
 import TripList from './app/collections/trip_list'
 
 
-console.log('it loaded!');
-
-const newTrip = new Trip({
-  name: "Here to There",
-  continent: "Here",
-  category: "There",
-  duration: "4",
-  cost: "45",
-})
-
-console.log(newTrip.get('name'));
-console.log(newTrip.get('cost'));
-
 let tripTemplate;
-
 let individualTripTemplate;
-
+let reportStatusTemplate;
 
 const tripList = new TripList();
 
@@ -35,24 +21,22 @@ const render = function render(tripList) {
   //iterate through the tripList, generate HTML
   //for each model and attach it to the DOM
   const tripTableElement = $('#trip-list');
-  //tripTableElement.html('')
+  tripTableElement.html('');
   //will clear out previous list when you render again
+
+  // tripList.forEach((trip) => {
+  // const genhtml = $(tripTemplate(trip.attributes));
+  // genhtml.on('click', (event) => {
+  // renderDetails(trip);
+  // });
+  // tripTable.append(genhtml);
+
   tripList.forEach((trip) => {
     const generatedHTML = tripTemplate(trip.attributes);
     console.log(`In tripList forEach, trip.attributes: ${trip.attributes}`);
     tripTableElement.append(generatedHTML);
   })
   $('#trip-table').show();
-
-  // $('.trip').on('click', function(event) {
-  //   let tripId = $(this).attr('data-id');
-  //
-  //   console.log($(this).attr('data-id'));
-  //   //get trip via tripId from tripList
-  //   tripList.get(tripId).fetch();
-  //
-  //   console.log(tripList.get(tripId));
-  // });
 
   $('.trip').on('click', function(event) {
     console.log('in the trip click');
@@ -75,21 +59,93 @@ const render = function render(tripList) {
 
           $('#individual-trip-details').show();
 
-        //   const TRIP_DETAILS = ['name', 'continent', 'category', 'weeks', 'cost', 'about'];
-        //
-        //   TRIP_DETAILS.forEach((detail) => {
-        //     individualTripTemplate(model.attributes)
-        //   })
-        //
-        //   const generatedHTML = tripTemplate(trip.attributes);
-        //   console.log(trip.attributes);
-        //   tripTableElement.append(generatedHTML);
-        // })
-        // $('#trip-table').show();
         } // function
       }); // fetch
   })
 }; //render
+
+const TRIP_FIELDS = ['name', 'about', 'continent', 'category', 'weeks', 'cost'];
+
+const readFormData = function readFormData() {
+  const tripData = {};
+  TRIP_FIELDS.forEach((field) => {
+    // select the input corresponding to the field we want
+    const inputElement = $(`#add-trip-form input[name="${ field }"]`);
+    const value = inputElement.val();
+
+    tripData[field] = value;
+
+    //TODO: ERROR HANDLING
+    // Don't take empty strings, so that Backbone can
+    // fill in default values
+    // if (value != '') {
+    //   tripData[field] = value;
+    // }
+    //
+    // inputElement.val('');
+  });
+
+  console.log("Read trip data");
+  console.log(tripData);
+
+  return tripData;
+};
+
+//TODO: ERROR HANDLING
+// const handleValidationFailures = function handleValidationFailures(errors) {
+//   // Since these errors come from a Rails server, the strucutre of our
+//   // error handling looks very similar to what we did in Rails.
+//   for (let field in errors) {
+//     for (let problem of errors[field]) {
+//       reportStatus('error', `${field}: ${problem}`);
+//     }
+//   }
+// };
+
+// Add a new status message
+const reportStatus = function reportStatus(status, message) {
+  console.log(`Reporting ${ status } status: ${ message }`);
+
+  // const statusHTML = reportStatusTemplate(trip.attributes);
+
+  const statusHTML = `<li class="${ status }">${ message }</li>`;
+
+  // note the symetry with clearStatus()
+  $('#status-messages ul').append(statusHTML);
+  $('#status-messages').show();
+};
+
+const addTripHandler = function(event) {
+  event.preventDefault();
+
+  const trip = new Trip(readFormData());
+
+  //TODO: ERROR HANDLING
+  // if (!trip.isValid()) {
+  //   handleValidationFailures(trip.validationError);
+  //   return;
+  // }
+
+  trip.save({}, {
+    success: (model, response) => {
+      console.log('Successfully saved trip!');
+      reportStatus('success', 'Successfully saved trip!');
+      tripList.add(trip);
+      $('#add-trip-form').hide();
+      reportStatus('success', 'Successfully saved trip!');
+    },
+    error: (model, response) => {
+      console.log('Failed to save trip! Server response:');
+      console.log(response);
+
+      // Server-side validations failed, so remove this bad
+      // trip from the list
+      // tripList.remove(model);
+
+      // handleValidationFailures(response.responseJSON["errors"]);
+    },
+  });
+};
 
 
 $(document).ready( () => {
@@ -98,7 +154,7 @@ $(document).ready( () => {
 
   individualTripTemplate = _.template($('#individual-trip-template').html());
 
-  // addTripFormTemplate = _.template($('#add-trip-form-template').html());
+  // reportStatusTemplate = _.template($('#report-status-template').html());
 
   // Register update listener first, to avoid the race condition
   tripList.on('update', render);
@@ -108,15 +164,14 @@ $(document).ready( () => {
     console.log('#add-trip clicked');
     // Make form available to user
     $('#add-trip-form').show();
-  });
 
-  // Listen for when user submits trip form
-  // $('#add-trip').on('click', addBookHandler);
-  // tripList.on('update', render);
+    // Listen for when user submits trip form
+    $('#add-trip-form').on('submit', addTripHandler);
+  });
 
   $('#all-trips').on('click', function() {
     console.log('#all-trip has been clicked, in event handler');
-    // When fetch gets back from the API call, it will add books
+    // When fetch gets back from the API call, it will add trips
     // to the list and then trigger an 'update' event
     tripList.fetch();
     console.log('#all-trip has been clicked, in event handler, after fetch()');

@@ -16,3 +16,8 @@
 #individual-trip-details h3 {
   text-align: center;
 }
+
+/* Styles for error section at the top */
+#status-messages {
+  display: none;
+}

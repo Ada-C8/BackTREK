@@ -13,12 +13,12 @@
     <h1>BACKTREK</h1>
       <p id="all-trips" class="button">List Trips</p>
       <p id="add-trip" class="button">Add Trip</p>
-      <!-- <section>
-        <form id="add-trip-form">
+      <section id="status-messages">
+        <ul>
+        </ul>
+      </section>
 
-        </form>
-      </section> -->
-      <section>
+      <section id="trip-form-message">
         <form id="add-trip-form">
           <label for="name">Name</label>
           <input type="text" name="name"></input>
@@ -27,16 +27,16 @@
           <input type="text" name="about"></input>
 
           <label for="continent">Continent</label>
-          <input type="number" name="continent"></input>
+          <input type="text" name="continent"></input>
 
           <label for="category">Category</label>
-          <input type="number" name="category"></input>
+          <input type="text" name="category"></input>
 
           <label for="weeks">Weeks</label>
           <input type="number" name="weeks"></input>
 
           <label for="cost">Cost</label>
-          <input type="number" name="cost"></input>
+          <input type="text" name="cost"></input>
 
           <input type="submit" value="Add Trip!" class="button"></input>
         </form>
@@ -72,7 +72,7 @@
 
   </footer>
 
-  <!-- underscore template, will get inserted in <tbody id="book-list"> -->
+  <!-- underscore templates -->
     <script type="text/template" id="trip-template">
       <tr class="trip" data-id="<%- id %>">
         <td>
@@ -110,30 +110,11 @@
       <p>
         <strong>Cost: </strong><%- cost %>
       </p>
-
     </script>
 
-    <!-- <script type="text/template" id="add-trip-form-template">
-      <label for="name">Name</label>
-      <input type="text" name="name"></input>
-
-      <label for="about">About</label>
-      <input type="text" name="about"></input>
-
-      <label for="continent">Continent</label>
-      <input type="number" name="continent"></input>
-
-      <label for="category">Category</label>
-      <input type="number" name="category"></input>
-
-      <label for="weeks">Weeks</label>
-      <input type="number" name="weeks"></input>
-
-      <label for="cost">Cost</label>
-      <input type="number" name="cost"></input>
-
-      <input type="submit" value="Add Trip!" class="button"></input>
-    </script> -->
+    <script type="text/template" id="report-status-template">
+      <li class="<%- status %>"></li>
+    </script>
 
   <script src="app.bundle.js" type="text/javascript"></script>
 </body>
