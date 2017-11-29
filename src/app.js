@@ -21,7 +21,7 @@ const loadTrips = function loadTrips(trips) {
 }
 
 $(document).ready( () => {
-  const tripTemplate = _.template($('#tripTemplate').html());
+  const tripTemplate = _.template($('#trip-template').html());
   const tripList = new TripList();
   tripList.fetch();
 
@@ -30,8 +30,8 @@ $(document).ready( () => {
   $('#tripButton').on('click',() => {
     console.log('button works');
     tripList.forEach((trip) => {
-      const newTrip = new Trip(trip);
-      const generatedHTML = tripTemplate(newTrip);
+      // const newTrip = new Trip(trip);
+      const generatedHTML = tripTemplate(trip.attributes);
       $('#tripSection').append($(generatedHTML));
     });
   });

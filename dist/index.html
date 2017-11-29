@@ -19,7 +19,6 @@
           <thead>
             <th> Name </th>
             <th> Destination </th>
-            <th> Continent </th>
             <th> Weeks </th>
             <th> Cost </th>
           </thead>
@@ -28,11 +27,10 @@
         </table>
     </section>
 
-    <script type='text/template' id='tripTemplate'>
+    <script type='text/template' id='trip-template'>
         <tr>
+            <td> <%- id %> </td>
             <td> <%- name %> </td>
-            <td> <%- destination %> </td>
-            <td> <%- continent %> </td>
             <td> <%- weeks %> </td>
             <td> <%- cost %> </td>
         </tr>
