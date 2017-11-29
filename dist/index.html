@@ -2,19 +2,101 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>My JavaScript App</title>
+  <title>BackTREK</title>
+  <link href="https://fonts.googleapis.com/css?family=PT+Sans+Narrow|PT+Serif|Permanent+Marker" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
   <header>
-
+    <section class="float-right">
+      <button class='button' id="add-trip">Add A Trip!</button>
+    </section>
+    <h1>BackTREK</h1>
   </header>
   <main>
+    <article class="row">
 
+      <section class="columns small-12 large-6">
+        <section>
+          <button class='button' id="show-trips">TREK!</button>
+        </section>
+        <section id="sorting">
+
+        </section>
+        <section id="trip-table">
+          <table>
+            <thead>
+              <th class="sort name">Name</th>
+              <th class="sort continent">Continent</th>
+              <th class="sort category">Category</th>
+              <th class="sort weeks">Trip Length</th>
+              <th class="sort cost">Cost</th>
+            </thead>
+            <tbody id="trip-list">
+              <!-- append here -->
+            </tbody>
+          </table>
+        </section>
+      </section>
+
+      <section class="columns small-12 large-6">
+        <section id="show-trip">
+
+        </section>
+        <section id="reservation">
+
+        </section>
+
+      </section>
+
+    </article>
   </main>
   <footer>
 
   </footer>
+  <script type="text/template" id="trip-list-template">
+      <tr class="trip-item" id=<%- id %>>
+        <td>
+          <%- name %>
+        </td>
+        <td>
+          <%- continent %>
+        </td>
+        <td>
+          <%- category %>
+        </td>
+        <td>
+          <%- weeks %>
+        </td>
+        <td>
+          <%- cost %>
+        </td>
+      </tr>
+    </script>
+
+    <script type="text/template" id="trip-template">
+        <section class="trip" id="">
+          <h2><%- name %></h2>
+          <ul>
+            <li><i class="fa fa-plane" aria-hidden="true"></i>
+              <%- continent %>
+            </li>
+            <li><i class="fa fa-photo" aria-hidden="true"></i>
+              <%- category %>
+            </li>
+            <li><i class="fa fa-clock-o" aria-hidden="true"></i>
+              <%- weeks %>
+            </li>
+            <li><i class="fa fa-money" aria-hidden="true"></i>
+              <%- cost %>
+            </li>
+          </ul>
+          <p>
+            <%- about %>
+          </p>
+        </section>
+      </script>
   <script src="app.bundle.js" type="text/javascript"></script>
 </body>
 </html>
