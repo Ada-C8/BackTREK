@@ -25,6 +25,9 @@ console.log(newTrip.get('cost'));
 
 let tripTemplate;
 
+let individualTripTemplate;
+
+
 const tripList = new TripList();
 
 // render html for tripList
@@ -36,7 +39,7 @@ const render = function render(tripList) {
   //will clear out previous list when you render again
   tripList.forEach((trip) => {
     const generatedHTML = tripTemplate(trip.attributes);
-    console.log(trip.attributes);
+    console.log(`In tripList forEach, trip.attributes: ${trip.attributes}`);
     tripTableElement.append(generatedHTML);
   })
   $('#trip-table').show();
@@ -50,6 +53,7 @@ const render = function render(tripList) {
   //
   //   console.log(tripList.get(tripId));
   // });
+
   $('.trip').on('click', function(event) {
     console.log('in the trip click');
 
@@ -65,11 +69,34 @@ const render = function render(tripList) {
 
     //fetch returns a hash, make a template that you then populate with variable.name
     let trip = tripList.get(tripId)
-        trip.fetch({
-          success: function(model) {
-            console.log(`in the fetch and about is: ${model.get('about')}`);
-          } // function
-        }); // fetch
+      trip.fetch({
+        success: function(model) {
+          console.log(`in the fetch and about is: ${model.get('about')}`);
+          console.log(`model attributes: ${model.get('attributes')}`);
+
+          const individualtripListElement = $('#individual-trip-details');
+
+          individualtripListElement.html('') //will clear out previous list when you render again
+
+          const generatedHTMLTripDetails = individualTripTemplate(model.attributes);
+          individualtripListElement.append(generatedHTMLTripDetails);
+
+          $('#individual-trip-details').show();
+
+        //
+        //   const TRIP_DETAILS = ['name', 'continent', 'category', 'weeks', 'cost', 'about'];
+        //
+        //   TRIP_DETAILS.forEach((detail) => {
+        //     individualTripTemplate(model.attributes)
+        //   })
+        //
+        //   const generatedHTML = tripTemplate(trip.attributes);
+        //   console.log(trip.attributes);
+        //   tripTableElement.append(generatedHTML);
+        // })
+        // $('#trip-table').show();
+        } // function
+      }); // fetch
   })
 }; //render
 
@@ -77,6 +104,10 @@ const render = function render(tripList) {
 $(document).ready( () => {
   // $('main').html('<h1>Hello World!</h1>');
   tripTemplate = _.template($('#trip-template').html());
+
+  individualTripTemplate = _.template($('#individual-trip-template').html());
+
+  $('')
 
   tripList.on('update', render);
 
