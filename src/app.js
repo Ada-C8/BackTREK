@@ -9,33 +9,50 @@ import './css/style.css';
 import Trip from './app/models/trip';
 import TripList from './app/collections/trip_list';
 
+
 const tripList = new TripList();
 tripList.fetch();
 
-console.log('here is the triplist');
-
-console.log(tripList);
-
 let tripTemplate;
 
-const render = function render(tripList) {
-  console.log(tripList);
+const renderTrips = function renderTrips(tripList) {
   const $tripList = $('#trip-list');
   $tripList.empty();
   tripList.forEach((trip) => {
-    console.log(trip)
     $tripList.append(tripTemplate(trip.attributes));
   });
 };
 
+// let singleTripTemplate;
+
+// let trip;
+
+// const renderOneTrip = function renderOneTrip() {
+//   trip = new Trip();
+//   trip.fetch();
+//   console.log(trip);
+//   const $tripInfo = $('#trip-info');
+//   $tripInfo.empty();
+//   $tripInfo.append(singleTripTemplate(trip.attributes));
+// };
+
 $(document).ready(() => {
   tripTemplate = _.template($('#trip-template').html());
+  // singleTripTemplate = _.template($('#single-trip-template').html());
+
 
 $('.reservation-form').hide();
 
   // $('.view-all-trips').on('click', function(){
-    tripList.on('update', render, tripList);
+    tripList.on('update', renderTrips, tripList);
+    // trip.on('update', renderOneTrip, trip);
+
+    let specialTrip = new Trip({id: 25});
+    specialTrip.fetch().done();
+    console.log(specialTrip.attributes);
   // });
+
+
 
 
 });
