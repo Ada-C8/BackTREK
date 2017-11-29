@@ -64,7 +64,6 @@ const events = {
 
     const trip = new Trip(tripData);
     trip.save({}, {
-      url: 'https://ada-backtrek-api.herokuapp.com/trips/new',
       success: events.successfulSave,
       error: events.failedSave
     });
