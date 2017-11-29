@@ -3,18 +3,27 @@
 <head>
   <meta charset="utf-8">
   <title>My JavaScript App</title>
+  <script src="app.bundle.js" type="text/javascript"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
   <header>
-
+    <h1>BackTrek</h1>
   </header>
   <main>
-
+    <ul id="trip-list"></ul>
   </main>
+
+    <script id="trip-template" type="text/template">
+      <section>
+        <h2>
+        <%- name %>
+        </h2>
+      </section>
+
+    </script>
   <footer>
 
   </footer>
-  <script src="app.bundle.js" type="text/javascript"></script>
 </body>
 </html>
