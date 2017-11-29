@@ -1,3 +1,7 @@
+[type='text'] {
+  width: initial;
+}
+
 .show {
   background-color: pink;
 }
