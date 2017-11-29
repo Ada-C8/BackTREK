@@ -1,2 +1,13 @@
 
 /* Your styles go here! */
+/*a[href=#add-trip-form] {
+  color: white;
+}*/
+
+/*header > button > a {
+  color: white;
+}*/
+
+a[href] {
+  color: white;
+}
