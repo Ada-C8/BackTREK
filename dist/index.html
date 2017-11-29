@@ -19,15 +19,7 @@
     <section class="trips row">
       <button id="trips" class="button large blue white-text" type="button" name="button">Find a Trip</button>
       <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Continent</th>
-            <th>Category</th>
-            <th>Duration</th>
-            <th>Cost</th>
-          </tr>
-        </thead>
+        <thead></thead>
         <tbody id="trip-list"></tbody>
       </table>
       <div class="back"></div>
@@ -53,7 +45,19 @@
       <td><%- category %></td>
       <td><%- weeks %></td>
       <td><%- cost %></td>
-    </tr>  
+    </tr>
+  </script>
+  <script type="text/template" id="back-button">
+    <button class="button white-text float-right">Go back</button>
+  </script>
+  <script type="text/template" id="tripsHead">
+    <tr>
+        <th>Name</th>
+        <th>Continent</th>
+        <th>Category</th>
+        <th>Duration</th>
+        <th>Cost</th>
+      </tr>
   </script>
 </body>
 </html>
