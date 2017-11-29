@@ -7,14 +7,56 @@
 </head>
 <body>
   <header>
+    <h2>BackTREK</h2>
+    <nav>
+      <button id="all-trips" class="button">ALL TRIPS</button>
+      <button href="index.html" class="button">HOME</button>
+    </nav>
 
   </header>
+
   <main>
 
+    <section id="all-trips-table" class="columns large-8 small-12">
+      <h2>Trips</h2>
+
+      <table>
+        <thead>
+          <th class="sort author">Name</th>
+          <th class="sort continent">Continent</th>
+          <th class="sort category">Category</th>
+          <th class="sort weeks">Weeks</th>
+          <th class="sort cost">Cost</th>
+        </thead>
+        <tbody id="trip-list">
+        </tbody>
+      </table>
+    </section>
+
   </main>
+
   <footer>
 
   </footer>
+  <script type="text/template" id="trip-template">
+    <tr class="trip">
+      <td>
+        <%- name %>
+      </td>
+      <td>
+        <%- continent %>
+      </td>
+      <td>
+        <%- category %>
+      </td>
+      <td>
+        <%- weeks %>
+      </td>
+      <td>
+        <%- cost %>
+      </td>
+    </tr>
+  </script>
   <script src="app.bundle.js" type="text/javascript"></script>
 </body>
 </html>
