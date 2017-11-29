@@ -74,19 +74,45 @@
 
     </article>
 
-    <!-- Trigger/Open The Modal -->
-    <button id="myBtn">Open Modal</button>
-    
     <!-- The Modal -->
     <div id="myModal" class="modal">
 
-      <!-- Modal content -->
       <div class="modal-content">
         <span class="close">&times;</span>
-        <p>Some text in the Modal..</p>
+        <h3>Add A Trip!</h3>
+        <form action='https://ada-backtrek-api.herokuapp.com/trips/new' method="post">
+          <section>
+            <label>Name</label>
+            <input type="text" id="name" name="name"></input>
+          </section>
+          <section>
+            <label>Continent</label>
+            <input type="text" id="continent" name="continent"></input>
+          </section>
+          <section>
+            <label>Category</label>
+            <input type="text" id="category" name="category"></input>
+          </section>
+          <section>
+            <label>Trip Length</label>
+            <input type="number" id="weeks" name="weeks"></input>
+          </section>
+          <section>
+            <label>Cost</label>
+            <input type="number" step="0.01" id="cost" name="cost"></input>
+          </section>
+          <section>
+            <label>About</label>
+            <textarea type="text" id="about" name="about"></textarea>
+          </section>
+          <section>
+            <button type="submit" class="button">ADD!</button>
+          </section>
+        </form>
       </div>
 
     </div>
+
   </main>
   <footer>
 

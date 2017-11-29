@@ -35,6 +35,7 @@ const events = {
       $('#show-trip').html(tripTemplate(trip.attributes));
       console.log('YAY');
     }).fail(() => {
+      $('#show-trip').html('<p>Looks like that trip left without you...</p>');
       console.log('OOPS');
     });
   },
@@ -66,7 +67,7 @@ console.log('it loaded!');
 var modal = document.getElementById('myModal');
 
 // Get the button that opens the modal
-var btn = document.getElementById("myBtn");
+var btn = document.getElementById("add-trip");
 
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
@@ -94,6 +95,11 @@ $(document).ready( function() {
 
   // On Start
   tripList.fetch();
+  //   {}, {
+  //   error: () => {
+  //     $('#trip-table').html('<p>All the trips are on vacation</p>')
+  //   }
+  // });
   $('#sorting').hide();
   $('#trip-table').hide();
   $('#reservation').hide();
