@@ -12,7 +12,6 @@ const tripList = new TripList();
 let tripTemplate;
 let tripDetails;
 let registrationTemplate;
-// let addTripTemplate;
 
 const render = function render(event) {
   const tableElement = $('#trip-list');
@@ -46,6 +45,7 @@ const showTripDetails = function showTripDetails(event) {
     },
     failure: (model, response) => {
       console.log('trip fetch failure');
+      reportStatus('success', 'Trip temporarilty unavailable');
     }
   });
 };
@@ -68,42 +68,54 @@ const addTripHandler = function(event) {
 
   const tripData = {};
   ['name', 'continent', 'category', 'cost', 'weeks', 'about'].forEach((field) => {
-    // select the input corresponding to the field we want
     const inputElement = $(`#add-trip-form input[name="${ field }"]`);
     const value = inputElement.val();
     tripData[field] = value;
 
     inputElement.val('');
   });
-  console.log(tripData);
 
   const trip = tripList.add(tripData);
 
   trip.save({}, {
     success: (model, response) => {
       console.log('Successfully saved trip!');
-      // reportStatus('success', 'Successfully saved book!');
+      reportStatus('success', 'Successfully saved book!');
+      $('#add-trip').hide();
+
     },
     error: (model, response) => {
-      console.log('Failed to save book! Server response:');
+      console.log('Failed to save trip! Server response:');
       console.log(response);
-      // const errors = response.responseJSON["errors"];
-      // for (let field in errors) {
-      //   for (let problem of errors[field]) {
-      //     reportStatus('error', `${field}: ${problem}`);
-      //   }
-      // }
+      const errors = response.responseJSON["errors"];
+      for (let field in errors) {
+        for (let problem of errors[field]) {
+          reportStatus('error', `${field}: ${problem}`);
+        }
+      }
     },
   });
+
 };
 
 
 const loadModal = function loadModal(event) {
-  // console.log(event);
-  // console.log(this);
   $('#add-trip').show();
+};
 
+const reportStatus = function reportStatus(status, message) {
+  console.log(`Reporting ${ status } status: ${ message }`);
 
+  // Should probably use an Underscore template here.
+  const statusHTML = `<li class="${ status }">${ message }</li>`;
+
+  $('#status-messages ul').append(statusHTML);
+  $('#status-messages').show();
+};
+
+const clearStatus = function clearStatus() {
+  $('#status-messages ul').html('');
+  $('#status-messages').hide();
 };
 
 $(document).ready( () => {
@@ -114,7 +126,7 @@ $(document).ready( () => {
   tripDetails = _.template($('#trip-info').html());
   tripTemplate = _.template($('#trip-template').html());
   registrationTemplate = _.template($('#registration-form').html());
-  // addTripTemplate = _.template($('add-trip-template').html());
+
 
   $('#load').on('click', showTrips);
 
@@ -131,4 +143,6 @@ $(document).ready( () => {
   $('#add-trip-form').on('submit', addTripHandler);
 
   $('#add-trip-button').on('click', loadModal);
+
+  $('#status-messages button.clear').on('click', clearStatus);
 });
