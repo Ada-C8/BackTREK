@@ -176,6 +176,27 @@ $(document).ready(() => {
     alert("Clikced button");
   });
 
+  $('#trip-filter-form').on('submit', function(event) {
+    event.preventDefault();
+  });
+
+  $('#trip-filter').on('keyup', function(event) {
+
+    //$ here is syntax used to indicate got this from jquery
+    let $filter = $(this);
+    let filteredTrips = _.filter(tripList.models, (trip) => {
+      let filterType = "continent";
+
+      if (filterType === "continent" || filterType === "name" || filterType === "category" ) {
+        return trip.get(filterType).toLowerCase().includes($filter.val().toLowerCase());
+      }
+      else {
+        return trip.get(filterType) <= parseInt($filter.val());
+      }
+    });
+
+    renderTrips(filteredTrips);
+  });
 
 });
 
