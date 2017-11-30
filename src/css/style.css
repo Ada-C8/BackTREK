@@ -1,5 +1,9 @@
 
 /* Your styles go here! */
+.button {
+  border-radius: 5px;
+}
+
 .trip:hover {
   background: #ccc;
   cursor: pointer;
@@ -15,7 +19,6 @@
 
 #create-trip-btn{
   margin: 40px;
-  border-radius: 5px;
 }
 
 header{
