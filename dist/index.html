@@ -10,7 +10,8 @@
 
   </header>
   <main>
-
+<section id="oneTrip">
+</section>
     <section class="columns large-8 small-12">
       <h2>Trip Options!</h2>
 
@@ -28,8 +29,8 @@
     </section>
 
     <script type="text/template" id="trip-template">
-  <tr class="trip">
-    <td>
+  <tr class="trip" id="<%- `trip${id }`%>" >
+    <td >
       <%- name %>
     </td>
     <td>
