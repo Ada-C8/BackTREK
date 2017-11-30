@@ -19,22 +19,22 @@
       <h2>Add a New Trip</h2>
       <form id="add-trip-form">
         <label for="title">Name</label>
-        <input type="text" name="name"></input>
+        <input type="text" name="name" required></input>
 
         <label for="category">Category</label>
-        <input type="text" name="category"></input>
+        <input type="text" name="category" required></input>
 
         <label for="continent">Continent</label>
-        <input type="text" name="continent"></input>
+        <input type="text" name="continent" required></input>
 
         <label for="weeks">Weeks</label>
-        <input type="number" name="weeks"></input>
+        <input type="number" name="weeks" min="0" required></input>
 
         <label for="cost">Cost</label>
-        <input type="number" name="cost"></input>
+        <input type="number" name="cost" min="0" required></input>
 
         <label for="about">About</label>
-        <input type="text" name="about"></input>
+        <input type="text" name="about" required></input>
 
         <input type="submit" value="Submit Trip!" class="button"></input>
       </form>
