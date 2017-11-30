@@ -1,2 +1,6 @@
 
 /* Your styles go here! */
+.trip:hover {
+  background: #ccc;
+  cursor: pointer;
+}
