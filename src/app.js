@@ -22,6 +22,11 @@ const clearStatus = function clearStatus() {
   $('#status-messages').hide();
 };
 
+//clearAddTripForm
+const clearAddTripForm = function clearAddTripForm() {
+  $('#trip-form-message').hide();
+}
+
 // render html for tripList
 const render = function render(tripList) {
   //iterate through the tripList, generate HTML
@@ -207,7 +212,7 @@ const addTripHandler = function(event) {
     success: (model, response) => {
       console.log('Successfully saved trip!');
       tripList.add(trip);
-      $('#add-trip-form').hide();
+      $('#trip-form-message').hide();
       reportStatus('success', 'Successfully saved trip!');
     },
     error: (model, response) => {
@@ -258,4 +263,6 @@ $(document).ready( () => {
 
 
   $('#status-messages button.clear').on('click', clearStatus);
+
+  $('#trip-form-button').on('click', clearAddTripForm);
 });
