@@ -11,9 +11,36 @@
   </header>
 
   <main>
-    <div id = 'about'>
 
+    <div>
+      <button type="button" name="button" class = "button" id = "add-trip">Add A Trip</button>
     </div>
+
+    <div id = myModal class="modal">
+      <span class="close">&times;</span>
+      <form id = "add-trip-form" class="modal-content">
+        <label for="name">Name</label>
+        <input type="text" name="name"></input>
+
+        <label for="continent">Continent</label>
+        <input type="text" name="continent"></input>
+
+        <label for="category">Category</label>
+        <input type="text" name="category"></input>
+
+        <label for="weeks">Weeks</label>
+        <input type="number" name="weeks"></input>
+
+        <label for="cost">Cost</label>
+        <input type="number" name="cost"></input>
+
+        <label for="about">About</label>
+        <input type="text" name="about"></input>
+
+        <input type="submit" value="Make a trip" class="button"></input>
+      </form>
+    </div>
+
     <section id = "status-messages">
       <button type="button" name="button"></button>
 
@@ -24,7 +51,9 @@
 
     </aside>
 
-    <section class="columns large-8 small-12">
+
+
+    <section class="table columns large-6 small-12">
       <h2>Trips!</h2>
 
       <table>
@@ -32,11 +61,19 @@
           <th class="sort name">Name</th>
           <th class="sort continent">Continent</th>
           <th class="sort weeks">Duration</th>
+          <th class="sort cost">Cost</th>
         </thead>
         <tbody id="trip-list">
         </tbody>
       </table>
     </section>
+
+
+    <div id = 'about' class = "columns large-6 small-12">
+
+    </div>
+
+
 
   </main>
   <footer>
@@ -64,9 +101,17 @@
 
   <script type="text/template" id="about-template">
     <div class = "about" >
-       <p>
-         <%- about %>
-       </p>
+      <p>
+        <%- about %>
+      </p>
+      <form id = "add-reservation-form">
+        <label for="name">Name:</label>
+        <input id="text" type="text" name="name" value=""></input>
+        <label for="name">Email:</label>
+        <input id="text" type="text" name="email" value=""></input>
+        <input type="hidden" value= "<%- id %>" name="tripId"> <input/>
+        <input class="button" id="submit" type="submit" name="submit" value="Reserve">
+      </form>
     </div>
   </script>
 
