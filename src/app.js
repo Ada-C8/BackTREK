@@ -10,27 +10,9 @@ import './css/style.css';
 
 console.log('it loaded!');
 
-// const trip = new Trip({
-//   id: 4,
-//   name: 'Cairo to Zanzibar',
-//   continent: 'Africa',
-//   category: 'everything',
-//   weeks: 5,
-//   cost: 9599.99
-// });
-
-// console.log(trip.attributes)
-// console.log(trip.get('id'))
-// console.log(trip.get('name'))
-
 const tripList = new TripList();
 
-// tripList.fetch().done(function() {
-//   console.log('done');
-//   render(tripList);
-//   let currentTrip = new Trip();
-// });
-
+const TRIP_FIELDS = [ 'id', 'name', 'continent', 'category', 'weeks','cost', 'about']
 
 const render = function render(tripList) {
   console.log(tripList);
@@ -44,9 +26,6 @@ const render = function render(tripList) {
       $('#trip-list').append(tripHTML);
       let id = currentTrip.get('id')
       console.log(`.current-trip-${id}`);
-
-      // $(`.details ${id}`).ahide()
-      // $(`.hide ${id}`).hide()
     });
   });
 };
@@ -64,14 +43,70 @@ const reserveFormUpdate = function (event){
 
   let currentTrip = new Trip({id: id});
   currentTrip.fetch().done(function() {
-    const nameTemplate =  _.template($('#name-template').html());
-    console.log(nameTemplate)
-    const nameHTML = nameTemplate(currentTrip.attributes);
-    console.log(nameHTML)
-    $('.form-container').removeClass('hide');
-    $('#trip-name').text(nameHTML);
+    const formTemplate =  _.template($('#form-template').html());
+    console.log(formTemplate);
+    const formHTML = formTemplate(currentTrip.attributes);
+    // $('.form-container').removeClass('hide');
+    $('#form-container').html(formHTML);
   });
 }
+
+const addTripHandler = function(event){
+  event.preventDefault();
+  const trip = new Trip(readFormData());
+  console.log('I am getting ready to make a trip!')
+  console.log(trip.attributes)
+  tripList.add(trip);
+  trip.save({}, {
+    success: (model, response) => {
+      console.log('Successfully saved trip!');
+      reportStatus('success', 'Successfully saved book!');
+    },
+    error: (model, response) => {
+      console.log('Failed to save trip! Server response:');
+      console.log(response);
+      tripList.remove(model);
+
+       handleValidationFailures(response.responseJSON["errors"]
+      );
+    },
+  });
+};
+
+const handleValidationFailures = function handleValidationFailures(errors) {
+  for (let field in errors) {
+    for (let problem of errors[field]) {
+      reportStatus('error', `${field}: ${problem}`);
+    }
+  }
+};
+
+// Add a new status message
+const reportStatus = function reportStatus(status, message) {
+  console.log(`Reporting ${ status } status: ${ message }`);
+  // Should probably use an Underscore template here.
+  const statusHTML = `<li class="${ status }">${ message }</li>`;
+  // note the symetry with clearStatus()
+  $('#status-messages ul').append(statusHTML);
+  $('#status-messages').show();
+};
+
+const readFormData = function readFormData() {
+  const tripData = {};
+  TRIP_FIELDS.forEach((field) => {
+    // select the input corresponding to the field we want
+    const inputElement = $(`#add-trip-form input[name="${ field }"]`);
+    const value = inputElement.val();
+
+    if (value != '') {
+      tripData[field] = value;
+    }
+    inputElement.val('');
+  });
+  console.log("Read trip data");
+  console.log(tripData.attributes);
+  return tripData;
+};
 
 
 
@@ -85,5 +120,7 @@ $(document).ready( () => {
   $('#trip-list').on('click', 'button', tripDetailHandler);
 
   $('#trip-list').on('click', '.reserve', reserveFormUpdate)
+  // $('.new-trip-button').on('click', addReservationHandler);
 
+  $('#add-trip-form').on('submit', addTripHandler)
 });
