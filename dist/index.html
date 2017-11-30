@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <title>My JavaScript App</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>https://cdnjs.cloudflare.com/ajax/libs/foundation/6.2.4/plugins/foundation.reveal.js</script>
 </head>
 <body>
   <header>
@@ -16,13 +17,11 @@
   </header>
 
   <main>
-
-    <section id="all-trips-table" class="columns large-8 small-12">
+    <section id="all-trips-table" class="columns large-7 small-12">
       <h2>Trips</h2>
-
       <table>
         <thead>
-          <th class="sort author">Name</th>
+          <th class="sort name">Name</th>
           <th class="sort continent">Continent</th>
           <th class="sort category">Category</th>
           <th class="sort weeks">Weeks</th>
@@ -32,6 +31,11 @@
         </tbody>
       </table>
     </section>
+
+    <aside class="columns large-5 small-12" id="single-trip-details">
+
+
+    </aside>
 
   </main>
 
@@ -57,6 +61,45 @@
       </td>
     </tr>
   </script>
+
+  <script type="text/template" id="single-trip-template">
+    <h2><%- name %></h2>
+    <h6>ID: <%- id %></h6>
+
+    <h6>Name: <%- name %></h6>
+
+    <h6>Continent: <%- continent %></h6>
+
+    <h6>Category: <%- category %></h6>
+
+    <h6>Weeks: <%- weeks %></h6>
+
+    <h6>Cost: <%- cost %></h6>
+
+    <h5>About:</h5>
+    <p><%- about %></p>
+
+    <button id="reserve-trip-button" class="button expanded"><strong>MAKE A RESERVATION</strong></button>
+    <section id="reservation-form">
+      <form id="reservation" data-id="${response.id}">
+
+        <label for="name">Name:</label>
+        <input type="text" name="name" placeholder="Firstname Lastname" required="required"></input>
+
+        <label for="age">Age:</label>
+        <input type="number" name="age" required="required"></input>
+
+        <label for="email">Email:</label>
+        <input type="text" name="email" required="required"></input>
+
+        <button class="button expanded" type="submit"><strong>RESERVE TRIP</strong></button>
+      </form>
+    </section>
+
+  </script>
+
+
+
   <script src="app.bundle.js" type="text/javascript"></script>
 </body>
 </html>

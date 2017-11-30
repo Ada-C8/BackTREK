@@ -39,18 +39,40 @@ const loadTrips = function loadTrips() {
   tripList.on('update', render, tripList);
 };
 
+let singleTripTemplate;
+
 const getTripDetails = function getTripDetails(attrID) {
   console.log('View Trip Row clicked');
 
   const trip = new Trip({ id: attrID });
-  trip.fetch();
+  trip.fetch({success: events.renderSingleTrip, error: events.failRenderTrip});
 
   console.log(trip)
+
+  // $('#reservation-form').hide();
+};
+
+const events = {
+  renderSingleTrip(trip) {
+    console.log('RENDERING SINGLE TRIP');
+    const $tripDetails = $('#single-trip-details');
+    //Clears the list so when you re-render it doesn't print duplicates
+    $tripDetails.empty();
+    $tripDetails.append(singleTripTemplate(trip.attributes));
+    console.log(trip.attributes);
+  },
+  failRenderTrip() {
+    console.log('FAILED TO RENDER SINGLE TRIP INFO');
+    $('#single-trip-table').append('ERROR: Trip details were not successfully loaded.');
+  }
 };
 
 $(document).ready( () => {
   $('#all-trips-table').hide();
+  $('#single-trip-details').hide();
+
   tripTemplate = _.template($('#trip-template').html());
+  singleTripTemplate = _.template($('#single-trip-template').html());
 
   // EVENTS
   // To view All Trips
@@ -61,8 +83,13 @@ $(document).ready( () => {
 
   // To view a single Trip
   $('#all-trips-table').on('click', '.trip', function() {
-    //console.log('Button trip details clicked');
+    $('#single-trip-details').show();
     let tripID = $(this).attr('data-id');
     getTripDetails(tripID);
   });
+
+  // To Show Trip Reservation Form
+  // $('#single-trip-details').on('click', '#reserve-trip-button', function() {
+  //   $('#reservation-form').show();
+  // });
 });
