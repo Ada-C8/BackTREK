@@ -1,12 +1,10 @@
 //Inline Validations
 //Validations and Error Handling for Reservations
-//Model Server side validations
 //Add drop down for continents
 //Success and error reporting
-// Add Class .failure for error reporting remove it later?
 
 //Bugs:
-//when reservation fails it will not succeed unless reclick on trip?
+//when reservation fails it will not succeed unless reclick on trip? ****
 //find better way to pass tripId from the form
 
 
@@ -40,6 +38,7 @@ const loadTrip = function loadTrip(singleTrip) {
       const generatedHTML = aboutTemplate(model.attributes)
       aboutTableElement.html('')
       aboutTableElement.append(generatedHTML);
+      //why is this automatically submitting?
       $('#add-reservation-form').on('submit', addReservationHandler);
     }
   });
@@ -63,9 +62,8 @@ const loadTrips = function loadTrips(tripList) {
   $(`th.sort.${ tripList.comparator }`).addClass('current-sort-field');
 };
 
-const addReservationHandler = function(event) {
+const addReservationHandler = function(trip) {
   event.preventDefault();
-  console.log('in addreservation handler');
 
   const reservation = new Reservation(readReservationData());
 
@@ -99,30 +97,29 @@ const addReservationHandler = function(event) {
       // console.log(response);
       // tripList.remove(model)
       //
-      handleValidationFailures(response.responseJSON["errors"]);
+      // handleValidationFailures(response.responseJSON["errors"]);
     },
 
   });
 };
 
 const readReservationData = function readReservationData() {
-  console.log('in reservation data');
   const reservationData = {};
   RESERVATION_FIELDS.forEach((field) => {
-
+    console.log(field);
     const inputElement = $(`#add-reservation-form input[name="${ field }"]`);
     const value = inputElement.val();
-
-    if (value != '') {
+    console.log(value);
+    // if (value != '') {
       reservationData[field] = value;
-    }
-
+    // }
     inputElement.val('');
   });
   console.log(reservationData);
-
   return reservationData;
 }
+
+// if field is tripId
 
 const readFormData = function readFormData() {
   const tripData = {};
@@ -138,7 +135,6 @@ const readFormData = function readFormData() {
       if (value != '') {
         tripData[field] = value;
       }
-
       inputElement.val('');
     }
     else if(field == 'weeks') {
@@ -147,17 +143,20 @@ const readFormData = function readFormData() {
       if (value != '') {
         tripData[field] = value;
       }
-
+      inputElement.val('');
+    }
+    else if(field == 'cost') {
+      const value = parseInt(inputElement.val());
+      if (value != '') {
+        tripData[field] = value;
+        console.log(tripData[field]);
+      }
       inputElement.val('');
     } else {
-
       const value = inputElement.val();
-
-
       if (value != '') {
         tripData[field] = value;
       }
-
       inputElement.val('');
     }
   });

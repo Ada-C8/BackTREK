@@ -51,6 +51,13 @@ validate(attributes) {
     errors.weeks = ['must be a number greater than 1'];
   }
 
+  if (!attributes.cost) {
+    errors.cost = ['cannot be blank'];
+  } else if (typeof attributes.cost != 'number'  ||
+  attributes.cost < 0)  {
+    errors.cost = ['must be a number greater than 1'];
+  }
+
   if (Object.keys(errors).length < 1) {
     return false;
   }
