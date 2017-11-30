@@ -21,7 +21,8 @@ const loadTrips = function loadTrips(trips) {
 }
 
 $(document).ready( () => {
-  const tripTemplate = _.template($('#trip-template').html());
+  const tripTemplate = _.template($('#tripTemplate').html());
+  const singleTripTemplate = _.template($('#singleTripTemplate').html());
   const tripList = new TripList();
   tripList.fetch();
 
@@ -34,5 +35,18 @@ $(document).ready( () => {
       const generatedHTML = tripTemplate(trip.attributes);
       $('#tripSection').append($(generatedHTML));
     });
+  });
+
+  $('#tripSection').on('click', 'tr', (e) => {
+    console.log('single trip button worked');
+    const baseURL = 'https://ada-backtrek-api.herokuapp.com/trips/'
+    $.get(`${baseURL}${e.currentTarget.id}`, (response) => {
+      console.log(response);
+      const generatedHTML = singleTripTemplate(response);
+      console.log(generatedHTML);
+      $('#singleTripSection').html(generatedHTML);
+    });
+
+
   });
 });

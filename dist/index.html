@@ -10,6 +10,19 @@
 
   </header>
   <main>
+    <section id='singleTripSection'>
+      <ul id='singleTrip'>
+      </ul>
+    </section>
+
+    <script type='text/template' id='singleTripTemplate'>
+        <li>Name: <%- name %> </li>
+        <li>Category: <%- category  %> </li>
+        <li>Continent: <%- continent %> </li>
+        <li>Weeks: <%- weeks %> </li>
+        <li>Cost: <%- cost %> </li>
+    </script>
+
     <section id='showAllTrips'>
       <button class='button' id='tripButton'>See Available Trips! </button>
     </section>
@@ -17,7 +30,7 @@
     <section>
         <table>
           <thead>
-            <th> Name </th>
+            <th> ID </th>
             <th> Destination </th>
             <th> Weeks </th>
             <th> Cost </th>
@@ -27,14 +40,20 @@
         </table>
     </section>
 
-    <script type='text/template' id='trip-template'>
-        <tr>
+    <script type='text/template' id='tripTemplate'>
+        <tr id='<%- id %>'>
             <td> <%- id %> </td>
             <td> <%- name %> </td>
             <td> <%- weeks %> </td>
             <td> <%- cost %> </td>
         </tr>
     </script>
+
+    <section class='modal'>
+      <div>
+        <p> testing </p>
+      </div>
+    </section>
   </main>
   <footer>
 
