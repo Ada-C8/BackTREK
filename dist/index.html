@@ -74,23 +74,26 @@
 
   <script id="trip-detail-template" type="text/template">
     <p class="trip-details">
-      <%- about %><br />
-      <a id="reserve-btn" class="button reserve-btn">Reserve Your Spot!</a>
+      <%- about %>
     </p>
+    <div class="reserve-holder">
+      <a id="reserve-btn" class="button reserve-btn">Reserve Your Spot!</a>
+    </div>
   </script>
 
   <script id="reserve-modal-template" type="text/template">
     <section id="reserve-modal" class="reserve modal">
       <div class="modal-shadow modal-close" id="modal-shadow">
-        <div class="modal-body small-11 medium-7 large-4 columns">
+        <div id="reservation-modal" class="modal-body small-11 medium-7 large-4 columns">
           <a class="modal-close close-btn">X</a>
           <h2>Make a Reservation</h2>
           <form id="reservation-form" class="<%- id %>">
-            <div class="reservation-form-holder small-12 columns">
+            <span class="form-messages"></span>
+            <div id="reserve-name" class="reservation-form-holder small-12 columns">
               <label for="name">Name:</label>
               <input type="text" name="name" />
             </div>
-            <div class="reservation-form-holder small-12 columns">
+            <div id="reserve-email" class="reservation-form-holder small-12 columns">
               <label for="name">Email:</label>
               <input type="text" name="email" />
             </div>
@@ -102,7 +105,6 @@
       </div>
     </section>
   </script>
-
   <script src="app.bundle.js" type="text/javascript"></script>
 </body>
 </html>

@@ -9,6 +9,7 @@ import './css/style.css';
 // Models and Collections
 import Trip from './app/models/trip';
 import TripList from './app/collections/trip-list';
+import Reservation from './app/models/reservation';
 
 let tripTemplate;
 let tripDetailTemplate;
@@ -31,7 +32,7 @@ const show = function show(e) {
     if (tripElement.hasClass('show')) {
       clearShow();
     } else {
-      const id = tripElement[0].id;
+      const id = findElementTripID(e);
       const trip = tripList.findWhere({id: 2});
       trip.fetch({
         success: () => {
@@ -49,7 +50,7 @@ const show = function show(e) {
 };
 
 const reserveModal = function reserveModal(e) {
-  const id = $(e.target).closest('li')[0].id;
+  const id = findElementTripID(e);
   const generatedHTML = $(reserveModalTemplate({'id': id}));
   const form = generatedHTML.find('#reservation-form');
   form.on('submit', submitReservation);
@@ -58,10 +59,44 @@ const reserveModal = function reserveModal(e) {
 
 const submitReservation = function submitReservation(e) {
   e.preventDefault();
-  console.log(e);
-  const formData = $(e.target).serialize();
+  $('.form-messages').html('');
+  const form = $('#reservation-form');
+  const id = form[0].classList[0];
+  // can this ID be transmitted with the form instead?
+  const formData = getFormData($(e.target), ['name', 'email']);
+  formData['tripID'] = id;
+  const newReservation = new Reservation(formData);
+  newReservation.save({}, {
+    success: (response) => {
+      formSuccess('reservation', form)
+      // $('#reservation-modal-response').html('Successfully created ');
+    },
+    error: (status, response) => {
+      const errors = ($.parseJSON(response.responseText))['errors'];
+      for(let field in errors) {
+        let errorElement = $(`#reserve-${field} > label`);
+        errorElement.addClass('has-errors');
+        errorElement.append(`<p class="error">${errors[field]}</p>`);
+      }
+    },
+  });
 };
 
+const formSuccess = function formSuccess(item, form) {
+  const messageBox = $(form.find('.form-messages'));
+  console.log(messageBox);
+  messageBox.html(`<p class="success">Successfully created ${item}!</p>`);
+  form[0].reset();
+}
+
+const getFormData = function getFormData(target, values) {
+  const formData = {};
+  values.forEach((value) => {
+    let targetElement = target.find(`[name="${ value }"]`);
+    formData[value] = targetElement.val();
+  });
+  return formData;
+};
 
 const clearShow = function clearShow() {
   $('.trip-row').removeClass('show');
@@ -73,6 +108,10 @@ const clearModal = function clearModal(e) {
     console.log('clearing modals');
     $('.modal').remove();
   }
+};
+
+const findElementTripID = function findElementTripID(e) {
+  return $(e.target).closest('li')[0].id;
 };
 
 $(document).ready( () => {
