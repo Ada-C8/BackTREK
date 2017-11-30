@@ -13,9 +13,19 @@
     <section id='singleTripSection'>
       <ul id='singleTrip'>
       </ul>
+      <form id='reservationForm' class='columns small-6 large-6'>
+        <label for='name'>Name:</label>
+        <input type='text' name='name'></input>
+
+        <label for='email'>Email:</label>
+        <input type='text' name='email'></input>
+
+        <input id='completeReservation' type='submit' value='Confirm booking'></input>
+      </form>
     </section>
 
     <script type='text/template' id='singleTripTemplate'>
+        <li id='<%- id %>'>ID: <%- id %> </li>
         <li>Name: <%- name %> </li>
         <li>Category: <%- category  %> </li>
         <li>Continent: <%- continent %> </li>
@@ -25,6 +35,31 @@
 
     <section id='showAllTrips'>
       <button class='button' id='tripButton'>See Available Trips! </button>
+      <button class='button' id='createTripButton'>Create a new trip! </button>
+    </section>
+
+    <section id='createTripSection'>
+      <form id='createTripForm' class='columns small-6 large-6'>
+        <label for='name'>Name:</label>
+        <input id='nameField' type='text' name='name'></input>
+
+        <label for='continent'>Continent:</label>
+        <input id='continentField' type='text' name='continent'></input>
+
+        <label for='about'>About:</label>
+        <input id='aboutField' type='text' name='about'></input>
+
+        <label for='category'>Category:</label>
+        <input id='categoryField' type='text' name='category'></input>
+
+        <label for='weeks'>Weeks:</label>
+        <input id='weeksField' type='number' name='weeks'></input>
+
+        <label for='cost'>Cost:</label>
+        <input id='costField' type='number' step=0.01 name='cost'></input>
+
+        <input id='completeReservation' type='submit' value='Confirm booking'></input>
+      </form>
     </section>
 
     <section>
@@ -49,11 +84,6 @@
         </tr>
     </script>
 
-    <section class='modal'>
-      <div>
-        <p> testing </p>
-      </div>
-    </section>
   </main>
   <footer>
 

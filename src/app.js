@@ -44,9 +44,46 @@ $(document).ready( () => {
       console.log(response);
       const generatedHTML = singleTripTemplate(response);
       console.log(generatedHTML);
-      $('#singleTripSection').html(generatedHTML);
+      $('#singleTrip').html(generatedHTML);
     });
 
 
+  });
+
+  $('#createTripForm').on('submit', () => {
+    console.log('Submission started');
+    const url = `https://ada-backtrek-api.herokuapp.com/trips`;
+    const name = $('#nameField')[0].value;
+    const continent = $('#continentField')[0].value;
+    const about = $('#aboutField')[0].value;
+    const category = $('#categoryField')[0].value;
+    const weeks = parseInt($('#weeksField')[0].value);
+    const cost = parseFloat($('#costField')[0].value);
+    const data = `name=${name}&continent='${continent}'&about='${about}'&category='${category}'&weeks=${weeks}&cost=${cost}`
+    console.log(data);
+    $.post(url, data, (response) => {
+      console.log('POST worked');
+      console.log(response);
+    }).fail(() => {
+
+      console.log('The post call failed');
+    });
+    return false;
+  });
+
+  $('#reservationForm').on('submit', () => {
+    console.log('Submission started');
+    const id = $('#singleTrip li')[0].id;
+
+    const url = `https://ada-backtrek-api.herokuapp.com/trips/${id}/reservations`
+    const data = $('#reservationForm').serialize();
+    $.post(url, data, (response) => {
+      console.log('POST worked');
+      console.log(response);
+    }).fail(() => {
+
+      console.log('The post call failed');
+    });
+    return false;
   });
 });
