@@ -1,2 +1,13 @@
 
 /* Your styles go here! */
+.logo, .button {
+  border: 2px solid yellow;
+}
+
+.main-header {
+  background-color: green;
+}
+
+#trip-info {
+  border: 2px solid yellow;
+}
