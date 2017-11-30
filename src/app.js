@@ -9,6 +9,7 @@ import './css/style.css';
 
 import Trip from './app/models/trip';
 import TripList from './app/collections/trip_list';
+import Reservation from './app/models/reservation';
 
 const tripList = new TripList();
 // const trip = new Trip();
@@ -18,21 +19,22 @@ let tripTemplate;
 
 // renders
 const renderTripList = function renderTripList(tripList) {
-  // empty existing list
+  // empty existing list and res form
   const $tripList = $('#trip-list');
   $tripList.empty();
+  $('#reservation').empty();
 
   tripList.forEach((trip) => {
     $tripList.append(tripListTemplate(trip.attributes));
   });
-  console.log(tripList);
 };
 
 const renderTrip = function renderTrip(trip) {
   const $tripDetail = $('#trip-detail');
 
   $tripDetail.empty();
-  $tripDetail.append(tripTemplate(trip.attributes));
+  $tripDetail.append(tripTemplate(trip.attributes))
+  $('.reservation').append(loadResForm(trip.id));
 };
 
 const cancelSubmit = function cancelSubmit() {
@@ -40,17 +42,32 @@ const cancelSubmit = function cancelSubmit() {
   $('.error-messages').empty();
 };
 
-const readTripForm = function readTripForm() {
-  const tripFields = ['name', 'category', 'continent', 'weeks', 'about', 'cost'];
+const readForm = function readForm(form) {
+  const fields = form.find(':input').not('button');
+  const formData = {};
 
-  const tripData = {};
+  for (let i = 0; i < fields.length; i += 1) {
+    const field = fields[i];
+    formData[field.name] = $(`#${field.id}`).val();
+  }
 
-  tripFields.forEach((field) => {
-    tripData[field] = $(`#add-trip-form [name$=${field}]`).val();
-  });
-
-  return tripData;
+  console.log(formData);
+  return formData;
 };
+
+const readTripForm = function readTripForm() {
+  const $tripForm = $('#add-trip-form');
+  return readForm($tripForm);
+};
+
+const readResForm = function readResForm(tripId) {
+  const $resForm = $('#add-res-form');
+  const resData = readForm($resForm);
+  resData['trip_id'] = tripId;
+
+  console.log(resData);
+  return resData
+}
 
 const getTrip = function getTrip(event) {
   const tripId = event.currentTarget.id;
@@ -99,7 +116,6 @@ const failedSave = function failedSave(trip, response) {
 
 const addTrip = function addTrip(event) {
   event.preventDefault();
-
   const trip = new Trip(readTripForm());
 
   // client side validations
@@ -111,16 +127,48 @@ const addTrip = function addTrip(event) {
   } else {
     console.log(trip.validationError);
   }
-  // trip.save({}, {
-  //   success: successfulSave,
-  //   error: failedSave
-  // });
 };
 
-const reserveTrip = function reserveTrip(event) {
-  event.preventDefault();
-  
+const loadResForm = function loadTripForm(tripId) {
+  const html = `
+  <form id="add-res-form" data-id="${tripId}" action="https://ada-backtrek-api.herokuapp.com/trips/${tripId}/reservations" method="post">
+    <label>Name</label>
+    <input type="text" id="res-name" name="name" />
+
+    <label>Age</label>
+    <input type="number" id="age" name="age" />
+
+    <label>Email</label>
+    <input type="email" id="email" name="email" />
+
+    <button class="button confirm" type="submit" id="add-reservation">Reserve this Trip</button>
+    <button class="button cancel" type="reset" id="cancel-reservation">Cancel</button>
+  </form>`;
+
+  $('.reservation').append(html);
 };
+
+const addRes = function addRes(event) {
+  event.preventDefault();
+
+  const tripId = $('#add-reservation').parent().data('id');
+  console.log(tripId);
+
+  console.log('adding res');
+  const res = new Reservation(readResForm(tripId));
+
+  // client-side validations
+  if (res.isValid()) {
+    res.save({
+      success: successfulSave,
+      error: failedSave
+    });
+  }
+  else {
+
+  }
+};
+
 
 
 $(document).ready( () => {
@@ -133,7 +181,11 @@ $(document).ready( () => {
 
 
   $('.cancel').on('click', cancelSubmit);
-  $('#add-trip').on('click', addTrip);
+  $('#add-trip').on('submit', addTrip);
+
+  // $('#trip-detail').on('click', '#add-trip-form', func($(this)));
+
+  $('#trip-detail').on('submit', '#add-res-form', addRes);
 
   tripList.fetch();
 });
