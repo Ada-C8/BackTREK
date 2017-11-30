@@ -11,3 +11,7 @@
 a[href] {
   color: white;
 }
+
+#trip-list > tr:focus, #trip-list > tr:hover {
+  background-color: darkgrey;
+}

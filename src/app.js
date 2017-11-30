@@ -16,6 +16,8 @@ const tripList = new TripList();
 
 let tripListTemplate;
 let tripTemplate;
+let successTemplate;
+let errorTemplate;
 
 // renders
 const renderTripList = function renderTripList(tripList) {
@@ -60,14 +62,37 @@ const readTripForm = function readTripForm() {
   return readForm($tripForm);
 };
 
-const readResForm = function readResForm(tripId) {
+const readResForm = function readResForm() {
   const $resForm = $('#add-res-form');
+  const tripId = $resForm.data('id');
   const resData = readForm($resForm);
+
   resData['trip_id'] = tripId;
 
   console.log(resData);
   return resData
 }
+
+const clearStatus = function clearStatus() {
+  $('.status-messages').empty();
+};
+
+const renderStatus = function reportStatus(statusInfo, section) {
+  if (statusInfo.status === 'success') {
+    section.append(successTemplate(statusInfo))
+  } else if (statusInfo.status === 'error') {
+    section.append(errorTemplate(statusInfo));
+  }
+};
+
+const handleValidationErrors = function handleValidationErrors(errors, section) {
+
+  Object.keys(errors).forEach((field) => {
+    errors[field].forEach((error) => {
+      renderStatus({status: 'error', message: `${field}: ${error}`}, section);
+    });
+  });
+};
 
 const getTrip = function getTrip(event) {
   const tripId = event.currentTarget.id;
@@ -89,6 +114,10 @@ const getTrip = function getTrip(event) {
       console.log(trip);
     }
   });
+};
+
+const highlightTrip = function highlightTrip() {
+  $('#trip-list tr').addClass('selected');
 };
 
 const successfulSave = function successfulSave(trip) {
@@ -125,7 +154,8 @@ const addTrip = function addTrip(event) {
       error: failedSave
     });
   } else {
-    console.log(trip.validationError);
+    const $curSection = $('#add-trip-form .status-messages');
+    handleValidationErrors(trip.validationError, $curSection);
   }
 };
 
@@ -150,12 +180,8 @@ const loadResForm = function loadTripForm(tripId) {
 
 const addRes = function addRes(event) {
   event.preventDefault();
-
-  const tripId = $('#add-reservation').parent().data('id');
-  console.log(tripId);
-
   console.log('adding res');
-  const res = new Reservation(readResForm(tripId));
+  const res = new Reservation(readResForm());
 
   // client-side validations
   if (res.isValid()) {
@@ -165,7 +191,8 @@ const addRes = function addRes(event) {
     });
   }
   else {
-
+    const $curSection = $('.reservation .status-messages');
+    handleValidationErrors(res.validationError, $curSection);
   }
 };
 
@@ -175,17 +202,18 @@ $(document).ready( () => {
   // load templates
   tripListTemplate = _.template($('#trip-list-template').html());
   tripTemplate = _.template($('#trip-template').html());
+  successTemplate = _.template($('#success-template').html());
+  errorTemplate = _.template($('#error-template').html());
 
   tripList.on('update', renderTripList, tripList);
-  $('#trip-list').on('click focus', 'tr', getTrip, this);
+  $('#trip-list').on('mouseover', 'tr', getTrip, this);
 
 
   $('.cancel').on('click', cancelSubmit);
-  $('#add-trip').on('submit', addTrip);
+  $('#add-trip-form').on('submit', addTrip);
 
   // $('#trip-detail').on('click', '#add-trip-form', func($(this)));
 
   $('#trip-detail').on('submit', '#add-res-form', addRes);
-
   tripList.fetch();
 });
