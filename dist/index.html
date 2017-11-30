@@ -52,20 +52,20 @@
   </script>
   <script type="text/template" id="tripsHead">
     <tr>
-        <th>Name</th>
-        <th>Continent</th>
-        <th>Category</th>
-        <th>Duration</th>
-        <th>Cost</th>
-      </tr>
+      <th>Name</th>
+      <th>Continent</th>
+      <th>Category</th>
+      <th>Duration</th>
+      <th>Cost</th>
+    </tr>
   </script>
   <script type="text/template" id="trip-template">
-    <li><h3><%- response.name %></h3></li>
-    <li><strong>Continent: </strong><%- response.continent %></li>
-    <li><strong>About: </strong><%- response.about %></li>
-    <li><strong>Category: </strong><%- response.category %></li>
-    <li><strong>Duration on weeks: </strong><%- response.weeks %></li>
-    <li><strong>Cost: </strong><%- response.cost %></li>
+    <li><h3><%- name %></h3></li>
+    <li><strong>Continent: </strong><%- continent %></li>
+    <li><strong>Category: </strong><%- category %></li>
+    <li><strong>Details: </strong><%- about %></li>
+    <li><strong>Duration on weeks: </strong><%- weeks %></li>
+    <li><strong>Cost: </strong><%- cost %></li>
   </script>
 </body>
 </html>

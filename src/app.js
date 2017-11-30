@@ -17,7 +17,6 @@ const TRIP_FIELDS = ['name', 'continent', 'category', 'weeks', 'cost'];
 // create variable for using in document.ready
 const tripList = new TripList();
 
-
 //define templates
 let tripsTemplate;
 let backTemplate;
@@ -31,24 +30,24 @@ const getTrips = function(tripList) {
   const tripTableElement = $('#trip-list');
   tripTableElement.html('');
   for (let trip of tripList.models) {
-    const generatedHTML = tripsTemplate(trip.attributes);
+    const generatedHTML = $(tripsTemplate(trip.attributes));
+    // generatedHTML.on('click', (event) => {
+    //   getTrip(trip);
+    // });
     tripTableElement.append(generatedHTML);
   }
 
   $('.trips thead').html(tableHead);
   $('.back').html(back);
-  // $('#trips').toggle();
   $('#trips').hide();
 } // end of getTrips
 
-const getTrip = function(id) {
-  let listItem = tripTemplate();
-  $('#trip').html(listItem);
-
-
+const getTrip = function(trip) {
+  console.log('get trip');
+  console.log(trip);
+  let generatedHTML = tripTemplate(trip);
+    $('#trip').html(generatedHTML);
 } // end of getTrip
-
-
 
 $(document).ready( () => {
   //templates
@@ -60,7 +59,7 @@ $(document).ready( () => {
   //get all trips on click
   $('.trips').on('click', '#trips', function() {
     tripList.on('update', getTrips);
-    tripList.on('sort', getTrips);
+    // tripList.on('sort', getTrips);
     tripList.fetch();
   })
 
@@ -75,10 +74,15 @@ $(document).ready( () => {
   //get trip info
   $('.trips').on('click', 'table tr', function() {
     let tripID = $(this).attr('data-id');
-    const trip = new Trip({ id: tripID });
-    console.log(tripID);
-    trip.fetch();
+    let trip = tripList.findWhere({ id: parseInt(tripID) });
+    trip.fetch({
+      success: (model, response) => {
+        console.log('success');
+        getTrip(response);
+      }
+    })
   })
+
 
 
 
