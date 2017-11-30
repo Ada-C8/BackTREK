@@ -9,18 +9,16 @@ import './css/style.css';
 
 import TripList from './app/collections/trip_list';
 import Trip from './app/models/trip';
+import Reservation from './app/models/trip';
 
-//Data from the API /trips
-// {"id":1,"name":"Cairo to Zanzibar","continent":"Africa","category":"everything","weeks":5,"cost":9599.99}
 
-//
-const TRIP_FIELDS = ['id', 'name', 'continent', 'category', 'weeks', 'cost'];
+const TRIP_FIELDS = ['id', 'name', 'continent', 'category', 'weeks', 'cost', 'about'];
+const DISPLAY_TRIP_FIELDS = ['id', 'name', 'continent', 'category', 'weeks', 'cost'];
 
 const tripList = new TripList();
-//
+
 // // Starts undefined - we'll set this in $(document).ready
 // // once we know the template is available
-
 let tripTemplate;
 
 const renderTrips = function renderTrips(tripList) {
@@ -40,7 +38,7 @@ const renderTrips = function renderTrips(tripList) {
   // Provide visual feedback for sorting
   $('th.sort').removeClass('current-sort-field');
   $(`th.sort.${tripList.comparator}`).addClass('current-sort-field');
-
+  // alert(`sorted by ${tripList.comparator}`);
 };
 
 
@@ -59,23 +57,25 @@ const renderSingleTrip = function renderSingleTrip(trip) {
 const addTripHandler = function(event) {
   event.preventDefault();
 
-const tripData = {};
-TRIP_FIELDS.forEach((field) => {
-  // select the input corresponding to the field we want
-  const inputElement = $(`#add-trip-form input[name="${ field }"]`);
-  const value = inputElement.val();
-  tripData[field] = value;
+  const tripData = {};
+  TRIP_FIELDS.forEach((field) => {
+    // select the input corresponding to the field we want
+    const inputElement = $(`#add-trip-form input[name="${ field }"]`);
+    const value = inputElement.val();
+    tripData[field] = value;
 
-  inputElement.val('');
-});
+    inputElement.val('');
+  });
 
   console.log("Read trip data");
   console.log(tripData);
 
-  const trip = tripList.add(tripData);
-    trip.save({}, {
+  const trip = new Trip(tripData);
+
+  trip.save({}, {
     success: (model, response) => {
       console.log('Successfully saved trip!');
+      tripList.add(model);
     },
     error: (model, response) => {
       console.log('Failed to save trip! Server response:');
@@ -84,11 +84,38 @@ TRIP_FIELDS.forEach((field) => {
   });
 };
 
+//ADDING A Reservation
+const addReservationHandler = function(event) {
+  event.preventDefault();
+  const reservationData = {};
+  RESERVATION_FIELDS.forEach((field) => {
+    // select the input corresponding to the field we want
+    const inputElement = $(`#add-trip-form input[name="${ field }"]`);
+    const value = inputElement.val();
+    reservationData[field] = value;
+
+    inputElement.val('');
+  });
+
+    console.log("Read Reservation data");
+    console.log(reservationData);
+
+    const trip = tripList.add(reservationData);
+      trip.save({}, {
+      success: (model, response) => {
+        console.log('Successfully saved reservation!');
+      },
+      error: (model, response) => {
+        console.log('Failed to save reservation! Server response:');
+        console.log(response);
+      },
+    });
+};
 
 
 $(document).ready(() => {
 
-  $('#reservation-form').hide()
+  // $('#reservation-form').hide()
 
   tripTemplate = _.template($('#trip-template').html());
 
@@ -109,7 +136,7 @@ $(document).ready(() => {
 // Add a click handler for each of the table headers
 //to sort the table by that column
 
-  TRIP_FIELDS.forEach((field) => {
+  DISPLAY_TRIP_FIELDS.forEach((field) => {
     const headerElement = $(`th.sort.${ field }`);
     headerElement.on('click', (event) => {
       console.log(`Sorting table by ${ field }`);
@@ -137,8 +164,9 @@ $(document).ready(() => {
   //   console.log("Clicked the button");
   // }
   $('#reservation-button').on('click', function(event) {
-    $('#reservation-form').show();
-    console.log('attempting to show the reservation form');
+    // $('#reservation-form').show();
+    // console.log('attempting to show the reservation form');
+    alert("Clikced button");
   });
 
 
