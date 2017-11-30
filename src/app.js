@@ -48,7 +48,14 @@ const render = function render(tripList) {
     console.log(`In tripList forEach, trip.attributes: ${trip.attributes}`);
     tripTableElement.append(generatedHTML);
   })
+
   $('#trip-table').show();
+
+  //Visual feedback code for sorting
+
+  $('th.sort').removeClass('current-sort-field');
+  $(`th.sort.${tripList.comparator}`).addClass('current-sort-field');
+
 
 
   // TODO: REFACTOR
@@ -191,7 +198,7 @@ const reportStatus = function reportStatus(status, message) {
 
   const statusHTML = `<li class="${ status }">${ message }</li>`;
 
-  // note the symetry with clearStatus()
+  // the symetry with clearStatus()
   $('#status-messages ul').append(statusHTML);
   $('#status-messages').show();
 };
