@@ -27,6 +27,15 @@ const events = {
   },
   failedTripFetch(trip) {
     console.log('failed trip fetch');
+  },
+  hideModal(event){
+    // TODO: click out of the modal and close
+    console.log('hid modal!');
+    $('#create-trip-modal').hide();
+  },
+  showModal(){
+    console.log('show modal!');
+    $('#create-trip-modal').show();
   }
 }
 
@@ -56,6 +65,7 @@ $(document).ready( () => {
   // render template for trip details (on click)
   $('#trip-list').on('click', '.trip', events.fetchTrip);
 
-  // const zanzibar = (new Trip({ id: 1 })).fetch();
-  // console.log(zanzibar);
+  // render modal for adding a trip
+  $('#create-trip-btn').click(events.showModal);
+  $('.close').click(events.hideModal);
 });
