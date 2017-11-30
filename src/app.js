@@ -50,6 +50,11 @@ const showTrip = function showTrip(event) {
   })
 };
 
+const clearMessages = function clearMessages() {
+  $('#status-messages ul').empty();
+  $('#status-messages').hide();
+};
+
 const addTripForm = function addTripForm() {
   $('.content').empty();
   addTripFields.forEach((item) => {
@@ -101,11 +106,6 @@ const failedTripSave = function failedSave(trip, response) {
   $('#status-messages').show();
 }
 
-const clearMessages = function clearMessages() {
-  $('#status-messages ul').empty();
-  $('#status-messages').hide();
-};
-
 const reserveForm = function reserveForm(event) {
   $('.content').empty();
   const tripId = $(event.currentTarget.attributes.tripid).val();
@@ -115,6 +115,49 @@ const reserveForm = function reserveForm(event) {
   });
   $('#reserve-trip-form').append('<section><button type="submit" class="button">Submit</button></section></form>');
 };
+
+const saveReservation = function saveReservation(event) {
+  event.preventDefault();
+  const reservationData = {};
+  reservationFields.forEach((field) => {
+    reservationData[field] = $(`#reserve-trip-form input[name=${field}]`).val();
+  });
+  const reservation = new Reservation(reservationData);
+  if (reservation.isValid()) {
+    reservation.save({}, {
+      // success: successfulTripSave,
+      // error: failedTripSave,
+    })
+  } else {
+    $('#status-messages ul').empty();
+      for (let error in reservation.validationError) {
+        reservation.validationError[error].forEach((message) => $('#status-messages ul').append(`<li>${message}</li>`));
+      }
+      $('#status-messages').show();
+  }
+}
+
+// const successfulTripSave = function successfulSave(trip) {
+//   tripList.add(trip);
+//   addTripFields.forEach((field) => {
+//     $(`#add-trip-form input[name=${field}]`).val('');
+//   });
+//   $('#status-messages ul').empty();
+//   $('#status-messages ul').append(`<li>${trip.get('name')} added!</li>`);
+//   $('#status-messages').show();
+// }
+//
+// const failedTripSave = function failedSave(trip, response) {
+//   trip.destroy
+//   $('#status-messages ul').empty();
+//   const errors = response.responseJSON.errors;
+//   for (let key in errors) {
+//     errors[key].forEach((issue) => {
+//       $('#status-messages ul').append(`<li>${key}: ${issue}</li>`);
+//     })
+//   }
+//   $('#status-messages').show();
+// }
 
 // TODO: add a way to save a reservation and the submit listener that calls the function
 
@@ -129,6 +172,6 @@ $(document).ready( () => {
   $('#add-trip').on('click', addTripForm);
   $('#add-trip-form').on('submit', saveTrip);
   $('#show-trip').on('click', '#reserve', reserveForm);
-  // $('#reserve-trip-form').on('submit', saveReservation);
+  $('#reserve-trip-form').on('submit', saveReservation);
   $('.clear, #load-trips, #add-trip').on('click', clearMessages);
 });

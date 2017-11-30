@@ -8,6 +8,10 @@ const Trip = Backbone.Model.extend({
       errors['name'] = ['Name cannot be blank'];
     }
 
+    if (!attributes.email) {
+      errors['email'] = ['Email cannot be blank'];
+    }
+
     if (Object.keys(errors).length > 0) {
       return errors;
     } else {
