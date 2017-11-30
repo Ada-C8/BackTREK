@@ -19,9 +19,8 @@ const fields = ['name', 'category', 'continent', 'weeks', 'cost', 'about']
 
 // Callback functions
 const render = function render(tripList) {
-  $('#trip-list').empty(); // clear it so it doesn't continually add on
+  $('#trip-list').empty();
   tripList.forEach((trip) => {
-    // use template to append trip row to table in the DOM
     $('#trip-list').append(tripRowTemplate(trip.attributes));
   });
 };
@@ -50,7 +49,7 @@ const events = {
   successfulGetTrip(trip) {
     $('#trip-not-found').hide();
     $('#trip-info').empty();
-    $('#trip-info').append(tripDetailsTemplate(trip.attributes))
+    $('#trip-info').append(tripDetailsTemplate(trip.attributes));
   },
   failedGetTrip() {
     $('#trip-not-found').show();
@@ -65,35 +64,22 @@ const events = {
   addTrip(event) {
     event.preventDefault();
     $('#in-form-status-message').hide();
-
-    console.log('triggered addTrip');
     const tripData = {};
     fields.forEach((field) => {
       tripData[field] = $(`input[name=${field}]`).val();
     })
     const trip = new Trip(tripData);
-    console.log(trip);
-
-    console.log(tripList)
-    trip.save({}, {
-      success: events.successfulSave,
-      error: events.failedSave
-    });
+    trip.save({}, {success: events.successfulSave, error: events.failedSave});
   },
-  successfulSave(trip, response) {
-    console.log('saved!')
-    console.log(trip)
-    console.log(response)
+  successfulSave(trip) {
     $('#status-message h3').empty();
-    $('#status-message h3').append(`${trip.get('name')} added!`)
+    $('#status-message h3').append(`${trip.get('name')} added!`);
     $('#status-message').show();
     tripList.add(trip);
     $('#form-modal').hide();
     $('#add-trip-form').trigger('reset');
   },
   failedSave(trip, response) {
-    console.log('no can save')
-    console.log(response)
     $('#in-form-status-message ul').empty();
     for(let key in response.responseJSON.errors) {
       response.responseJSON.errors[key].forEach((error) => {
