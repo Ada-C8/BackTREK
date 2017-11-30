@@ -10,7 +10,8 @@
   </header>
   <main>
     <section class="row">
-      <section class="large-2 small-12 columns">
+      <section class="large-6 small-12 columns">
+        <h1>View All Trips</h1>
         <table>
           <thead>
             <!-- <th>ID</th> -->
@@ -27,14 +28,14 @@
 
       <section class="large-6 small-12 columns" id="trip-details">
       </section>
-      
+
     </section>
   </main>
   <footer>
 
   </footer>
   <script src="app.bundle.js" type="text/javascript"></script>
-  <script type="text/template" id="trip-template">
+  <script type="text/template" id="all-trips-template">
     <tr class="trip" data-id="<%- id %>">
       <!-- <td><%- id %></td> -->
       <td class="show-details"><%- name %></td>
@@ -47,7 +48,7 @@
 
   <script type="text/template" id="trip-details-template">
     <section class="large-12 columns">
-      <h1>Trip Details:</h1>
+      <h1>Details:</h1>
       <h2><%- name %></h2>
       <p>Continent: <%- continent %></p>
       <p>Category: <%- category %></p>
