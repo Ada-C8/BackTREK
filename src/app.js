@@ -153,12 +153,11 @@ const events = {
     const trip = new Trip(tripData);
     console.log('testing: this is the new trip');
     console.log(trip);
-
     if (trip.isValid()) {
       console.log('this trip is valid')
       tripList.add(trip);
       trip.save({}, {
-        success: event.successfulSave,
+        success: events.successfulSave,
         error: events.failedSave,
       });
     } else {
