@@ -60,22 +60,7 @@ const render = function render(tripList) {
 
         $('#individual-trip-detail').show();
         $('#reserve').show();
-        $('#reserve').on('click', function(event) {
-          let tripID = $(this).attr('data-id');
-          console.log(this);
-          let individualURL =  `https://ada-backtrek-api.herokuapp.com/trips/${tripID}`;
-          console.log(individualURL);
 
-          let formInfo = `<form class="add-reservation" action="${individualURL}/reservations">
-          <label for="name">Name:</label><input type="text" name="name"></input>
-          <label for="age">Age:</label><input type="number" name="age"></input>
-          <label for="email">Email:</label><input type="text" name="email"></input>
-          <input type="submit" value="Make Reservation"</input></form>`;
-          $(this).after(formInfo).hide();
-
-          // $('#reserve-trip-template').show();
-          // console.log(event);
-        });
       }
     }); // fetch
   });
@@ -117,6 +102,7 @@ const addTripHandler = function(event) {
     success: (model, response) => {
       console.log('successfully saved trip!');
       reportStatus('success', 'Successfully saved trip!');
+      tripList.add(model);
     },
     error: (model, response) => {
       console.log('failed to save trip.');
