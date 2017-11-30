@@ -8,11 +8,14 @@ import './css/style.css';
 
 import TripList from './app/collections/trip_list';
 import Trip from './app/models/trip';
+import Reservation from './app/models/reservation'
 
 const tripList = new TripList();
 let tripTemplate;
 let tripDetails;
 let registrationTemplate;
+const tripFields = ['name', 'continent', 'category', 'cost', 'weeks', 'about'];
+const reservationFields = ['name', 'email', 'age']
 
 const render = function render(event) {
   const tableElement = $('#trip-list');
@@ -39,8 +42,7 @@ const showTripDetails = function showTripDetails(event) {
 
   trip.fetch({
     success: (model, response) =>{
-      console.log('trip fetch success');
-      console.log(model);
+      // console.log('trip fetch success');
       const generatedHTML = tripDetails(trip.attributes);
       $('#trip-details').html(generatedHTML)
     },
@@ -52,38 +54,62 @@ const showTripDetails = function showTripDetails(event) {
 };
 
 const loadRegistrationForm = function loadRegistrationForm(event) {
-  const generatedHTML = registrationTemplate();
+  const tripId = {tripId: $(this).attr('data-id')}
+  const generatedHTML = registrationTemplate(tripId);
   $('.sign-up').hide();
   $('#trip-details').append(generatedHTML);
-};
-
-const addReservationHandler = function addReservationHandler(event) {
-
-  // event.preventDefault();
-  // const reservationData;
-  // ToDo: come backkkkk
 };
 
 const loadModal = function loadModal(event) {
   $('#add-trip').show();
 };
 
-const makeTripObject = function makeTripObject() {
-  const tripData = {};
-  ['name', 'continent', 'category', 'cost', 'weeks', 'about'].forEach((field) => {
+const makeObject = function makeObject(fields) {
+  const objectData = {};
+  fields.forEach((field) => {
     const inputElement = $(`#add-trip-form input[name="${ field }"]`);
     const value = inputElement.val();
-    tripData[field] = value;
+    objectData[field] = value;
 
     inputElement.val('');
   });
-  return tripData
+  return objectData
 };
 
-const addTripHandler = function(event) {
+const addReservationHandler = function addReservationHandler(event) {
   event.preventDefault();
 
-  const trip = new Trip(makeTripObject());
+
+  const reservation = new Reservation(makeObject(reservationFields));
+
+  console.log('inReservationHanlder');
+  console.log(this);
+  reservation.tripId =$(this).attr('data-id')
+
+  console.log(reservation);
+
+  // if (!reservation.isValid()) {
+  //   handleValidationFailures(reservation.validationError);
+  //   return;
+  // }
+
+  reservation.save({}, {
+    success: (model, response) => {
+      console.log(model);
+      reportStatus('success', 'Successfully reserved spot on trip')
+    },
+    error: (model, response) => {
+      console.log(model);
+      console.log(response);
+      handleValidationFailures(response.responseJSON['errors']);
+    }
+  });
+};
+
+const addTripHandler = function addTripHandler(event) {
+  event.preventDefault();
+
+  const trip = new Trip(makeObject(tripFields));
 
   if (!trip.isValid()) {
     handleValidationFailures(trip.validationError);
@@ -151,7 +177,7 @@ $(document).ready( () => {
 
   $('#trip-details').on('click', '.sign-up', loadRegistrationForm)
 
-  $('.res-form').on('submit', addReservationHandler);
+  $('#trip-details').on('submit', '#res-form', addReservationHandler );
 
   $('#add-trip-form').on('submit', addTripHandler);
 

@@ -58,7 +58,7 @@
     </div>
 
 
-    <section id='trips-table' class="columns large-6 small-12">
+    <section id='trips-table' class="columns large-6 small-6">
       <h3>All Trips</h3>
 
       <table>
@@ -72,7 +72,7 @@
       </table>
     </section>
 
-    <section id='trip-details' class='columns large-6 small-12'>
+    <section id='trip-details' class='columns large-6 small-6'>
     </section>
 
 
@@ -106,19 +106,19 @@
     <p>
       <%- about %>
     </p>
-    <button class='button sign-up'>Sign Me UP!</button>
+    <button class='button sign-up' data-id=<%- id %>>Sign Me UP!</button>
 
   </script>
 
   <script type="text/template" id="registration-form">
-    <form class='res-form' action="https://trektravel.herokuapp.com/trips/${id}/reservations" method="post">
+    <form id='res-form' data-id=<%- tripId %>>
       <label for="name">Name:</label>
       <input type="text" name="name"></input>
       <label for="email">Email:</label>
       <input type="text" name="email"></input>
       <label for="age">Age:</label>
       <input type="number" name="age"></input>
-      <input class='button' type="submit" value="Register for Trip"></input>
+      <input class='button' type="submit"   value="Register for Trip"></input>
     </form>
   </script>
 
