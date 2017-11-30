@@ -12,7 +12,7 @@ import TripList from './app/collections/trip_list'
 console.log('it loaded!');
 
 const tripList = new TripList();
-
+let trip;
 let tripTemplate;
 
 const render = function render(tripList) {
@@ -20,24 +20,51 @@ const render = function render(tripList) {
   $tripList.empty();
   tripList.forEach((trip) => {
     $tripList.append(tripTemplate(trip.attributes));
-    console.log(trip.attributes);
+    // console.log(trip.attributes);
   });
-
 };
+
+// const renderTrip = function renderTrip(trip) {
+//     console.log('first line of renderTrip');
+//   const $summary = $('#summary');
+//   $summary.empty();
+//   $summary.append(infoTemplate(trip.attributes));
+//     console.log('last line of renderTrip');
+//
+// };
 
 const loadTrips = function loadTrips(){
   tripList.on('update', render, tripList);
   tripList.fetch();
 };
+
 let infoTemplate;
 
 const loadTripDetails = function loadTripDetails(tId) {
-  let trip = new Trip({id: tId}).fetch().done();
-  const $summary = $('#summary');
-  $summary.empty();
-  $summary.append(infoTemplate(trip.attributes));
+  // tripList.on('update', renderTrip, trip);
+  trip = tripList.get(tId);
+  trip.fetch( {
+    success: events.successfulRender,
+    error: events.failedRender,
+  });
   console.log(trip);
 
+};
+
+const events = {
+  successfulRender(trip, response) {
+    console.log('success render::::');
+    console.log(response)
+
+    const $summary = $('#summary');
+    $summary.empty();
+    $summary.append(infoTemplate(trip.attributes));
+    console.log('last line of renderTrip');
+  },
+  failedRender(trip, response) {
+    console.log('failed render:::::');
+    console.log(response);
+  }
 };
 
 $(document).ready( () => {

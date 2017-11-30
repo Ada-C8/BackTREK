@@ -9,21 +9,26 @@
   <header>
 
   </header>
+  <main class='row'>
+
+  <section id="summary" class='columns medium-4'>Summary Here</section>
+
+  <section class='columns medium-8'>  
   <button class='all-trips'>View All Trips</button>
-  <section id="summary"></section>
 
-  <table>
-    <thead>
-      <th class="sort name">name</th>
-      <th class="sort id">id</th>
-      <th class="sort continent">continent</th>
-      <th class="sort category">category</th>
-      <th class="sort weeks">weeks</th>
-    </thead>
-    <tbody id="trip-list">
-    </tbody>
-  </table>
-
+    <table>
+      <thead>
+        <th class="sort name">name</th>
+        <th class="sort id">id</th>
+        <th class="sort continent">continent</th>
+        <th class="sort category">category</th>
+        <th class="sort weeks">weeks</th>
+      </thead>
+      <tbody id="trip-list">
+      </tbody>
+    </table>
+  </section>
+  </main>
   <script type="text/template" id="trip-template">
     <tr class="trip" data-id="<%- id %>">
       <td><%- name %></td>
@@ -60,8 +65,8 @@
         <%- id %>
       </p>
     </section>
-
   </script>
+
   <footer>
 
   </footer>
