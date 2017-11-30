@@ -11,6 +11,7 @@ import './css/style.css';
 
 const tripList = new TripList();
 let tripTemplate;
+let tripDetails;
 
 const render = function render(tripList) {
   const $tripList = $('#trip-list');
@@ -25,11 +26,22 @@ const render = function render(tripList) {
 
 $(document).ready( () => {
   tripTemplate = _.template($('#trip-template').html());
+  tripDetails = _.template($('#trip-details-template').html());
+
   $('#trip-list').hide();
   tripList.on('update', render, tripList);
   tripList.fetch();
 
   $('#all-trips').on('click', function() {
     $('#trip-list').toggle();
+  });
+
+  $('#trip-list').on('click', 'article', function() {
+    const id = $(this).attr('id');
+    const url = new Trip(this).url();
+
+    $.get(url, response => {
+      $(`#${id}`).append(`<p>${response.about}<p>`);
+    });
   });
 });
