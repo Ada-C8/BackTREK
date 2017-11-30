@@ -11,9 +11,9 @@
     <h1>BackTrek</h1>
   </header>
   <main>
-    
-    <section class="columns large-8 small-12">
-      <h2>Trip Options</h2>
+    <button id="trips_button" class="button"> Get trips! </button>
+    <section id="load_trips" class="columns large-8 small-12">
+      <h2></h2>
 
       <table>
         <thead>
@@ -23,10 +23,16 @@
           <th class="sort weeks">Trip Duration</th>
           <th class="sort cost">Cost</th>
         </thead>
+
         <tbody id="trip-list">
         </tbody>
       </table>
     </section>
+
+    <aside class="columns large-4 small-12">
+      
+    </aside>
+
   </main>
 
 
@@ -46,10 +52,10 @@
           <%- category %>
         </td>
         <td>
-          <%- weeks %>
+          <%- weeks %> weeks
         </td>
         <td>
-          <%- cost %>
+          $<%- cost %>
         </td>
     </script>
   </body>
