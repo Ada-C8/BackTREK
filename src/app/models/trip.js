@@ -15,6 +15,8 @@ const Trip = Backbone.Model.extend({
 
     const continents = ['Africa', 'Antartica', 'Asia', 'Australasia', 'Europe', 'North America', 'South America']
 
+
+    //TODO: should add to keys array, not replace?
     if (!attributes.name) {
       errors['name'] = ['Name cannot be blank'];
     }
@@ -49,16 +51,6 @@ const Trip = Backbone.Model.extend({
       return false;
     }
   },
-  
 });
 
 export default Trip
-
-// name: can't be blank
-// continent: can't be blank
-// continent: is not included in the list
-// category: can't be blank
-// weeks: can't be blank
-// weeks: is not a number
-// cost: can't be blank
-// cost: is not a number

@@ -52,15 +52,22 @@ const events = {
     const trip = new Trip(tripData);
 
     if (trip.isValid()) {
-      console.log('VALID!');
+      console.log('valid!')
+      trip.save({}, {
+        success: events.successfullSave,
+        error: events.failedSave,
+      });
     } else {
       console.log('uh oh! Invalid trip :(')
+      console.log(trip.validationError);
+
+      // TODO: FORMAT ERROR MESSGES!
+      // multiple messages per key
+      Object.keys(trip.validationError).forEach((error) => {
+        $('#status-messages ul').append(`<li>${error}: ${trip.validationError[error]}</li>`)
+      });
+      $('#status-messages').show();
     }
-    // tripList.add(trip);
-    // trip.save({}, {
-    //   success: events.successfullSave,
-    //   error: events.failedSave,
-    // });
   },
   successfullSave(trip, response) {
     console.log('Success!');
