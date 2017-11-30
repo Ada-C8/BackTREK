@@ -1,3 +1,9 @@
+//Inline Validations
+//Validations and Error Handling for Reservations
+//Model Server side validations
+//Add drop down for continents
+//Success and error reporting
+
 // Vendor Modules
 import $ from 'jquery';
 import _ from 'underscore';
@@ -111,16 +117,30 @@ const loadTrip = function loadTrip(singleTrip) {
     TRIP_FIELDS.forEach((field) => {
       // select the input corresponding to the field we want
       const inputElement = $(`#add-trip-form input[name="${ field }"]`);
+      if(field == 'continent') {
+        console.log(inputElement);
+        const string = inputElement.val();
+        const value = string.charAt(0).toUpperCase() + string.slice(1)
+        console.log(value);
+      } else {
       const value = inputElement.val();
+
 
       if (value != '') {
         tripData[field] = value;
       }
 
       inputElement.val('');
+    }
     });
 
     return tripData;
+  };
+
+
+  const clearStatus = function clearStatus() {
+    $('#status-messages').html('');
+    $('#status-messages').hide();
   };
 
   const reportStatus = function reportStatus(status, message) {
@@ -130,6 +150,7 @@ const loadTrip = function loadTrip(singleTrip) {
     const statusHTML = `<p class="${ status }">${ message }</p>`;
 
     // note the symetry with clearStatus()
+    clearStatus() //??is this right?
     $('#status-messages').append(statusHTML);
     $('#status-messages').show();
   };
@@ -243,5 +264,6 @@ const loadTrip = function loadTrip(singleTrip) {
       }
     }
 
+    // $('#status-messages button.clear').on('click', clearStatus);
 
   });
