@@ -4,3 +4,24 @@
   background: #ccc;
   cursor: pointer;
 }
+
+.right{
+  float: right;
+}
+
+.left{
+  float: left;
+}
+
+#create-trip-btn{
+  margin: 40px;
+  border-radius: 5px;
+}
+
+header{
+  background: rgb(140, 234, 189);
+}
+
+.site-title{
+  margin: 30px;
+}
