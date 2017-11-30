@@ -14,6 +14,7 @@ import TripList from './app/collections/trip_list';
 
 
 const TRIP_FIELDS = ['name', 'about', 'continent', 'category', 'weeks', 'cost'];
+const RESERVATION_FIELDS = ['name', 'email', 'age'];
 
 const trips = new TripList();
 
@@ -21,7 +22,23 @@ let tripTemplate;
 
 let showTripTemplate;
 
+// Clear status messages
+const clearStatus = function clearStatus() {
+  $('#status-messages ul').html('');
+  $('#status-messages').hide();
+};
 
+// Add a new status message
+const reportStatus = function reportStatus(status, message) {
+  console.log(`Reporting ${ status } status: ${ message }`);
+
+  // Should probably use an Underscore template here.
+  const statusHTML = `<li class="${ status }">${ message }</li>`;
+
+  // note the symetry with clearStatus()
+  $('#status-messages ul').append(statusHTML);
+  $('#status-messages').show();
+};
 
 
 const render = function render(trips) {
@@ -39,10 +56,11 @@ const render = function render(trips) {
     // console.log(`${trip.attributes.id}`)
     // data-id=${trip.id}
   });
+  $('#trips').show();
 
-  // // provide visual feedback for sorting
-  // $('th.sort').removeClass('current-sort-field');
-  // $(`th.sort.${ trips.comparator }`).addClass('current-sort-field');
+  // provide visual feedback for sorting
+  $('th.sort').removeClass('current-sort-field');
+  $(`th.sort.${ trips.comparator }`).addClass('current-sort-field');
 };
 
 const showTrip = function showTrip(id) {
@@ -61,11 +79,37 @@ const showTrip = function showTrip(id) {
       console.log(response);
 
       const generatedHTML = showTripTemplate(response);
-      singleTrip.append(generatedHTML);
-
-
+      // singleTrip.append(generatedHTML);
+      singleTrip.html(generatedHTML);
     },
   })
+  $('#show-trip').show();
+
+
+//   $( "#target" ).submit(function( event ) {
+//   alert( "Handler for .submit() called." );
+//   event.preventDefault();
+// });
+console.log(`this is the show trip click event`);
+console.log(event);
+  console.log(`this is the show trip id ${id}`);
+// $( "#reserve-trip-form" ).submit(function( e ) {
+//   e.preventDefault();
+//
+//   alert( "Handler for .submit() called." );
+//     // addReservationHandler();
+//
+// });
+  // $('#reserve-trip-form').on('submit', function(ev) {
+  //   ev.preventDefault();
+  //   ev.stopPropagation()
+  //   alert( "Handler for .submit() called." );
+  //
+  //   // addReservationHandler();
+  // })
+
+  // addReservationHandler
+
   // console.log(result);
   // // trips.fetch(trip.url)
   // const generatedHTML = showTripTemplate(result.responseJSON);
@@ -106,6 +150,65 @@ const readFormData = function readFormData() {
   return tripData;
 };
 
+const handleValidationFailures = function handleValidationFailures(errors) {
+  for (let field in errors) {
+    for (let problem of errors[field]) {
+      reportStatus('error', `${field}: ${problem}`);
+    }
+  }
+};
+
+const addReservationHandler = function(ev) {
+  ev.preventDefault();
+  console.log('in addReservationHandler')
+  const reservationData = {};
+
+  RESERVATION_FIELDS.forEach((field) => {
+
+
+    const inputElement = $(`#add-reservation-form input[name="${ field }"]`);
+    const value = inputElement.val();
+
+    // Don't take empty strings, so that Backbone can
+    // // fill in default values
+    // if (value != '') {
+    //   bookData[field] = value;
+    // }
+
+
+    tripData[field] = value;
+    // clears the field
+    // break this out into a clear inputs and a method that reads inputs and one that does both
+    // methods that don't have side effects
+    // pure functions are guaranteed to be idempotent
+    inputElement.val('');
+  });
+  const tripId = $('#add-reservation-form').attr('data-id').val();
+  tripData['id'] = tripId;
+  console.log(tripId);
+  return tripData;
+
+  const reservation = new Reservation(tripData);
+
+  reservation.save({}, {
+    success: (model, response) => {
+      console.log('Successfully saved reservation!');
+      trips.add(model);
+      // reportStatus('success', 'Successfully saved trip!');
+    },
+    error: (model, response) => {
+      console.log('Failed to save reservation! Server response:');
+      console.log(response);
+      const errors = response.responseJSON["errors"];
+      for (let field in errors) {
+        for (let problem of errors[field]) {
+          // reportStatus('error', `${field}: ${problem}`);
+        }
+      }
+    },
+  });
+}
+
 const addTripHandler = function(event) {
   event.preventDefault();
   // const tripData = {};
@@ -126,6 +229,10 @@ const addTripHandler = function(event) {
 
   const trip = new Trip(readFormData());
   //const trip = trips.add(tripData);
+  if (!trip.isValid()) {
+    handleValidationFailures(trip.validationError);
+    return;
+  }
   console.log(trip);
   // console.log(trip.url)
 
@@ -133,7 +240,7 @@ const addTripHandler = function(event) {
   trip.save({}, {
     success: (model, response) => {
       console.log('Successfully saved trip!');
-      trips.add(trip)
+      trips.add(model);
       // reportStatus('success', 'Successfully saved trip!');
     },
     error: (model, response) => {
@@ -155,20 +262,27 @@ $(document).ready( () => {
   showTripTemplate = _.template($('#show-trip-template').html());
 
   trips.on('update', render)
-  // trips.on('sort', render);
+  trips.on('sort', render);
 
   trips.fetch();
   // console.log(trips);
 
   $('#add-trip-form').on('submit', addTripHandler);
+  // TODO: FIX LOAD TRIPS BUTTON
+  // $('#load-trips').on('click', render);
 
 
   $('#trip-list').on('click', 'tr td', function () {
+    event.preventDefault();
+    // event.stopPropagation();
     let tripId = $(this).attr('data-id');
     console.log(`this is the trip id ${$(this).attr('data-id')}`);
     // render();
     showTrip(tripId);
   });
+
+  // $('#reserve-trip-form').on('submit', addReservationHandler)
+
 
   // $('#reserve-trip-form').on('submit', function () {
   //   let tripId = $(this).attr('data-id');
@@ -182,6 +296,18 @@ $(document).ready( () => {
   //   console.log(`this is the trip id${$(this).attr('data-id')}`);
   //   loadTrip(tripID);
   // });
+
+
+    TRIP_FIELDS.forEach((field) => {
+      const headerElement = $(`th.sort.${ field }`)
+      headerElement.on('click', (event) => {
+        console.log(`Sorting table by ${ field }`);
+        trips.comparator = field
+        trips.sort();
+      });
+    });
+
+    $('#status-messages button.clear').on('click', clearStatus);
 
 
 });

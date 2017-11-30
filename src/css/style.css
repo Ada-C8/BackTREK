@@ -1,2 +1,106 @@
 
-/* Your styles go here! */
+th.sort {
+  cursor: pointer;
+}
+
+.current-sort-field {
+  background-color: darkgrey;
+  color: white;
+}
+
+#status-messages {
+  background-color: white;
+
+  /* Hide by default */
+  display: none;
+
+  border-radius: 1rem;
+  /*margin: 1rem;*/
+  height: 100%;
+  padding: .8rem;
+}
+
+#status-messages ul {
+  list-style: none;
+  margin-left: 0;
+}
+#status-messages button.clear {
+  margin-top: .2rem;
+  height: 100%;
+}
+
+#status-messages button.clear img {
+  width: 2rem;
+}
+
+
+#wrapper {
+
+  max-width: 1000px;
+  height: 100vh;
+  top: 300px;
+  margin: 0 auto;
+  overflow-x: scroll;
+  /*overflow-y: scroll;*/
+}
+
+#bckgd-image{
+  /*height: 100vh;*/
+  background: url("http://www.weatherwizkids.com/wp-content/uploads/2015/04/fog6.jpg") no-repeat center center;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+#status-messages .error {
+  color: red;
+}
+
+#status-messages .success {
+  color: green;
+}
+
+#trips-table {
+  z-index: 1000;
+}
+
+.page-header {
+  max-width:  100%;
+}
+
+.page-header button, .query{
+  margin-top: 2%;
+}
+
+.page-header {
+  text-align: center;
+}
+
+.page-header .row h1{
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+}
+
+#reserve-trip-form {
+  position: relative;
+  padding-bottom: 5%;
+}
+
+#reserve-button {
+  display: flex;
+  justify-content: center;
+}
+
+#show-trip {
+  display: none;
+  background-color: white;
+  padding: 5%;
+  margin-bottom: 5%;
+  margin-top: 2%;
+
+  min-width: 333px;
+}
+
+#trips {
+  margin-top: 2%;
+  display: none;
+}

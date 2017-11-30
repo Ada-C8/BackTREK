@@ -13,6 +13,7 @@ const Trip = Backbone.Model.extend({
     //   title: ['cannot be blank', 'already taken'],
     //   author: ['cannot be blank']
     // }
+    // continents mabye client-side validation??
 
     const errors = {};
     if (!attributes.name) {
