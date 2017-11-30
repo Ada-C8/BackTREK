@@ -7,6 +7,7 @@ import './css/foundation.css';
 import './css/style.css';
 import Trip from './app/models/trip';
 import TripList from './app/collections/trip_list';
+import Reservation from './app/models/reservation';
 
 // Initialize
 const tripList = new TripList();
@@ -21,6 +22,9 @@ const render = function render(list) {
   });
 }
 
+const fields = ['name', 'continent', 'category', 'weeks', 'cost', 'about'];
+const reservationFields = ['name', 'email', 'age'];
+
 const events = {
   showTrips() {
     console.log('SHOW ME TRIPS!');
@@ -29,22 +33,43 @@ const events = {
   },
   showTrip(event) {
     $('#reservation').show();
-    console.log('MA TRIP!');
     const trip = new Trip({id: event.target.parentElement.id});
     trip.fetch({}).done(() => {
       $('#show-trip').html(tripTemplate(trip.attributes));
       console.log('YAY');
+      $('form').attr('action', `${trip.url()}/reservations`);
     }).fail(() => {
       $('#show-trip').html('<p>Looks like that trip left without you...</p>');
       console.log('OOPS');
     });
   },
   addTrip(event) {
-
+    event.preventDefault();
+    const tripData = {};
+    fields.forEach((field) => {
+      $(`label[for=${field}] span`).remove();
+      $(`input[name=${field}]`).removeClass('error');
+      tripData[field] = $(`#add-trip-form [name=${field}]`).val();
+    });
+    const trip = new Trip(tripData);
+    if (trip.isValid()) {
+      // tripList.add(trip);
+      trip.save({}, {
+        success: events.successfulSave,
+        error: events.failedSave,
+      });
+    } else {
+      Object.entries(trip.validationError).forEach((error) => {
+          $(`label[for=${error[0]}] span`).remove();
+          $(`label[for=${error[0]}]`).append(`<span class="error">: ${error[1]}</span>`);
+          $(`input[name=${error[0]}]`).addClass('error');
+      });
+    }
   },
   successfulSave(trip) {
+    $('.modal').css('display','none');
     $('#status-messages ul').empty();
-    $('#status-messages ul').append(`<li>You booked ${trip.name}!</li>`);
+    $('#status-messages ul').append(`<li>You added ${trip.get('name')}!</li>`);
     $('#status-messages').show();
   },
   failedSave(trip, response) {
@@ -54,9 +79,45 @@ const events = {
         $('#status-messages ul').append(`<li>${error[0]}: ${error[1][i]}</li>`);
       }
     });
-
     $('#status-messages').show();
     trip.destroy();
+  },
+  addReservation(event) {
+    event.preventDefault();
+    const reservationData = {};
+    reservationFields.forEach((field) => {
+      $(`label[for=${field}] span`).remove();
+      $(`input[name=${field}]`).removeClass('error');
+      reservationData[field] = $(`#reservation-form input[name=${field}]`).val();
+    });
+    const r = new Reservation(reservationData);
+    if (r.isValid()) {
+      // tripList.add(trip);
+      r.save({}, {
+        url: $('form').attr('action'),
+        success: events.successfulBook,
+        error: events.failedBook,
+      });
+    } else {
+      Object.entries(r.validationError).forEach((error) => {
+          $(`label[for=${error[0]}] span`).remove();
+          $(`label[for=${error[0]}]`).append(`<span class="error">: ${error[1]}</span>`);
+          $(`input[name=${error[0]}]`).addClass('error');
+      });
+    }
+  },
+  successfulBook() {
+    $('#status-messages ul').empty();
+    $('#status-messages ul').append(`<li>Your reservation has been saved!</li>`);
+    $('#status-messages').show();
+  },
+  failedBook(reservation, response) {
+    $('#status-messages ul').empty();
+    Object.entries(response.responseJSON.errors).forEach((error) => {
+        $('#status-messages ul').append(`<li>${error[0]}: ${error[1]}</li>`);
+    });
+    $('#status-messages').show();
+    reservation.destroy();
   },
 }
 
@@ -64,30 +125,23 @@ console.log('it loaded!');
 
 // -------------------------------------------------------
 // Get the modal
-var modal = document.getElementById('myModal');
+let $modal = $('.modal');
 
-// Get the button that opens the modal
-var btn = document.getElementById("add-trip");
-
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-
-// When the user clicks on the button, open the modal
-btn.onclick = function() {
-    modal.style.display = "block";
-}
+$('#add-trip').on('click', function() {
+  $('.modal').css('display', 'block');
+});
 
 // When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-    modal.style.display = "none";
-}
+$('.close').on('click', function() {
+  $('.modal').css('display: none');
+});
 
 // When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-}
+$(window).on('click', function(event) {
+  if (event.target.id == 'myModal') {
+    $('.modal').css('display','none');
+  }
+});
 // -------------------------------------------------------
 
 
@@ -106,6 +160,8 @@ $(document).ready( function() {
 
   // Event Trigger
   tripList.on('update', render, tripList);
+  $('#add-trip-form').submit(events.addTrip);
+  $('#reservation-form').submit(events.addReservation);
 
   // Event Handler
   $('button#show-trips').click(events.showTrips);

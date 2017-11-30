@@ -37,3 +37,14 @@
     text-decoration: none;
     cursor: pointer;
 }
+
+/*------------------------------*/
+
+input.error {
+  background-color: #f5adad;
+  border-color: red;
+}
+
+span.error {
+  color: red;
+}
