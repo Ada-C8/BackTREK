@@ -196,6 +196,26 @@ const addRes = function addRes(event) {
   }
 };
 
+const sortTrips = function sortTrips() {
+  const fields = ['id', 'name', 'continent', 'category', 'cost', 'weeks'];
+
+  $('.current-sort-field').removeClass('current-sort-field');
+  $(this).addClass('current-sort-field');
+
+  const classes = $(this).attr('class').split(/\s+/);
+
+  classes.forEach((className) => {
+    // if already sorted, sort desc
+    if (fields.includes(className)) {
+      tripList.models.reverse();
+      tripList.trigger('sort', tripList);
+      // sort asc
+    } else {
+      tripList.comparator = className;
+      tripList.sort();
+    }
+  });
+};
 
 
 $(document).ready( () => {
@@ -206,13 +226,13 @@ $(document).ready( () => {
   errorTemplate = _.template($('#error-template').html());
 
   tripList.on('update', renderTripList, tripList);
+  tripList.on('sort', renderTripList, tripList);
+  
   $('#trip-list').on('mouseover', 'tr', getTrip, this);
-
+  $('.all-trips th').on('click', sortTrips);
 
   $('.cancel').on('click', cancelSubmit);
   $('#add-trip-form').on('submit', addTrip);
-
-  // $('#trip-detail').on('click', '#add-trip-form', func($(this)));
 
   $('#trip-detail').on('submit', '#add-res-form', addRes);
   tripList.fetch();

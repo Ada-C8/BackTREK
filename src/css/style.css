@@ -1,12 +1,5 @@
 
 /* Your styles go here! */
-/*a[href=#add-trip-form] {
-  color: white;
-}*/
-
-/*header > button > a {
-  color: white;
-}*/
 
 a[href] {
   color: white;
@@ -14,4 +7,14 @@ a[href] {
 
 #trip-list > tr:focus, #trip-list > tr:hover {
   background-color: darkgrey;
+  cursor: pointer;
+}
+
+.current-sort-field {
+  background-color: darkgrey;
+  color: white;
+}
+
+.current-sort-field:hover {
+  cursor: pointer;
 }
