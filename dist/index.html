@@ -38,13 +38,14 @@
         <input type="text" name="about"></input>
 
         <input type="submit" value="Make a trip" class="button"></input>
+        <section id = "status-messages">
+          <button type="button" name="button"></button>
+
+        </section>
       </form>
     </div>
 
-    <section id = "status-messages">
-      <button type="button" name="button"></button>
 
-    </section>
 
     <aside class="">
 
@@ -112,6 +113,9 @@
         <input type="hidden" value= "<%- id %>" name="tripId"> <input/>
         <input class="button" id="submit" type="submit" name="submit" value="Reserve">
       </form>
+      <div id = 'reservation-status'>
+
+      </div>
     </div>
   </script>
 
