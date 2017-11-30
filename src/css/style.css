@@ -33,14 +33,20 @@ h1 {
   padding-top: 8rem;
 }
 
+h2 {
+  font-family: 'Berkshire Swash';
+  font-size: 4rem;
+}
+
 #title {
   color: #fff;
 }
 
-#trips {
+#trips, #new-trip {
   display: block;
   margin: 1.5rem auto;
 }
+
 
 @-webkit-keyframes glowing {
   0% { background-color: #D4F3FD; -webkit-box-shadow: 0 0 3px #D4F3FD; }
@@ -85,7 +91,17 @@ h1 {
   text-shadow: 0 0 .8rem #075B69;
 }
 
+/*NAV*/
+nav {
+  display: none;
+}
+
 /*TRIPS TABLE*/
+.trips {
+  overflow: scroll;
+  max-height: 700px;
+}
+
 .trips table {
   /*margin-bottom: 5rem; */
   border-collapse: separate;
@@ -101,7 +117,7 @@ h1 {
   font-size: 1.2rem;
 }
 
-.trips table thead, .trips table tbody {
+.trips table tbody {
   background: rgba(255, 255, 255, 0.7);
 }
 
@@ -113,4 +129,32 @@ h1 {
   text-shadow: 0 0 1rem #075B69;
   box-shadow: 0 0 1rem #075B69;
   cursor: pointer;
+}
+
+/*TRIP SECTION*/
+.trip {
+  display: none;
+  max-height: 700px;
+}
+
+.trip ul, .trip article {
+  overflow: scroll;
+  background: rgba(255, 255, 255, 0.7);
+  margin: 0;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.trip ul {
+  height: 369px;
+}
+
+.trip article {
+  height: 315px;
+}
+
+.trip li {
+  text-align: justify;
+  list-style-type: none;
+  margin: .5rem 0;
 }

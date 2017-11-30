@@ -22,6 +22,7 @@ let tripsTemplate;
 let backTemplate;
 let headTemplate;
 let tripTemplate;
+let reserveTemplate;
 
 const getTrips = function(tripList) {
   let back = backTemplate();
@@ -37,16 +38,27 @@ const getTrips = function(tripList) {
     tripTableElement.append(generatedHTML);
   }
 
+  //hide header and #trips button and show nav section
+  $('h1').hide();
+  $('#trips').hide();
+  $('nav').show();
+  //fill out .trips section
   $('.trips thead').html(tableHead);
   $('.back').html(back);
-  $('#trips').hide();
+  $('.trip').show();
+  //fill out .trip section with first trip of collection
+  let trip = tripList.first();
+  trip.on('change', getTrip);
+  trip.fetch();
+
 } // end of getTrips
 
 const getTrip = function(trip) {
   console.log('get trip');
   console.log(trip);
-  let generatedHTML = tripTemplate(trip);
-    $('#trip').html(generatedHTML);
+  let generatedHTML = tripTemplate(trip.attributes);
+  $('#trip').html(generatedHTML);
+  $('#reservation').html(reserveTemplate());
 } // end of getTrip
 
 $(document).ready( () => {
@@ -55,11 +67,12 @@ $(document).ready( () => {
   backTemplate = _.template($('#back-button').html());
   headTemplate = _.template($('#tripsHead').html());
   tripTemplate = _.template($('#trip-template').html());
+  reserveTemplate = _.template($('#reserve-form-template').html());
 
   //get all trips on click
-  $('.trips').on('click', '#trips', function() {
+  $('main').on('click', '#trips', function() {
     tripList.on('update', getTrips);
-    // tripList.on('sort', getTrips);
+    tripList.on('sort', getTrips);
     tripList.fetch();
   })
 
@@ -75,12 +88,14 @@ $(document).ready( () => {
   $('.trips').on('click', 'table tr', function() {
     let tripID = $(this).attr('data-id');
     let trip = tripList.findWhere({ id: parseInt(tripID) });
-    trip.fetch({
-      success: (model, response) => {
-        console.log('success');
-        getTrip(response);
-      }
-    })
+    // trip.fetch({
+    //   success: (model, response) => {
+    //     console.log('success');
+    //     getTrip(response);
+    //   }
+    // })
+    trip.on('change', getTrip);
+    trip.fetch();
   })
 
 

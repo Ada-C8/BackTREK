@@ -15,9 +15,13 @@
   <header>
     <h1 id="title" class="text-center white-text">Travel with BackTREK</h1>
   </header>
+  <nav class="row">
+    <h2 class="white-text float-left">BackTreck</h2>
+    <button id="new-trip" class="button large blue white-text float-right" type="button" name="button">Add a Trip</button>
+  </nav>
   <main>
-    <section class="trips row">
-      <button id="trips" class="button large blue white-text" type="button" name="button">Find a Trip</button>
+    <button id="trips" class="button large blue white-text" type="button" name="button">Find a Trip</button>
+    <section class="trips large-6 columns">
       <table>
         <thead></thead>
         <tbody id="trip-list"></tbody>
@@ -25,13 +29,11 @@
       <div class="back"></div>
     </section>
 
-    <!-- <div class="wrapper"> -->
-      <section class="trip row">
-        <!-- <button id="close" class="button" type="button">&#10006;</button> -->
-        <ul id="trip"></ul>
-        <article id="reservation"></article>
-      </section>
-    <!-- </div> -->
+    <section class="trip large-6 columns">
+      <!-- <button id="close" class="button" type="button">&#10006;</button> -->
+      <ul id="trip"></ul>
+      <article id="reservation"></article>
+    </section>
 
   </main>
   <footer>
@@ -66,6 +68,23 @@
     <li><strong>Details: </strong><%- about %></li>
     <li><strong>Duration on weeks: </strong><%- weeks %></li>
     <li><strong>Cost: </strong><%- cost %></li>
+  </script>
+  <script type="text/template" id="reserve-form-template">
+    <form data-id=${id}>
+        <div class="input-form">
+          <label for="name"><strong>Name: </strong></label>
+          <input type="text" name="name"></input>
+        </div>
+        <div class="input-form">
+          <label for="age"><strong>Age: </strong></label>
+          <input type="number" name="age"></input>
+        </div>
+        <div class="input-form">
+          <label for="email"><strong>Email: </strong></label>
+          <input type="text" name="email"></input>
+        </div>
+        <input id="submit" class="button blue white-text" type="submit" value="Reserve a trip"></input>
+      </form>
   </script>
 </body>
 </html>

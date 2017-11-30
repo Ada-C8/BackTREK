@@ -2,10 +2,10 @@ import Backbone from 'backbone';
 
 const Trip = Backbone.Model.extend({
   urlRoot: 'https://ada-backtrek-api.herokuapp.com/trips/',
-  url: function() {
-    return this.urlRoot + this.id;
-    console.log(this.id);
-  }
+  // url: function() {
+  //   return this.urlRoot + this.id;
+  //   console.log(this.id);
+  // }
 });
 
 
