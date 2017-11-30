@@ -113,8 +113,11 @@ const events = {
     // need to add in validations!
   },
   successfulSave(trip, response) {
-    updateStatusMessageWith(`${trip.get('name')} added!`);
+    $('#message').html('<p> Trip Added! </p>')
+    $('#message').delay(1000).hide(1);
+    // updateStatusMessageWith(`${trip.get('name')} added!`);
     $.modal.close();
+    $.modal.empty;
   },
   failedSave(trip, response) {
     updateStatusMessageFrom(response.responseJSON.errors);
