@@ -67,6 +67,7 @@ const events = {
     // $('#status-messages ul').empty();
     // $('#status-messages ul').append(`<li>${trip.get('title')} added!!!!!!!!!!!!!!!!</li>`)
     // $('#status-messages').show();
+    //clear form after execution has happened
   },
 
   failedSave(trip, response){
@@ -80,22 +81,22 @@ const events = {
     trip.destroy();
   },
 
-  // reserveSpot: function(event) {
-  //   console.log("I want to reserve a trip");
-  //   event.preventDefault();
-  //   const reservationData = {}
-  //     fields.forEach((field) => {
-  //       const val = $(`input[name=${field}]`).val();
-  //       if (val != '') {
-  //         reservationData[field] = val;
-  //       }
-  //     });
-  //
-  //     //need a new model, reservation.
-  //     const reservation = new Reservation(reservationData)
-  //     reservation.save()
-  //     console.log(reservation);
-  //   }
+  reserveSpot: function(event) {
+    console.log("I want to reserve a trip");
+    event.preventDefault();
+    const reservationData = {}
+      fields.forEach((field) => {
+        const val = $(`input[name=${field}]`).val();
+        if (val != '') {
+          reservationData[field] = val;
+        }
+      });
+
+      //need a new model, reservation.
+      const reservation = new Reservation(reservationData)
+      reservation.save()
+      console.log(reservation);
+    }
 }
 
 $(document).ready( () => {
@@ -119,7 +120,7 @@ $(document).ready( () => {
 
 
     $('#bookingForm form').remove('action') // takes off any previously appended action links
-    $('#bookingForm form').attr('action', `https://trektravel.herokuapp.com/trips/${trip.id}/reservations`) //appends a new one.
+    $('#bookingForm form').attr('action', `https://ada-backtrek-api.herokuapp.com/trips/${trip.id}/reservations`) //appends a new one.
     $('#bookingForm').show(); //shows the form.
   });
 
