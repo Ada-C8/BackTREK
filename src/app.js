@@ -104,4 +104,32 @@ $(document).ready( () => {
     tripList.sort();
   });
 
+  $('#filterForm').on('submit', function(event){
+    event.preventDefault();
+  });
+
+  $('#filter').on('keyup', function(event) {
+    let filterType = $('#filterType').val();
+    let filter = $(this).val().toLowerCase().trim();
+
+    let filteredList = _.filter(tripList.models, function(trip) {
+      if (filter === '') {
+        return true;
+      }
+
+      if (filterType === 'name' || filterType === 'category' || filterType === 'continent') {
+        return (trip.get(filterType).toLowerCase().includes(filter));
+      }
+      else  {
+        return (trip.get(filterType) <= parseInt(filter));
+      }
+    });
+
+    loadTrips(filteredList);
+  });
+
+  $('#filterType').on('change', function(event) {
+    $('#filter').val('');
+    loadTrips(tripList.models);
+  });
 });

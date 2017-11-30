@@ -67,10 +67,19 @@
 
       </form>
       </script>
-
-
-
     </div>
+
+    <form id="filterForm">
+      <select id="filterType">
+        <option value="name">Name</option>
+        <option value="category">Category</option>
+        <option value="continent">Continent</option>
+        <option value="weeks">Weeks</option>
+        <option value="cost">Cost</option>
+      </select>
+      <input type='text' id="filter"></input>
+    </form>
+
     <!-- TABLE RENDERS ALL TRIPS  -->
     <table>
       <thead>
@@ -95,11 +104,6 @@
     </table>
 
     <!-- END TRIP LIST TABLE  -->
-    <label for="continent">Search By Continent</label>
-    <input type='text' id="keyword">
-
-    <ul id="list">
-    </ul>
 
   </main>
   <footer>
