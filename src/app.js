@@ -17,7 +17,7 @@ const render = function render(tripList) {
   $tripList.empty();
 
   tripList.forEach((trip) => {
-    $('#trip-list').append(tripTemplate(trip.attributes));
+    $tripList.append($(tripTemplate(trip.attributes)).attr('id', `${trip.id}`));
   });
 };
 
@@ -25,7 +25,11 @@ const render = function render(tripList) {
 
 $(document).ready( () => {
   tripTemplate = _.template($('#trip-template').html());
-  tripList.fetch();
+  $('#trip-list').hide();
   tripList.on('update', render, tripList);
+  tripList.fetch();
 
+  $('#all-trips').on('click', function() {
+    $('#trip-list').toggle();
+  });
 });
