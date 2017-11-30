@@ -20,17 +20,6 @@ console.log(tripList);
 let tripTemplate;
 let showTemplate;
 
-
-// const render = function render(tripList) {
-//
-//   const $tripList = $('#trip-list');
-//   $tripList.empty();
-//   tripList.forEach((trip) => {
-//     $tripList.append(tripTemplate(trip.attributes));
-//   });
-//
-// };
-
 const reservationFields = ['name', 'age', 'email'];
 
 const events = {
@@ -46,22 +35,50 @@ const events = {
   showTrip(id) {
     const $showTrip = $('#show_trip');
     $showTrip.empty();
-    event.preventDefault();
     const trip = new Trip({id: id});
-    trip.fetch({}).done(() => { $showTrip.append(showTemplate(trip.attributes)); });
+    const resForm = `<h2>Reserve Your Spot</h2>
+    <form id="reserve-trip-form" action="https://trektravel.herokuapp.com/trips/${id}/reservations" method="post">
+    <label for="name">Name</label>
+    <input type="text" name="name"></input>
+
+    <label for="age">Age</label>
+    <input type="number" name="age"></input>
+
+    <label for="email">Email</label>
+    <input type="text" name="email"></input>
+
+    <input id="submitResButton" type="submit" value="Reserve it!" class="button"></input>
+    </form>`
+
+    trip.fetch({}).done(() => {
+      $showTrip.append(showTemplate(trip.attributes));
+      $showTrip.append(resForm);
+     });
+
   },
-  makeReservation(event) {
+  // makeReservation(event) {
+  //   event.preventDefault();
+  //   const reservationInfo = {};
+  //   reservationFields.forEach( (field) => {
+  //     const val = $(`input[name=${field}]`).val();
+  //       if (val !== '') {
+  //         reservationInfo[field] = val;
+  //       }
+  //   });
+  //   console.log('Reservation Added!');
+  //
+  //
+  // },
+  finalizeReservation(event) {
     event.preventDefault();
-    const reservationInfo = {};
-    reservationFields.forEach( (field) => {
-      const val = $(`input[name=${field}]`).val();
-        if (val !== '') {
-          reservationInfo[field] = val;
-        }
+    const url = $(this).attr('action'); // Retrieve the action from the form
+    const formData = $(this).serialize();
+    // $(this).hide();
+    $.post(url, formData, function(response) {
+      $('#message').html('<p> Trip Reserved! </p>');
+    }).fail(() => {
+      $('#message').html('<p>Reserving Trip Failed</p>');
     });
-    console.log('Reservation Added!');
-
-
   },
 };
 
@@ -83,5 +100,26 @@ $(document).ready( () => {
     $(this).addClass('current-select-row');
     events.showTrip(tripID);
   });
+
+
+
+  // const finalizeReservation = function finalizeReservation() {
+  //   $('#submitResButton').on('submit', 'form', function(e) {
+  //     console.log("IN FINALIZERESERVATION FUNCTION");
+  //     e.preventDefault();
+  //     const url = $(this).attr('action'); // Retrieve the action from the form
+  //     const formData = $(this).serialize();
+  //     $(this).hide();
+  //     $.post(url, formData, function(response) {
+  //       $('#message').html('<p> Trip Reserved! </p>');
+  //     }).fail(() => {
+  //       $('#message').html('<p>Reserving Trip Failed</p>');
+  //     });
+  //   });
+  // };
+
+$('#show_trip').on('submit', 'form', events.finalizeReservation);
+
+  // $('#reserve-trip-form').submit(events.finalizeReservation);
 
 });

@@ -17,6 +17,10 @@
       <a class="button" href="#newTrip" rel="modal:open">Make a New Trip!</a>
     </section>
 
+    <section id="message">
+
+    </section>
+
     <div id="newTrip" class="modal">
       <form id="new-trip-form">
         <label for="name">Name</label>
@@ -42,9 +46,7 @@
       <a href="#" rel="modal:close">Close</a>
     </div>
 
-      <!-- <p><a href="#newTrip" rel="modal:open">Make a New Trip!</a></p> -->
-
-    <section class="small-12 medium-3 large-5 columns" id="all_trips_section">
+    <section class="small-12 medium-3 large-6 columns" id="all_trips_section">
       <h2>Trips!</h2>
       <table>
         <thead>
@@ -70,22 +72,7 @@
       <p><strong>Category:</strong> <%- category %></p>
       <p><strong>Length:</strong> <%- weeks %> week(s)</p>
       <p><strong>Cost:</strong> <%- cost %></p>
-
-      <h2>Reserve Your Spot</h2>
-      <form id="reserve-trip-form">
-        <label for="name">Name</label>
-        <input type="text" name="name"></input>
-
-        <label for="age">Age</label>
-        <input type="number" name="age"></input>
-
-        <label for="email">Email</label>
-        <input type="text" name="email"></input>
-
-        <input type="submit" value="Reserve it!" class="button"></input>
-      </form>
     </script>
-
 
 
     <script type="text/template" id="trip-template">
