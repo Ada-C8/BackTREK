@@ -107,4 +107,22 @@ $(document).ready(() => {
   tripList.on('sort', render, tripList);
 
   tripList.fetch();
+
+  $('#reserve-trip-form').submit(function(event) {
+    event.preventDefault();
+    const tripName = event['currentTarget']['parentElement']['children'][0]['innerText']
+    const trip = tripList.findWhere({name: tripName});
+    const id = trip.id;
+    const url = `https://ada-backtrek-api.herokuapp.com/trips/${id}/reservations`;
+    
+    const formData = $(this).serialize();
+    $.post(url, formData, (response) => {
+      $('#status-messages').append('<p> Reservation confirmed! </p>');
+    }).fail(() => {
+      $('#status-messages ul').empty();
+      $('#status-messages').append('<p>Reservation Failed</p>');
+      console.log(event);
+      $('#status-messages').show();
+    });
+  });
 });
