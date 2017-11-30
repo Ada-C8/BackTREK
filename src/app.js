@@ -22,8 +22,11 @@ const renderTrips = function renderTrips(tripList) {
   tripTableElement.html('');
 
   tripList.forEach((trip) => {
-    const generatedHTML = tripsTemplate(trip.attributes);
+    const generatedHTML = $(tripsTemplate(trip.attributes));
     tripTableElement.append(generatedHTML);
+    generatedHTML.on('click', (event) =>{
+      renderTripDetails(trip);
+    });
   });
 
   // Provide visual feedback for sorting
@@ -34,35 +37,43 @@ const renderTrips = function renderTrips(tripList) {
 
 const renderTripDetails = function renderTripDetails(trip) {
 
-  const tripDivElement = $('#trip-details');
+  const tripDivElement = $('.side-bar');
   tripDivElement.html('');
+  trip.fetch({
+    success: (model) => {
+    const detailsHTML = $(tripDescriptionTemplate(trip.attributes));
+    tripDivElement.append(detailsHTML);
+    }
+  });
 
-    const generatedHTML = tripsTemplate(trip.attributes);
-    console.log(trip);
-    console.log(`generatedHTML ${generatedHTML}`);
-    console.log(this);
-    console.log(`not sure what ${this} is`)
-    tripDivElement.append(generatedHTML);
-
+  console.log(trip);
+  console.log($(this).attr('class'));
 };
 
 const sortTrips = function sortTrips(){
-let sortCategory = $(this).attr('class').split(' ')[1];
-tripList.comparator = sortCategory;
-tripList.sort();
-console.log('sorted');
+  let sortCategory = $(this).attr('class').split(' ')[1];
+  tripList.comparator = sortCategory;
+  tripList.sort();
+  console.log('sorted');
 };
 
-$(document).ready( () => {
-   tripsTemplate = _.template($('#trips-template').html());
-   tripDescriptionTemplate = _.template($('#trips-description-template').html());
+const singleTrip = function singleTrip(tripId){
+  console.log(`tripId is ${tripId}`)
+  let singleTripVar = tripList.findWhere({id: tripId});
+  console.log(singleTripVar);
+};
 
+
+$(document).ready( () => {
+  tripsTemplate = _.template($('#trips-template').html());
+  tripDescriptionTemplate = _.template($('#trips-description-template').html());
 
   tripList.fetch();
 
- $('.sort').on('click', sortTrips);
- tripList.on('update', renderTrips);
- tripList.on('sort', renderTrips);
+  $('.sort').on('click', sortTrips);
+  // $('.trip').on('click', singleTrip(`${$(this).attr('id')}`));
+  tripList.on('update', renderTrips);
+  tripList.on('sort', renderTrips);
 
 
 });

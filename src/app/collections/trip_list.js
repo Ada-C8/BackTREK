@@ -7,4 +7,9 @@ const TripList = Backbone.Collection.extend({
   comparator: 'name',
 });
 
+
+
+
+
+
 export default TripList;

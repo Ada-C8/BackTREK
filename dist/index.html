@@ -43,7 +43,7 @@
   </footer>
 
   <script type="text/template" id="trips-template">
-    <tr class="trip">
+    <tr class="trip" id = "<%- id %>">
       <td>
         <%- name %>
       </td>
@@ -60,7 +60,7 @@
       <td>
         <%- id %>
       </td>
-      <div class="trip-show">
+      <div id="trip-show">
 
       </div>
     </tr>
@@ -70,9 +70,15 @@
   <script type="text/template" id="trips-description-template">
     <div class="trip-description">
 
-    <h4>Description</h4>
       <article>
-        <%- description %>
+         <h5><%- name %></h5>
+        <ul class="list-upper-alpha">
+          <li><em>Cost:</em> <%- cost %></li>
+          <li><em>Continent:</em> <%- continent %></li>
+            <li><em>Duration (weeks):</em> <%- weeks %></li>
+              <li><em>Id:</em> <%- id %></li>
+        </ul>
+        <%- about %>
       </article>
 
     </div>
