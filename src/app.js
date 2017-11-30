@@ -12,7 +12,7 @@ import Reservation from './app/models/reservation'
 
 let tripTemplate;
 let individualTripTemplate;
-let reportStatusTemplate;
+// let reportStatusTemplate;
 
 const tripList = new TripList();
 
@@ -30,6 +30,7 @@ const render = function render(tripList) {
   tripTableElement.html('');
   //will clear out previous list when you render again
 
+  // TODO: inline event handler so we get a closure for trip
   // tripList.forEach((trip) => {
   // const genhtml = $(tripTemplate(trip.attributes));
   // genhtml.on('click', (event) => {
@@ -44,11 +45,14 @@ const render = function render(tripList) {
   })
   $('#trip-table').show();
 
+
+  // TODO: REFACTOR
   $('.trip').on('click', function(event) {
+    // event.preventDefault();
     console.log('in the trip click');
 
     // get the id of the trip you clicked on
-    let tripId = $(this).attr('data-id')
+    let tripId = $(this).attr('data-id');
     // fetch the trip details of the trip you clicked on from the api; fetch returns a hash
     let trip = tripList.get(tripId)
       trip.fetch({
@@ -64,16 +68,10 @@ const render = function render(tripList) {
           individualtripListElement.append(generatedHTMLTripDetails);
 
           $('#individual-trip-details').show();
-          // $('#reserve-trip').show();
 
-          //listen for submit click for reservation
-          console.log(`Trip ID: ${tripId}`);
-          $('#reserve-trip').on('submit', addReservationHandler)
-          //   function(event) {
-          //   event.preventDefault();
-          //   console.log('IN RESERVE TRIP FUNCTION');
-          //   console.log();
-          // })
+          // Listen for submit event on #reserve-trip
+          $('#reserve-trip').on('submit', addReservationHandler);
+
         } // function
       }); // fetch
   })
@@ -125,6 +123,7 @@ const addReservationHandler = function(event) {
       // tripList.add(trip);
       $('#individual-trip-details').hide();
       reportStatus('success', 'Successfully made reservation!');
+      //add to collection?
     },
     error: (model, response) => {
       console.log('Failed to make reservation! Server response:');
@@ -242,11 +241,13 @@ $(document).ready( () => {
     console.log('#add-trip clicked');
     // Make form available to user
     $('#add-trip-form').show();
-
-    // Listen for when user submits trip form
-    $('#add-trip-form').on('submit', addTripHandler);
   });
 
+  // Listen for when user submits trip form
+  $('#add-trip-form').on('submit', addTripHandler);
+  // });
+
+  // Listen for click event on #all-trip
   $('#all-trips').on('click', function() {
     console.log('#all-trip has been clicked, in event handler');
     // When fetch gets back from the API call, it will add trips
@@ -254,6 +255,7 @@ $(document).ready( () => {
     tripList.fetch();
     console.log('#all-trip has been clicked, in event handler, after fetch()');
   });
+
 
   $('#status-messages button.clear').on('click', clearStatus);
 });
