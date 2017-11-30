@@ -13,33 +13,49 @@ import TripList from './app/collections/trip_list';
 const fields = ['id', 'name', 'continent', 'category', 'weeks', 'cost'];
 
 const events = {
-  showDetails(id){
-    console.log(id);
+  fetchTrip() {
+    const trip = tripList.get($(this).data('id'));
+    trip.fetch({
+      success: events.successfulTripFetch,
+      error: events.failedTripFetch,
+    });
+  },
+  successfulTripFetch(trip) {
+    let $tripDetails = $('#trip-details');
+    $tripDetails.empty();
+    $tripDetails.append(tripDetailsTemplate(trip.attributes));
+  },
+  failedTripFetch(trip) {
+    console.log('failed trip fetch');
   }
 }
 
 
-
+// TEMPLATE RENDERING
 const tripList = new TripList();
-let tripTemplate;
+let allTripsTemplate;
+let tripDetailsTemplate;
 
-const render = function render(tripList) {
+const renderAllTrips = function renderAllTrips(tripList) {
   let $tripList = $('#trip-list');
   $tripList.empty();
   tripList.forEach((trip) => {
-    $tripList.append(tripTemplate(trip.attributes));
+    $tripList.append(allTripsTemplate(trip.attributes));
   });
 };
 
 $(document).ready( () => {
-  tripTemplate = _.template($('#trip-template').html());
-  tripList.on('update', render, tripList);
+  // TEMPLATES
+  allTripsTemplate = _.template($('#all-trips-template').html());
+  tripDetailsTemplate = _.template($('#trip-details-template').html());
+
+  // render template for all trips
+  tripList.on('update', renderAllTrips, tripList);
   tripList.fetch();
 
-  $('#trip-list').on('click', '.trip', function callback() {
-      events.showDetails($(this).data('id'));
-  });
+  // render template for trip details (on click)
+  $('#trip-list').on('click', '.trip', events.fetchTrip);
 
-  const zanzibar = new Trip({ id: 1 }).fetch();
-  console.log(zanzibar);
+  // const zanzibar = (new Trip({ id: 1 })).fetch();
+  // console.log(zanzibar);
 });
