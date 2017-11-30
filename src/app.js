@@ -78,7 +78,7 @@ const saveTrip = function saveTrip(event) {
   }
 }
 
-const successfulTripSave = function successfulSave(trip, response) {
+const successfulTripSave = function successfulSave(trip) {
   tripList.add(trip);
   addTripFields.forEach((field) => {
     $(`#add-trip-form input[name=${field}]`).val('');
