@@ -100,7 +100,7 @@ const getFormData = function getFormData(target, values) {
 
 const clearShow = function clearShow() {
   $('.trip-row').removeClass('show');
-  $('.trip-details').remove();
+  $('.trip-detail-holder').remove();
 };
 
 const clearModal = function clearModal(e) {
