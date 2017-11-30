@@ -15,7 +15,21 @@
     <section id="create-trip-modal" class="modal">
       <section class="modal-content">
         <span class="close">&times;</span>
-        <h1>Inside Modal</h1>
+        <h1>Create A New Trip</h1>
+        <form id="create-trip-form">
+          <label for="name">Name:</label>
+          <input type="text" name="name" placeholder="Name">
+          <label for="continent">Continent:</label>
+          <input type="text" name="continent" placeholder="ex. Asia">
+          <label for="about">About:</label>
+          <input type="text" name="about" placeholder="ex. This place is really fun!">
+          <label for="category">Category:</label>
+          <input type="text" name="category" placeholder="ex. exploration">
+          <label for="weeks">Weeks:</label>
+          <input type="number" name="weeks">
+          <label for="cost">Cost:</label>
+          <input type="number" name="cost">
+        </form>
       </section>
     </section>
 
@@ -74,7 +88,7 @@
 
     <section class="large-12 columns">
       <h2>Make a Reservation:</h2>
-      <form action="">
+      <form id="create-reservation-form">
         <label for="name">Name:</label>
         <input type="text" name="name" placeholder="Name">
         <label for="age">Age:</label>
