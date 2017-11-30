@@ -8,6 +8,7 @@ import './css/style.css';
 
 // Our components
 import TripList from './app/collections/trip_list';
+import Trip from './app/models/trip';
 
 const tripList = new TripList();
 
@@ -18,18 +19,27 @@ let detailsTemplate;
 
 const renderDetails = function renderDetails(trip){
   const detailsElement = $('#trip-details');
+  detailsElement.html('');
 
-  // clears between clicks
-  // api call is really slow
-  trip.fetch({
-    success: (model) => {
-      console.log(model);
-      const generatedHTML = $(detailsTemplate(trip.attributes));
-      detailsElement.html('');
-      detailsElement.append(generatedHTML);
-    }
-  });
+  // trip.fetch({
+  //   success: (model) => {
+  //     const generatedHTML = $(detailsTemplate(trip.attributes));
+  //     detailsElement.append(generatedHTML);
+  //   }
+  // });
 
+  // API doesn't happen if model has already been clicked on and updated
+  if (trip.get('about')) {
+    const generatedHTML = $(detailsTemplate(trip.attributes));
+    detailsElement.append(generatedHTML);
+  } else {
+    trip.fetch({
+      success: (model) => {
+        const generatedHTML = $(detailsTemplate(trip.attributes));
+        detailsElement.append(generatedHTML);
+      }
+    });
+  }
 };
 
 const render = function render(tripList) {
@@ -43,25 +53,29 @@ const render = function render(tripList) {
   tripList.forEach((trip) => {
     const generatedHTML = $(tripTemplate(trip.attributes));
     generatedHTML.on('click', (event) => {
-      // console.log(`clicked on ${trip}`);
-      //
-      // console.log(trip);
       renderDetails(trip);
-
     });
     tripTableElement.append(generatedHTML);
   });
 };
 
 
+
 $(document).ready( () => {
   detailsTemplate = _.template($('#details-template').html());
   tripTemplate = _.template($('#trip-template').html());
-
 
   // adding new models to a collection triggers an update event
   tripList.on('update', render);
 
   // get all of the trips from the API
   tripList.fetch();
+
+  let myTrip = new Trip ({
+    "continent":"Africa",
+    "category":"everything",
+    "weeks":5,
+    "cost":9599.99
+  });
+  console.log(myTrip.isValid());
 });
