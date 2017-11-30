@@ -22,6 +22,24 @@ let showTemplate;
 
 const reservationFields = ['name', 'age', 'email'];
 const newTripFields = ['name', 'continent', 'about', 'category', 'weeks', 'cost']
+
+const updateStatusMessageFrom = (messageHash) => {
+  $('#status-messages ul').empty();
+  for(let messageType in messageHash) {
+    messageHash[messageType].forEach((message) => {
+      $('#status-messages ul').append($(`<li>${messageType}:  ${message}</li>`));
+      console.log(`<li>${messageType}:  ${message}</li>`);
+    })
+  }
+  $('#status-messages').show();
+}
+
+const updateStatusMessageWith = (message) => {
+  $('#status-messages ul').empty();
+  $('#status-messages ul').append(`${message}</li>`);
+  $('#status-messages').show();
+}
+
 const events = {
   allTrips(event) {
     const $tripList = $('#trip-list');
@@ -71,6 +89,7 @@ const events = {
   },
   addTrip(event) {
     event.preventDefault();
+    console.log("IN ADDTRIP FUNCTION");
     const tripData = {};
     newTripFields.forEach( (field) => {
       const val = $(`input[name=${field}]`).val();
@@ -80,9 +99,27 @@ const events = {
     });
     const trip = new Trip(tripData);
     console.log(trip);
+    if (trip.isValid()) {
+      tripList.add(trip);
+      trip.save({}, {
+        success: events.successfulSave,
+        error: events.failedSave,
+      });
+    } else {
+      // getting here means there were client-side validation errors reported
+      // console.log("What's on book in an invalid book?");
+      // console.log(book);
+      updateStatusMessageFrom(book.validationError);
+    }
     // need to add in validations!
-    trip.save();
-  }
+  },
+  successfulSave(trip, response) {
+    updateStatusMessageWith(`${trip.get('name')} added!`);
+  },
+  failedSave(trip, response) {
+    updateStatusMessageFrom(response.responseJSON.errors);
+    trip.destroy();
+  },
 };
 
 $('#all_trips_section').hide();
@@ -104,5 +141,36 @@ $(document).ready( () => {
   });
 
   $('#show_trip').on('submit', 'form', events.finalizeReservation);
+  $('#newTrip').submit(events.addTrip);
 
 });
+
+
+
+// sortBooks(event) {
+//    $('.current-sort-field').removeClass('current-sort-field');
+//    $(this).addClass('current-sort-field');
+//
+//    // Get the class list of the selected element
+//    const classes = $(this).attr('class').split(/\s+/);
+//
+//    classes.forEach((className) => {
+//      if (fields.includes(className)) {
+//        if (className === bookList.comparator) {
+//          bookList.models.reverse();
+//          bookList.trigger('sort', bookList);
+//        }
+//        else {
+//          bookList.comparator = className;
+//          bookList.sort();
+//        }
+//      }
+//    });
+//  },
+//  successfullSave(book, response) {
+//    updateStatusMessageWith(`${book.get('title')} added!`)
+//  },
+//  failedSave(book, response) {
+//    updateStatusMessageFrom(response.responseJSON.errors);
+//    book.destroy();
+//  },
