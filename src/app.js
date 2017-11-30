@@ -36,6 +36,9 @@ const events = {
   showModal(){
     console.log('show modal!');
     $('#create-trip-modal').show();
+  },
+  addTrip(){
+
   }
 }
 
@@ -68,4 +71,8 @@ $(document).ready( () => {
   // render modal for adding a trip
   $('#create-trip-btn').click(events.showModal);
   $('.close').click(events.hideModal);
+
+  //submit forms
+  $('#create-trip-form').submit(events.addTrip);
+  // $('#create-reservation-form').submit(events.addReservation);
 });
