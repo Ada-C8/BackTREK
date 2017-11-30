@@ -24,30 +24,12 @@ const loadTrips = function loadTrips(tripList) {
 
   tripList.forEach((trip) => {
     const generatedHTML = $(tripsTemplate(trip.attributes));
-
-    generatedHTML.on('click', (event) => {
-      renderTrip(trip);
-    });
     tripsTableElement.append(generatedHTML);
   });
   // Provide visual feedback for sorting
   // $('th.sort').removeClass('current-sort-field');
   // $(`th.sort.${ tripList.comparator }`).addClass('current-sort-field');
 };
-
-// render single trip
-const renderTrip = function renderTrip(trip) {
-  const aboutElement = $('#trip-about');
-  aboutElement.html('');
-
-  trip.fetch({
-    success: (model) => {
-      const generatedHTML = $(aboutTemplate(trip.attributes));
-      aboutElement.html(generatedHTML);
-    },
-  });
-};
-
 
 // const addTripHandler = function(event) {
 //   event.preventDefault();
@@ -82,13 +64,24 @@ $(document).ready(() => {
   tripList.on('sort', loadTrips);
   tripList.fetch();
 
-  // clicking on a single trip in the list
+  // render single trip details
+  // using 'click'
   $('#trip-list').on('click', 'tr', function() {
+    const aboutElement = $('#trip-about');
+    aboutElement.html('');
+
     console.log('clicked');
     let tripID = $(this).data('id');
     console.log(tripID);
     let singleTrip = new Trip({id: tripID});
     console.log(singleTrip.url());
+
+    singleTrip.fetch({
+      success: (model) => {
+        const generatedHTML = $(aboutTemplate(model.attributes));
+        aboutElement.html(generatedHTML);
+      },
+    });
   })
 
   // $('#add-trip-form').on('submit', addTripHandler);
