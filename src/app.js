@@ -71,8 +71,8 @@ const events = {
     </form>`
 
     trip.fetch({}).done(() => {
-      $showTrip.append(showTemplate(trip.attributes));
       $showTrip.append(resForm);
+      $showTrip.append(showTemplate(trip.attributes));
     });
 
   },
@@ -83,9 +83,13 @@ const events = {
     $('#show_trip').hide();
     // $(this).hide();
     $.post(url, formData, function(response) {
+      $('#message').empty();
       $('#message').html('<p> Trip Reserved! </p>');
+      $('#message').delay(1000).hide(1);
     }).fail(() => {
+      $('#message').empty();
       $('#message').html('<p>Reserving Trip Failed</p>');
+      $('#message').delay(2000).hide(1);
     });
   },
   addTrip(event) {
@@ -114,7 +118,7 @@ const events = {
   },
   successfulSave(trip, response) {
     $('#message').html('<p> Trip Added! </p>')
-    $('#message').delay(1000).hide(1);
+    $('#message').delay(2000).hide(1);
     // updateStatusMessageWith(`${trip.get('name')} added!`);
     $.modal.close();
     $.modal.empty;
