@@ -61,8 +61,7 @@ $(document).ready( () => {
     const cost = parseFloat($('#costField')[0].value);
     const data = `name=${name}&continent=${continent}&about=${about}&category=${category}&weeks=${weeks}&cost=${cost}`
     const form = $('#createTripForm').serialize();
-    console.log(form);
-    console.log(data);
+
     $.post(url, data, (response) => {
       console.log('POST worked');
       console.log(response);
