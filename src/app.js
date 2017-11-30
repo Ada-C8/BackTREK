@@ -37,6 +37,7 @@ const updateStatusMessageFrom = (messageHash) => {
 const updateStatusMessageWith = (message) => {
   $('#status-messages ul').empty();
   $('#status-messages ul').append(`${message}</li>`);
+  console.log($('#status-messages ul'))
   $('#status-messages').show();
 }
 
@@ -99,6 +100,7 @@ const events = {
     });
     const trip = new Trip(tripData);
     console.log(trip);
+    $.modal.close();
     if (trip.isValid()) {
       tripList.add(trip);
       trip.save({}, {
@@ -107,9 +109,7 @@ const events = {
       });
     } else {
       // getting here means there were client-side validation errors reported
-      // console.log("What's on book in an invalid book?");
-      // console.log(book);
-      updateStatusMessageFrom(book.validationError);
+      updateStatusMessageFrom(trip.validationError);
     }
     // need to add in validations!
   },
@@ -144,33 +144,3 @@ $(document).ready( () => {
   $('#newTrip').submit(events.addTrip);
 
 });
-
-
-
-// sortBooks(event) {
-//    $('.current-sort-field').removeClass('current-sort-field');
-//    $(this).addClass('current-sort-field');
-//
-//    // Get the class list of the selected element
-//    const classes = $(this).attr('class').split(/\s+/);
-//
-//    classes.forEach((className) => {
-//      if (fields.includes(className)) {
-//        if (className === bookList.comparator) {
-//          bookList.models.reverse();
-//          bookList.trigger('sort', bookList);
-//        }
-//        else {
-//          bookList.comparator = className;
-//          bookList.sort();
-//        }
-//      }
-//    });
-//  },
-//  successfullSave(book, response) {
-//    updateStatusMessageWith(`${book.get('title')} added!`)
-//  },
-//  failedSave(book, response) {
-//    updateStatusMessageFrom(response.responseJSON.errors);
-//    book.destroy();
-//  },
