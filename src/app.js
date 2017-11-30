@@ -16,6 +16,12 @@ let reportStatusTemplate;
 
 const tripList = new TripList();
 
+//clearStatus messages
+const clearStatus = function clearStatus() {
+  $('#status-messages ul').html('');
+  $('#status-messages').hide();
+};
+
 // render html for tripList
 const render = function render(tripList) {
   //iterate through the tripList, generate HTML
@@ -92,15 +98,16 @@ const readFormData = function readFormData() {
 };
 
 //TODO: ERROR HANDLING
-// const handleValidationFailures = function handleValidationFailures(errors) {
-//   // Since these errors come from a Rails server, the strucutre of our
-//   // error handling looks very similar to what we did in Rails.
-//   for (let field in errors) {
-//     for (let problem of errors[field]) {
-//       reportStatus('error', `${field}: ${problem}`);
-//     }
-//   }
-// };
+const handleValidationFailures = function handleValidationFailures(errors) {
+  console.log('In handleValidationFailures()');
+  // Since these errors come from a Rails server, the strucutre of our
+  // error handling looks very similar to what we did in Rails.
+  for (let field in errors) {
+    for (let problem of errors[field]) {
+      reportStatus('error', `${field}: ${problem}`);
+    }
+  }
+};
 
 // Add a new status message
 const reportStatus = function reportStatus(status, message) {
@@ -121,10 +128,11 @@ const addTripHandler = function(event) {
   const trip = new Trip(readFormData());
 
   //TODO: ERROR HANDLING
-  // if (!trip.isValid()) {
-  //   handleValidationFailures(trip.validationError);
-  //   return;
-  // }
+  if (!trip.isValid()) {
+    console.log('Client side error handling');
+    handleValidationFailures(trip.validationError);
+    return;
+  }
 
   trip.save({}, {
     success: (model, response) => {
@@ -142,7 +150,7 @@ const addTripHandler = function(event) {
       // trip from the list
       // tripList.remove(model);
 
-      // handleValidationFailures(response.responseJSON["errors"]);
+      handleValidationFailures(response.responseJSON["errors"]);
     },
   });
 };
@@ -177,4 +185,5 @@ $(document).ready( () => {
     console.log('#all-trip has been clicked, in event handler, after fetch()');
   });
 
+  $('#status-messages button.clear').on('click', clearStatus);
 });
