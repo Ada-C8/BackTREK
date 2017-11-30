@@ -12,6 +12,9 @@ import Trip from './app/models/trip'
 
 import TripList from './app/collections/trip_list';
 
+import Reservation from './app/models/reservation'
+
+
 
 const TRIP_FIELDS = ['name', 'about', 'continent', 'category', 'weeks', 'cost'];
 const RESERVATION_FIELDS = ['name', 'email', 'age'];
@@ -32,6 +35,7 @@ const clearStatus = function clearStatus() {
 const reportStatus = function reportStatus(status, message) {
   console.log(`Reporting ${ status } status: ${ message }`);
 
+  // TODO: use an underscore method for this
   // Should probably use an Underscore template here.
   const statusHTML = `<li class="${ status }">${ message }</li>`;
 
@@ -140,6 +144,7 @@ const readFormData = function readFormData() {
 
 
     tripData[field] = value;
+    // TODO: see below
     // clears the field
     // break this out into a clear inputs and a method that reads inputs and one that does both
     // methods that don't have side effects
@@ -190,6 +195,7 @@ const addReservationHandler = function(ev) {
 
   const reservation = new Reservation(tripData);
 
+  // TODO: pull out into function so can DRY saving reservation and trip models
   reservation.save({}, {
     success: (model, response) => {
       console.log('Successfully saved reservation!');
@@ -271,6 +277,7 @@ $(document).ready( () => {
   // TODO: FIX LOAD TRIPS BUTTON
   // $('#load-trips').on('click', render);
 
+  $('#load-add-trip').on('click', () => $('#add-trip').toggle());
 
   $('#trip-list').on('click', 'tr td', function () {
     event.preventDefault();
@@ -281,9 +288,12 @@ $(document).ready( () => {
     showTrip(tripId);
   });
 
-  // $('#reserve-trip-form').on('submit', addReservationHandler)
+  // $('#reserve-trip-form').on('submit', function (event) {
+  //   event.preventDefault();
+  //   addReservationHandler
+  // });
 
-
+  //
   // $('#reserve-trip-form').on('submit', function () {
   //   let tripId = $(this).attr('data-id');
   //   console.log(`this is the trip id ${$(this).attr('data-id')}`);

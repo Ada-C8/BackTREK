@@ -31,6 +31,7 @@ th.sort {
 
 #status-messages button.clear img {
   width: 2rem;
+  z-index: 1000;
 }
 
 
@@ -98,6 +99,20 @@ th.sort {
   margin-top: 2%;
 
   min-width: 333px;
+}
+#add-trip {
+  display: none;
+  background-color: white;
+  padding: 5%;
+  margin-bottom: 5%;
+  margin-top: 2%;
+
+  min-width: 333px;
+}
+#add-trip h2 {
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 200;
 }
 
 #trips {
