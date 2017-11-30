@@ -27,6 +27,18 @@
   text-align: center;
 }
 
+/* Styles for sorting */
+
+th.sort {
+  cursor: pointer;
+}
+
+.current-sort-field {
+  background-color: darkgrey;
+  color: white;
+}
+
+
 
 /* Styles for error section at the top */
 #status-messages {

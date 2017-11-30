@@ -116,11 +116,11 @@ const addReservationHandler = function(event) {
   const reservation = new Reservation(readReservationFormData());
 
   //TODO: ERROR HANDLING
-  // if (!reservation.isValid()) {
-  //   console.log('Client side error handling');
-  //   handleValidationFailures(reservation.validationError);
-  //   return;
-  // }
+  if (!reservation.isValid()) {
+    console.log('Client side error handling');
+    handleValidationFailures(reservation.validationError);
+    return;
+  }
 
   reservation.save({}, {
     success: (model, response) => {
@@ -142,7 +142,7 @@ const addReservationHandler = function(event) {
     },
   });
 };
-
+const CONDENSED_TRIP_FIELDS = ['name', 'continent', 'category', 'weeks', 'cost'];
 
 const TRIP_FIELDS = ['name', 'about', 'continent', 'category', 'weeks', 'cost'];
 
@@ -240,6 +240,9 @@ $(document).ready( () => {
   // Register update listener first, to avoid the race condition
   tripList.on('update', render);
 
+  //Listen for sort event when user clicks on column
+  tripList.on('sort', render);
+
   // Listen for user click on add trip button
   $('#add-trip').on('click', function() {
     console.log('#add-trip clicked');
@@ -265,4 +268,14 @@ $(document).ready( () => {
   $('#status-messages button.clear').on('click', clearStatus);
 
   $('#trip-form-button').on('click', clearAddTripForm);
+
+  // Build event handlers for each of the table headers
+  CONDENSED_TRIP_FIELDS.forEach((field) => {
+    const headerElement = $(`.sort.${ field }`);
+    headerElement.on('click', () => {
+      console.log(`Sorting by ${ field }`);
+      tripList.comparator = field;
+      tripList.sort();
+    });
+  });
 });
