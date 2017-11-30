@@ -15,6 +15,7 @@ let tripRowTemplate;
 let tripDetailsTemplate;
 let trip = new Trip();
 const tripList = new TripList();
+const fields = ['name', 'category', 'continent', 'weeks', 'cost', 'about']
 
 // Callback functions
 const render = function render(tripList) {
@@ -40,31 +41,51 @@ const addTrip = function addTrip() {
 }
 
 const events = {
-  successfulGetTrip(trip, response) {
+  successfulGetTrip(trip) {
+    $('#trip-not-found').hide();
     $('#trip-info').empty();
     $('#trip-info').append(tripDetailsTemplate(trip.attributes))
   },
-  failedGetTrip(trip, response) {
+  failedGetTrip() {
     $('#trip-not-found').show();
   },
-  successfulGetTripList(tripList, response) {
+  successfulGetTripList() {
+    $('#list-not-found').hide();
     $('#trip-table').show();
   },
-  failedGetTripList(tripList, response) {
+  failedGetTripList() {
     $('#list-not-found').show();
-  }
+  },
+  addTrip(event) {
+    event.preventDefault();
+    console.log('triggered addTrip');
+    const tripData = {};
+    fields.forEach((field) => {
+      tripData[field] = $(`input[name=${field}]`).val();
+    })
+    const trip = new Trip(tripData);
+    console.log(trip);
+    //tripList.add(trip);
+    console.log(tripList)
+    trip.save({}, {
+      success: events.successfulSave,
+      error: events.successfulSave
+    });
+  },
 };
 
 
 $(document).ready( () => {
   tripRowTemplate = _.template($('#trip-row-template').html());
   tripDetailsTemplate = _.template($('#trip-details-template').html());
-
+  $('#add-trip-form').submit(events.addTrip);
   $('#explore-trips').on('click', getTripList);
 
   tripList.on('update', render, tripList)
 
   $('#trip-list').on('click', 'tr', getTrip);
   $('#add-trip').on('click', addTrip);
-  $('#form-modal').on('click', function () {$('#form-modal').hide();})
+  //$('#form-modal').on('click', function () {$('#form-modal').hide();})
+  $('#form-modal').click(function() {$('#form-modal').hide();});
+  $('#modal-content').click(function(e){ e.stopPropagation();});
 });
