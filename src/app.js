@@ -13,7 +13,8 @@ import TripList from './app/collections/trip_list';
 //selectors from the DOM
 const $tripsList = $('#trips-list')
 const $tripDescription = $('#trip-description')
-const $newTripBtn = $('#newTripBtn')
+const $newTripBtn = $('#newTripBtn');
+const $addTripForm = $('#add-trip-form');
 
 //templates
 let tripTemplate;
@@ -31,8 +32,51 @@ const render = function render(tripList) {
   });
 }
 
-const newTrip = function newTrip() {
-  console.log('button clicked!');
+// const newTrip = function newTrip() {
+//   console.log('button clicked!');
+// }
+const fields = ['name', 'category', 'continent', 'weeks', 'cost', 'about'];
+
+const events = {
+  addTrip(event){
+    event.preventDefault();
+    const tripData = {};
+    fields.forEach( (field) => {
+      tripData[field] = $( `input[name=${field}]`).val();
+      console.log(tripData[field]);
+    });
+
+    const trip = new Trip(tripData);
+    console.log('trip added!');
+    console.log(trip);
+
+    // tripList.add(trip);
+    trip.save({}, {
+      success: events.successfullSave,
+      error: events.failedSave,
+    });
+  },
+  successfullSave(trip, response) {
+    console.log('Success!');
+    console.log(trip);
+    console.log(response);
+    $('#status-messages ul').empty();
+    $('#status-messages ul').append(`<li>${trip.get('name')} added!<li>`)
+    $('#status-messages').show();
+  },
+  failedSave(trip, response) {
+    console.log('errrrror!');
+    console.log(trip);
+    console.log(response);
+    console.log(response.responseJSON.errors);
+
+    for (let key in response.responseJSON.errors) {
+      response.responseJSON.errors[key].forEach((error) => {
+        $('#status-messages ul').append(`<li>${key}: ${error}</li>`)
+      });
+    }
+  },
+
 }
 
 
@@ -49,8 +93,9 @@ $(document).ready( () => {
     });
   });
 
-  $newTripBtn.on('click', newTrip);
 
+  // $newTripBtn.on('click', newTrip);
+  $addTripForm.submit(events.addTrip);
 
   // Data Events
   tripList.on('update', render, tripList);
