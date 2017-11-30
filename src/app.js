@@ -41,7 +41,7 @@ $(document).ready( () => {
   showTripTemplate = _.template($('#trip-details-template').html());
 
   const tripList = new TripList();
-  tripList.on('update', loadTrips);
+  tripList.on('update sort', loadTrips);
   tripList.fetch();
 
   $('#trip-list').on('click', '.trip', function(event){
@@ -97,6 +97,11 @@ $(document).ready( () => {
         $('#messages').html("Unable to reserve.");
       }
     });
+  });
+
+  $('#trip-list-headers').on('click', 'th', function(event) {
+    tripList.sort_key = $(this).text().toLowerCase();
+    tripList.sort();
   });
 
 });
