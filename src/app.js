@@ -206,7 +206,6 @@ const addTripHandler = function(event) {
   trip.save({}, {
     success: (model, response) => {
       console.log('Successfully saved trip!');
-      reportStatus('success', 'Successfully saved trip!');
       tripList.add(trip);
       $('#add-trip-form').hide();
       reportStatus('success', 'Successfully saved trip!');
@@ -240,7 +239,8 @@ $(document).ready( () => {
   $('#add-trip').on('click', function() {
     console.log('#add-trip clicked');
     // Make form available to user
-    $('#add-trip-form').show();
+    // $('#add-trip-form').show();
+    $('#trip-form-message').show();
   });
 
   // Listen for when user submits trip form
