@@ -185,7 +185,11 @@ $(document).ready(() => {
     //$ here is syntax used to indicate got this from jquery
     let $filter = $(this);
     let filteredTrips = _.filter(tripList.models, (trip) => {
-      let filterType = "continent";
+      if ($filter.val().trim() === "") {
+        return true;
+      }
+
+      let filterType = $('#filter-type').val();
 
       if (filterType === "continent" || filterType === "name" || filterType === "category" ) {
         return trip.get(filterType).toLowerCase().includes($filter.val().toLowerCase());
@@ -193,10 +197,15 @@ $(document).ready(() => {
       else {
         return trip.get(filterType) <= parseInt($filter.val());
       }
+      // Can move this code into a method outside of doc.ready and then call it here and then call it also below for trip-filter.change
     });
 
     renderTrips(filteredTrips);
   });
+
+  $('#trip-filter').on('change', function(event){
+    $('#trip-filter').val("");
+  })
 
 });
 
