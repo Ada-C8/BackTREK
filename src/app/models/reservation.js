@@ -1,6 +1,12 @@
 import Backbone from 'backbone';
 
 const Trip = Backbone.Model.extend({
+  url() {
+    return this.url;
+  },
+  initialize(attributes, options) {
+    this.url = options.url;
+  },
   validate(attributes) {
     const errors = {};
 

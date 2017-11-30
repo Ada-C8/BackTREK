@@ -73,7 +73,7 @@ const saveTrip = function saveTrip(event) {
   if (trip.isValid()) {
     trip.save({}, {
       success: successfulTripSave,
-      error: failedTripSave,
+      error: failedSave,
     })
   } else {
     $('#status-messages ul').empty();
@@ -84,7 +84,7 @@ const saveTrip = function saveTrip(event) {
   }
 }
 
-const successfulTripSave = function successfulSave(trip) {
+const successfulTripSave = function successfulTripSave(trip) {
   tripList.add(trip);
   addTripFields.forEach((field) => {
     $(`#add-trip-form input[name=${field}]`).val('');
@@ -94,8 +94,8 @@ const successfulTripSave = function successfulSave(trip) {
   $('#status-messages').show();
 }
 
-const failedTripSave = function failedSave(trip, response) {
-  trip.destroy
+const failedSave = function failedSave(model, response) {
+  model.destroy
   $('#status-messages ul').empty();
   const errors = response.responseJSON.errors;
   for (let key in errors) {
@@ -118,15 +118,18 @@ const reserveForm = function reserveForm(event) {
 
 const saveReservation = function saveReservation(event) {
   event.preventDefault();
+  const baseUrl = 'https://ada-backtrek-api.herokuapp.com/trips';
+  const tripId = $(event.currentTarget.attributes.tripid).val();
+  const finalUrl = `${baseUrl}/${tripId}/reservations`
   const reservationData = {};
   reservationFields.forEach((field) => {
     reservationData[field] = $(`#reserve-trip-form input[name=${field}]`).val();
   });
-  const reservation = new Reservation(reservationData);
+  const reservation = new Reservation(reservationData, {url: finalUrl});
   if (reservation.isValid()) {
     reservation.save({}, {
-      // success: successfulTripSave,
-      // error: failedTripSave,
+      success: successfulReservationSave,
+      error: failedSave,
     })
   } else {
     $('#status-messages ul').empty();
@@ -137,29 +140,16 @@ const saveReservation = function saveReservation(event) {
   }
 }
 
-// const successfulTripSave = function successfulSave(trip) {
-//   tripList.add(trip);
-//   addTripFields.forEach((field) => {
-//     $(`#add-trip-form input[name=${field}]`).val('');
-//   });
-//   $('#status-messages ul').empty();
-//   $('#status-messages ul').append(`<li>${trip.get('name')} added!</li>`);
-//   $('#status-messages').show();
-// }
-//
-// const failedTripSave = function failedSave(trip, response) {
-//   trip.destroy
-//   $('#status-messages ul').empty();
-//   const errors = response.responseJSON.errors;
-//   for (let key in errors) {
-//     errors[key].forEach((issue) => {
-//       $('#status-messages ul').append(`<li>${key}: ${issue}</li>`);
-//     })
-//   }
-//   $('#status-messages').show();
-// }
-
-// TODO: add a way to save a reservation and the submit listener that calls the function
+const successfulReservationSave = function successfulReservationSave(reservation, response) {
+  reservationFields.forEach((field) => {
+    $(`#reserve-trip-form input[name=${field}]`).val('');
+  });
+  $('#status-messages ul').empty();
+  $('#status-messages ul').append(`<li>A space reserved for ${reservation.get('name')}!</li>`);
+  $('#status-messages').show();
+  const fakeEvent = {currentTarget: {id: response.trip_id}};
+  showTrip(fakeEvent);
+}
 
 $(document).ready( () => {
   allTripsTemplate = _.template($('#all-trips-template').html());
