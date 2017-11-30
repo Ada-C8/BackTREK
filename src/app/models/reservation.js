@@ -1,8 +1,11 @@
 import Backbone from 'backbone';
 import Trip from '../models/trip';
+import TripList from '../models/reservation';
 
 const Reservation = Backbone.Collection.extend({
-  model: Trip,
+  // model: Trip,
+
+
   // const tripId = this.get('tripId');
   // urlRoot: `http://localhost:3000/trips/`,
 

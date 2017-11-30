@@ -9,13 +9,15 @@ import './css/style.css';
 // modules I've created:
 import Trip from './app/models/trip';
 import TripList from './app/collections/trip_list';
+import Reservation from  './app/models/reservation';
 
 const TRIP_FIELDS = ['name', 'category', 'continent', 'cost', 'weeks'];
 
 const  tripList = new TripList();
+// const reservation = new Reservation();
 let tripTemplate;
 let individualTripTemplate;
-// let reserveTemplate;
+let reserveTemplate;
 
 console.log('it loaded!');
 
@@ -59,8 +61,18 @@ const render = function render(tripList) {
         individualTripListElement.append(generatedHTMLTripDetails);
 
         $('#individual-trip-detail').show();
-        $('#reserve').show();
+        // handling reservation!
+        $('#reserve').show(); //button display
+        $('#reserve').on('click', function(event) {
+          const reservation = new Reservation({ tripId: trip.id });
+// getting a not default constructor error
+          const generatedHTMLForm = reserveTemplate(reservation.attributes);
 
+          individualTripListElement.append(generatedHTMLForm);
+        });
+        // find('.reserve')
+        // });
+        // });
       }
     }); // fetch
   });
@@ -116,8 +128,7 @@ const addTripHandler = function(event) {
 $(document).ready( () => {
   individualTripTemplate = _.template($('#individual-trip-template').html());
   tripTemplate = _.template($('#trip-template').html());
-
-  // reserveTemplate = _.template($('#reserve-trip-template').html());
+  reserveTemplate = _.template($('#reserve-trip-template').html());
 
   tripList.on('update', render);
   tripList.on('sort', render);
