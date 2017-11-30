@@ -7,10 +7,13 @@
 </head>
 <body>
   <header>
-    <h1>backTREK</h1>
-    <a class="button add-trip small-12 medium-4 columns">Add Trip</a>
+    <div class="row">
+
+      <h1>backTREK</h1>
+      <a class="button add-trip small-12 medium-4 columns">Add Trip</a>
+    </div>
     <form id="trip-search">
-      <div class="form-holder category-holder small-12 medium-4 columns">
+      <div class="form-holder category-holder small-12 medium-3 columns">
         <select name="category">
           <option value="name">Trip Name</option>
           <option value="continent">Continent</option>
@@ -20,7 +23,7 @@
         </select>
       </div>
 
-      <div class="form-holder text-holder small-12 medium-6 columns">
+      <div class="form-holder text-holder small-12 medium-7 columns">
         <input type="text"/>
       </div>
 
@@ -71,8 +74,33 @@
 
   <script id="trip-detail-template" type="text/template">
     <p class="trip-details">
-      <%- about %>
+      <%- about %><br />
+      <a id="reserve-btn" class="button reserve-btn">Reserve Your Spot!</a>
     </p>
+  </script>
+
+  <script id="reserve-modal-template" type="text/template">
+    <section id="reserve-modal" class="reserve modal">
+      <div class="modal-shadow modal-close" id="modal-shadow">
+        <div class="modal-body small-11 medium-7 large-4 columns">
+          <a class="modal-close close-btn">X</a>
+          <h2>Make a Reservation</h2>
+          <form id="reservation-form" class="<%- id %>">
+            <div class="reservation-form-holder small-12 columns">
+              <label for="name">Name:</label>
+              <input type="text" name="name" />
+            </div>
+            <div class="reservation-form-holder small-12 columns">
+              <label for="name">Email:</label>
+              <input type="text" name="email" />
+            </div>
+            <div class="reservation-form-holder small-12 columns">
+              <input type="submit" class="button" />
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
   </script>
 
   <script src="app.bundle.js" type="text/javascript"></script>

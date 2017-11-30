@@ -36,6 +36,10 @@ ul {
   list-style: none;
 }
 
+.row {
+  max-width: 100%;
+}
+
 .button {
   border-radius: 1rem;
   background-color: var(--ltblue);
@@ -121,4 +125,29 @@ form {
 /* TRIP DISPLAY */
 
 .show {
+}
+
+/**********/
+/* MODALS */
+/**********/
+
+.modal-shadow {
+  background-color: rgba(51, 51, 51, 0.5);
+  height: 100vh;
+  position: fixed;
+  width: 100%;
+  top: 0;
+}
+
+.modal-body {
+  background-color: var(--white);
+  border-radius: 1rem;
+  box-shadow: 5px 5px 20px var(--black);
+  float: none;
+  margin: 10% auto;
+  padding: 2rem;
+}
+
+.close-btn {
+  float: right;
 }
