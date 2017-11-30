@@ -15,22 +15,39 @@ const TRIP_FIELDS = ['id', 'name', 'continent', 'category', 'weeks', 'cost'];
 
 const tripList = new TripList();
 let tripsTemplate;
-let tripTemplate;
+let aboutTemplate;
 
-const render = function render(tripList) {
-  // iterate through the tripList, generate HTML for each model, attatch it to the DOM
-  const tripTableElement = $('#trip-list');
-  tripTableElement.html('');
+// render list of trips
+const loadTrips = function loadTrips(tripList) {
+  const tripsTableElement = $('#trip-list');
+  tripsTableElement.html('');
 
   tripList.forEach((trip) => {
-    const generatedHTML = tripsTemplate(trip.attributes);
-    tripTableElement.append(generatedHTML);
-  });
+    const generatedHTML = $(tripsTemplate(trip.attributes));
 
+    generatedHTML.on('click', (event) => {
+      renderTrip(trip);
+    });
+    tripsTableElement.append(generatedHTML);
+  });
   // Provide visual feedback for sorting
   // $('th.sort').removeClass('current-sort-field');
   // $(`th.sort.${ tripList.comparator }`).addClass('current-sort-field');
 };
+
+// render single trip
+const renderTrip = function renderTrip(trip) {
+  const aboutElement = $('#trip-about');
+  aboutElement.html('');
+
+  trip.fetch({
+    success: (model) => {
+      const generatedHTML = $(aboutTemplate(trip.attributes));
+      aboutElement.html(generatedHTML);
+    },
+  });
+};
+
 
 // const addTripHandler = function(event) {
 //   event.preventDefault();
@@ -59,20 +76,18 @@ const render = function render(tripList) {
 
 $(document).ready(() => {
   tripsTemplate = _.template($('#trips-template').html());
-  tripTemplate = _.template($('#trip-template').html());
+  aboutTemplate = _.template($('#trip-template').html());
 
-  tripList.on('update', render);
-  tripList.on('sort', render);
-
+  tripList.on('update', loadTrips);
+  tripList.on('sort', loadTrips);
   tripList.fetch();
-
 
   // clicking on a single trip in the list
   $('#trip-list').on('click', 'tr', function() {
     console.log('clicked');
     let tripID = $(this).data('id');
     console.log(tripID);
-    const singleTrip = new Trip({id: tripID});
+    let singleTrip = new Trip({id: tripID});
     console.log(singleTrip.url());
   })
 
