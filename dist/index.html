@@ -12,10 +12,18 @@
       <button id = "all-trips-btn" class = "button">
         See All Trips
       </button>
+      <button id = "add-trip-btn" class = "button">
+        Add New Trip
+      </button>
     </section>
   </header>
   <main>
-    <section class="columns large-8 small-12" id = "all-trips">
+    <section id = "messages">
+      <ul>
+        
+      </ul>
+    </section>
+    <section class="columns large-7 small-12" id = "all-trips">
       <!-- <h2>All Trips</h2>
 
         <table>
@@ -31,7 +39,7 @@
           </tbody>
         </table> -->
     </section>
-    <section class= "columns small-12 large-4" id = "trip-details">
+    <section class= "columns small-12 large-5" id = "trip-details">
 
     </section>
   </main>
@@ -57,7 +65,7 @@
           <%- weeks %>
         </td>
         <td>
-          <%- cost %>
+          $<%- cost %>
         </td>
     </tr>
   </script>
@@ -75,7 +83,7 @@
         Category: <%- category %>
       </li>
       <li>
-        Cost: $<%- cost %>
+        Cost: $<%- cost.toFixed(2) %>
       </li>
     </ul>
     <p>
@@ -84,6 +92,9 @@
     <p>
       <%- about %>
     </p>
+    <button id = "reserve-btn" class = "button" data-trip-id= <%- id %>>
+      Make Reservation
+    </button>
   </script>
 </body>
 </html>
