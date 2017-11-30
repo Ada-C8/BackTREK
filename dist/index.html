@@ -42,12 +42,7 @@
     <!-- END ADD TRIP FORM  -->
 
     <!-- RESERVE TRIP FORM  -->
-    <form id="reserve-trip-form">
-      <label for="name">Name</label>
-      <input type="text" name="name"></input>
 
-      <input type="submit" value="Reserve This Trip" class="button"></input>
-    </form>
     <!-- END RESERVE TRIP FORM  -->
 
      <!-- SHOW TRIP -->
@@ -59,7 +54,22 @@
         <p><%- category %></p>
         <p><%- weeks %></p>
         <p><%- cost %></p>
+
+        <form id="reserve-trip-form" data-id="<%- id %>">
+          <label for="name">Name</label>
+          <input type="text" name="name"></input>
+          <label for="name">Email</label>
+          <input type="text" name="email"></input>
+          <label for="name">Age</label>
+          <input type="text" name="age"></input>
+          <input type="submit" value="Reserve This Trip" class="button"></input>
+          <input type="hidden" value="<%- id %>" name="trip_id"></input>
+
+      </form>
       </script>
+
+
+
     </div>
     <!-- TABLE RENDERS ALL TRIPS  -->
     <table>
@@ -85,6 +95,11 @@
     </table>
 
     <!-- END TRIP LIST TABLE  -->
+    <label for="continent">Search By Continent</label>
+    <input type='text' id="keyword">
+
+    <ul id="list">
+    </ul>
 
   </main>
   <footer>

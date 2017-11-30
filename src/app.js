@@ -8,6 +8,7 @@ import './css/foundation.css';
 import './css/style.css';
 import Trip from './app/models/trip';
 import TripList from './app/collections/trip_list';
+import Reservation from './app/models/reservation';
 
 let tripsTemplate ;
 let headerTemplate;
@@ -71,5 +72,31 @@ $(document).ready( () => {
       }
     });
   });
-  //formTemplate = _.template($('').html());
+
+  $('#tripDetails').on('submit', "#reserve-trip-form", function(event) {
+    event.preventDefault();
+
+    let tripId = $(this).data("id");
+
+    const reservationData = {};
+    const reservationFields = ['name', 'email', 'age'];
+
+    reservationFields.forEach(function(field){
+      reservationData[field] = $(`#reserve-trip-form input[name=${field}]`).val();
+    });
+
+    reservationData['trip_id'] = tripId;
+
+    let reservation = new Reservation(reservationData);
+
+    reservation.save({}, {
+      success: (model, response) => {
+        $('#messages').html("Reserved!");
+      },
+      error: (model, response) => {
+        $('#messages').html("Unable to reserve.");
+      }
+    });
+  });
+
 });
