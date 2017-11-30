@@ -41,20 +41,26 @@ const events = {
   addTrip(event){
     event.preventDefault();
     const tripData = {};
+
     fields.forEach( (field) => {
-      tripData[field] = $( `input[name=${field}]`).val();
-      console.log(tripData[field]);
+      const val = $(`input[name=${field}]`).val();
+      if (val !== '' ) {
+        tripData[field] = val;
+      }
     });
 
     const trip = new Trip(tripData);
-    console.log('trip added!');
-    console.log(trip);
 
+    if (trip.isValid()) {
+      console.log('VALID!');
+    } else {
+      console.log('uh oh! Invalid trip :(')
+    }
     // tripList.add(trip);
-    trip.save({}, {
-      success: events.successfullSave,
-      error: events.failedSave,
-    });
+    // trip.save({}, {
+    //   success: events.successfullSave,
+    //   error: events.failedSave,
+    // });
   },
   successfullSave(trip, response) {
     console.log('Success!');
