@@ -41,7 +41,9 @@ const renderOneTrip = function renderOneTrip(id) {
   });
 };
 
-const tripFields = ['name', 'cost', 'weeks', 'continent', 'about', 'category']
+const tripFields = ['name', 'cost', 'weeks', 'continent', 'about', 'category'];
+const reservationFields = ['name', 'age', 'email'];
+
 
 const events = {
   addTrip(event) {
@@ -68,6 +70,33 @@ const events = {
     });
 
   },
+
+  // addReservation(event) {
+  //   console.log(this);
+  //   const id = this.id;
+  //   event.preventDefault();
+  //   const reservationData = {};
+  //   reservationFields.forEach( (field) => {
+  //     let val = $(`input[name=${field}]`).val();
+  //     if (field === 'age') {
+  //       val = parseInt(val);
+  //     }
+  //     if (val != '') {
+  //       reservationData[field] = val;
+  //     }
+  //   });
+  //
+  //   const reservation = reservationData;
+  //
+  //   reservation.save({}, {
+  //     url: `https://ada-backtrek-api.herokuapp.com/trips/${id}/reservations`,
+  //     success: events.successfulSave,
+  //     error: events.failedSave
+  //   });
+  //
+  // },
+
+
 
   // sortBooks(event) {
   //   console.log(event);
@@ -121,9 +150,9 @@ $(document).ready(() => {
   tripTemplate = _.template($('#trip-template').html());
   singleTripTemplate = _.template($('#single-trip-template').html());
 
-$('.reservation-form').hide();
-$('#trips-table').hide();
-$('#new-trip-form').hide();
+  $('.reservation-form').hide();
+  $('#trips-table').hide();
+  $('#new-trip-form').hide();
 
   $('#trip-list').on('click', 'tr', function (){
     const tripID = $(this).attr('data-id');
@@ -143,8 +172,26 @@ $('#new-trip-form').hide();
 
   $('#new-trip-form').submit(events.addTrip);
 
+  $('.reservation-form').submit( function(e) {
+    e.preventDefault();
+    let tripID = $('.show .trip').attr('data-id');
+    console.log(tripID);
+    tripID = tripID.match(/\d+/g)[0];
 
-    tripList.on('update', renderTrips, tripList);
+    const url = `https://trektravel.herokuapp.com/trips/${tripID}/reservations`;
+    console.log(url);
+    const formData = $(this).serialize();
+
+    $.post(url, formData, (response) => {
+      $('.reservation-form').hide();
+      $('.message').append('<p> Reservation confirmed! </p>');
+    }).fail(() => {
+      $('.message').append('<p>Adding Reservation Failed</p>');
+    });
+  });
+
+
+  tripList.on('update', renderTrips, tripList);
 
 
 });

@@ -83,11 +83,16 @@
         <input type="text" id="name" name="name"></input>
       </span>
       <span>
+        <label>Age</label>
+        <input type="text" id="age" name="age"></input>
+      </span>
+      <span>
         <label>Email</label>
         <input type="text" id="email" name="email"></input>
       </span>
       <span>
-        <button type="submit">Reserve Your Spot!</button>
+        <input type="submit" value="Reserve your spot!" class="button"></input>
+
       </span>
     </form>
 
@@ -113,7 +118,7 @@
 
 
   <script type="text/template" id="single-trip-template">
-    <p class="trip">
+    <p class="trip" data-id=<%- id %> >
       <%- name %>
       $<%- cost %>
       <%- weeks %> Weeks
