@@ -65,12 +65,25 @@ const events = {
     })
     const trip = new Trip(tripData);
     console.log(trip);
-    //tripList.add(trip);
+
     console.log(tripList)
     trip.save({}, {
       success: events.successfulSave,
-      error: events.successfulSave
+      error: events.failedSave
     });
+  },
+  successfulSave(trip, response) {
+    console.log('saved!')
+    console.log(trip)
+    console.log(response)
+    $('#status-message h3').empty();
+    $('#status-message h3').append(`${trip.get('name')} added!`)
+    $('#status-message').show();
+    tripList.add(trip);
+    $('#form-modal').hide();
+  },
+  failedSave() {
+
   },
 };
 
@@ -87,5 +100,6 @@ $(document).ready( () => {
   $('#add-trip').on('click', addTrip);
   //$('#form-modal').on('click', function () {$('#form-modal').hide();})
   $('#form-modal').click(function() {$('#form-modal').hide();});
+  $(':button').click(function() {$('#form-modal').hide();});
   $('#modal-content').click(function(e){ e.stopPropagation();});
 });
