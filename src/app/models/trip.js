@@ -5,7 +5,7 @@ const Trip = Backbone.Model.extend({
   url: function() {
     const url = this.baseUrl + this.id;
     return url;
-  }
+  },
 });
 
 export default Trip;

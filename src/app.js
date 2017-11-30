@@ -40,8 +40,8 @@ $(document).ready( () => {
     const id = $(this).attr('id');
     const url = new Trip(this).url();
 
-    $.get(url, response => {
-      $(`#${id}`).append(`<p>${response.about}<p>`);
+    $.get(url, function(response) {
+      $(`#${id}`).append(tripDetails(response));
     });
   });
 });
