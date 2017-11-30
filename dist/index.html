@@ -26,8 +26,18 @@
         <section>
           <button class='button' id="show-trips">TREK!</button>
         </section>
-        <section id="sorting">
-
+        <section id="filter">
+          <form id="filter-form">
+            <select id="filter-category">
+              <option value="">Filter By</option>
+              <option value="name">Name</option>
+              <option value="category">Category</option>
+              <option value="continent">Continent</option>
+              <option value="weeks">Trip Length</option>
+              <option value="cost">Cost</option>
+            </select>
+            <input type="text" name="search" />
+          </form>
         </section>
         <section id="trip-table">
           <table>
@@ -150,6 +160,7 @@
     <script type="text/template" id="trip-template">
         <section class="trip" id="">
           <h2><%- name %></h2>
+          <div class="top-border"></div>
           <ul>
             <li><i class="fa fa-plane" aria-hidden="true"></i>
               <%- continent %>
@@ -164,7 +175,7 @@
               <%- cost %>
             </li>
           </ul>
-          <p>
+          <p id="about">
             <%- about %>
           </p>
         </section>

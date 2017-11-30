@@ -1,5 +1,10 @@
+* {
+  box-sizing: border-box;
+}
+html {
 
-/* Your styles go here! */
+}
+/* --MODAL------------- */
 /* The Modal (background) */
 .modal {
     display: none; /* Hidden by default */
@@ -39,6 +44,37 @@
 }
 
 /*------------------------------*/
+#trip-table {
+  width: 100%;
+  height: 70vh;
+  overflow: scroll;
+}
+
+#about {
+  width: 100%;
+  max-height: 18vh;
+  overflow: scroll;
+}
+
+.trip li {
+  display: inline;
+}
+
+.trip h2 {
+  font-size: 2.2em;
+}
+
+#reservation h3 {
+  font-size: 1.5em;
+  text-align: center;
+}
+
+.top-border {
+  border-top: 1px solid #000;
+  width: 10%;
+  margin: 10px 0;
+}
+/*------------------------------*/
 
 input.error {
   background-color: #f5adad;
@@ -47,4 +83,18 @@ input.error {
 
 span.error {
   color: red;
+}
+
+th.sort {
+  cursor: pointer;
+}
+
+.current-sort-field {
+  background-color: darkgrey;
+  color: white;
+}
+
+tr.selected-trip td{
+  background-color: blue;
+  color: white;
 }
