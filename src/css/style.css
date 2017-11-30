@@ -8,23 +8,28 @@
   /*height: 10vw;*/
 }
 
-/*.table {
-  display: inline-block;
-  width: 35vw;
-}*/
-
 
 .current-sort-field {
   background-color: darkgrey;
   color: white;
 }
-.selected-trip {
+
+tr.trip.selected-trip {
   background-color: darkgrey;
   color: white;
-
 }
 #about {
   position: relative;
+
+}
+
+.about {
+  height: 35vw;
+  overflow-y: auto;
+}
+
+.about p {
+
 }
 
 .failure {

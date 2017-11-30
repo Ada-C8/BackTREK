@@ -1,6 +1,6 @@
 //Inline Validations
 //Validations and Error Handling for Reservations
-//Add drop down for continents
+
 //Success and error reporting
 
 //Bugs:
@@ -70,35 +70,43 @@ const addReservationHandler = function(trip) {
   reservation.save({}, {
     success: (model, response) => {
       console.log('Successfully saved reservation!');
-      $('#reservation-status').html('successfully saved reservation!')
+      // $('#reservation-status').html('successfully saved reservation!')
       $('#reservation-status').addClass('success')
       $('#add-reservation-form').hide('slow')
+      reportReservationStatus('success', 'Successfully saved reservation!');
 
-      // hide form
-
-      // console.log(trip);
-      // tripList.add(trip);
-      // $('#status-messages').addClass('success')
-      // $('#status-messages').html('SUCCESSFULLY SAVED!')
-      //
-      // reportStatus('success', 'Successfully saved trip!');
     },
     error: (model, response) => {
       console.log('Failed to save reservation! Server response:');
-      $('#reservation-status').html('failed to saved reservation!');
       $('#reservation-status').removeClass('success');
       $('#reservation-status').addClass('failure');
 
-      //add failure to status messages
-
-      //NEED TO FIND A WAY TO
-      // $('#status-messages').addClass('failure')
-      // $('#status-messages').append(`Failed to save trip`)
-      // console.log(response);
-      // tripList.remove(model)
-      //
-      // handleValidationFailures(response.responseJSON["errors"]);
+      handleReservationValidationFailures(response.responseJSON["errors"]);
     },
+
+    ////////////////////////
+    // trip.save({}, {
+    //   success: (model, response) => {
+    //     console.log('Successfully saved trip!');
+    //     console.log(trip);
+    //     tripList.add(trip);
+    //     $('#status-messages').addClass('success')
+    //     reportStatus('success', 'Successfully saved trip!');
+    //   },
+    //   error: (model, response) => {
+    //     console.log('Failed to save trip! Server response:');
+    //     //NEED TO FIND A WAY TO
+    //     $('#status-messages').removeClass('success')
+    //     $('#status-messages').addClass('failure')
+    //     $('#status-messages').append(`Failed to save trip`)
+    //     console.log(response);
+    //     tripList.remove(model)
+    //
+    //     handleValidationFailures(response.responseJSON["errors"]);
+    //   },
+    // });
+
+    ////////////////
 
   });
 };
@@ -110,10 +118,11 @@ const readReservationData = function readReservationData() {
     const inputElement = $(`#add-reservation-form input[name="${ field }"]`);
     const value = inputElement.val();
     console.log(value);
-    // if (value != '') {
+    if (value != '') {
       reservationData[field] = value;
-    // }
-    inputElement.val('');
+    }
+    // making the tripId equal an empty string
+    // inputElement.val('');
   });
   console.log(reservationData);
   return reservationData;
@@ -126,8 +135,11 @@ const readFormData = function readFormData() {
 
   TRIP_FIELDS.forEach((field) => {
     // select the input corresponding to the field we want
-    const inputElement = $(`#add-trip-form input[name="${ field }"]`);
+    let inputElement = $(`#add-trip-form input[name="${ field }"]`);
+
     if(field == 'continent') {
+      inputElement = $(`#add-trip-form select[name="${ field }"]`);
+      console.log(inputElement);
       console.log(inputElement);
       const string = inputElement.val();
       const value = string.charAt(0).toUpperCase() + string.slice(1)
@@ -183,6 +195,18 @@ const reportStatus = function reportStatus(status, message) {
   $('#status-messages').show();
 };
 
+const reportReservationStatus = function reportReservationStatus(status, message) {
+  console.log(`Reporting ${ status } status: ${ message }`);
+  // Should probably use an Underscore template here.
+  const statusHTML = `<p class="${ status }">${ message }</p>`;
+  // note the symetry with clearStatus()
+  $('#reservation-status').append(statusHTML);
+  $('#reservation-status').removeClass('success')
+
+  $('#reservation-status').addClass('failure')
+  $('#reservation-status').show();
+};
+
 const handleValidationFailures = function handleValidationFailures(errors) {
   // Since these errors come from a Rails server, the strucutre of our
   // error handling looks very similar to what we did in Rails.
@@ -190,6 +214,16 @@ const handleValidationFailures = function handleValidationFailures(errors) {
   for (let field in errors) {
     for (let problem of errors[field]) {
       reportStatus('error', `${field}: ${problem}`);
+    }
+  }
+};
+
+const handleReservationValidationFailures = function handleValidationFailures(errors) {
+  // Since these errors come from a Rails server, the strucutre of our
+  // error handling looks very similar to what we did in Rails.
+  for (let field in errors) {
+    for (let problem of errors[field]) {
+      reportReservationStatus('error', `${field}: ${problem}`);
     }
   }
 };
@@ -241,11 +275,6 @@ $(document).ready(() => {
   tripTemplate = _.template($('#trip-template').html());
   aboutTemplate = _.template($('#about-template').html());
 
-  // $("#add-trip-form").hide()
-  // $('#add-trip').on('click', function() {
-  //   $("#add-trip-form").show('slow')
-  // })
-
   tripList.on('update', loadTrips);
   tripList.on('sort', loadTrips);
 
@@ -257,7 +286,6 @@ $(document).ready(() => {
   TRIP_FIELDS.forEach((field) => {
     const headerElement = $(`th.sort.${ field }`);
     headerElement.on('click', (event) => {
-      console.log(`Sorting table by ${ field }`);
       tripList.comparator = field;
       tripList.sort();
     });
@@ -268,11 +296,8 @@ $(document).ready(() => {
 
   // Get the modal
   const modal = document.getElementById('myModal');
-  console.log(modal);
   // Get the button that opens the modal
   const btn = document.getElementById("add-trip");
-  console.log(btn);
-
   // Get the <span> element that closes the modal
   const span = document.getElementsByClassName("close")[0];
 
