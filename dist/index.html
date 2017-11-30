@@ -21,8 +21,9 @@
         </ul>
       </section>
 <!-- FORM -->
-<button class="button trip-info">View All Trips</button>
+
       <aside class="columns large-4 small-12">
+        <button class="button trip-info">View All Trips</button>
         <h2>Add a Trip</h2>
         <form id="add-trip-form">
           <label for="name">Trip Name</label>
@@ -47,11 +48,11 @@
         </form>
       </aside>
 
-      <section class="columns large-8 small-12">
+      <section id="trips-section" class="columns large-8 small-12 hidden">
         <h2>Trips!</h2>
 
 <!-- TABLE -->
-        <table>
+        <table id="trips-table">
           <thead>
             <th class="sort name">Name</th>
             <th class="sort category">Category</th>
@@ -66,8 +67,6 @@
       </section>
     </main>
 
-    <footer>backTrek 2017</footer>
-
     <script type="text/template" id="trip-template">
       <tr class="trip">
         <td><%- name %></td>
@@ -77,5 +76,7 @@
         <td><%- cost %></td>
       </tr>
     </script>
+
+    <footer>backTrek 2017</footer>
 </body>
 </html>

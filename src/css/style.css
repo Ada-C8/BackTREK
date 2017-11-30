@@ -5,3 +5,16 @@
   background-color: #2199e8;
   color: white;
 }
+
+.sort-field:hover {
+  background-color: #1583cc;
+  color: white;
+}
+
+.hidden {
+  display: none;
+}
+
+.show {
+  display: inline;
+}

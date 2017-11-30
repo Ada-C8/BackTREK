@@ -99,6 +99,18 @@ const events = {
     $('.sort-field').removeClass('sort-field');
     $(this).addClass('sort-field');
   },
+
+  showAllTrips() {
+    console.log('*****************');
+    $('#trips-section').removeClass('hidden');
+    $('#trips-section').addClass('show');
+  },
+
+  showTripDetails() {
+    const id = $(this).attr('id')
+    tripList.fetch(id);
+
+  },
 };
 
 
@@ -110,6 +122,9 @@ $(document).ready( () => {
   tripList.on('sort', render, tripList);
 
   $('#add-trip-form').submit(events.addTrip);
+
+// TODO
+  $('.trip-info').click(events.showAllTrips);
 
   tripList.on('update', render, tripList);
 
