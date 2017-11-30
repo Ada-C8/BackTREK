@@ -32,38 +32,54 @@ const render = function(tripList) {
 const reservationFields = ['name', 'age', 'email']
 const tripFields = ['name', 'continent', 'about', 'weeks', 'cost', 'category'];
 const events = {
-    addTrip(event) {
-      console.log("I want to make a new trip");
-      event.preventDefault();
-      const tripData = {};
-      tripFields.forEach((field) => {
-        const value = $(`input[name=${field}]`).val();
-        if (value !== "") {
-          tripData[field] = value
-        }
+  addTrip(event) {
+    console.log("I want to make a new trip");
+    event.preventDefault();
+    const tripData = {};
+    tripFields.forEach((field) => {
+      const value = $(`input[name=${field}]`).val();
+      if (value !== "") {
+        tripData[field] = value
+      }
+    });
+
+    const trip = new Trip(tripData);
+    console.log("this trip is: ")
+    console.log(trip);
+    console.log("Trip not yet saved.")
+
+    if (trip.isValid()){
+      console.log("SUCCESSSSSSS")
+      console.log();
+      tripList.add(trip)
+      trip.save({}, {
+        success: events.successfulSave,
+        error: events.failedSave,
       });
-
-        const trip = new Trip(tripData);
-        console.log("this trip is: ")
-        console.log(trip);
-        console.log("Trip not yet saved.")
-
-        if (trip.isValid()){
-          console.log("SUCCESSSSSSS")
-          console.log();
-          tripList.add(trip)
-          trip.save({}, {
-            // success: events.successfulSave,
-            // error: events.failedSave,
-          });
-          console.log("Now the trip has been saved.")
-        } else {
-          console.log("What's on book is invalid on the client side")
-          console.log(trip)
-        }
-
-
+      console.log("Now the trip has been saved.")
+    } else {
+      console.log("What's on book is invalid on the client side")
+      console.log(trip)
     }
+  },
+  successfulSave(trip, response) {
+    console.log("Successful Save!")
+    // $('#status-messages ul').empty();
+    // $('#status-messages ul').append(`<li>${trip.get('title')} added!!!!!!!!!!!!!!!!</li>`)
+    // $('#status-messages').show();
+  },
+
+  failedSave(trip, response){
+    console.log("Failed Save");
+    // for (let key in response.responseJSON.errors) {
+    //   response.responseJSON.errors[key].forEach((error) => {
+    //     $('#status-messages ul').append(`<li>${key}: ${error}</li>`)
+    //   })
+    // }
+    // $('#status-messages').show()
+    trip.destroy();
+  },
+
   // reserveSpot: function(event) {
   //   console.log("I want to reserve a trip");
   //   event.preventDefault();
@@ -80,7 +96,7 @@ const events = {
   //     reservation.save()
   //     console.log(reservation);
   //   }
-  }
+}
 
 $(document).ready( () => {
   $('#newTripForm').hide();
