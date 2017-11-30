@@ -9,6 +9,7 @@ import './css/style.css';
 // Models and Collections
 import Trip from './app/models/trip';
 import TripList from './app/collections/trip_list';
+import Reservation from './app/models/reservation';
 
 const tripList = new TripList();
 let allTripsTemplate;
@@ -128,5 +129,6 @@ $(document).ready( () => {
   $('#add-trip').on('click', addTripForm);
   $('#add-trip-form').on('submit', saveTrip);
   $('#show-trip').on('click', '#reserve', reserveForm);
-  $('#status-messages').on('click', '.clear', clearMessages);
+  // $('#reserve-trip-form').on('submit', saveReservation);
+  $('.clear, #load-trips, #add-trip').on('click', clearMessages);
 });
