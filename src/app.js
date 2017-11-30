@@ -10,7 +10,8 @@ import './css/style.css';
 import Trip from './app/models/trip';
 import TripList from './app/collections/trip_list';
 
-const fields = ['id', 'name', 'continent', 'category', 'weeks', 'cost'];
+const tripFields = ['name', 'continent', 'about', 'category', 'weeks', 'cost'];
+const reservationFields = ['name', 'age', 'email'];
 
 const events = {
   fetchTrip() {
@@ -37,8 +38,15 @@ const events = {
     console.log('show modal!');
     $('#create-trip-modal').show();
   },
-  addTrip(){
-
+  addTrip(event){
+    event.preventDefault();
+    const tripData = {};
+    tripFields.forEach( (field) => {
+      const val = $(`input[name=${field}]`).val();
+      // TODO: check for validation if an input has a value
+      tripData[field] = val;
+    });
+    console.log(tripData);
   }
 }
 
