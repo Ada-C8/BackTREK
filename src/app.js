@@ -32,30 +32,35 @@ const render = function(tripList) {
 const reservationFields = ['name', 'age', 'email']
 const tripFields = ['name', 'continent', 'about', 'weeks', 'cost', 'category'];
 const events = {
-    addTrip: function(event) {
+    addTrip(event) {
       console.log("I want to make a new trip");
-      event.preventDefault;
+      event.preventDefault();
       const tripData = {};
       tripFields.forEach((field) => {
         const value = $(`input[name=${field}]`).val();
-        if (value != "") {
+        if (value !== "") {
           tripData[field] = value
         }
+      });
+
         const trip = new Trip(tripData);
+        console.log("this trip is: ")
         console.log(trip);
+        console.log("Trip not yet saved.")
 
         if (trip.isValid()){
           console.log("SUCCESSSSSSS")
           tripList.add(trip)
-          // trip.save({}, {
-          //   success: events.successfulSave,
-          //   error: events.failedSave,
-          // });
+          trip.save({}, {
+            // success: events.successfulSave,
+            // error: events.failedSave,
+          });
+          console.log("Now the trip has been saved.")
         } else {
           console.log("What's on book is invalid on the client side")
           console.log(trip)
         }
-      });
+
 
     }
   // reserveSpot: function(event) {
@@ -106,6 +111,6 @@ $(document).ready( () => {
     $('#newTripForm').show();
   });
 
-  $('#newTripForm').submit(events.addTrip);
-
+  // $('#newTripForm').submit(events.addTrip);
+  $('#newTripForm').on('click', 'button', events.addTrip);
 });
