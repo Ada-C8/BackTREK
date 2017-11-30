@@ -64,10 +64,18 @@ const saveTrip = function saveTrip(event) {
     tripData[field] = $(`#add-trip-form input[name=${field}]`).val();
   });
   const trip = new Trip(tripData);
-  trip.save({}, {
-    success: successfulTripSave,
-    error: failedTripSave,
-  })
+  if (trip.isValid()) {
+    trip.save({}, {
+      success: successfulTripSave,
+      error: failedTripSave,
+    })
+  } else {
+    $('#status-messages ul').empty();
+      for (let error in trip.validationError) {
+        trip.validationError[error].forEach((message) => $('#status-messages ul').append(`<li>${message}</li>`));
+      }
+      $('#status-messages').show();
+  }
 }
 
 const successfulTripSave = function successfulSave(trip, response) {
