@@ -1,2 +1,95 @@
 
 /* Your styles go here! */
+.header{
+   text-align: center;
+   padding-bottom: 2%;
+   background-image: url("http://2.bp.blogspot.com/-cIFih6LY4x8/U2i6PX7HYTI/AAAAAAAAFyk/oGQO3pXUlTc/s1600/Twitter-Header-1500x500-Size-18.jpg");
+ }
+
+ .header_word{
+   padding-top: 5%;
+   color: #FF5733;
+   font-weight: 700;
+   font-family: fantasy;
+   font-style: italic;
+ }
+ #load{
+    text-align: center;
+    border: 1px black solid;
+    border-radius: .2em ;
+    background-color: lightblue;
+    color: black;
+    margin-top: 2%;
+  }
+
+  #load:hover, input.button:hover{
+    background-color: lightsteelblue;
+  }
+
+  /*********BODY************/
+
+
+#trips{
+  background-color: AZURE;
+  color: navy;
+  font-family: sans-serif;
+  font-size: 10pt;
+  padding-left: 5%;
+  padding-top: 5%;
+}
+/*#trips table{
+  display: none;
+}*/
+
+tr th{
+  padding-right: 22%;
+  padding-bottom: 2%;
+}
+
+tr td{
+  padding-bottom: 1%;
+}
+
+tr:hover.selected td,
+tr:hover td {
+  background-color: #FFEFC6;
+  cursor: pointer;
+}
+
+
+#trip{
+  border-radius: .5em;
+  background-color: AZURE;
+  color: #FF5733;
+}
+
+.reserve, .tripname{
+  text-align: center;
+}
+
+.button a, input.button{
+  text-align: center;
+  border: 1px black solid;
+  border-radius: .2em ;
+  background-color: lightblue;
+  color: black;
+  margin-top: 2%;
+}
+p{
+  color: maroon;
+}
+b{
+  color: navy;
+}
+strong{
+  color: green; /* Success message */
+}
+/*footer{
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  background-color: #efefef;
+  text-align: center;
+}*/
