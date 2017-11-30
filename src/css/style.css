@@ -5,3 +5,11 @@
   background-color: #dfdfdf;
   display: none;
 }
+
+#reservation-form {
+  display: none;
+}
+
+#add-trip-form {
+  display: none;
+}

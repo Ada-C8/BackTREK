@@ -6,8 +6,8 @@ const Trip = Backbone.Model.extend({
     return response
   },
   initialize: function(attributes) {
-    console.log(`in initializer for the trip ${ this.get('title')}`);
-    console.log(attributes);
+    // console.log(`in initializer for the trip ${ this.get('title')}`);
+    // console.log(attributes);
   },
   validate: function(attributes) {
     console.log(attributes);

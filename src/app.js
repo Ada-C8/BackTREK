@@ -10,11 +10,13 @@ import './css/style.css';
 import Trip from './app/models/trip';
 import TripList from './app/collections/trip_list';
 
-//selectors from the DOM
 const $tripsList = $('#trips-list')
 const $tripDescription = $('#trip-description')
 const $newTripBtn = $('#newTripBtn');
 const $addTripForm = $('#add-trip-form');
+const $resFormBtn = $('#res-form-btn');
+const $resForm = $('#reservation-form');
+const $tripIDonForm = $('#tripID');
 
 //templates
 let tripTemplate;
@@ -35,7 +37,7 @@ const render = function render(tripList) {
 // const newTrip = function newTrip() {
 //   console.log('button clicked!');
 // }
-const fields = ['name', 'category', 'continent', 'weeks', 'cost', 'about'];
+const fields = ['name', 'category', 'continent', 'weeks', 'cost', 'about', 'tripID'];
 
 const events = {
   addTrip(event){
@@ -96,20 +98,31 @@ const events = {
 
 
 $(document).ready( () => {
+
   tripTemplate = _.template($('#trip-template').html());
 
 
   // User Events
   $tripsList.on('click', 'tr', function getTrip() {
     const trip = new Trip({ id: $(this).attr('data-id') })
-
+    $tripDescription.empty();
     trip.fetch().done(() => {
       $tripDescription.append(tripDetailsTemplate(trip.attributes));
     });
   });
 
+  $('#trip-description').on('click', 'button', function showResForm() {
+    console.log(this);
+    const tripID = $(this).attr('data-id');
+    console.log(tripID);
+    $tripIDonForm.append(`<input type="hidden" name="tripID" value="${tripID}">`);
+    $resForm.show();
+  });
 
-  // $newTripBtn.on('click', newTrip);
+  $newTripBtn.on('click', function showNewTripForm() {
+    $addTripForm.toggle();
+  });
+
   $addTripForm.submit(events.addTrip);
 
   // Data Events
