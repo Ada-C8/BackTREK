@@ -9,8 +9,7 @@ import './css/style.css';
 
 import TripList from './app/collections/trip_list';
 import Trip from './app/models/trip';
-import Reservation from './app/models/trip';
-
+import Reservation from './app/models/reservation';
 
 const TRIP_FIELDS = ['id', 'name', 'continent', 'category', 'weeks', 'cost', 'about'];
 const DISPLAY_TRIP_FIELDS = ['id', 'name', 'continent', 'category', 'weeks', 'cost'];
@@ -88,28 +87,36 @@ const addTripHandler = function(event) {
 const addReservationHandler = function(event) {
   event.preventDefault();
   const reservationData = {};
-  RESERVATION_FIELDS.forEach((field) => {
+  ['name', 'email', 'age'].forEach((field) => {
     // select the input corresponding to the field we want
-    const inputElement = $(`#add-trip-form input[name="${ field }"]`);
+    const inputElement = $(`#reservation-form input[name="${ field }"]`);
     const value = inputElement.val();
     reservationData[field] = value;
 
     inputElement.val('');
   });
 
-    console.log("Read Reservation data");
-    console.log(reservationData);
+  console.log("Read Reservation data");
+  console.log(reservationData);
 
-    const trip = tripList.add(reservationData);
-      trip.save({}, {
-      success: (model, response) => {
-        console.log('Successfully saved reservation!');
-      },
-      error: (model, response) => {
-        console.log('Failed to save reservation! Server response:');
-        console.log(response);
-      },
-    });
+  reservationData["trip_id"] = $(this).data("id");
+  const reservation = new Reservation(reservationData);
+
+  console.log(reservation.url);
+
+  reservation.save({}, {
+    success: (model, response) => {
+      console.log('Successfully saved reservation!');
+      $('#alert-messages').html('Successfully saved reservation!');
+    },
+    error: (model, response) => {
+      console.log('Failed to save reservation! Server response:');
+      console.log(response);
+      $('#alert-messages').html('Failed to save reservation!');
+      // FIGURE OUT HOW TO ADD EACH ERROR
+      //SET TIMEOUT ON THIS ONE AND THE SUCCESS - check TREK Project
+    },
+  });
 };
 
 
@@ -160,9 +167,9 @@ $(document).ready(() => {
     trip.fetch();
 
   });
-  // $('#reservation-form').on('submit', function(event) {
-  //   console.log("Clicked the button");
-  // }
+
+  $('#trip-detail').on('submit', '#reservation-form', addReservationHandler);
+
   $('#reservation-button').on('click', function(event) {
     // $('#reservation-form').show();
     // console.log('attempting to show the reservation form');
