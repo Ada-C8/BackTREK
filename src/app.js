@@ -50,6 +50,7 @@ const events = {
 
         if (trip.isValid()){
           console.log("SUCCESSSSSSS")
+          console.log();
           tripList.add(trip)
           trip.save({}, {
             // success: events.successfulSave,
@@ -94,7 +95,7 @@ $(document).ready( () => {
     $('#all-trips').show(); // shows all trips.
   });
 
-  $('#trip-list').on('focus', 'tr', function(){ // when you focus a row in the table
+  $('#trip-list').on('click', 'tr', function(){ // when you focus a row in the table
     $('#trip-description').empty();
     const tripTemplate = _.template($('#description-template').html()); //make a new template for the new section (for displaying individual trips)
     const trip = new Trip(this) //create a new instance of trip because it doesn't yet exist.
