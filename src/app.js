@@ -44,9 +44,15 @@ const events = {
     tripFields.forEach( (field) => {
       const val = $(`input[name=${field}]`).val();
       // TODO: check for validation if an input has a value
-      tripData[field] = val;
+      if (val != '') {
+        tripData[field] = val;
+      }
     });
+    console.log('in addTrip in app.js');
     console.log(tripData);
+
+    const trip = new Trip(tripData);
+    console.log(trip.isValid());
   }
 }
 
