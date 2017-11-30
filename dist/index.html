@@ -44,29 +44,34 @@
           <h1 class= "text-center">Your <br />journey <br />awaits!</h1>
         </div>
       </section>
+
       <section class = "columns small-12">
         <form id="add-trip-form" method="post">
-          <section>
+          <h3>Make a new trip!</h3>
+          <p class="status-messages add-trip">
+
+          </p>
+          <section class ="name error">
             <label>Name</label>
             <input type="text" id="name" name="name"></input>
           </section>
-          <section>
+          <section class ="continent error">
             <label>Continent</label>
             <input type="text" id="continent" name="continent"></input>
           </section>
-          <section>
+          <section class ="category error">
             <label>Category</label>
             <input type="text" id="category" name="category"></input>
           </section>
-          <section>
+          <section class ="weeks error">
             <label>Weeks</label>
             <input type="text" id="weeks" name="weeks"></input>
           </section>
-          <section>
+          <section class ="cost error">
             <label>Cost</label>
             <input type="text" id="cost" name="cost"></input>
           </section>
-          <section>
+          <section class ="description error">
             <label>Description</label>
             <input type="text" id="Description" name="about"></input>
           </section>
@@ -87,7 +92,9 @@
     <script type="text/template" id="form-template">
       <div class= "form-container">
         <h3 id="trip-name" class ="text-center"><%- name %></h3>
-        <form id="reserve-form" method="post">
+        <form id="reserve-form">
+
+          <input type="hidden" value="<%-id%>" name="tripID"></input>
           <section>
             <label>Name</label>
             <input type="text" id="name" name="name"></input>
@@ -101,7 +108,7 @@
             <input type="text" id="email" name="email"></input>
           </section>
           <section class= "<%-id%>" >
-            <button class= "submit button">Make Reservation!</button>
+            <button class= "submit-reservation button" >Make Reservation!</button>
           </section>
         </form>
 

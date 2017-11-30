@@ -2,6 +2,7 @@
 import $ from 'jquery';
 import _ from 'underscore';
 import Trip from 'app/models/trip.js'
+import Reservation from 'app/models/reservation.js'
 import TripList from 'app/collections/tripList.js'
 
 // CSS
@@ -13,6 +14,8 @@ console.log('it loaded!');
 const tripList = new TripList();
 
 const TRIP_FIELDS = [ 'id', 'name', 'continent', 'category', 'weeks','cost', 'about']
+
+const RESERVATION_FIELDS = [ 'tripID', 'name', 'age', 'email']
 
 const render = function render(tripList) {
   console.log(tripList);
@@ -26,6 +29,7 @@ const render = function render(tripList) {
       $('#trip-list').append(tripHTML);
       let id = currentTrip.get('id')
       console.log(`.current-trip-${id}`);
+      // $('#submit-reservation').on('submit', addReservationHandler);
     });
   });
 };
@@ -48,12 +52,18 @@ const reserveFormUpdate = function (event){
     const formHTML = formTemplate(currentTrip.attributes);
     // $('.form-container').removeClass('hide');
     $('#form-container').html(formHTML);
+    $('#reserve-form').on('click','.submit-reservation', addReservationHandler);
   });
 }
 
 const addTripHandler = function(event){
   event.preventDefault();
-  const trip = new Trip(readFormData());
+  const trip = new Trip(readTripFormData());
+
+  if (!trip.isValid()) {
+    handleValidationFailures(trip.validationError);
+    return;
+  }
   console.log('I am getting ready to make a trip!')
   console.log(trip.attributes)
   tripList.add(trip);
@@ -67,11 +77,24 @@ const addTripHandler = function(event){
       console.log(response);
       tripList.remove(model);
 
-       handleValidationFailures(response.responseJSON["errors"]
-      );
-    },
-  });
+      handleValidationFailures(response.responseJSON["errors"]
+    );
+  },
+});
 };
+
+
+const addReservationHandler = function addReservationHandler(event) {
+  event.preventDefault();
+  console.log('this is the reserve function')
+
+  const reservation = new Reservation(readReservationFormData());
+
+  // if (!reservation.isValid()) {
+  //   handleValidationFailures(reservation.validationError);
+  //   return;
+  // }
+}
 
 const handleValidationFailures = function handleValidationFailures(errors) {
   for (let field in errors) {
@@ -85,13 +108,14 @@ const handleValidationFailures = function handleValidationFailures(errors) {
 const reportStatus = function reportStatus(status, message) {
   console.log(`Reporting ${ status } status: ${ message }`);
   // Should probably use an Underscore template here.
-  const statusHTML = `<li class="${ status }">${ message }</li>`;
+  const statusHTML = ` <p class="${ status }">${ message }</p>`;
   // note the symetry with clearStatus()
-  $('#status-messages ul').append(statusHTML);
-  $('#status-messages').show();
+  $('.status-messages').append(statusHTML);
+  $('.status-messages').show();
 };
 
-const readFormData = function readFormData() {
+
+const readTripFormData = function readTripFormData() {
   const tripData = {};
   TRIP_FIELDS.forEach((field) => {
     // select the input corresponding to the field we want
@@ -108,6 +132,23 @@ const readFormData = function readFormData() {
   return tripData;
 };
 
+const readReservationFormData = function readReservationFormData() {
+  console.log('getting ready to read reservation form')
+  const reservationData = {};
+  RESERVATION_FIELDS.forEach((field) => {
+    // select the input corresponding to the field we want
+    const inputElement = $(`#reserve-form input[name="${ field }"]`);
+    const value = inputElement.val();
+
+    if (value != '') {
+      reservationData[field] = value;
+    }
+    inputElement.val('');
+  });
+  console.log("Read reservation data");
+  console.log(reservationData.attributes);
+  return reservationData;
+};
 
 
 $(document).ready( () => {
@@ -119,8 +160,8 @@ $(document).ready( () => {
 
   $('#trip-list').on('click', 'button', tripDetailHandler);
 
-  $('#trip-list').on('click', '.reserve', reserveFormUpdate)
+  $('#trip-list').on('click', '.reserve', reserveFormUpdate);
   // $('.new-trip-button').on('click', addReservationHandler);
-
-  $('#add-trip-form').on('submit', addTripHandler)
+  // $('#reserve-form').on('submit', addReservationHandler);
+  $('#add-trip-form').on('submit', addTripHandler);
 });

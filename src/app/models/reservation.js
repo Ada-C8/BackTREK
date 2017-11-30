@@ -1,15 +1,32 @@
 import Backbone from 'backbone';
 
-const Trip = Backbone.Model.extend({
+const Reservation = Backbone.Model.extend({
   // model: Trip,
-   urlRoot: 'https://ada-backtrek-api.herokuapp.com/trips/',
-   toString() {
-     return `<Trip ${this.get('name')}>`;
-   },
+  //set trip id as an attribute in reservation
+  urlRoot () {
+    return`https://trektravel.herokuapp.com/trips/${this.get('tripID')}/reservations`
+  },
+
+  toString() {
+    return `<Reservation ${this.get('name')}>`;
+  },
+  
+  validate(attributes) {
+    const errors = {};
+    if (!attributes.name) {
+      errors.name = [' cannot be blank'];
+    }
+
+    if (!attributes.email) {
+      errors.email = [' cannot be blank'];
+    }
+
+    if (Object.keys(errors).length < 1) {
+      return false;
+    }
+    return errors;
+  },
 
 });
 
-export default Trip;
-
-
-`https://trektravel.herokuapp.com/trips/${id}/reservations`
+export default Reservation;

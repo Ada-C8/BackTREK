@@ -22,3 +22,12 @@ ul {
 tr :hover {
   background-color: grey;
 }
+
+
+.error {
+  color: red;
+}
+
+.success {
+  color: green;
+}
