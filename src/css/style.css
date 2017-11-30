@@ -17,6 +17,10 @@
   text-align: center;
 }
 
+/*#reserve-trip {
+  display: none;
+}*/
+
 /* Styles for error section at the top */
 #status-messages {
   display: none;

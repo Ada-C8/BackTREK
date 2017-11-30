@@ -68,6 +68,16 @@
         <div id="individual-trip-details">
 
         </div>
+
+        <!-- <form id="reserve-trip">
+          <label for="name">Name</label>
+          <input type="text" name="name"></input>
+
+          <label for="email">Email</label>
+          <input type="number" name="email"></input>
+
+          <input type="submit" value="Reserve Trip!" class="button"></input>
+        </form> -->
       </section>
     </section>
   </main>
@@ -113,6 +123,18 @@
       <p>
         <strong>Cost: </strong><%- cost %>
       </p>
+
+      <form id="reserve-trip">
+        <label for="name">Name</label>
+        <input type="text" name="name"></input>
+
+        <label for="email">Email</label>
+        <input type="text" name="email"></input>
+
+        <input type="hidden" value= "<%- id %>" name="tripId"> <input/>
+
+        <input type="submit" value="Reserve Trip!" class="button"></input>
+      </form>
     </script>
 
     <script type="text/template" id="report-status-template">

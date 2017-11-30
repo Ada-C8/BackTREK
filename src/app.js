@@ -8,7 +8,7 @@ import './css/style.css';
 
 import Trip from './app/models/trip'
 import TripList from './app/collections/trip_list'
-
+import Reservation from './app/models/reservation'
 
 let tripTemplate;
 let individualTripTemplate;
@@ -64,11 +64,81 @@ const render = function render(tripList) {
           individualtripListElement.append(generatedHTMLTripDetails);
 
           $('#individual-trip-details').show();
+          // $('#reserve-trip').show();
 
+          //listen for submit click for reservation
+          console.log(`Trip ID: ${tripId}`);
+          $('#reserve-trip').on('submit', addReservationHandler)
+          //   function(event) {
+          //   event.preventDefault();
+          //   console.log('IN RESERVE TRIP FUNCTION');
+          //   console.log();
+          // })
         } // function
       }); // fetch
   })
 }; //render
+
+const RESERVATION_FIELDS = ['name', 'email', 'tripId'];
+
+const readReservationFormData = function readReservationFormData() {
+  const reservationData = {};
+  RESERVATION_FIELDS.forEach((field) => {
+    // select the input corresponding to the field we want
+    const inputElement = $(`#reserve-trip input[name="${ field }"]`);
+    const value = inputElement.val();
+
+    reservationData[field] = value;
+
+    //TODO: ERROR HANDLING
+    // Don't take empty strings, so that Backbone can
+    // fill in default values
+    // if (value != '') {
+    //   tripData[field] = value;
+    // }
+    //
+    // inputElement.val('');
+  });
+
+  console.log("Read reservation data");
+  console.log(reservationData);
+
+  return reservationData;
+};
+
+
+const addReservationHandler = function(event) {
+  event.preventDefault();
+
+  const reservation = new Reservation(readReservationFormData());
+
+  //TODO: ERROR HANDLING
+  // if (!reservation.isValid()) {
+  //   console.log('Client side error handling');
+  //   handleValidationFailures(reservation.validationError);
+  //   return;
+  // }
+
+  reservation.save({}, {
+    success: (model, response) => {
+      console.log('Successfully saved trip!');
+      // tripList.add(trip);
+      $('#individual-trip-details').hide();
+      reportStatus('success', 'Successfully made reservation!');
+    },
+    error: (model, response) => {
+      console.log('Failed to make reservation! Server response:');
+      console.log(response);
+
+      // Server-side validations failed, so remove this bad
+      // trip from the list
+      // tripList.remove(model);
+
+      handleValidationFailures(response.responseJSON["errors"]);
+    },
+  });
+};
+
 
 const TRIP_FIELDS = ['name', 'about', 'continent', 'category', 'weeks', 'cost'];
 
