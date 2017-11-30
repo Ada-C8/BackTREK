@@ -7,6 +7,7 @@ import './css/foundation.css';
 import './css/style.css';
 
 import TripList from './app/collections/trip_list';
+import Trip from './app/models/trip';
 
 const tripList = new TripList();
 let tripTemplate;
@@ -63,9 +64,11 @@ const addReservationHandler = function addReservationHandler(event) {
   // ToDo: come backkkkk
 };
 
-const addTripHandler = function(event) {
-  event.preventDefault();
+const loadModal = function loadModal(event) {
+  $('#add-trip').show();
+};
 
+const makeTripObject = function makeTripObject() {
   const tripData = {};
   ['name', 'continent', 'category', 'cost', 'weeks', 'about'].forEach((field) => {
     const inputElement = $(`#add-trip-form input[name="${ field }"]`);
@@ -74,33 +77,33 @@ const addTripHandler = function(event) {
 
     inputElement.val('');
   });
+  return tripData
+};
 
-  const trip = tripList.add(tripData);
+const addTripHandler = function(event) {
+  event.preventDefault();
+
+  const trip = new Trip(makeTripObject());
+
+  if (!trip.isValid()) {
+    handleValidationFailures(trip.validationError);
+    return;
+  }
+
+  tripList.add(trip);
 
   trip.save({}, {
     success: (model, response) => {
-      console.log('Successfully saved trip!');
       reportStatus('success', 'Successfully saved book!');
       $('#add-trip').hide();
 
     },
     error: (model, response) => {
-      console.log('Failed to save trip! Server response:');
-      console.log(response);
-      const errors = response.responseJSON["errors"];
-      for (let field in errors) {
-        for (let problem of errors[field]) {
-          reportStatus('error', `${field}: ${problem}`);
-        }
-      }
+      tripList.remove(model)
+      handleValidationFailures(response.responseJSON["errors"]);
     },
   });
 
-};
-
-
-const loadModal = function loadModal(event) {
-  $('#add-trip').show();
 };
 
 const reportStatus = function reportStatus(status, message) {
@@ -111,6 +114,16 @@ const reportStatus = function reportStatus(status, message) {
 
   $('#status-messages ul').append(statusHTML);
   $('#status-messages').show();
+};
+
+
+const handleValidationFailures = function handleValidationFailures(errors) {
+
+  for (let field in errors) {
+    for (let problem of errors[field]) {
+      reportStatus('error', `${field}: ${problem}`);
+    }
+  }
 };
 
 const clearStatus = function clearStatus() {
