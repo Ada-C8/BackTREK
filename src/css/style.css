@@ -13,6 +13,10 @@
   display: none;
 }
 
+#in-form-status-message {
+  display: none;
+}
+
 #form-modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */

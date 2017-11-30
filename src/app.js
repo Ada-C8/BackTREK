@@ -40,6 +40,12 @@ const addTrip = function addTrip() {
   $('#form-modal').show();
 }
 
+const leaveForm = function leaveForm() {
+  $('#form-modal').hide();
+  $('#add-trip-form').trigger('reset');
+  $('#in-form-status-message').hide();
+}
+
 const events = {
   successfulGetTrip(trip) {
     $('#trip-not-found').hide();
@@ -58,6 +64,8 @@ const events = {
   },
   addTrip(event) {
     event.preventDefault();
+    $('#in-form-status-message').hide();
+
     console.log('triggered addTrip');
     const tripData = {};
     fields.forEach((field) => {
@@ -81,9 +89,18 @@ const events = {
     $('#status-message').show();
     tripList.add(trip);
     $('#form-modal').hide();
+    $('#add-trip-form').trigger('reset');
   },
-  failedSave() {
-
+  failedSave(trip, response) {
+    console.log('no can save')
+    console.log(response)
+    $('#in-form-status-message ul').empty();
+    for(let key in response.responseJSON.errors) {
+      response.responseJSON.errors[key].forEach((error) => {
+        $('#in-form-status-message ul').append(`<li>${key}: ${error}</li>`);
+      })
+    }
+    $('#in-form-status-message').show();
   },
 };
 
@@ -98,8 +115,7 @@ $(document).ready( () => {
 
   $('#trip-list').on('click', 'tr', getTrip);
   $('#add-trip').on('click', addTrip);
-  //$('#form-modal').on('click', function () {$('#form-modal').hide();})
-  $('#form-modal').click(function() {$('#form-modal').hide();});
-  $(':button').click(function() {$('#form-modal').hide();});
+  $('#form-modal').on('click', leaveForm);
+  $(':button').on('click', leaveForm);
   $('#modal-content').click(function(e){ e.stopPropagation();});
 });
