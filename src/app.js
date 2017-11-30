@@ -75,6 +75,8 @@ const events = {
         $('#status-messages ul').append(`<li>${key}: ${error}</li>`)
       });
     }
+    $('#status-messages').show();
+    trip.destroy();
   },
 
 }

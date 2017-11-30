@@ -1,2 +1,7 @@
 
 /* Your styles go here! */
+
+#status-messages {
+  background-color: #dfdfdf;
+  display: none;
+}
