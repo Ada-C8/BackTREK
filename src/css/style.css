@@ -95,11 +95,24 @@ p.success {
 /**********/
 
 header {
-  background-color: var(--indigo);
+  /*background-color: var(--indigo);*/
+  padding: 1rem;
 }
 
 .add-trip {
   float: right;
+}
+
+.form-holder {
+  padding: 1rem 0 0 0;
+}
+
+.form-holder input, .form-holder select {
+  border-radius: 1rem;
+}
+
+.text-holder {
+  padding: 1rem 1rem 0 1rem;
 }
 
 /* SEARCH */
@@ -126,7 +139,7 @@ form {
 }
 
 .trip-list ul {
-  margin: 2rem auto;
+  margin: 0 auto;
   width: 95%;
 }
 
