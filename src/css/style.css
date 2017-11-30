@@ -5,3 +5,7 @@
   background-color: darkgrey;
   color: white;
 }
+
+#status-messages ul {
+  color: red;
+}

@@ -28,7 +28,7 @@ const updateStatusMessageFrom = (messageHash) => {
   for(let messageType in messageHash) {
     messageHash[messageType].forEach((message) => {
       $('#status-messages ul').append($(`<li>${messageType}:  ${message}</li>`));
-      console.log(`<li>${messageType}:  ${message}</li>`);
+      // console.log(`<li>${messageType.charAt(0).toUpperCase()}:  ${message}</li>`);
     })
   }
   $('#status-messages').show();
@@ -100,7 +100,6 @@ const events = {
     });
     const trip = new Trip(tripData);
     console.log(trip);
-    $.modal.close();
     if (trip.isValid()) {
       tripList.add(trip);
       trip.save({}, {
@@ -115,6 +114,7 @@ const events = {
   },
   successfulSave(trip, response) {
     updateStatusMessageWith(`${trip.get('name')} added!`);
+    $.modal.close();
   },
   failedSave(trip, response) {
     updateStatusMessageFrom(response.responseJSON.errors);
