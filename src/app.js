@@ -63,10 +63,15 @@ const events = {
     tripList.fetch();
   },
   successfulSave(trip, response) {
-    $('#message ul').empty();
-    $('#message ul').append(`<li>${trip.get('name')} added!</li>`);
-    $('#message').addClass('success').show();
-    $.modal.close();
+    $('#modal-message ul').empty();
+    $('#modal-message ul').append(`<li>${trip.get('name')} added!</li>`);
+    $('#modal-message').addClass('success').show();
+    // $.modal.close();
+    $("#new-trip-form").modal({
+ escapeClose: true,
+ clickClose: true,
+ showClose: true
+});
   },
   failedSave(trip, response) {
     $('#modal-message ul').empty();
@@ -85,7 +90,6 @@ const events = {
 $(document).ready( () => {
   // PREP
   $('#reservation-form').hide();
-  // $('#new-trip').hide();
   tripListTemplate = _.template($('#trip-list-template').html());
   tripTemplate = _.template($('#trip-detail-template').html());
 
@@ -100,7 +104,6 @@ $(document).ready( () => {
   tripList.fetch();
 
   //NEW Trip
-  // $('#add-trip').click(() => $('#new-trip').show());
   $('#new-trip-form').submit(events.addTrip);
 
 });
