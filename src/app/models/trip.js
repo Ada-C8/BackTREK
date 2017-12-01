@@ -10,30 +10,43 @@ const Trip = Backbone.Model.extend({
     if (!attributes.name) {
       errors.title = ['cannot be blank'];
     }
+
     if (!CONTINENTS.includes(attributes.continent)){
       errors.continent = ["that isn't a continent"];
     }
+
     if (!attributes.continent){
       errors.continent = ['cannot be blank'];
     }
+
     if (!attributes.about) {
       errors.about = ['cannot be blank'];
     }
+
     if (!attributes.category) {
       errors.category = ['cannot be blank'];
     }
+
     if (!attributes.weeks) {
       errors.weeks = ['cannot be blank'];
     }
+
     if (attributes.weeks <= 0) {
       errors.weeks = ['trips must be greater than one week in length'];
     }
+
     if (!attributes.cost) {
       errors.cost = ['cannot be blank'];
     }
+
     if (attributes.cost <= 0) {
       errors.cost = ['A trips cost must be greater than 0'];
     }
+    
+    if (Object.keys(errors).length < 1) {
+      return false;
+    }
+    return errors;
   }
 });
 

@@ -36,26 +36,52 @@ const renderDetails = function renderDetails(trip){
   }
 };
 
+// Add a new status message
+const reportStatus = function reportStatus(status, message) {
+  console.log('in reportStatus function');
+  console.log(`Reporting ${ status } status: ${ message }`);
+
+  // // Should probably use an Underscore template here.
+  // const statusHTML = `<li class="${ status }">${ message }</li>`;
+  //
+  // // note the symetry with clearStatus()
+  // $('#status-messages ul').append(statusHTML);
+  // $('#status-messages').show();
+};
+
+const handleValidationFailures = function handleValidationFailures(errors) {
+  console.log('in handleValidationFailures function');
+  for (let field in errors) {
+    for (let problem of errors[field]) {
+      reportStatus('error', `${field}: ${problem}`);
+    }
+  }
+};
+
 const addTripHandler = function(event) {
   console.log('addTripHandler entered');
   event.preventDefault();
+
   const trip = new Trip(readResFormData());
-  // const form = document.querySelector("form");
-  // const form = $('#add-trip-form');
-  // var data = $(this).serializeArray();
-  console.log(trip);
+  if (!trip.isValid()) {
+    console.log(`trip is not valid!`);
+    handleValidationFailures(trip.validationError);
+    return;
+  }
+
+  // console.log();
 };
+
+
 
 const readResFormData = function readResFormData(){
   const tripData = {};
-
   TRIP_FIELDS.forEach((field) => {
     // select the input corresponding to the field we want
     const inputElement = $(`#add-trip-form input[name="${ field }"]`);
     const value = inputElement.val();
 
-    // Don't take empty strings, so that Backbone can
-    // fill in default values
+    // Don't take empty strings, so that Backbone can fill in default values
     if (value != '') {
       tripData[field] = value;
     }
