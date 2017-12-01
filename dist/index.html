@@ -3,18 +3,119 @@
 <head>
   <meta charset="utf-8">
   <title>My JavaScript App</title>
+  <script src="app.bundle.js" type="text/javascript"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
   <header>
-
+    <span>
+      <h1 class="title">World Trek</h1>
+    </span>
+    <button id="load-trips">See All Trips</button>
+    <!-- <div class="globe-large"><img src="http://www.issaquahhighlands.com/wp-content/uploads/2015/06/Travel-Night-globe.png" alt="globe"></div> -->
   </header>
+
   <main>
 
-  </main>
-  <footer>
+    <section id="status-messages">
+      <button class="clear float-right">
+        <img src="http://www.pvhc.net/img223/xeiwtpbbgpmyhtcnjvwt.png" alt="Clear">
+      </button>
+      <ul>
+      </ul>
+    </section>
 
-  </footer>
-  <script src="app.bundle.js" type="text/javascript"></script>
+    <section id="add-a-trip-form-container">
+      <h2>Add a Trip</h2>
+      <form id="add-trip-form">
+        <label for="name">Name</label>
+        <input type="text" name="name"></input>
+
+        <label for="category">Category</label>
+        <input type="text" name="category"></input>
+
+        <label for="continent">Continent</label>
+        <input type="text" name="continent"></input>
+
+        <label for="weeks">Weeks</label>
+        <input type="number" name="weeks"></input>
+
+        <label for="cost">Number of Trip Cost</label>
+        <input type="number" name="cost"></input>
+
+        <label for="description">Description</label>
+        <input type="text" name="description"></input>
+
+        <input type="submit" value="Add Trip!" class="button"></input>
+      </form>
+    </section>
+
+    <section id="trips-table-container" class="columns large-7 small-12 float-left">
+      <h2>Trips:</h2>
+      <table>
+        <thead>
+          <th class="sort name">Name</th>
+          <th class="sort category">Category</th>
+          <th class="sort continent">Continent</th>
+          <th class="sort cost">Cost</th>
+          <th class="sort weeks">Weeks</th>
+        </thead>
+        <tbody id="trips-list">
+        </tbody>
+      </table>
+    </section>
+
+    <section id="trip-details-container" class="columns large-5 small-12 float-right">
+    </section>
+
+
+  </main>
+
+  <!-- <footer>
+    <h4>Footer Holding Text</h4>
+  </footer> -->
+
+  <script type="text/template" id="trips-template">
+      <tr class="trips-row" data-id=<%- id %>>
+        <td>
+          <%- name %>
+        </td>
+        <td>
+          <%- category %>
+        </td>
+        <td>
+          <%- continent %>
+        </td>
+        <td>
+          <%- cost %>
+        </td>
+        <td>
+          <%- weeks %>
+        </td>
+      </tr>
+    </script>
+
+    <script type="text/template" id="single-trip-template">
+        <ul class="trip-ul" data-id=<%- id %>>
+          <li>Name:
+            <%- name %>
+          </li>
+          <li>Category:
+            <%- category %>
+          </li>
+          <li>Continent:
+            <%- continent %>
+          </li>
+          <li>Cost:
+            <%- cost %>
+          </li>
+          <li>Weeks:
+            <%- weeks %>
+          </li>
+          <li>About:
+            <%- about %>
+          </li>
+        </ul>
+      </script>
 </body>
 </html>
