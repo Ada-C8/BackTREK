@@ -21,9 +21,9 @@
       </ul>
     </section>
 
-    <div class="centerme"><button type="button" class="hollow button" id="load"> Look at Available Trips! </button></div>
+    <section class="centerme"><button type="button" class="hollow button" id="load"> Look at Available Trips! </button></section>
 
-    <section class="columns large-8 small-12">
+    <section class="columns large-8 small-12" id="trips-table">
       <h2>Trips!</h2>
 
       <table>
@@ -39,10 +39,21 @@
       </table>
     </section>
 
+    <section class="columns large-8 small-12" id="trip">
+
+    </section>
+
   </main>
   <footer>
 
   </footer>
+
+  <script type="text/template" id="atrip-template">
+    <h2 class="name"><%- name %></h2>
+    <p class="description"><%- description %></p>
+    <p class="weeks"><%- weeks %></p>
+    <p class="cost"><%- cost %></p>
+  </script>
 
   <script type="text/template" id="trip-template">
     <tr class="trip">

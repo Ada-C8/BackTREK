@@ -1,2 +1,9 @@
 
 /* Your styles go here! */
+#trips-table {
+  display: none;
+}
+
+.active {
+  display: block;
+}
