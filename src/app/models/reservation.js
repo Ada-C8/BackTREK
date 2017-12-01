@@ -14,27 +14,27 @@ const Reservation = Backbone.Model.extend({
   validate: function(attributes) {
     const errors = {};
 
-  //   if (!attributes.name) {
-  //     errors['name'] = 'Name cannot be blank';
-  //   }
-  //
-  //   if (!attributes.age) {
-  //     errors['age'] = 'Age cannot be blank';
-  //   } else if (isNaN(attributes.age)) {
-  //     errors['age'] = 'Age must be a number';
-  //   }
-  //
-  //   if (!attributes.email) {
-  //     errors['email'] = 'Email cannot be blank';
-  //   }
-  //
-  //   console.log('errrrrors!');
-  //   console.log(errors);
-  //   if (Object.keys(errors).length > 0) {
-  //     return errors;
-  //   } else {
-  //     return false;
-  //   }
+    if (!attributes.name) {
+      errors['name'] = 'Name cannot be blank';
+    }
+
+    if (!attributes.age) {
+      errors['age'] = 'Age cannot be blank';
+    } else if (isNaN(attributes.age)) {
+      errors['age'] = 'Age must be a number';
+    }
+
+    if (!attributes.email) {
+      errors['email'] = 'Email cannot be blank';
+    }
+
+    console.log('errrrrors!');
+    console.log(errors);
+    if (Object.keys(errors).length > 0) {
+      return errors;
+    } else {
+      return false;
+    }
   }
 });
 
