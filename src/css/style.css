@@ -1,6 +1,6 @@
 /* general */
 body {
-  height: 99vh;
+  max-height: 99vh;
 }
 
 .row {
@@ -19,47 +19,38 @@ body {
   clear: both;
 }
 
-table.tableSection {
-  display: table;
-  width: 100%;
-}
-
-/*thead, tbody {
-  width: 100%;
-}*/
-
 thead {
-  overflow-y: scroll;
   display: table;
+  overflow-y: scroll;
   table-layout: fixed;
-  /*width: calc(100% - 16px);*/
-  /* assuming scrollbar width as 16px */
 }
 
 tbody {
-  overflow: auto;
-  height: 100vh;
   display: block;
+  height: 75vh;
+  overflow: auto;
 }
 
 tr {
-  width: 100%;
-  text-align: left;
   display: table;
   table-layout: fixed;
+  text-align: left;
+  width: 100%;
 }
 
-td {
+td, th {
   overflow-x: scroll;
+}
+
+.show-right {
+  height: 80vh;
+  overflow-y: scroll;
 }
 
 #status-messages {
   background-color: #dfdfdf;
-
-  /* Hide by default */
-  display: none;
-
   border-radius: 1rem;
+  display: none;
   margin: 1rem;
   padding: .8rem;
 }
