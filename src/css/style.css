@@ -18,3 +18,16 @@ a[href] {
 .current-sort-field:hover {
   cursor: pointer;
 }
+
+
+.error {
+  border: solid 2px red;
+}
+
+.error-message {
+  color: red;
+}
+
+.success {
+  color: green;
+}

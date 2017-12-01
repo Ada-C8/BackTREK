@@ -11,19 +11,20 @@ import Trip from './app/models/trip';
 import TripList from './app/collections/trip_list';
 import Reservation from './app/models/reservation';
 
-const tripList = new TripList();
-// const trip = new Trip();
+const allTrips = new TripList();
+let filteredTrips = allTrips;
 
 let tripListTemplate;
 let tripTemplate;
-let successTemplate;
-let errorTemplate;
 
 // renders
 const renderTripList = function renderTripList(tripList) {
   // empty existing list and res form
+  console.log('rendering');
+  console.log(tripList);
   const $tripList = $('#trip-list');
   $tripList.empty();
+  console.log('empty trip list');
   $('#reservation').empty();
 
   tripList.forEach((trip) => {
@@ -53,7 +54,6 @@ const readForm = function readForm(form) {
     formData[field.name] = $(`#${field.id}`).val();
   }
 
-  console.log(formData);
   return formData;
 };
 
@@ -69,27 +69,29 @@ const readResForm = function readResForm() {
 
   resData['trip_id'] = tripId;
 
-  console.log(resData);
   return resData
 }
 
-const clearStatus = function clearStatus() {
-  $('.status-messages').empty();
+const renderSuccess = function renderSuccess(message, section) {
+  // const $msgSection = $('main > .status-messages')
+
+  section.addClass('success');
+  section.append(`<p>${message}</p>`);
+  // $msgSection.delay(5000).fadeout();
+}
+
+const renderError = function renderError(field, error, form) {
+  const html = `<p class="error-message small-6 cell">${error}</p>`;
+  const $errorInput = form.find(`input[name=${field}]`);
+
+  $errorInput.before(html);
+  $errorInput.parent().addClass('error');
 };
 
-const renderStatus = function reportStatus(statusInfo, section) {
-  if (statusInfo.status === 'success') {
-    section.append(successTemplate(statusInfo))
-  } else if (statusInfo.status === 'error') {
-    section.append(errorTemplate(statusInfo));
-  }
-};
-
-const handleValidationErrors = function handleValidationErrors(errors, section) {
-
+const handleValidationErrors = function handleValidationErrors(errors, form) {
   Object.keys(errors).forEach((field) => {
     errors[field].forEach((error) => {
-      renderStatus({status: 'error', message: `${field}: ${error}`}, section);
+      renderError(field, error, form);
     });
   });
 };
@@ -116,32 +118,12 @@ const getTrip = function getTrip(event) {
   });
 };
 
-const highlightTrip = function highlightTrip() {
-  $('#trip-list tr').addClass('selected');
-};
-
-const successfulSave = function successfulSave(trip) {
-  $('.error-messages').empty();
-
-  tripList.add(trip);
-  $.modal.close();
-};
-
-const failedSave = function failedSave(trip, response) {
-  const $errors = $('.error-messages');
-
-  $errors.empty();
-  $errors.append('<h4>Failed to save<h4><ul>');
-
-  const errorList = response.responseJSON.errors;
-
-  Object.keys(errorList).forEach((errorType) => {
-    errorList[errorType].forEach((error) => {
-      $errors.append(`<li>${errorType}: ${error}</li>`);
-    });
-  });
-  $errors.append('</ul>');
-};
+// const successfulSave = function successfulSave(trip) {
+//   $('.error-messages').empty();
+//
+//   tripList.add(trip);
+//   $.modal.close();
+// };
 
 const addTrip = function addTrip(event) {
   event.preventDefault();
@@ -150,26 +132,46 @@ const addTrip = function addTrip(event) {
   // client side validations
   if (trip.isValid()) {
     trip.save({}, {
-      success: successfulSave,
-      error: failedSave
+      success: () => {
+        if ($('#add-trip-form p').length) {
+          $('#add-trip-form p').remove();
+        }
+
+        allTrips.add(trip);
+        $.modal.close();
+
+        renderSuccess('Trip successfully added', $('main > .status-messages'));
+      },
+      // success: successfulSave,
+      error: (model, response) => {
+        handleValidationErrors(response.responseJSON.errors, $('#add-trip-form'));
+      }
+      // error: failedSave
     });
   } else {
-    const $curSection = $('#add-trip-form .status-messages');
-    handleValidationErrors(trip.validationError, $curSection);
+    handleValidationErrors(trip.validationError, $('#add-trip-form'));
   }
 };
 
 const loadResForm = function loadTripForm(tripId) {
   const html = `
   <form id="add-res-form" data-id="${tripId}" action="https://ada-backtrek-api.herokuapp.com/trips/${tripId}/reservations" method="post">
-    <label>Name</label>
-    <input type="text" id="res-name" name="name" />
+    <section class="status-messages">
+    </section>
+    <div class="name grid-x">
+      <label class="small-6 cell">Name</label>
+      <input type="text" id="res-name" name="name" />
+    </div>
 
-    <label>Age</label>
-    <input type="number" id="age" name="age" />
+    <div class="age grid-x">
+      <label class="small-6 cell">Age</label>
+      <input type="number" id="age" name="age" />
+    </div>
 
-    <label>Email</label>
-    <input type="email" id="email" name="email" />
+    <div class="email grid-x">
+      <label class="small-6 cell">Email</label>
+      <input type="email" id="email" name="email" />
+    </div>
 
     <button class="button confirm" type="submit" id="add-reservation">Reserve this Trip</button>
     <button class="button cancel" type="reset" id="cancel-reservation">Cancel</button>
@@ -180,19 +182,26 @@ const loadResForm = function loadTripForm(tripId) {
 
 const addRes = function addRes(event) {
   event.preventDefault();
-  console.log('adding res');
+
   const res = new Reservation(readResForm());
 
   // client-side validations
   if (res.isValid()) {
-    res.save({
-      success: successfulSave,
-      error: failedSave
+    res.save({}, {
+      success: () => {
+        // if ($('#add-res-form p').length) {
+          $('#add-res-form p').remove();
+        // }
+        renderSuccess('Spot reserved', $('#add-res-form .status-messages'));
+        $('#add-res-form').trigger('reset');
+      },
+      error: (model, response) => {
+        handleValidationErrors(response.responseJSON.errors, $('#add-res-form'));
+      }
     });
   }
   else {
-    const $curSection = $('.reservation .status-messages');
-    handleValidationErrors(res.validationError, $curSection);
+    handleValidationErrors(res.validationError, $('#add-res-form'));
   }
 };
 
@@ -207,27 +216,35 @@ const sortTrips = function sortTrips() {
   classes.forEach((className) => {
     // if already sorted, sort desc
     if (fields.includes(className)) {
-      tripList.models.reverse();
-      tripList.trigger('sort', tripList);
-      // sort asc
-    } else {
-      tripList.comparator = className;
-      tripList.sort();
+      if (className === allTrips.comparator) {
+        allTrips.models.reverse();
+        allTrips.trigger('sort', allTrips);
+        // sort asc
+      } else {
+        allTrips.comparator = className;
+        allTrips.sort();
+      }
     }
   });
 };
 
+const filterTrips = function filterTrips() {
+  const $filter = $('#filter-by option:checked').val();
+  // make empty string if undefined
+  const $search = $('#search').val() || "";
+  filteredTrips = allTrips.filterBy($filter, $search);
+  renderTripList(filteredTrips);
+};
 
 $(document).ready( () => {
   // load templates
   tripListTemplate = _.template($('#trip-list-template').html());
   tripTemplate = _.template($('#trip-template').html());
-  successTemplate = _.template($('#success-template').html());
-  errorTemplate = _.template($('#error-template').html());
 
-  tripList.on('update', renderTripList, tripList);
-  tripList.on('sort', renderTripList, tripList);
-  
+  allTrips.on('update', renderTripList, allTrips);
+  allTrips.on('sort', renderTripList, allTrips);
+  // filteredTrips.on('update', renderTripList, filteredTrips);
+
   $('#trip-list').on('mouseover', 'tr', getTrip, this);
   $('.all-trips th').on('click', sortTrips);
 
@@ -235,5 +252,7 @@ $(document).ready( () => {
   $('#add-trip-form').on('submit', addTrip);
 
   $('#trip-detail').on('submit', '#add-res-form', addRes);
-  tripList.fetch();
+  $('#filter').on('change keyup', 'input', filterTrips);
+
+  allTrips.fetch();
 });

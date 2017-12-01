@@ -3,14 +3,13 @@ import Backbone from 'backbone';
 const Trip = Backbone.Model.extend({
   urlRoot: 'https://ada-backtrek-api.herokuapp.com/trips',
 
-
   validate(attributes) {
     const errors = {};
 
     const continents = ['Africa', 'Antartica', 'Asia', 'Australasia', 'Europe', 'North America', 'South America'];
 
     if (!attributes.name) {
-      errors['name'].push('Cannot be blank');
+      errors['name']= ['Cannot be blank'];
     }
 
     if (!attributes.continent) {
