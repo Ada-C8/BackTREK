@@ -13,6 +13,7 @@ import Trip from './models/trip';
 // TRIP FIELDS
 const TRIP_FIELDS = ['id', 'name', 'about', 'continent', 'category', 'weeks', 'cost'];
 
+// Trip COLLECTION
 const tripList = new TripList();
 
 // TEMPLATES
@@ -22,7 +23,7 @@ let aboutTemplate;
 let createNewTripTemplate;
 let newReservationTemplate;
 
-// render list of trips
+// RENDER LIST OF TRIPS
 const loadTrips = function loadTrips(tripList) {
   const tripsTableElement = $('#trip-list');
   tripsTableElement.html('');
@@ -31,9 +32,8 @@ const loadTrips = function loadTrips(tripList) {
     const generatedHTML = $(tripsTemplate(trip.attributes));
     tripsTableElement.append(generatedHTML);
   });
-  // Provide visual feedback for sorting
-  // $('th.sort').removeClass('current-sort-field');
-  // $(`th.sort.${ tripList.comparator }`).addClass('current-sort-field');
+  $('th.sort').removeClass('current-sort-field');
+  $(`th.sort.${ tripList.comparator }`).addClass('current-sort-field');
 };
 
 const createNewTripHandler = function(event) {
