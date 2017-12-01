@@ -80,17 +80,27 @@ const events = {
 const makeTripReservation = function makeTripReservation(id) {
   const trip = tripList.findWhere({id: parseInt(id)});
 
+  const reservationData = {};
+  fields.forEach( (field) => {
+    const val = $(`input[name=${field}]`).val();
+    if (val != '') {
+    reservationData[field] = val;
+    }
+  });
+
+  const reservation = trip.reserve(reservationData);
   // Validations: Testing missing parameters
   // const reservation = trip.reserve({age: "21", email:"jedrzo@ada.com"});
   // reservation.on("invalid", function(model, error) {
-  //   $('#myModal ul').append('<li>Something went wrong!</li>');
-  //   $('#myModal').foundation('open');
+  //   $('#errorModal ul').append('<li>Something went wrong!</li>');
+  //   $('#errorModal').foundation('open');
   // });
+  //reservation.save();
 
   reservation.on("invalid", function(model, error) {
-    // $('#myModal ul').append(`<li>Something went wrong! Please resolve: ${reservation.validationError['age'][0]}</li>`);
-    $('#myModal ul').append(`<li>Something went wrong! Please resolve: ${JSON.stringify(error)}</li>`);
-    $('#myModal').foundation('open');
+    // $('#errorModal ul').append(`<li>Something went wrong! Please resolve: ${reservation.validationError['age'][0]}</li>`);
+    $('#errorModal ul').append(`<li>Something went wrong! Please resolve: ${JSON.stringify(error)}</li>`);
+    $('#errorModal').foundation('open');
   });
   reservation.save();
   console.log(reservation);

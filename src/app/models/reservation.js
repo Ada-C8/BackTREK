@@ -1,7 +1,10 @@
 import Backbone from 'backbone';
 
 const Reservation = Backbone.Model.extend({
-
+  initialize: function(attributes) {
+    // just to see what reservation attributes look like from form
+    console.log(attributes);
+  },
   validate: function(attributes) {
     console.log('What are the attributes in validate');
     console.log(attributes);
