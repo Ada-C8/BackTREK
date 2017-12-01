@@ -17,8 +17,21 @@
 
     </button>
 
+    <button id="add-trip" class="button">
+      Add Trip
+    </button>
+
   </header>
   <main>
+
+    <section id="status-messages">
+      <button class="clear float-right">
+        <img src="http://www.pvhc.net/img223/xeiwtpbbgpmyhtcnjvwt.png" alt="Clear">
+      </button>
+
+      <ul>
+      </ul>
+    </section>
     <section class="columns large-8 small-12">
 
       <div id="trips">
@@ -39,9 +52,36 @@
 
     <section >
       <div>
-        <div id='trip' >hotmail</div>
+        <div id='trip' ></div>
       </div>
     </section>
+
+    <aside class="columns large-4 small-12">
+      <h2>Add a Trip</h2>
+
+      <form id="add-trip-form">
+        <label for="name">Name</label>
+        <input type="text" name="name">
+
+        <label for="category">Category</label>
+        <input type="text" name="category">
+
+        <label for="continent">Continent</label>
+        <input type="text" name="continent">
+
+        <label for="weeks">Duration</label>
+        <input type="text" name="weeks">
+
+        <label for="cost">Cost</label>
+        <input type="text" name="cost">
+
+        <label for="about">About</label>
+        <input type="text" name="about">
+
+        <input type="submit" value="Trip Registration" class="button">
+      </form>
+
+    </aside>
 
 
 
@@ -77,9 +117,10 @@
   <script type="text/template" id="trip-detail-template">
     <h2><%- name  %><h2/>
     <p>Category: <%- category %></p>
+    <p>Continent: <%- continent %></p>
     <p>Duration: <%- weeks %> weeks</p>
     <p>Cost: $<%- cost %></p>
-    <p>about: $<%- about %></p>
+    <p>About: <%- about %></p>
 
   </script>
 

@@ -1,2 +1,61 @@
 
 /* Your styles go here! */
+/* Styles for error section at the top */
+#status-messages {
+  background-color: #dfdfdf;
+
+  /* Hide by default */
+  display: none;
+
+  border-radius: 1rem;
+  margin: 1rem;
+  height: 100%;
+  padding: .8rem;
+}
+
+#status-messages ul {
+  list-style: none;
+  margin-left: 0;
+}
+
+#status-messages button.clear {
+  margin-top: .2rem;
+  height: 100%;
+}
+
+#status-messages button.clear img {
+  width: 2rem;
+}
+
+#status-messages .error {
+  color: red;
+}
+
+#status-messages .success {
+  color: green;
+}
+
+
+/* Modal positioning */
+.bbm-wrapper {
+  box-sizing: border-box;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  padding: 50px 10px;
+  overflow: auto; }
+  .bbm-wrapper * {
+    box-sizing: border-box; }
+
+.bbm-modal {
+  border-radius: 3px;
+  margin: auto;
+  width: auto;
+  max-width: 550px; }
+
+.bbm-views {
+  width: 100%;
+  box-sizing: border-box; }

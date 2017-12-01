@@ -14,9 +14,29 @@ console.log('it loaded!');
 const tripList = new TripList()
 const trip = new Trip()
 
+const TRIP_FIELDS = ['name', 'category', 'continent', 'weeks', 'cost', 'about'];
+
+
 let tripsTemplate;
 let tripDetailTemplate;
 
+// Clear status messages
+const clearStatus = function clearStatus() {
+  $('#status-messages ul').html('');
+  $('#status-messages').hide();
+};
+
+// Add a new status message
+const reportStatus = function reportStatus(status, message) {
+  console.log(`Reporting ${ status } status: ${ message }`);
+
+  // Should probably use an Underscore template here.
+  const statusHTML = `<li class="${ status }">${ message }</li>`;
+
+  // note the symetry with clearStatus()
+  $('#status-messages ul').append(statusHTML);
+  $('#status-messages').show();
+};
 
 const render = function render(tripList) {
   const $tripsElement = $('#trip-list');
@@ -40,16 +60,7 @@ const render = function render(tripList) {
   });
 };
 
-// const renderTripDetails = function renderTripDetails(trip) {
-//
-//   const tripDivElement = $('#trip-show');
-//   tripDivElement.html('');
-//   trip.fetch({
-//     success: (model) => {
-//       const detailsHTML = $(tripDescriptionTemplate(trip.attributes));
-//       tripDivElement.append(detailsHTML);
-//     }
-//   });
+
 const renderTrip = function renderTrip(trip) {
   const $tripElement = $('#trip');
   $tripElement.html('');
@@ -61,16 +72,81 @@ const renderTrip = function renderTrip(trip) {
 }
 
 const loadTrips = function loadTrips() {
-  tripList.fetch();
-  tripList.on('update', render, tripList);
+  tripList.fetch({
+    success(model, response) {
+    render(model);
+    }
+  });
 };
 
-// const loadTrip = function trip(id) {
-  // trip.fetch();
-//   trip.on('update', renderTrip, trip)
-// }
+const readFormData = function readFormData() {
+  const tripData = {};
+  TRIP_FIELDS.forEach((field) => {
+    // select the input corresponding to the field we want
+    const $inputElement = $(`#add-trip-form input[name="${ field }"]`);
+    const value = $inputElement.val();
 
-console.log(tripList);
+    // Don't take empty strings, so that Backbone can
+    // fill in default values
+    if (value != '') {
+      tripData[field] = value;
+    }
+
+    $inputElement.val('');
+  });
+
+  console.log("Read trip data");
+  console.log(tripData);
+
+  return tripData;
+};
+
+const handleValidationFailures = function handleValidationFailures(errors) {
+  // Since these errors come from a Rails server, the strucutre of our
+  // error handling looks very similar to what we did in Rails.
+  for (let field in errors) {
+    for (let problem of errors[field]) {
+      reportStatus('error', `${field}: ${problem}`);
+    }
+  }
+};
+
+
+const addTripHandler = function(event) {
+  event.preventDefault();
+  console.log('addTripHandler test click');
+
+  const trip = new Trip(readFormData());
+
+  if (!trip.isValid()) {
+    handleValidationFailures(trip.validationError);
+    return;
+  }
+
+  tripList.add(trip);
+
+  // The first argument to .save is the attributes to save.
+  // If we leave it blank, it will save all the attributes!
+  // (Think of model.update in Rails, where it updates the
+  // model and saves to the DB in one step). We need the second
+  // argument for callbacks, so we pass in {} for the first.
+  trip.save({}, {
+    success: (model, response) => {
+      console.log('Successfully saved trip!');
+      reportStatus('success', 'Successfully saved trip!');
+    },
+    error: (model, response) => {
+      console.log('Failed to save trip! Server response:');
+      console.log(response);
+
+      // Server-side validations failed, so remove this bad
+      // trip from the list
+      tripList.remove(model);
+
+      handleValidationFailures(response.responseJSON["errors"]);
+    },
+  });
+};
 
 // Jquery event handling
 $(document).ready( () => {
@@ -79,25 +155,25 @@ $(document).ready( () => {
 
   $('#trips').hide();
 
-  console.log('loadtrips');
-  console.log(loadTrips());
-
   $('#trip').on('click', 'tr', renderTrip);
 
   $('#load-trips').on('click', function (){
     $('#trips').show();
     loadTrips()
+
   });
 
-  // $('#trip-list').on('click', 'tr',function (event) {
-  //   event.preventDefault();
-  //   let tripID = $(this).attr('data-id')
-  //
-  //   console.log(tripID);
-  //   loadtrip(tripID);
-  //   $('trip').show()
-  //   $('trips').hide()
-  // })
+  $('#add-trip-form').on('submit', addTripHandler);
 
+  TRIP_FIELDS.forEach((field) => {
+    const headerElement = $(`th.sort.${ field }`);
+    headerElement.on('click', (event) => {
+      console.log(`Sorting table by ${ field }`);
+      tripList.comparator = field;
+      tripList.sort();
+    });
+  });
+
+  $('#status-messages button.clear').on('click', clearStatus);
 
 });
