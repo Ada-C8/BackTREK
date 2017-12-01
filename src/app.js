@@ -1,6 +1,7 @@
 // Vendor Modules
 import $ from 'jquery';
 import _ from 'underscore';
+import 'jquery-modal';
 
 // CSS
 import './css/foundation.css';
@@ -16,6 +17,7 @@ const reservationFields = ['name', 'age', 'email'];
 
 const events = {
   sortTrips(event){
+    // TODO: tell the user that a sort has happened
     console.log('Tried to sort!');
     $('.sort').removeClass('current-sort-field');
     $(this).addClass('current-sort-field');
@@ -32,7 +34,8 @@ const events = {
       }
     });
   },
-  filterTrips(event){
+  filterTrips(event) {
+    // TODO: handle no trip results gracefully
     console.log($('#trip-query').val());
     const query = $('#trip-query').val().toLowerCase();
     console.log($('#trip-fields').find(":selected").val());
@@ -91,6 +94,7 @@ const events = {
         success: events.successfulSaveTrip,
         error: events.failSaveTrip
       });
+      $.modal.close();
     } else { // save is invalid
       console.log('Trip Validation Error');
       console.log(trip.validationError);

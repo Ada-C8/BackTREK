@@ -8,39 +8,35 @@
 <body>
   <header class="panel clearfix">
     <h1 class="left site-title">BackTREK</h1>
-    <button class="button right" id="create-trip-btn">Create Trip</button>
+    <a href="#create-trip-modal" rel="modal:open" class="button right" id="create-trip-btn">Create Trip</a>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
   </header>
   <main>
     <!-- MODAL -->
-    <section id="create-trip-modal" class="modal">
-      <section class="modal-content">
-
-        <!-- MODAL CONTENT -->
-        <span class="close">&times;</span>
-        <h1>Create A New Trip</h1>
-        <!-- ERROR MESSAGES -->
-        <section id="status-messages" class="large-8 large-centered small-12 columns">
-          <h2 id="status-title"></h2>
-          <!-- <span class="close">&times;</span> -->
-          <ul></ul>
-        </section>
-        <form id="create-trip-form">
-          <label for="name">Name:</label>
-          <input type="text" class="input" name="name" placeholder="Name">
-          <label for="continent">Continent:</label>
-          <input type="text" class="input" name="continent" placeholder="ex. Asia">
-          <label for="about">About:</label>
-          <input type="text" class="input" name="about" placeholder="ex. This place is really fun!">
-          <label for="category">Category:</label>
-          <input type="text" class="input" name="category" placeholder="ex. exploration">
-          <label for="weeks">Weeks:</label>
-          <input type="number" class="input" name="weeks">
-          <label for="cost">Cost:</label>
-          <input type="number" class="input" name="cost">
-          <input type="submit" value="Create Trip" class="button"></input>
-        </form>
+    <!-- Modal HTML embedded directly into document -->
+    <div id="create-trip-modal" class="modal">
+      <!-- ERROR MESSAGES -->
+      <section id="status-messages" class="large-8 large-centered small-12 columns">
+        <h2 id="status-title"></h2>
+        <ul></ul>
       </section>
-    </section>
+      <form id="create-trip-form">
+        <label for="name">Name:</label>
+        <input type="text" class="input" name="name" placeholder="Name">
+        <label for="continent">Continent:</label>
+        <input type="text" class="input" name="continent" placeholder="ex. Asia">
+        <label for="about">About:</label>
+        <input type="text" class="input" name="about" placeholder="ex. This place is really fun!">
+        <label for="category">Category:</label>
+        <input type="text" class="input" name="category" placeholder="ex. exploration">
+        <label for="weeks">Weeks:</label>
+        <input type="number" class="input" name="weeks">
+        <label for="cost">Cost:</label>
+        <input type="number" class="input" name="cost">
+        <input type="submit" value="Create Trip" class="button"></input>
+      </form>
+      <a href="#" rel="modal:close">Close</a>
+    </div>
 
     <section class="row">
 
