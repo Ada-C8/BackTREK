@@ -10,7 +10,7 @@
 
   </header>
   <main>
-    <div id="alert-messages"></div>
+    <div id="messages"></div>
 
     <aside class="columns large-4 small-12">
         <h2>Add a Trip</h2>
@@ -79,6 +79,12 @@
   <footer>
 
   </footer>
+
+  <script type="text/template" id="status-messages-template">
+    <ul id="status-messages">
+      <li class="<%- status >%"><%- message %></li>;
+    </ul>
+  </script>
 
   <script type="text/template" id="trip-template">
       <tr class="trip" data-id="<%- id%>">

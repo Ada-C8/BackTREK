@@ -20,6 +20,24 @@ const tripList = new TripList();
 // // once we know the template is available
 let tripTemplate;
 
+// Clear status messages
+const clearStatus = function clearStatus() {
+  $('#status-messages ul').html('');
+  $('#status-messages').hide();
+};
+
+// Add a new status message
+const reportStatus = function reportStatus(status, message) {
+  console.log(`Reporting ${ status } status: ${ message }`);
+
+  // Should probably use an Underscore template here.
+  const statusHTML = $('#status-messages-template')//NEED TO FIX THIS - this is not correct
+
+  // note the symetry with clearStatus()
+  $('#status-messages ul').append(statusHTML);
+  $('#status-messages').show();
+};
+
 const renderTrips = function renderTrips(tripList) {
 //   iterate through the tripList, generate HTML
 //   for each model and attatch it to the DOM
@@ -51,6 +69,15 @@ const renderSingleTrip = function renderSingleTrip(trip) {
     console.log("checking this");
 }
 
+const addTripHandleValidationFailures = function handleValidationFailures(errors) {
+  // Since these errors come from a Rails server, the strucutre of our
+  // error handling looks very similar to what we did in Rails.
+  for (let field in errors) {
+    for (let problem of errors[field]) {
+      reportStatus('error', `${field}: ${problem}`);
+    }
+  }
+};
 
 //ADDING A TRIP
 const addTripHandler = function(event) {
@@ -70,6 +97,11 @@ const addTripHandler = function(event) {
   console.log(tripData);
 
   const trip = new Trip(tripData);
+
+  if (!trip.isValid()) {
+    addTripHandleValidationFailures(trip.validationError);
+    return;
+  }
 
   trip.save({}, {
     success: (model, response) => {
@@ -173,7 +205,7 @@ $(document).ready(() => {
   $('#reservation-button').on('click', function(event) {
     // $('#reservation-form').show();
     // console.log('attempting to show the reservation form');
-    alert("Clikced button");
+    alert("Clicked button");
   });
 
   $('#trip-filter-form').on('submit', function(event) {
