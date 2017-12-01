@@ -9,3 +9,14 @@
   height: 100%;
   padding: .8rem;
 }
+
+/* table sorting styling */
+.current-sort-field {
+  background-color: darkgrey;
+  color: white;
+}
+
+th a {
+  color: inherit; /* blue colors for links too */
+  text-decoration: inherit; /* no underline */
+}
