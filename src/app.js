@@ -107,6 +107,7 @@ $(document).ready( () => {
     $(`#${id}`).css('background','pink');
 
     $.get(url, function(response) {
+      // const id = response.id;
       $(`#trip-details`).html(tripDetails(response));
     });
   });
@@ -123,5 +124,17 @@ $(document).ready( () => {
       event.stopPropagation();
       modal.style.display = 'none';
     }
+  });
+
+  $('body').on('submit', '.book-trip', function form(e) {
+    e.preventDefault();
+    const url = $(this).attr('action');
+    const formData = $(this).serialize();
+
+    $.post(url, formData, () => {
+      $('.book-trip').html('<h3>Booking Complete</h3>');
+    }).fail(() => {
+      $('.book-trip').html('<h3>Booking failed</h3>');
+    });
   });
 });

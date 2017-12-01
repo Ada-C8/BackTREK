@@ -76,7 +76,7 @@
         <p><%- about %></p>
         <h3>$ <%- cost %></h3>
 
-        <form>
+        <form class="book-trip" action='https://ada-backtrek-api.herokuapp.com/trips/<%- id %>/reservations' method='post' >
           <input type='text' name='name' placeholder='Name' />
           <input type='text' name='age' placeholder='Age' />
           <input type='text' name='email' placeholder='Email' />
