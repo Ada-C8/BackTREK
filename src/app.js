@@ -66,7 +66,10 @@ const events = {
     $('#in-form-status-message').hide();
     const tripData = {};
     fields.forEach((field) => {
-      tripData[field] = $(`input[name=${field}]`).val();
+      const value = $(`input[name=${field}]`).val();
+      if (value != '') {
+        tripData[field] = value;
+      }
     })
     const trip = new Trip(tripData);
     trip.save({}, {success: events.successfulSave, error: events.failedSave});
