@@ -72,7 +72,18 @@ const events = {
       }
     })
     const trip = new Trip(tripData);
-    trip.save({}, {success: events.successfulSave, error: events.failedSave});
+    if (trip.isValid()) {
+      trip.save({}, {success: events.successfulSave, error: events.failedSave});
+    } else {
+      console.log(trip.validationError);
+      $('#in-form-status-message ul').empty();
+      for(let key in trip.validationError) {
+        trip.validationError[key].forEach((error) => {
+          $('#in-form-status-message ul').append(`<li>${key}: ${error}</li>`);
+        })
+      }
+      $('#in-form-status-message').show();
+    }
   },
   successfulSave(trip) {
     $('#status-message h3').empty();
