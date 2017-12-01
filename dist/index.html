@@ -3,6 +3,8 @@
 <head>
   <meta charset="utf-8">
   <title>My JavaScript App</title>
+  <link rel="../favico.ico" href="favicon.ico" type="favicon.ico">
+
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
@@ -35,6 +37,13 @@
       </div>
     </section>
 
+    <section >
+      <div>
+        <div id='trip' >hotmail</div>
+      </div>
+    </section>
+
+
 
   </main>
   <footer>
@@ -42,7 +51,7 @@
   </footer>
 
   <script type="text/template" id="trip-template">
-    <tr class="trip">
+    <a ><tr class="trip" >
       <td>
         <%- name %>
       </td>
@@ -62,8 +71,18 @@
       <td>
         <%- cost %>
       </td>
-    </tr>
+    </tr></a>
   </script>
+
+  <script type="text/template" id="trip-detail-template">
+    <h2><%- name  %><h2/>
+    <p>Category: <%- category %></p>
+    <p>Duration: <%- weeks %> weeks</p>
+    <p>Cost: $<%- cost %></p>
+    <p>about: $<%- about %></p>
+
+  </script>
+
   <script src="app.bundle.js" type="text/javascript"></script>
 </body>
 </html>

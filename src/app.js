@@ -12,40 +12,92 @@ import Trip from './app/models/trip';
 console.log('it loaded!');
 
 const tripList = new TripList()
+const trip = new Trip()
 
-let tripTemplate;
+let tripsTemplate;
+let tripDetailTemplate;
+
 
 const render = function render(tripList) {
-  const $tripElement = $('#trip-list');
-  $tripElement.html('');
+  const $tripsElement = $('#trip-list');
+  $tripsElement.html('');
 
   tripList.forEach((trip) => {
-    const generatedHTML = tripTemplate(trip.attributes);
-    $tripElement.append(generatedHTML)
+    const generatedHTML = $(tripsTemplate(trip.attributes));
+    generatedHTML.on('click', (event) => {
+      console.log('testing click');
+      $('#trips').hide()
+      $('#trip').show()
+      // due to asynchonous api responses we put the renderTrip into the .fetch()
+      trip.fetch({
+        success(model, response) {
+          renderTrip(model);
+        }
+      });
+
+    })
+    $tripsElement.append(generatedHTML)
   });
 };
+
+// const renderTripDetails = function renderTripDetails(trip) {
+//
+//   const tripDivElement = $('#trip-show');
+//   tripDivElement.html('');
+//   trip.fetch({
+//     success: (model) => {
+//       const detailsHTML = $(tripDescriptionTemplate(trip.attributes));
+//       tripDivElement.append(detailsHTML);
+//     }
+//   });
+const renderTrip = function renderTrip(trip) {
+  const $tripElement = $('#trip');
+  $tripElement.html('');
+  console.log(trip.attributes);
+  // console.log(trip.attributes.about);
+
+  const generatedDetailHTML = tripDetailTemplate(trip.attributes);
+  $tripElement.html(generatedDetailHTML)
+}
 
 const loadTrips = function loadTrips() {
   tripList.fetch();
   tripList.on('update', render, tripList);
 };
 
+// const loadTrip = function trip(id) {
+  // trip.fetch();
+//   trip.on('update', renderTrip, trip)
+// }
+
 console.log(tripList);
 
 // Jquery event handling
 $(document).ready( () => {
-  tripTemplate = _.template($('#trip-template').html())
+  tripsTemplate = _.template($('#trip-template').html());
+  tripDetailTemplate = _.template($('#trip-detail-template').html());
+
   $('#trips').hide();
 
-  // renders DOM when a new trip is added to the collection
-  tripList.on('update', render, tripList);
+  console.log('loadtrips');
+  console.log(loadTrips());
 
-  // gets all trips from API
-  tripList.fetch()
-  console.log(tripList);
+  $('#trip').on('click', 'tr', renderTrip);
 
   $('#load-trips').on('click', function (){
     $('#trips').show();
     loadTrips()
   });
+
+  // $('#trip-list').on('click', 'tr',function (event) {
+  //   event.preventDefault();
+  //   let tripID = $(this).attr('data-id')
+  //
+  //   console.log(tripID);
+  //   loadtrip(tripID);
+  //   $('trip').show()
+  //   $('trips').hide()
+  // })
+
+
 });
