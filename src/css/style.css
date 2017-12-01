@@ -7,6 +7,8 @@
 --transpblack: rgba(51, 51, 51, 0.5);
 --peach: #fec0aa;
 --ltblue: #98C1D9;
+--transpltblue: rgba(152, 193, 217, 0.7);
+--salmon: #EE6352;
 --indigo: #223843;
 --grey: #E3E4E8;
 --transpgrey: rgba(227, 227, 232, 0.7);
@@ -70,7 +72,6 @@ ul {
 }
 
 .has-errors {
-  /*border: 2px solid tomato;*/
   color: tomato;
   font-weight: bold;
 }
@@ -95,7 +96,6 @@ p.success {
 /**********/
 
 header {
-  /*background-color: var(--indigo);*/
   overflow: auto;
   padding: 1rem;
 }
@@ -187,9 +187,13 @@ form {
 }
 
 .cost-col {
-  /*float: right;*/
   text-align: right;
   width: 15%;
+}
+
+.current-sort {
+  color: var(--salmon);
+  text-decoration: underline;
 }
 
 /* TRIP DISPLAY */

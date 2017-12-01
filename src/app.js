@@ -59,9 +59,11 @@ const clearShow = function clearShow() {
 };
 
 const sort = function sort(e) {
-  let field = $(e.target)[0].id;
-  console.log(field);
+  $('.current-sort').removeClass('current-sort');
+  let targetElement = $(e.target);
+  let field = targetElement[0].id;
   tripList.comparator = field;
+  targetElement.addClass('current-sort');
   tripList.sort();
   render(tripList);
 };
