@@ -54,8 +54,19 @@
     const tripList = new TripList();
     tripList.on('update',render);
 
+    // sorting by header element
+    tripList.on('sort', render);
+    TRIP_FIELDS.forEach((field) => {
+      const headerData = $(`th.sort.${ field }`);
+      headerData.on('click', (event) => {
+        // console.log(`sorting table by ${ field }`);
+        tripList.comparator = field;
+        tripList.sort();
+      });
+    });
+
+    // Retrieving all trips by clicking the button
     $('#load').on('click', function(){
-      // $('#trip-list').show();
       tripList.fetch({
         success: function(collection, response){
           $('#trips').show();
@@ -64,9 +75,12 @@
       });
     });
 
-    // $('#add_trip').on('click', function(){
-    //   $('#show_form').show();
-    // };
+    $('#add_trip').on('click', function(){
+      event.preventDefault();
+      $('#show_form').show();
+    };
+
+    // Adding trip to the DB
     $("#add-trip-form").on('submit', function(event){
       event.preventDefault(); // stops after reading user input, doesn't do anything yet
       let tripData = {};
@@ -84,6 +98,7 @@
       })
     });
 
+    // Reserving a trip
     $("#trip").on('submit', "#reservation-form", function(event){
       event.preventDefault();
       let reservationData = {};

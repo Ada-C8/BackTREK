@@ -13,7 +13,7 @@
    font-family: fantasy;
    font-style: italic;
  }
- #load{
+ #load, #add_trip{
     text-align: center;
     border: 1px black solid;
     border-radius: .2em ;
@@ -22,7 +22,7 @@
     margin-top: 2%;
   }
 
-  #load:hover, input.button:hover{
+  #load:hover, #add_trip:hover, input.button:hover{
     background-color: lightsteelblue;
   }
 
