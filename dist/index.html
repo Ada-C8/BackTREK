@@ -10,83 +10,39 @@
 
   </header>
   <main>
-    <section id='singleTripSection'>
-      <ul id='singleTrip'>
-      </ul>
-      <form id='reservationForm' class='columns small-6 large-6'>
-        <label for='name'>Name:</label>
-        <input type='text' name='name'></input>
 
-        <label for='email'>Email:</label>
-        <input type='text' name='email'></input>
+  <section class='row'>
+      <section>
+        <form id='filterForm' class='columns small-6'>
+          <label><strong>Select Filter:</strong></label>
+          <select id='filter'>
+            <option value='blank'></option>
+            <option value='name'>Name</option>
+            <option value='category'>Category</option>
+            <option value='continent'>Continent</option>
+            <option value='budget'>Cost</option>
+            <option value='weeks'>Weeks</option>
+          </select>
 
-        <input id='completeReservation' type='submit' value='Confirm booking'></input>
-      </form>
-    </section>
+          <input type='text' id='textFilter'></input>
+          <input type='number' id='numberFilter'></input>
 
-    <script type='text/template' id='singleTripTemplate'>
-        <li id='<%- id %>'>ID: <%- id %> </li>
-        <li>Name: <%- name %> </li>
-        <li>Category: <%- category  %> </li>
-        <li>Continent: <%- continent %> </li>
-        <li>Weeks: <%- weeks %> </li>
-        <li>Cost: <%- cost %> </li>
-    </script>
+        </form>
+      </section>
+      <h2> BackTREK </h2>
+      <section id='showAllTrips'>
+        <button class='button' id='createTripButton'>Create a new trip! </button>
+      </section>
+  </section>
 
-    <section>
-      <form id='filterForm' class='columns small-6 large-6'>
-        <label>Select Filter:</label>
-        <select id='filter'>
-          <option value='blank'></option>
-          <option value='name'>Name</option>
-          <option value='category'>Category</option>
-          <option value='continent'>Continent</option>
-          <option value='budget'>Cost</option>
-          <option value='weeks'>Weeks</option>
-        </select>
-
-        <input type='text' id='textFilter'></input>
-        <input type='number' id='numberFilter'></input>
-
-
-        <input type='submit' value='Filter trips' id='filterSubmit'></input>
-      </form>
-    </section>
-
-    <section id='showAllTrips'>
-      <button class='button' id='tripButton'>See Available Trips! </button>
-      <button class='button' id='createTripButton'>Create a new trip! </button>
-    </section>
-
-    <section id='createTripSection'>
-      <form id='createTripForm' class='columns small-6 large-6'>
-        <label for='name'>Name:</label>
-        <input id='nameField' type='text' name='name'></input>
-
-        <label for='continent'>Continent:</label>
-        <input id='continentField' type='text' name='continent'></input>
-
-        <label for='about'>About:</label>
-        <input id='aboutField' type='text' name='about'></input>
-
-        <label for='category'>Category:</label>
-        <input id='categoryField' type='text' name='category'></input>
-
-        <label for='weeks'>Weeks:</label>
-        <input id='weeksField' type='number' name='weeks'></input>
-
-        <label for='cost'>Cost:</label>
-        <input id='costField' type='number' step=0.01 name='cost'></input>
-
-        <input id='completeReservation' type='submit' value='Confirm booking'></input>
-      </form>
-    </section>
-
-    <section>
+  <section class='row'>
+    <section id='leftSection' class='columns small-6'>
         <table>
           <thead>
             <th class='sort id'> ID </th>
             <th class='sort name'> Destination </th>
+            <th class='sort category'> Category </th>
+            <th class='sort continent'>Continent</th>
             <th class='sort weeks'> Weeks </th>
             <th class='sort cost'> Cost </th>
           </thead>
@@ -95,15 +51,83 @@
         </table>
     </section>
 
-    <script type='text/template' id='tripTemplate'>
-        <tr id='<%- id %>'>
-            <td> <%- id %> </td>
-            <td> <%- name %> </td>
-            <td> <%- weeks %> </td>
-            <td> <%- cost %> </td>
-        </tr>
-    </script>
+    <section id='rightSection' class='columns small-4'>
+      <section  id='singleTripSection'>
+        <h3>Trip Details </h3>
+        <ul id='singleTrip'>
+        </ul>
+      </section>
 
+      <section id='reservationFormSection'>
+        <form id='reservationForm'>
+          <label for='name'>Name:</label>
+          <input id='reservationName' type='text' name='name'></input>
+
+          <label for='email'>Email:</label>
+          <input type='text' name='email' id='reservationEmail'></input>
+
+          <input id='completeReservation' type='submit' value='Confirm reservation'></input>
+        </form>
+      </section>
+
+      <script type='text/template' id='singleTripTemplate'>
+          <li id='<%- id %>'><strong>ID:</strong> <%- id %> </li>
+          <li><strong>Name:</strong> <%- name %> </li>
+          <li><strong>Category:</strong> <%- category  %> </li>
+          <li><strong>Continent:</strong> <%- continent %> </li>
+          <li><strong>Weeks:</strong> <%- weeks %> </li>
+          <li><strong>Cost:</strong> <%- cost %> </li>
+      </script>
+
+      <section id='createTripSection'>
+        <h3> Create new trip </h3>
+        <form id='createTripForm'>
+          <label for='name'>Name:</label>
+          <input id='nameField' type='text' name='name'></input>
+
+          <label for='continent'>Continent:</label>
+          <select id='continentField' name='continent'>
+            <option value='Africa'>Africa</option>
+            <option value='Antartica'>Antartica</option>
+            <option value='Asia'>Asia</option>
+            <option value='Australasia'>Australasia</option>
+            <option value='Europe'>Europe</option>
+            <option value='North America'>North America</option>
+            <option value='South America'>South America</option>
+          </select>
+
+
+          <label for='about'>About:</label>
+          <input id='aboutField' type='text' name='about'></input>
+
+          <label for='category'>Category:</label>
+          <input id='categoryField' type='text' name='category'></input>
+
+          <label for='weeks'>Weeks:</label>
+          <input id='weeksField' type='number' name='weeks'></input>
+
+          <label for='cost'>Cost:</label>
+          <input id='costField' type='number' step=0.01 name='cost'></input>
+
+          <input id='completeReservation' type='submit' value='Create new trip'></input>
+        </form>
+      </section>
+    </section>
+
+
+
+
+    <script type='text/template' id='tripTemplate'>
+          <tr id='<%- id %>'>
+              <td> <%- id %> </td>
+              <td> <%- name %> </td>
+              <td> <%- category %> </td>
+              <td> <%- continent %> </td>
+              <td> <%- weeks %> </td>
+              <td> <%- cost %> </td>
+          </tr>
+      </script>
+  </section>
   </main>
   <footer>
 

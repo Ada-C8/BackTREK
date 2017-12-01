@@ -1,2 +1,32 @@
+body{
+  background-color: lightblue;
+}
+.row {
+  max-width: 100rem;
+}
 
-/* Your styles go here! */
+
+
+#createTripSection{
+  margin-top: 20%;
+}
+
+#rightSection{
+  margin-left: 10%;
+}
+
+#filter{
+  width: 125px;
+}
+
+#numberFilter{
+  width: 300px;
+}
+
+#textFilter{
+  width: 300px;
+}
+
+ul {
+  list-style-type: none;
+}
