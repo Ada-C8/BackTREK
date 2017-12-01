@@ -222,6 +222,13 @@ th.sort {
   color: white;
 }
 
+.sort-up::after {
+  content: "\25BD";
+}
+.sort-down::after {
+  content: "\25B3";
+}
+
 tr.selected-trip td{
   background-color: #3120f6;
   color: white;

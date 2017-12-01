@@ -134,14 +134,22 @@ const events = {
     // get class
     const classes = $(this).attr('class').split(/\s+/);
     // css styling
-    console.log('sort styling');
+    console.log(event.target.classList);
+    if (!event.target.classList.contains('sort-up') && !event.target.classList.contains('sort-down')) {
+      $('.sort').removeClass('sort-up');
+      $('.sort').removeClass('sort-down');
+    }
+    // const classes = $(this).attr('class');
     $('.sort').removeClass('current-sort-field');
     $(this).addClass('current-sort-field');
+    // $(this).addClass('sort-up');
     if (filteredTrips) {
       if (tripList.comparator === classes[1]) {
         filteredTrips.reverse();
+        $(this).toggleClass('sort-up');
+        $(this).toggleClass('sort-down');
       } else {
-        console.log(classes[1]);
+        $(this).toggleClass('sort-up');
         filteredTrips.sort(function(a, b) {
           const textA = a.get(classes[1]);
           const textB = b.get(classes[1]);
@@ -155,7 +163,10 @@ const events = {
       if (tripList.comparator === classes[1]) {
         tripList.models.reverse();
         tripList.trigger('sort', tripList);
+        $(this).toggleClass('sort-up');
+        $(this).toggleClass('sort-down');
       } else {
+        $(this).toggleClass('sort-up');
         tripList.comparator = classes[1];
         tripList.sort();
       }
