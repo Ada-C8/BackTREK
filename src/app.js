@@ -36,6 +36,10 @@ const renderDetails = function renderDetails(trip){
   }
 };
 
+const addTripHandler = function(event) {
+  event.preventDefault();
+}
+
 const render = function render(tripList) {
   // iterate through the bookList, generate HTML
   // for each model and attatch it to the DOM
@@ -53,15 +57,10 @@ const render = function render(tripList) {
   });
 };
 
-
-// MODALS
-// Get the modal
-const modal = document.getElementById('myModal');
-
-// Get the <span> element that closes the modal
-const span = document.getElementsByClassName("close")[0];
-
 $(document).ready( () => {
+  let modal = $('#myModal');
+
+  // compiled underscore templates
   detailsTemplate = _.template($('#details-template').html());
   tripTemplate = _.template($('#trip-template').html());
 
@@ -72,21 +71,18 @@ $(document).ready( () => {
   tripList.fetch();
 
   // EVENTS
-  // $('#add-book-form').on('submit', addBookHandler);
+  $('#add-trip-form').on('submit', addTripHandler);
 
   // MODAL
-  // changes modal class so that that is displays when add trip button is clicked on
+  // displays modal on button click
   $('#add-trip-button').on('click', function() {
-    modal.style.display = "block";
+    modal.css("display", "block");
   });
-  // When the user clicks on <span> (x), close the modal
-  span.onclick = function() {
-    modal.style.display = "none";
-  };
-  // When the user clicks anywhere outside of the modal, close it
-  window.onclick = function(event) {
-    if (event.target == modal) {
-      modal.style.display = "none";
+
+  // hides modal on click for things with correct class
+  $('body').on('click', '.modal-close', function(event){
+    if($(event.target).hasClass('modal-close')) {
+      modal.hide();
     }
-  };
+  });
 });

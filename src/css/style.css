@@ -8,10 +8,12 @@
 }
 #left{
   background-color: lightyellow;
+  overflow: auto;
 }
 
 #left .table {
   max-width: 50vw;
+
 }
 
 
