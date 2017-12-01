@@ -1,5 +1,5 @@
 // Vendor Modules
-// import ‘jquery-modal’
+import 'jquery-modal'
 import $ from 'jquery';
 import _ from 'underscore';
 
@@ -119,9 +119,15 @@ $(document).ready( () => {
   });
 
   $('#new-trip').on('focus', function(){
-    $('#newTripForm').show();
+    $('#newTripForm').modal();
+    // $('#newTripForm').show();
   });
 
-  $('#newTripForm').on('click', 'button', events.addTrip);
+  $('#newTripForm').on('click', 'button', function() {
+
+    events.addTrip
+    $.modal.close();
+
+  });
 
 });
