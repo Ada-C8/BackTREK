@@ -30,7 +30,6 @@ $(document).ready( () => {
   tripList.fetch();
 
 
-
   $('#tripButton').on('click',() => {
     console.log('button works');
     tripList.forEach((trip) => {
@@ -115,15 +114,31 @@ $(document).ready( () => {
 
   $('#filterForm').on('submit', () => {
     const filter = $('#filter')[0].value;
+    
     let value;
     if($('#numberFilter').is(':visible')){
       value = $('#numberFilter')[0].value;
     } else {
       value = $('#textFilter')[0].value;
     }
-    
 
 
+    const url = `https://ada-backtrek-api.herokuapp.com/trips/${filter}?query=${value}`;
+
+    console.log(url);
+    $.get(url, (response) => {
+      console.log(response);
+      $('#tripSection').html('');
+      response.forEach((trip) => {
+        console.log(trip.id);
+        $.get(`https://ada-backtrek-api.herokuapp.com/trips/${trip.id}`, (response) => {
+            console.log(response);
+            const generatedHTML = tripTemplate(response);
+            $('#tripSection').append($(generatedHTML));
+        });
+
+      });
+    });
     return false;
   });
 
