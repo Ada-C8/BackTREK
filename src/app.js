@@ -27,9 +27,32 @@ let tripTemplate;
 let reserveTemplate;
 let addTripTemplate;
 
-//define clobal variable
+//define global variable
 var showFirst = false;
 
+//Validation handling
+const handleValidationFailures = function(errors) {
+  for (let field in errors) {
+    for (let problem of errors[field]) {
+      reportStatus('errors', `${ field }: ${ problem }`);
+    }
+  }
+};
+
+//clear status messages
+const clearStatus = function() {
+  $('#status-messages ul').html('');
+  $('#status-messages').hide();
+}
+
+//add a new status message
+const reportStatus = function(status, message) {
+  const statusHTML = `<li class="${ status }">${ message }</li>`;
+  $('#status-messages ul').append(statusHTML);
+  $('#status-messages').show();
+}
+
+//get all trips
 const getTrips = function(tripList) {
   let back = backTemplate();
   let tableHead = headTemplate();
@@ -44,20 +67,16 @@ const getTrips = function(tripList) {
     tripTableElement.append(generatedHTML);
   }
 
-  $('nav').on('click', '#new-trip', function() {
-    $('#add-trip').append(addTripTemplate);
-    $('.wrapper').show();
-    $('#add-trip-form').on('submit', addTrip);
-  })
-
   //hide header and #trips button and show nav section
   $('h1').hide();
   $('#trips').hide();
   $('nav').show();
+
   //fill out .trips section
   $('.trips thead').html(tableHead);
   $('.back').html(back);
   $('.trip').show();
+
   //fill out .trip section with first trip of collection
   if (showFirst === false) {
     let trip = tripList.first();
@@ -124,12 +143,29 @@ const addTrip = function(event) {
   event.preventDefault();
 
   const trip = new Trip(readFormData(TRIP_FIELDS, '#add-trip-form'));
+
+  if (!trip.isValid()) {
+    clearStatus();
+    handleValidationFailures(trip.validationError);
+    return;
+  }
+
   trip.set('id', $(this).cid);
   console.log('my new trip:');
   console.log(trip);
 
   tripList.add(trip);
-  trip.save({});
+  trip.save({}, {
+    success: (model, response) => {
+      clearStatus();
+      reportStatus('success', 'Successfully saved new trip!');
+    },
+    error: (model, response) => {
+      tripList.remove(model);
+      clearStatus();
+      handleValidationFailures(response.responseJSON['errors']);
+    }
+  });
   console.log('new trip added');
 };//end of add trip
 

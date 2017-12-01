@@ -15,11 +15,18 @@
   <header>
     <h1 id="title" class="text-center white-text">Travel with BackTREK</h1>
   </header>
+
   <nav class="row">
     <h2 class="white-text float-left">BackTreck</h2>
     <button id="new-trip" class="button large blue white-text float-right" type="button" name="button">Add a Trip</button>
   </nav>
+
   <main>
+    <section id="status-messages">
+      <button id="close" class="button" type="button">&#10006;</button>
+      <ul></ul>
+    </section>
+
     <button id="trips" class="button large blue white-text" type="button" name="button">Find a Trip</button>
     <section class="trips large-6 columns">
       <table>
@@ -38,14 +45,15 @@
       <section id="add-trip">
         <h3>Add a Trip</h3>
       </section>
-      <button id="close" class="button" type="button">&#10006;</button>
+      <!-- <button id="close" class="button" type="button">&#10006;</button> -->
     </div>
 
   </main>
-  <footer>
 
-  </footer>
+  <footer></footer>
+
   <script src="app.bundle.js" type="text/javascript"></script>
+
   <script type="text/template" id="trips-template">
     <tr data-id=<%- id %>>
       <td><%- name %></td>
@@ -55,9 +63,11 @@
       <td><%- cost %></td>
     </tr>
   </script>
+
   <script type="text/template" id="back-button">
     <button class="button white-text float-right">Go back</button>
   </script>
+
   <script type="text/template" id="tripsHead">
     <tr>
       <th class="sort name">Name</th>
@@ -67,6 +77,7 @@
       <th class="sort cost">Cost</th>
     </tr>
   </script>
+
   <script type="text/template" id="trip-template">
     <li><h3><%- name %></h3></li>
     <li><strong>Continent: </strong><%- continent %></li>
@@ -75,6 +86,7 @@
     <li><strong>Duration on weeks: </strong><%- weeks %></li>
     <li><strong>Cost: </strong><%- cost %></li>
   </script>
+
   <script type="text/template" id="reserve-form-template">
     <form data-id=<%- id %> id="reservation-form">
         <div class="input-form">
@@ -92,6 +104,7 @@
         <input id="submit" class="button blue white-text" type="submit" value="Reserve a trip"></input>
       </form>
   </script>
+
   <script type="text/template" id="trip-form-template">
     <form id="add-trip-form">
         <div class="input-form">
