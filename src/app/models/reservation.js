@@ -3,7 +3,7 @@ import Trip from '../models/trip';
 import TripList from '../models/reservation';
 
 const Reservation = Backbone.Collection.extend({
-  // model: Trip,
+  model: Trip,
 
 
   // const tripId = this.get('tripId');
@@ -11,8 +11,8 @@ const Reservation = Backbone.Collection.extend({
 
   // ${ tripId }/reservations`;
 
-  urlRoot: function() {
-    const tripId = this.get('tripId');
+  urlRoot: function(tripId) {
+    // const tripId = this.get('tripId');
     // if (isNaN(tripId)) {
     //   throw 'Cannot make a reservation w/o trip ID';
     // }

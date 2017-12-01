@@ -24,6 +24,9 @@
 
     <section class="columns large-5 small-12">
       <h2>Trips</h2>
+      <section id="messages">
+
+      </section>
       <table>
         <thead>
           <th class="sort name">Name</th>
@@ -41,6 +44,14 @@
       <ul id="individual-trip-detail"></ul>
 
       <h2 id="reserve" class="button" >Reserve</h2>
+      <form id="add-reservation">
+        <label for="name">Name:</label>
+        <input type="text" name="name"></input>
+        <label for="age">Age:</label>
+        <input type="number" name="age"></input>
+        <label for="email">Email:</label>
+        <input type="text" name="email"></input>
+        <input id="reservationSubmit" type="submit" value="Make Reservation"</input></form>
       <!-- not working to pull id of trip data-id="{trip.id}">-->
     </section>
 
@@ -103,14 +114,7 @@
 <!--  reservation template -->
 
 <script id="reserve-trip-template" type="text/template">
-  <form class="add-reservation">
-    <label for="name">Name:</label>
-    <input type="text" name="name"></input>
-    <label for="age">Age:</label>
-    <input type="number" name="age"></input>
-    <label for="email">Email:</label>
-    <input type="text" name="email"></input>
-    <input type="submit" value="Make Reservation"</input></form>
+
   </script>
 
 

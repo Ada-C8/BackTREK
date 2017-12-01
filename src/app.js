@@ -64,15 +64,35 @@ const render = function render(tripList) {
         // handling reservation!
         $('#reserve').show(); //button display
         $('#reserve').on('click', function(event) {
-          const reservation = new Reservation({ tripId: trip.id });
-// getting a not default constructor error
-          const generatedHTMLForm = reserveTemplate(reservation.attributes);
-
-          individualTripListElement.append(generatedHTMLForm);
+          $('#add-reservation').show();
         });
-        // find('.reserve')
-        // });
-        // });
+        $('#add-reservation').on('submit', function(event){
+          event.preventDefault();
+
+          console.log('in submit event');
+          let formData = $(this).serialize();
+          const reservationResponse = function reservationResponse(status) {
+            // console.log('inside res response');
+            $("#messages").html(`<h3> ${status} </h3>`);
+          };
+          const positive = 'Resevation Made!';
+          const success = function success(){
+            $('#add-reservation').hide();
+            reservationResponse(positive);
+          };
+          const negative = 'Reservation failed';
+          let url = `https://ada-backtrek-api.herokuapp.com/trips/${ tripId }/reservations`;
+          console.log(formData);
+          $.post(url, formData, success)
+          .fail(function(){
+            console.log('failure');
+            reservationResponse(negative);
+          })
+          .always(function(){
+            console.log('always even if we have success or failure');
+          });
+
+        });
       }
     }); // fetch
   });
@@ -145,4 +165,5 @@ $(document).ready( () => {
   });
   $('#status-messages button.clear').on('click', clearStatus);
   $('#reserve').hide();
+  $('#add-reservation').hide();
 });
