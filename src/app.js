@@ -65,13 +65,30 @@ const setfilterCategory = function setfilterCategory() {
 };
 
 const filterTrips = function filterTrips(event) {
-  if (filterCategory) {
-    const filterInput = event.currentTarget.value.toLowerCase();
-    const filteredTrips = tripList.models.filter(function(trip) {
-      return trip.attributes[filterCategory].toLowerCase().includes(filterInput);
-    });
-    referenceList.reset(filteredTrips);
-    renderTrips(referenceList);
+  let filterInput = event.currentTarget.value;
+  let filteredTrips = [];
+  switch (filterCategory) {
+    case 'name':
+    case 'category':
+    case 'continent':
+      filterInput = filterInput.toLowerCase();
+      filteredTrips = tripList.models.filter(function(trip) {
+        return trip.attributes[filterCategory].toLowerCase().includes(filterInput);
+      });
+      referenceList.reset(filteredTrips);
+      renderTrips(referenceList);
+      break;
+    case 'weeks':
+    case 'cost':
+      filterInput = parseFloat(filterInput);
+      filteredTrips = tripList.models.filter(function(trip) {
+        return trip.attributes[filterCategory] <= filterInput;
+      });
+      referenceList.reset(filteredTrips);
+      renderTrips(referenceList);
+      break;
+    default:
+      break;
   }
 };
 
