@@ -94,10 +94,25 @@ const events = {
     trip.destroy();
   },
   successReservation(reservation, response) {
-    console.log('success!');
+    console.log('success!')
+    console.log(reservation);
+    console.log(response);
+    $('#status-messages ul').empty();
+    $('#status-messages ul').append(`<li>${reservation.get('name')} added!<li>`)
+    $('#status-messages').show();
   },
   failedReservation(reservation, response) {
+    console.log(response);
+    console.log(reservation);
     console.log('uh oh');
+
+    for (let key in response.responseJSON.errors) {
+      response.responseJSON.errors[key].forEach((error) => {
+        $('#status-messages ul').append(`<li>${key}: ${error}</li>`)
+      });
+    }
+    $('#status-messages').show();
+    reservation.destroy();
   }
 
 }
@@ -119,7 +134,7 @@ $(document).ready( () => {
 
   $tripDescription.on('click', 'button', function showResForm() {
     const tripID = $(this).attr('data-id');
-    $resForm.append(`<input type="hidden" name="tripID" value="${tripID}">`);
+    $resForm.append(`<input type="hidden" name="res-tripID" value="${tripID}">`);
     $resForm.show();
   });
 
@@ -141,26 +156,17 @@ $(document).ready( () => {
       if (val !== '') {
         resData[field] = val;
       }
-      console.log(val);
-      console.log(resData);
     });
 
-    console.log('aaaaa');
-    console.log(resData);
     const reservation = new Reservation(resData)
 
-    console.log(reservation);
-    console.log(reservation.isValid());
 
     if (reservation.isValid()) {
-      console.log('valid!')
       reservation.save({}, {
         success: events.successReservation,
         error: events.failedReservation,
       });
     } else {
-      console.log('uh oh! Invalid reservation! :(');
-      console.log(reservation.validationError);
       Object.keys(reservation.validationError).forEach((error) => {
         $('#status-messages ul').append(`<li>${error}: ${reservation.validationError[error]}<li>}`)
       });
