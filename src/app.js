@@ -238,6 +238,12 @@ const events = {
     $('#messages').show();
     trip.destroy();
   },
+  filtering() {
+    const filterCategory = $('#filter-category :selected').val();
+    const filterInput = $('#filter-query').val();
+    console.log(filterCategory);
+    console.log(filterInput);
+  },
 };
 const render= function render(tripList) {
   $('#trip-list').empty();
@@ -262,4 +268,6 @@ $(document).ready( () => {
   $('#trip-details').on('submit', '#new-trip-form', events.addTrip);
   $('#all-trips').on('click', '.sort', events.sortTrips);
   tripList.on('sort', render, tripList);
+  $('#filter-category').on('change', events.filtering);
+  $('#filter-query').on('keyup', events.filtering);
 });

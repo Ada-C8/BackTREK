@@ -26,7 +26,30 @@
     </section>
     <section class="columns large-7 small-12" id = "all-trips">
       <h2>All Trips</h2>
-        <table>
+      <form id= "filter-form">
+        <select name="filter-category" id= "filter-category">
+          <option>
+
+          </option>
+          <option value = "name">
+            Name
+          </option>
+          <option value= "category">
+            Category
+          </option>
+          <option value = "continent">
+            Continent
+          </option>
+          <option value = "weeks">
+            Weeks
+          </option>
+          <option value = "cost">
+            Cost
+          </option>
+        </select>
+        <input type="text" id="filter-query" name="filter-query"></input>
+      </form>
+      <table>
           <thead>
             <th class="sort id">ID</th>
             <th class="sort name">name</th>
