@@ -92,17 +92,19 @@ const makeTripReservation = function makeTripReservation(id) {
 
   const reservation = trip.reserve(reservationData);
   // Validations: Testing missing parameters
-  // const reservation = trip.reserve({age: "21", email:"jedrzo@ada.com"});
+  //const reservation = trip.reserve({age: "21", email:"jedrzo@ada.com"});
+  // Validations Test with simple error message:
   // reservation.on("invalid", function(model, error) {
   //   $('#errorModal ul').append('<li>Something went wrong!</li>');
   //   $('#errorModal').foundation('open');
   // });
   //reservation.save();
 
-  reservation.on("invalid", function(model, error) {
-    // $('#errorModal ul').append(`<li>Something went wrong! Please resolve: ${reservation.validationError['age'][0]}</li>`);
-    $('#errorModal ul').append(`<li>Something went wrong! Please resolve: ${JSON.stringify(error)}</li>`);
-    $('#errorModal').foundation('open');
+  reservation.on("invalid", function(model, errors) {
+    for (let key in errors) {
+      $('#errorModal ul').append(`<li>${key.charAt(0).toUpperCase() + key.slice(1)}: ${errors[key]}</li>`);
+      $('#errorModal').foundation('open');
+    };
   });
   reservation.save();
   console.log('RESERVATION SUBMITTED')
