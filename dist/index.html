@@ -56,23 +56,17 @@
       <article id="trip-description">
       </article>
       <form class="form" id="reservation-form">
-        <section>
-          <label>Name</label>
-          <input type="text" id="name" name="name" required/>
-        </section>
-        <section>
-          <label>Age</label>
-          <input type="number" id="age" name="age" required/>
-        </section>
-        <section>
-          <label>Email</label>
-          <input type="email" id="email" name="email" required/>
-        </section>
-        <section type="tripID" id="tripID" name="tripID">
-        </section>
-        <section>
-          <button class="button border" type="submit">Make Reservation!</button>
-        </section>
+        <label>Name</label>
+        <input type="text" name="res-name" id="res-name" />
+
+        <label>Age</label>
+        <input type="number" name="res-age" id="res-age"/>
+
+        <label>Email</label>
+        <input type="email" name="res-email" id="res-email"/>
+
+        <input id="submit-res" type="submit" value="Make Reservation!" class="button" />
+
       </form>
     </section>
   </main>

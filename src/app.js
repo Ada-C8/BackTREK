@@ -9,6 +9,7 @@ import './css/style.css';
 //MODELS AND COLLECTIONS
 import Trip from './app/models/trip';
 import TripList from './app/collections/trip_list';
+import Reservation from './app/models/reservation';
 
 const $tripsList = $('#trips-list')
 const $tripDescription = $('#trip-description')
@@ -16,7 +17,6 @@ const $newTripBtn = $('#newTripBtn');
 const $addTripForm = $('#add-trip-form');
 const $resFormBtn = $('#res-form-btn');
 const $resForm = $('#reservation-form');
-const $tripIDonForm = $('#tripID');
 
 //templates
 let tripTemplate;
@@ -93,7 +93,6 @@ const events = {
     $('#status-messages').show();
     trip.destroy();
   },
-
 }
 
 
@@ -111,11 +110,9 @@ $(document).ready( () => {
     });
   });
 
-  $('#trip-description').on('click', 'button', function showResForm() {
-    console.log(this);
+  $tripDescription.on('click', 'button', function showResForm() {
     const tripID = $(this).attr('data-id');
-    console.log(tripID);
-    $tripIDonForm.append(`<input type="hidden" name="tripID" value="${tripID}">`);
+    $resForm.append(`<input type="hidden" name="tripID" value="${tripID}">`);
     $resForm.show();
   });
 
@@ -125,9 +122,61 @@ $(document).ready( () => {
 
   $addTripForm.submit(events.addTrip);
 
+  $resForm.submit( function submit(event) {
+    const resData = {};
+    event.preventDefault();
+
+    const formfields = ['res-name', 'res-age', 'res-email', 'tripID']
+    event.preventDefault();
+
+    formfields.forEach( (field) => {
+      const val = $(`form input[name=${field}]`).val();
+      if (val !== '') {
+        resData[field] = val;
+      }
+      console.log(val);
+      console.log(resData);
+    });
+
+    console.log('aaaaa');
+    console.log(resData);
+    const reservation = new Reservation(resData)
+
+    console.log(reservation);
+    console.log(reservation.isValid());
+
+    if (reservation.isValid()) {
+      console.log('valid!')
+      // reservation.save({}, {
+      //   success: events.successfullSave,
+      //   error: events.failedSave,
+      // });
+    }
+  });
+
   // Data Events
   tripList.on('update', render, tripList);
 
   // Implement when page loads
   tripList.fetch();
 });
+
+
+// if (trip.isValid()) {
+//   console.log('valid!')
+//   trip.save({}, {
+//     success: events.successfullSave,
+//     error: events.failedSave,
+//   });
+// } else {
+//   console.log('uh oh! Invalid trip :(')
+//   console.log(trip.validationError);
+//
+//   // TODO: FORMAT ERROR MESSGES!
+//   // multiple messages per key
+//   Object.keys(trip.validationError).forEach((error) => {
+//     $('#status-messages ul').append(`<li>${error}: ${trip.validationError[error]}</li>`)
+//   });
+//   $('#status-messages').show();
+// }
+// }
