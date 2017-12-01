@@ -333,25 +333,40 @@ $(document).ready( () => {
 
   });
 
-  // onkeyup="myFunction()"
-
-  $('#search-field').keypress(function (event) {
-    // const value = inputElement.val();
-    // const value = $(`#search-field input[name="query"]`);
-    let input = $('#search-field');
-    let filter = input.value.toUpperCase();
-
-    let header = $(`#search-category select`).val();
-    console.log('header');
-
-    console.log(header);
-    // const letter = letters.val();
-    console.log(filter);
-    console.log(event.key);
-    trips.textSearch(event.key);
-  });
 
   $('#status-messages button.clear').on('click', clearStatus);
+
+  // TODO: continue implementing filtering if time allows and move collection filtering to method in collection
+  // $('#search-field').keypress(function (event) {
+  //   // const value = inputElement.val();
+  //   // const value = $(`#search-field input[name="query"]`);
+  //   let input = document.getElementById("search-field");
+  //   // let input = $('#search-field');
+  //
+  //
+  //   // let filter = input.value.toLowerCase();
+  //   let filter = input.value;
+  //
+  //
+  //   let header = $(`#search-category select`).val();
+  //
+  //   // let results = trips.pluck(`${header}`).filter(word => word.match(`/${filter}/`));
+  //   let results = trips.pluck(`${header}`).filter(word => word.match(`/Af/`));
+  //   // let results = trips.pluck(`${header}`);
+  //
+  //
+  //
+  //   console.log(results);
+  //   console.log('header');
+  //
+  //   console.log(header);
+  //   // const letter = letters.val();
+  //   console.log('filter');
+  //
+  //   console.log(filter);
+  //   console.log(event.key);
+  //   trips.textSearch(event.key);
+  // });
 
 
 });
