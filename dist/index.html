@@ -11,6 +11,18 @@
   </header>
   <main>
     <h1>BACKTREK</h1>
+    <form id="filter-triplist">
+
+      <select id="select-header">
+        <option value="trip-name">Name</option>
+        <option value="trip-continent">Continent</option>
+        <option value="trip-category">Category</option>
+        <option value="trip-cost">Cost</option>
+      </select>
+
+      <input type="text" id="typing-search" placeholder="Search">
+    </form>
+
       <p id="all-trips" class="button">List Trips</p>
       <p id="add-trip" class="button">Add Trip</p>
       <section id="status-messages">

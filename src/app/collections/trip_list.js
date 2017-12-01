@@ -8,6 +8,14 @@ const TripList = Backbone.Collection.extend({
   // parse: function(response){
   //   return response['trips'];
   comparator: 'name', //default comparator, will have it sort by title by default
+  filterSearch: function filterSearch(letters, selectedHeader) {
+    console.log('In filterSearch');
+    console.log(`Current letters: ${letters}`);
+    console.log(`Current selectedHeader: ${selectedHeader}`);
+
+    console.log(`Current tripList?: ${this.toJSON()}`);
+  },
+
 });
 
 export default TripList;

@@ -285,4 +285,19 @@ $(document).ready( () => {
       tripList.sort();
     });
   });
+
+  // Listen for search typing
+  $('#typing-search').keyup(function (event) {
+    console.log(`In typing-search, this: ${this}`);
+    console.log(`In #typing-search, event: ${$(this).val()}`);
+
+    const letters = $(this).val();
+    // console.log(`Sibling of this: ${$('#typing-search').siblings('.select-header').val()}`);
+    console.log(`Selected 1: ${$('#select-header').find(":selected").text()}`);
+    // console.log(`Selected 2: ${$('#select-header option:selected').val()}`);
+    // console.log(`Selected 3: ${$('#select-header').val()}`);
+    const selectedHeader = $('#select-header').find(":selected").text();
+
+    tripList.filterSearch(letters, selectedHeader);
+  });
 });
