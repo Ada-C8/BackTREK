@@ -16,6 +16,7 @@
   <section>
     <h2>Trips</h2>
 
+    <div id="trip"></div>
     <table>
       <thead>
         <th class="name">name</th>
@@ -32,7 +33,18 @@
 
   </footer>
 
+
   <script type="text/template" id="trip-template">
+    <div class="indTrip">
+      <h4><%- name %></h4>
+      <p><%- continent %></p>
+      <p><%- category %></p>
+      <p><%- weeks %></p>
+      <p><%- cost %></p>
+    </div>
+  </script>
+
+  <script type="text/template" id="list-template">
     <tr class="trip">
       <td>
         <%- name %>
