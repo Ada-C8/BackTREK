@@ -36,7 +36,6 @@ const events = {
     $('#status-title').empty();
     $('#status-messages ul').empty();
     $('#status-messages').hide();
-
     $('#create-trip-modal').hide();
   },
   showModal(){
@@ -48,14 +47,10 @@ const events = {
     const tripData = {};
     tripFields.forEach( (field) => {
       const val = $(`input[name=${field}]`).val();
-      // TODO: check for validation if an input has a value
-      if (val != '') {
-        tripData[field] = val;
-      }
+      if (val != '') tripData[field] = val;
     });
     console.log('in addTrip in app.js');
     console.log(tripData);
-
     const trip = new Trip(tripData);
     if (trip.isValid()) {
       console.log('it is valid!');
@@ -66,31 +61,26 @@ const events = {
     } else { // save is invalid
       console.log('Trip Validation Error');
       console.log(trip.validationError);
-      events.addStatusMessagesFromHash("Error", trip.validationError);
+      events.addStatusMessagesFromHash("Errors", trip.validationError);
     }
   },
   successfulSaveTrip(trip, response){
-    // TODO: add message
+    // TODO: add message on the
     $('#create-trip-form .input').val("");
     events.hideModal();
     tripList.add(trip);
   },
   failSaveTrip(trip, response){
-    $('#status-title').text('Errors:');
     console.log('Response Validation Errors');
     console.log(response);
-    events.addStatusMessagesFromHash("Error", response.responseJSON.errors);
+    events.addStatusMessagesFromHash("Errors", response.responseJSON.errors);
     trip.destroy();
   },
   addStatusMessagesFromHash(statusTitle, collection){
-    console.log('Collection');
-    console.log(collection);
     $('#status-title').empty();
     $('#status-messages ul').empty();
-
     $('#status-title').text(`${statusTitle}`);
     for (let key in collection) {
-
       $('#status-messages ul').append(`<li>${key}: ${collection[key]}</li>`);
     }
     $('#status-messages').css('background-color', 'pink');
@@ -131,5 +121,4 @@ $(document).ready( () => {
 
   //submit forms
   $('#create-trip-form').submit(events.addTrip);
-  // $('#create-reservation-form').submit(events.addReservation);
 });
