@@ -50,6 +50,7 @@ const render = function render(tripList) {
   })
 
   $('#trip-table').show();
+  $('#filter-triplist').show();
 
   //Visual feedback code for sorting
 

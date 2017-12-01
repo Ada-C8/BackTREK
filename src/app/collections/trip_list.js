@@ -14,8 +14,20 @@ const TripList = Backbone.Collection.extend({
     console.log(`Current selectedHeader: ${selectedHeader}`);
 
     console.log(`Current tripList?: ${this.toJSON()}`);
-  },
+    console.log(`Current tripList?: ${this}`);
+    let tripListArray = this.toJSON();
 
+    tripListArray.forEach(function(trip) {
+      console.log(`trip: ${trip}`);
+      console.log(trip);
+      console.log(`name: ${trip.name}`);
+    });
+
+    let names = this.pluck('name');
+    console.log(`names array: ${names}`);
+    let word = names.filter(word => word.match(`/${letters}/`));
+    console.log(word);
+},
 });
 
 export default TripList;
