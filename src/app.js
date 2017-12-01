@@ -64,36 +64,37 @@ const events = {
         error: events.failSaveTrip
       });
     } else { // save is invalid
-      $('#status-title').empty();
-      $('#status-messages ul').empty();
-
-      $('#status-title').text('Errors:');
-      for(let error in trip.validationError) {
-        $('#status-messages ul').append(`<li>${trip.validationError[error]}</li>`);
-      }
-      $('#status-messages').css('background-color', 'pink');
-      $('#status-messages').show();
+      console.log('Trip Validation Error');
+      console.log(trip.validationError);
+      events.addStatusMessagesFromHash("Error", trip.validationError);
     }
   },
   successfulSaveTrip(trip, response){
+    // TODO: add message
     $('#create-trip-form .input').val("");
     events.hideModal();
     tripList.add(trip);
   },
   failSaveTrip(trip, response){
-    // TODO: redundant with fail case when trip isn't valid
+    $('#status-title').text('Errors:');
+    console.log('Response Validation Errors');
+    console.log(response);
+    events.addStatusMessagesFromHash("Error", response.responseJSON.errors);
+    trip.destroy();
+  },
+  addStatusMessagesFromHash(statusTitle, collection){
+    console.log('Collection');
+    console.log(collection);
     $('#status-title').empty();
     $('#status-messages ul').empty();
 
-    $('#status-title').text('Errors:');
-    for (let key in response.responseJSON.errors) {
-      response.responseJSON.errors[key].forEach((error) => {
-        $('#status-messages ul').append(`<li>${key}:${error}</li>`);
-      });
+    $('#status-title').text(`${statusTitle}`);
+    for (let key in collection) {
+
+      $('#status-messages ul').append(`<li>${key}: ${collection[key]}</li>`);
     }
     $('#status-messages').css('background-color', 'pink');
     $('#status-messages').show();
-    trip.destroy();
   }
 }
 
