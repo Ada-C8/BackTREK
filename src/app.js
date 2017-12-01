@@ -15,6 +15,7 @@ import TripList from './app/collections/trip_list';
 import Reservation from './app/models/reservation'
 
 
+const TEXT_SEARCH = ['name', 'continent', 'category'];
 
 const TRIP_FIELDS = ['name', 'about', 'continent', 'category', 'weeks', 'cost'];
 const RESERVATION_FIELDS = ['tripId', 'name', 'email', 'age'];
@@ -98,20 +99,20 @@ const showTrip = function showTrip(id) {
   $('#show-trip').show();
 
 
-//   $( "#target" ).submit(function( event ) {
-//   alert( "Handler for .submit() called." );
-//   event.preventDefault();
-// });
-console.log(`this is the show trip click event`);
-console.log(event);
+  //   $( "#target" ).submit(function( event ) {
+  //   alert( "Handler for .submit() called." );
+  //   event.preventDefault();
+  // });
+  console.log(`this is the show trip click event`);
+  console.log(event);
   console.log(`this is the show trip id ${id}`);
-// $( "#reserve-trip-form" ).submit(function( e ) {
-//   e.preventDefault();
-//
-//   alert( "Handler for .submit() called." );
-//     // addReservationHandler();
-//
-// });
+  // $( "#reserve-trip-form" ).submit(function( e ) {
+  //   e.preventDefault();
+  //
+  //   alert( "Handler for .submit() called." );
+  //     // addReservationHandler();
+  //
+  // });
 
 
   // addReservationHandler
@@ -137,13 +138,6 @@ const readFormData = function readFormData() {
 
     const inputElement = $(`#add-trip-form input[name="${ field }"]`);
     const value = inputElement.val();
-
-    // Don't take empty strings, so that Backbone can
-    // // fill in default values
-    // if (value != '') {
-    //   bookData[field] = value;
-    // }
-
 
     tripData[field] = value;
     // TODO: see below
@@ -226,6 +220,7 @@ const addReservationHandler = function(ev) {
       console.log('Failed to save reservation! Server response:');
       console.log(response);
       const errors = response.responseJSON["errors"];
+      //TODO: tell Diane
       // print server-side validation failures if client-side validation
       // somehow misses a server-side validation
       handleValidationFailures(response.responseJSON["errors"]);
@@ -271,6 +266,7 @@ const addTripHandler = function(event) {
       console.log('Failed to save trip! Server response:');
       console.log(response);
       const errors = response.responseJSON["errors"];
+      //TODO: tell Diane
       // print server-side validation failures if client-side validation
       // somehow misses a server-side validation
       handleValidationFailures(response.responseJSON["errors"]);
@@ -325,16 +321,37 @@ $(document).ready( () => {
   // });
 
 
-    TRIP_FIELDS.forEach((field) => {
-      const headerElement = $(`th.sort.${ field }`)
-      headerElement.on('click', (event) => {
-        console.log(`Sorting table by ${ field }`);
-        trips.comparator = field
-        trips.sort();
-      });
+  // method in triplist and return array with results if no search return all
+
+  TRIP_FIELDS.forEach((field) => {
+    const headerElement = $(`th.sort.${ field }`)
+    headerElement.on('click', (event) => {
+      console.log(`Sorting table by ${ field }`);
+      trips.comparator = field
+      trips.sort();
     });
 
-    $('#status-messages button.clear').on('click', clearStatus);
+  });
+
+  // onkeyup="myFunction()"
+
+  $('#search-field').keypress(function (event) {
+    // const value = inputElement.val();
+    // const value = $(`#search-field input[name="query"]`);
+    let input = $('#search-field');
+    let filter = input.value.toUpperCase();
+
+    let header = $(`#search-category select`).val();
+    console.log('header');
+
+    console.log(header);
+    // const letter = letters.val();
+    console.log(filter);
+    console.log(event.key);
+    trips.textSearch(event.key);
+  });
+
+  $('#status-messages button.clear').on('click', clearStatus);
 
 
 });
