@@ -51,7 +51,12 @@ const events = {
     event.preventDefault();
     const tripData = {};
     tripFields.forEach( (field) => {
-      let val = $(`input[name=${field}]`).val();
+      let val;
+      if (field === 'continent') {
+        val = $(`select[name=${field}]`).val();
+      } else {
+        val = $(`input[name=${field}]`).val();
+      }
       if (field === 'cost') {
         val = parseFloat(val);
       }
