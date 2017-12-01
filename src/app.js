@@ -106,7 +106,6 @@ const unSplitScreen = function unSplitScreen() {
 
 const highlightCurrentTrip = function highlightCurrentTrip(event) {
   const currentRow = $(event.currentTarget).parent().parents('tr:first').children();
-  console.log(currentRow);
   $('#all-trips tr td').removeClass('current-trip');
   $(currentRow).addClass('current-trip');
 };
@@ -138,6 +137,7 @@ const clearMessages = function clearMessages() {
 
 const addTripForm = function addTripForm() {
   clearContent();
+  splitScreen();
   addTripFields.forEach((item) => {
     $('#add-trip-form').append(formTemplate({field: item, lowercaseField: item}));
   });
@@ -166,6 +166,7 @@ const saveTrip = function saveTrip(event) {
 }
 
 const successfulTripSave = function successfulTripSave(trip) {
+  unSplitScreen();
   tripList.add(trip);
   referenceList.add(trip);
   addTripFields.forEach((field) => {
