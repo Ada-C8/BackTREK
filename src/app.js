@@ -1,5 +1,10 @@
 // Vendor Modules
-import $ from 'jquery';
+// import $ from 'jquery';
+
+// load jquery and foundation in the window scope
+import 'script-loader!jquery'
+import 'script-loader!foundation-sites'
+
 import _ from 'underscore';
 
 // CSS
@@ -68,6 +73,7 @@ const events = {
 };
 
 $(document).ready( () => {
+  $(document).foundation();
   $('#all-trips-table').hide();
   $('#single-trip-details').hide();
 
@@ -92,4 +98,7 @@ $(document).ready( () => {
   $('#single-trip-template').on('click', '#reserve-trip-button', function() {
     $('#reservation-form').show();
   });
+
+  // To Show New Trip Form Modal
+
 });
