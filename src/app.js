@@ -48,9 +48,9 @@ const events = {
     tripFields.forEach( (field) => {
       let val;
       if (field === 'continent') {
-        val = $(`select[name=${field}]`).val();
+        let val = $(`select[name=${field}]`).val();
       } else {
-        val = $(`input[name=${field}]`).val();
+        let val = $(`input[name=${field}]`).val();
       }
       if (field === 'cost') {
         val = parseFloat(val);
@@ -98,10 +98,9 @@ const events = {
     $('#status-messages').show();
   },
 
-  sortTrips() {
+  sortTrips(event) {
     const classes = $(this).attr('class').split(/\s+/);
     tripList.comparator = classes[1];
-
     if (classes.includes('current-sort-field')) {
       $(this).removeClass('current-sort-field');
       tripList.set(tripList.models.reverse());
@@ -115,6 +114,7 @@ const events = {
 
   tripFilter(event) {
     event.preventDefault();
+
     const column = document.getElementById("filter-query").value;
     const input = document.getElementById("myInput");
     const filter = input.value.toUpperCase();
@@ -155,24 +155,6 @@ const events = {
   }
 };
 
-const newReservation = $('.reservation-form').submit( function(e) {
-  e.preventDefault();
-  let tripID = $('.show .trip').attr('data-id');
-  tripID = tripID.match(/\d+/g)[0];
-
-  const url = `https://trektravel.herokuapp.com/trips/${tripID}/reservations`;
-  const formData = $(this).serialize();
-
-  $.post(url, formData, (response) => {
-    $('.reservation-form').hide();
-    $('#status-messages').append('<p> Reservation confirmed! </p>');
-    document.getElementById("new-trip-form").reset();
-
-  }).fail(() => {
-    $('#status-messages').append('<p>Adding Reservation Failed</p>');
-  });
-});
-
 const modalStuff = function() {
   const modal = document.getElementById('the-modal');
   const openModal = document.getElementById('make-a-trip');
@@ -195,8 +177,10 @@ $(document).ready(() => {
   singleTripTemplate = _.template($('#single-trip-template').html());
 
   $('.reservation-form').hide();
+  $('#trips-table').hide();
+  $('#new-trip-form').hide();
+  $('#filter-form').hide();
 
-  renderTrips(tripList);
   modalStuff();
 
   $('#trip-list').on('click', 'tr', function (){
@@ -217,10 +201,27 @@ $(document).ready(() => {
   });
 
   $('#new-trip-form').submit(events.addTrip);
+
+  $('.reservation-form').submit( function(e) {
+    e.preventDefault();
+    let tripID = $('.show .trip').attr('data-id');
+    tripID = tripID.match(/\d+/g)[0];
+
+    const url = `https://trektravel.herokuapp.com/trips/${tripID}/reservations`;
+    const formData = $(this).serialize();
+
+    $.post(url, formData, (response) => {
+      $('.reservation-form').hide();
+      $('#status-messages').append('<p> Reservation confirmed! </p>');
+      document.getElementById("new-trip-form").reset();
+
+    }).fail(() => {
+      $('#status-messages').append('<p>Adding Reservation Failed</p>');
+    });
+  });
+
   $('.sort').click(events.sortTrips);
   $('#filter-form').submit(events.tripFilter);
-
-  newReservation();
 
   tripList.on('update', renderTrips, tripList);
   tripList.on('sort', renderTrips, tripList);

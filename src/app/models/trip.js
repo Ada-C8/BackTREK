@@ -16,18 +16,15 @@ const Trip = Backbone.Model.extend ({
     if (!attributes.name) {
       errors['name'] = ['Cannot be blank'];
     }
-
     const CONTINENTS = ['Africa', 'Antartica', 'Asia', 'Australasia', 'Europe', 'North America', 'South America']
     if (!attributes.continent) {
       errors['continent'] = ['Cannot be blank'];
     } else if (!CONTINENTS.includes(attributes.continent)) {
       errors['continent'] = ['Must be one of the 7 continents'];
     }
-
     if (!attributes.category) {
       errors['category'] = ['Cannot be blank'];
     }
-
     if (!attributes.weeks) {
       errors['weeks'] = ['Cannot be blank'];
     } else if (isNaN(attributes.weeks)) {
@@ -35,7 +32,6 @@ const Trip = Backbone.Model.extend ({
     } else if (attributes.weeks < 0) {
       errors['weeks'] = ['Must be more than 0'];
     }
-
     if (!attributes.cost) {
       errors['cost'] = ['Cannot be blank'];
     } else if (isNaN(attributes.weeks)) {
@@ -43,7 +39,6 @@ const Trip = Backbone.Model.extend ({
     } else if (attributes.weeks < 0) {
       errors['cost'] = ['Must be more than 0'];
     }
-
     if (Object.keys(errors).length > 0) {
       return errors;
     } else {
