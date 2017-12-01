@@ -59,6 +59,7 @@ const reserveModal = function reserveModal(e) {
 
 const submitReservation = function submitReservation(e) {
   e.preventDefault();
+  clearErrors();
   $('.form-messages').html('');
   const form = $('#reservation-form');
   const id = form[0].classList[0];
@@ -66,20 +67,34 @@ const submitReservation = function submitReservation(e) {
   const formData = getFormData($(e.target), ['name', 'email']);
   formData['tripID'] = id;
   const newReservation = new Reservation(formData);
-  newReservation.save({}, {
-    success: (response) => {
-      formSuccess('reservation', form)
-      // $('#reservation-modal-response').html('Successfully created ');
-    },
-    error: (status, response) => {
-      const errors = ($.parseJSON(response.responseText))['errors'];
-      for(let field in errors) {
-        let errorElement = $(`#reserve-${field} > label`);
-        errorElement.addClass('has-errors');
-        errorElement.append(`<p class="error">${errors[field]}</p>`);
-      }
-    },
-  });
+  console.log(newReservation.isValid());
+  console.log(newReservation.validationError);
+  if (newReservation.isValid()) {
+    newReservation.save({}, {
+      success: (response) => {
+        formSuccess('reservation', form)
+      },
+      error: (status, response) => {
+        const errors = ($.parseJSON(response.responseText))['errors'];
+        printErrors(errors);
+      },
+    });
+  } else {
+    printErrors(newReservation.validationError);
+  }
+};
+
+const printErrors = function printErrors(errors) {
+  for(let field in errors) {
+    let errorElement = $(`#reserve-${field} > label`);
+    errorElement.addClass('has-errors');
+    errorElement.append(`<p class="error">${errors[field]}</p>`);
+  }
+};
+
+const clearErrors = function clearErrors() {
+  $('.has-errors').removeClass('has-errors');
+  $('.error').remove();
 };
 
 const formSuccess = function formSuccess(item, form) {
