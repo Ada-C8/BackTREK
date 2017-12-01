@@ -80,9 +80,11 @@ const events = {
 const makeTripReservation = function makeTripReservation(id) {
   const trip = tripList.findWhere({id: parseInt(id)});
 
+  const fields = ['name', 'age', 'email'];
+
   const reservationData = {};
   fields.forEach( (field) => {
-    const val = $(`input[name=${field}]`).val();
+    const val = $(`#reservation input[name=${field}]`).val();
     if (val != '') {
     reservationData[field] = val;
     }
@@ -103,6 +105,7 @@ const makeTripReservation = function makeTripReservation(id) {
     $('#errorModal').foundation('open');
   });
   reservation.save();
+  console.log('RESERVATION SUBMITTED')
   console.log(reservation);
 
 };
