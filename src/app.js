@@ -34,8 +34,10 @@ const events = {
     $('#trip-table').show();
   },
   showTrip(event) {
-    console.log(event.target.parentElement);
+    console.log('A TRIP!');
+    console.log('rm styling');
     $('.selected-trip').removeClass('selected-trip');
+    console.log('add styling');
     $(event.target.parentElement).addClass('selected-trip');
     $('#reservation').show();
     const trip = new Trip({id: event.target.parentElement.id});
@@ -128,9 +130,9 @@ const events = {
     // get class
     const classes = $(this).attr('class').split(/\s+/);
     // css styling
+    console.log('sort styling');
     $('.sort').removeClass('current-sort-field');
     $(this).addClass('current-sort-field');
-    console.log(filteredTrips);
     if (filteredTrips) {
       if (tripList.comparator === classes[1]) {
         filteredTrips.reverse();
@@ -208,6 +210,7 @@ $(document).ready( function() {
   $('#filter').hide();
   $('#trip-table').hide();
   $('#reservation').hide();
+  $('#status-messages').hide();
 
   // Event Trigger
   $('#add-trip-form').submit(events.addTrip);

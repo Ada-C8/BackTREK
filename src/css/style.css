@@ -1,52 +1,140 @@
+/* #cdfcfa #434349*/
+
 * {
   box-sizing: border-box;
+  color:#434349;
+  font-family: 'Oswald';
 }
-html {
+html {]
+  height: 100%;
+}
+body {
+  background-image: url('wormz.png');
+  background-repeat: repeat;
+  height: 100%;
+  padding-bottom: 50px;
+}
+main {
+  min-height: 100%;
+}
 
+.page-header{
+  max-width: 100%;
+  margin: 0.5em;
+  padding: 1em;
+  /*background-color: #cdfcfa;*/
 }
+
+.page-header .button {
+  margin-top: 0.5em;
+}
+
+h1{
+  font-family: 'Oswald';
+  color:#434349;
+  font-weight: 700;
+}
+
+h2, h3, h4 {
+  color:#434349;
+  font-family: 'Oswald';
+  font-weight: bold;
+}
+
+.button {
+  text-transform: uppercase;
+  background-color: #3120f6;
+  color: white;
+  font-weight: bold;
+  /*font-family: 'Walter Turncoat';*/
+}
+
+/*.page-wrap {
+  min-height: 100%;
+  margin-bottom: -50px;
+}
+.page-wrap:after {
+  content: "";
+  display: block;
+}
+.site-footer, .page-wrap:after {
+  height: 50px;
+}*/
+
+.page-wrap .show-trips{
+  text-align: center;
+}
+
+#show-trips {
+  font-size: 2em;
+  width: 15%;
+}
+
+footer {
+  text-align: center;
+  height: 50px;
+  background-image: url('stardust.png');*/
+  background-repeat: repeat;
+  padding-top: 0.5em;
+}
+
+footer p {
+  color: white;
+  /*margin: 0.5em auto 0 auto;*/
+}
+
 /* --MODAL------------- */
-/* The Modal (background) */
 .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
 /* Modal Content/Box */
 .modal-content {
-    background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+.modal h3, .modal .center {
+  text-align: center;
+  margin: auto;
+}
+
+.modal-content .top-border {
+  text-align: center;
+  margin: auto;
 }
 
 /* The Close Button */
 .close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
 }
 
 .close:hover,
 .close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 /*------------------------------*/
 #trip-table {
   width: 100%;
-  height: 70vh;
+  height: 75vh;
   overflow: scroll;
 }
 
@@ -54,10 +142,12 @@ html {
   width: 100%;
   max-height: 18vh;
   overflow: scroll;
+  background-color: rgba(255, 255, 255,0.6);
 }
 
 .trip li {
   display: inline;
+  padding-right: 10px;
 }
 
 .trip h2 {
@@ -70,11 +160,26 @@ html {
 }
 
 .top-border {
-  border-top: 1px solid #000;
+  border-top: 5px solid #3120f6;
   width: 10%;
   margin: 10px 0;
 }
+
+label {
+  text-transform: uppercase;
+}
 /*------------------------------*/
+
+#status-messages {
+  background-color: #b4fdfa;
+  margin: 0.5em auto;
+  padding: 0.5em;
+}
+#status-messages li {
+  text-align: center;
+  list-style-type: none;
+  font-size: 1.5em;
+}
 
 input.error {
   background-color: #f5adad;
@@ -90,11 +195,41 @@ th.sort {
 }
 
 .current-sort-field {
-  background-color: darkgrey;
+  /*background-color: #cdfcfa;
+  color: #434349;*/
+  background-color: #3120f6;
   color: white;
 }
 
 tr.selected-trip td{
-  background-color: blue;
+  background-color: #3120f6;
   color: white;
+}
+
+#filter select {
+  display: inline;
+  width: 30%;
+  height: 2.5em;
+}
+
+#filter input[type="text"] {
+  display: inline;
+  width: 68%;
+  height: 2.4em;
+}
+
+@media screen and (max-width: 40em) {
+  #filter select {
+    display: block;
+    width: 100%;
+  }
+
+  #filter input[type="text"] {
+    display: block;
+    width: 100%;
+  }
+
+  h1 {
+    font-size: 3em;
+  }
 }

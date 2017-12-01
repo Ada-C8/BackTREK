@@ -3,16 +3,19 @@
 <head>
   <meta charset="utf-8">
   <title>BackTREK</title>
-  <link href="https://fonts.googleapis.com/css?family=PT+Sans+Narrow|PT+Serif|Permanent+Marker" rel="stylesheet">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css?family=PT+Sans+Narrow|Walter+Turncoat|Oswald:300:700" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-  <header>
-    <section class="float-right">
-      <button class='button' id="add-trip">Add A Trip!</button>
-    </section>
+  <header class="page-header row">
+    <section class="columns small-6 large-9">
     <h1>BackTREK</h1>
+    </section>
+    <section class="columns small-6 large-3">
+      <button class='button float-right' id="add-trip">Add A Trip!</button>
+    </section>
   </header>
   <main>
     <article class="row" id="status-messages">
@@ -20,12 +23,12 @@
         <!-- append here -->
       </ul>
     </article>
-    <article class="row">
+    <article class="row page-wrap">
+      <section class="show-trips">
+        <button class='button' id="show-trips">TREK!</button>
+      </section>
 
       <section class="columns small-12 large-6">
-        <section>
-          <button class='button' id="show-trips">TREK!</button>
-        </section>
         <section id="filter">
           <form id="filter-form">
             <select id="filter-category">
@@ -90,6 +93,7 @@
       <div class="modal-content">
         <span class="close">&times;</span>
         <h3>Add A Trip!</h3>
+        <div class="top-border"></div>
         <form id="add-trip-form" action='https://ada-backtrek-api.herokuapp.com/trips/new' method="post">
           <section>
             <label for="name">Name</label>
@@ -125,7 +129,7 @@
             <label for="about">About</label>
             <textarea type="text" id="about" name="about"></textarea>
           </section>
-          <section>
+          <section class="center">
             <button type="submit" class="button">ADD!</button>
           </section>
         </form>
@@ -135,7 +139,7 @@
 
   </main>
   <footer>
-
+    <p>By: Averi Kitsch</p>
   </footer>
   <script type="text/template" id="trip-list-template">
       <tr class="trip-item" id=<%- id %>>
