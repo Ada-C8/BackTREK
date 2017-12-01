@@ -49,7 +49,7 @@ const getTripDetails = function getTripDetails(attrID) {
 
   console.log(trip)
 
-  // $('#reservation-form').hide();
+  $('#reservation-form').hide();
 };
 
 const events = {
@@ -89,7 +89,7 @@ $(document).ready( () => {
   });
 
   // To Show Trip Reservation Form
-  // $('#single-trip-details').on('click', '#reserve-trip-button', function() {
-  //   $('#reservation-form').show();
-  // });
+  $('#single-trip-template').on('click', '#reserve-trip-button', function() {
+    $('#reservation-form').show();
+  });
 });
