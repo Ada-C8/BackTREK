@@ -1,11 +1,21 @@
+// Filtering
+//
+// Add a form to the top of your trip list. The form should have a dropdown to select Name, Category, Continent, Cost or Weeks, as well as a text box.
+//
+// When the user types in the text box, the list of trips will be filtered to only show trips that match.
+//
+// For a text field (Name, Category, Continent), the trip's value for that field should include the filter value.
+// Filtering for Continent asia should match both Asia and Australasia
+// For a numeric field (Weeks, Cost), the trip's value for that field should be less than or equal to the filter value.
+// The list of displayed trips should be updated with every keystroke. This means that making a new query against the API every time will be too slow. Instead, you should filter your list in JavaScript, probably via a custom method on the collection.
+//
+// Your app should gracefully handle the case where none of the trips match the filter.
+//
+// This feature is complex - it's what brings this project from stage 1 to stage 2. Spend some time thinking it through before you start writing code. What data needs to be where, how will code be organized, and how are you going to avoid stepping on your own feet?
+//
+
 //Inline Validations
 //Validations and Error Handling for Reservations
-
-//Success and error reporting
-
-//Bugs:
-//when reservation fails it will not succeed unless reclick on trip? ****
-//find better way to pass tripId from the form
 
 
 // Vendor Modules
@@ -44,11 +54,17 @@ const loadTrip = function loadTrip(singleTrip) {
   });
 };
 
-const loadTrips = function loadTrips(tripList) {
+const loadTrips = function loadTrips(tripList, filters) {
   const tripTableElement = $('#trip-list');
   tripTableElement.html('');
 
-  tripList.forEach((trip) => {
+  // console.log('LOGGING Filters:');
+  // console.log(filters);
+  //don't do this but its an idea?
+  const listOfTrips = tripList.filterTrips(filters);
+  console.log(listOfTrips);
+
+  listOfTrips.forEach((trip) => {
     const generatedHTML = $(tripTemplate(trip.attributes));
     generatedHTML.on('click', (event) => {
       $('.trip').removeClass('selected-trip')
@@ -58,56 +74,45 @@ const loadTrips = function loadTrips(tripList) {
     tripTableElement.append(generatedHTML);
   });
 
+  if(tripTableElement.html === '') {
+    console.log(LOSER);
+    tripTableElement.append('LSE')
+  }
+
   $('th.sort').removeClass('current-sort-field');
   $(`th.sort.${ tripList.comparator }`).addClass('current-sort-field');
 };
+
 
 const addReservationHandler = function(trip) {
   event.preventDefault();
 
   const reservation = new Reservation(readReservationData());
 
+  console.log('about to check validations!!!!!!!');
+  if (!reservation.isValid()) {
+    console.log('didnt get in here obviously');
+    handleReservationValidationFailures(reservation.validationError);
+    return;
+  }
+
   reservation.save({}, {
     success: (model, response) => {
       console.log('Successfully saved reservation!');
-      // $('#reservation-status').html('successfully saved reservation!')
+      $('#reservation-status').html('');
       $('#reservation-status').addClass('success')
       $('#add-reservation-form').hide('slow')
       reportReservationStatus('success', 'Successfully saved reservation!');
-
     },
+
     error: (model, response) => {
       console.log('Failed to save reservation! Server response:');
       $('#reservation-status').removeClass('success');
       $('#reservation-status').addClass('failure');
 
-      handleReservationValidationFailures(response.responseJSON["errors"]);
+      handleValidationFailures(response.responseJSON["errors"]);
+
     },
-
-    ////////////////////////
-    // trip.save({}, {
-    //   success: (model, response) => {
-    //     console.log('Successfully saved trip!');
-    //     console.log(trip);
-    //     tripList.add(trip);
-    //     $('#status-messages').addClass('success')
-    //     reportStatus('success', 'Successfully saved trip!');
-    //   },
-    //   error: (model, response) => {
-    //     console.log('Failed to save trip! Server response:');
-    //     //NEED TO FIND A WAY TO
-    //     $('#status-messages').removeClass('success')
-    //     $('#status-messages').addClass('failure')
-    //     $('#status-messages').append(`Failed to save trip`)
-    //     console.log(response);
-    //     tripList.remove(model)
-    //
-    //     handleValidationFailures(response.responseJSON["errors"]);
-    //   },
-    // });
-
-    ////////////////
-
   });
 };
 
@@ -128,7 +133,74 @@ const readReservationData = function readReservationData() {
   return reservationData;
 }
 
-// if field is tripId
+const handleReservationValidationFailures = function handleValidationFailures(errors) {
+  // Since these errors come from a Rails server, the strucutre of our
+  // error handling looks very similar to what we did in Rails.
+
+  console.log('in handlereservationvalidation');
+  for (let field in errors) {
+    for (let problem of errors[field]) {
+      reportReservationStatus('error', `${field}: ${problem}`);
+    }
+  }
+};
+
+const reportReservationStatus = function reportReservationStatus(status, message) {
+  console.log(`Reporting ${ status } status: ${ message }`);
+  // Should probably use an Underscore template here.
+  const statusHTML = `<p class="${ status }">${ message }</p>`;
+  console.log(statusHTML);
+  // note the symetry with clearStatus()
+  // $('#reservation-status').html('');
+
+  $('#reservation-status').append(statusHTML);
+  $('#reservation-status').removeClass('success')
+
+  $('#reservation-status').addClass('failure')
+  $('#reservation-status').show();
+};
+
+
+const addTripHandler = function(event) {
+  event.preventDefault();
+  // $('#myModal').removeClass('block')
+  // $('#add-trip-form').removeClass('none')
+  $('#status-messages').html('')
+  console.log('in addtriphandler');
+
+  const trip = new Trip(readFormData());
+  console.log(trip);
+
+  if (!trip.isValid()) {
+    handleValidationFailures(trip.validationError);
+    return;
+  }
+  console.log('about to add!');
+  console.log(trip);
+
+  //in response to API validations, not to model validations
+  trip.save({}, {
+    success: (model, response) => {
+      console.log('Successfully saved trip!');
+      console.log(trip);
+      tripList.add(trip);
+      $('#status-messages').addClass('success')
+      reportStatus('success', 'Successfully saved trip!');
+    },
+    error: (model, response) => {
+      console.log('Failed to save trip! Server response:');
+      //NEED TO FIND A WAY TO
+      $('#status-messages').removeClass('success')
+      $('#status-messages').addClass('failure')
+      $('#status-messages').append(`Failed to save trip`)
+      console.log(response);
+      tripList.remove(model)
+
+      handleValidationFailures(response.responseJSON["errors"]);
+    },
+  });
+
+};
 
 const readFormData = function readFormData() {
   const tripData = {};
@@ -176,9 +248,15 @@ const readFormData = function readFormData() {
   return tripData;
 };
 
-const clearStatus = function clearStatus() {
-  $('#status-messages').html('');
-  $('#status-messages').hide();
+const handleValidationFailures = function handleValidationFailures(errors) {
+  // Since these errors come from a Rails server, the strucutre of our
+  // error handling looks very similar to what we did in Rails.
+  console.log('inhandlevalidationfaiilurs');
+  for (let field in errors) {
+    for (let problem of errors[field]) {
+      reportStatus('error', `${field}: ${problem}`);
+    }
+  }
 };
 
 const reportStatus = function reportStatus(status, message) {
@@ -195,88 +273,31 @@ const reportStatus = function reportStatus(status, message) {
   $('#status-messages').show();
 };
 
-const reportReservationStatus = function reportReservationStatus(status, message) {
-  console.log(`Reporting ${ status } status: ${ message }`);
-  // Should probably use an Underscore template here.
-  const statusHTML = `<p class="${ status }">${ message }</p>`;
-  // note the symetry with clearStatus()
-  $('#reservation-status').append(statusHTML);
-  $('#reservation-status').removeClass('success')
 
-  $('#reservation-status').addClass('failure')
-  $('#reservation-status').show();
+const clearStatus = function clearStatus() {
+  $('#status-messages').html('');
+  $('#status-messages').hide();
 };
 
-const handleValidationFailures = function handleValidationFailures(errors) {
-  // Since these errors come from a Rails server, the strucutre of our
-  // error handling looks very similar to what we did in Rails.
-  console.log('inhandlevalidationfaiilurs');
-  for (let field in errors) {
-    for (let problem of errors[field]) {
-      reportStatus('error', `${field}: ${problem}`);
-    }
-  }
-};
+const readFilterForm = function readFilterForm() {
 
-const handleReservationValidationFailures = function handleValidationFailures(errors) {
-  // Since these errors come from a Rails server, the strucutre of our
-  // error handling looks very similar to what we did in Rails.
-  for (let field in errors) {
-    for (let problem of errors[field]) {
-      reportReservationStatus('error', `${field}: ${problem}`);
-    }
-  }
-};
-
-const addTripHandler = function(event) {
-  event.preventDefault();
-  // $('#myModal').removeClass('block')
-  // $('#add-trip-form').removeClass('none')
-  $('#status-messages').html('')
-  console.log('in addtriphandler');
-
-  const trip = new Trip(readFormData());
-  console.log(trip);
-
-  if (!trip.isValid()) {
-    handleValidationFailures(trip.validationError);
-    return;
-  }
-  console.log('about to add!');
-  console.log(trip);
-
-  //in response to API validations, not to model validations
-  trip.save({}, {
-    success: (model, response) => {
-      console.log('Successfully saved trip!');
-      console.log(trip);
-      tripList.add(trip);
-      $('#status-messages').addClass('success')
-      reportStatus('success', 'Successfully saved trip!');
-    },
-    error: (model, response) => {
-      console.log('Failed to save trip! Server response:');
-      //NEED TO FIND A WAY TO
-      $('#status-messages').removeClass('success')
-      $('#status-messages').addClass('failure')
-      $('#status-messages').append(`Failed to save trip`)
-      console.log(response);
-      tripList.remove(model)
-
-      handleValidationFailures(response.responseJSON["errors"]);
-    },
-  });
-
-};
-
+}
 
 
 $(document).ready(() => {
   tripTemplate = _.template($('#trip-template').html());
   aboutTemplate = _.template($('#about-template').html());
+  let filters = {}
 
   tripList.on('update', loadTrips);
-  tripList.on('sort', loadTrips);
+  tripList.on('sort', function() {
+    loadTrips(tripList, filters)
+  });
+
+  $('#filter').on('keyup', function(event) {
+    filters[$('#filter option:selected')[0].innerHTML] = $('#filter input')[0].value;
+    loadTrips(tripList, filters)
+  })
 
   tripList.fetch();
 

@@ -4,12 +4,6 @@ import Backbone from 'backbone';
 const Trip = Backbone.Model.extend({
   urlRoot: 'https://ada-backtrek-api.herokuapp.com/trips',
 
-//VALIDATIONS
-
-//   validates :category, presence: true
-//   validates :weeks, presence: true, numericality: { greater_than: 0 }
-//   validates :cost, presence: true, numericality: { greater_than: 0 }
-
 validate(attributes) {
   console.log(`attributes: ${attributes}`);
   const errors = {};
@@ -17,13 +11,7 @@ validate(attributes) {
   if (!attributes.name) {
     errors.name = ['cannot be blank'];
   }
-
-  // tripList.forEach(function(trip) {
-  //   if(attributes.name === trip.name) {
-  //     errors.name = ['must be unique']
-  //   }
-  // });
-
+  
   if (!attributes.continent) {
     errors.continent = ['cannot be blank'];
   }
