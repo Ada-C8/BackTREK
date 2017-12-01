@@ -32,12 +32,12 @@ const render = function render(tripList) {
   });
 };
 
-const renderFiltered = function render(filteredTrips) {
+const renderFiltered = function(filteredList) {
   console.log('INSIDE renderFiltered');
   const $tripList = $('#trip-list');
   $tripList.empty();
 
-  filteredTrips.forEach((trip) => {
+  filteredList.forEach((trip) => {
     $tripList.append(tripTemplate(trip.attributes));
   });
 };
@@ -76,13 +76,13 @@ const events = {
     const trip = new Trip({id: id});
     const resForm = `<h2>Reserve Your Spot</h2>
     <form id="reserve-trip-form" action="https://trektravel.herokuapp.com/trips/${id}/reservations" method="post">
-    <label for="name">Name</label>
+    <label for="name" required="required">Name</label>
     <input type="text" name="name"></input>
 
     <label for="age">Age</label>
     <input type="number" name="age"></input>
 
-    <label for="email">Email</label>
+    <label for="email" required="required">Email</label>
     <input type="text" name="email"></input>
 
     <input id="submitResButton" type="submit" value="Reserve it!" class="button"></input>
@@ -98,6 +98,7 @@ const events = {
     event.preventDefault();
     const url = $(this).attr('action'); // Retrieve the action from the form
     const formData = $(this).serialize();
+
     $('#show_trip').hide();
     $.post(url, formData, function(response) {
       $('#message').empty();
@@ -172,13 +173,15 @@ const events = {
       filteredTrips = tripList.filter(trip => trip.get(searchCategory.toLowerCase()).includes(searchTerm)
     )
     console.log(filteredTrips);
-    return filteredTrips;
+    // return const filteredList = new TripList(filteredTrips);
   } else if (numericSearches.includes(searchCategory.toLowerCase())) {
     filteredTrips = tripList.filter(trip => trip.get(searchCategory.toLowerCase()) <= (searchTerm));
     console.log(filteredTrips);
-    return filteredTrips;
   }
-  console.log(filteredTrips);
+  // console.log(filteredTrips);
+  const filteredList = new TripList(filteredTrips);
+
+  renderFiltered(filteredList);
 },
 };
 
