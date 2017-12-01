@@ -68,11 +68,14 @@ const events = {
     });
 
     const trip = new Trip(tripData);
-
-    trip.save({}, {
-      success: events.successfulSave,
-      error: events.failedSave
-    });
+    if (trip.isValid()) {
+      trip.save({}, {
+        success: events.successfulSave,
+        error: events.failedSave
+      });
+    }  else {
+      events.failedSave(trip);
+    }
 
   },
 
