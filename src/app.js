@@ -6,16 +6,20 @@ import _ from 'underscore';
 import './css/foundation.css';
 import './css/style.css';
 
+// do i need you? -- I THINK SO
+import Trip from './app/models/trip';
 import TripList from './app/collections/trip_list';
 
-const TRIP_FIELDS = ['name', 'continent', 'weeks'];
-const DEET_FIELDS = ['name', 'continent', 'weeks', 'category', 'cost', 'about'];
+// ALL THE FIELDS
+const TRIP_FIELDS = ['id', 'name', 'continent', 'about', 'category', 'weeks', 'cost'];
 
 const tripList = new TripList();
+let trip = new Trip();
+
 let tripTemplate;
 let tripDetails;
 
-// RENDER
+// RENDERS
 const render = function render(tripList) {
   const tripTbody = $('#trip-list');
   tripTbody.html('');
@@ -26,17 +30,34 @@ const render = function render(tripList) {
   });
 };
 
+const renderDetails = function renderDetails(trip){
+  const detailsDiv = $('#trip-details');
+  detailsDiv.html('');
+
+  console.log(trip.attributes);
+
+  trip.fetch({
+    success: (model) => {
+      const generatedHTML = $(tripDetails(trip.attributes));
+      detailsDiv.append(generatedHTML);
+      console.log(trip);
+    }
+  });
+};
+
 // JQUERY
 $(document).ready( () => {
+  // my templates
   tripTemplate = _.template($('#trip-template').html());
   tripDetails = _.template($('#detail-template').html());
 
   console.log(`About to fetch data from ${ tripList.url }`);
 
   tripList.on('update', render);
-  // tripList.on('sort', render);
-  // tripList.on('click', render);
   tripList.fetch();
+
+  trip.on('click', renderDetails);
+  trip.fetch();
 
   TRIP_FIELDS.forEach((field) => {
     const headerElement = $(`th.sort.${ field }`);
@@ -47,43 +68,41 @@ $(document).ready( () => {
   });
 });
 
-// $('#trip-list').on('click', 'a', function(event) {
-//   let id = $(this).find('.trip-item td[id^=trip]').attr("class");
-//   console.log(id);
-// });
-
-// $('.trip-item td[id^=trip]').on('click', function(event) {
-//   let id = $(this).attr("class");
-//   id = id.slice(8);
-//   id = parseInt(id);
-//   let reserve_url = `https://ada-backtrek-api.herokuapp.com/trips/${id}`;
-//
-//   // tripList.url = reserve_url
-//   console.log(reserve_url);
-//   // tripList.fetch();
-// });
-
 $('tbody#trip-list').on('click', 'a', function() {
   let tripID = $(this).attr('data-id');
-  loadTrip(tripID);
+  trip = tripList.get(tripID);
+  console.log(trip);
+  console.log(trip.attributes);
+  trip.on('click', renderDetails(trip));
+  // trip.fetch();
 });
 
-let loadTrip = function loadTrip(id) {
-
-  let url = `https://ada-backtrek-api.herokuapp.com/trips/${id}`
-  $.get(`${url}`, function(data) {
-    data.category = data.category.charAt(0).toUpperCase() + data.category.slice(1);
-    data.cost = parseFloat(Math.round(data.cost * 100) / 100).toFixed(2);
-
-    const tripDiv = $('#trip-details');
-    tripDiv.html('');
-
-    console.log(url);
-    console.log(tripDetails);
-    console.log(tripDetails.attributes);
-
-    const generatedHtml = tripDetails(attributes);
-    tripDiv.append(generatedHtml);
-
-  });
-};
+// $('tbody#trip-list').on('click', 'a', function() {
+//   // where you will go
+//   const tripDiv = $('#trip-details');
+//   tripDiv.html('');
+//
+//   // who are you
+//   let tripID = $(this).attr('data-id');
+//   let thisTrip = new Trip({ id: `${tripID}` });
+//   thisTrip.fetch();
+//   // console.log(thisTrip);
+//   // let tripInf = trip.fetch(tripID);
+//   // console.log(tripList.models);
+//   // let thisTrip = Trip.where({ id: `${tripID}` });
+//   // console.log(thisTrip);
+//   // let tripInf = tripList.where({ id: `${tripID}` });
+//
+//   // console.log(tripID);
+//   // console.log(tripInf);
+//   console.log(thisTrip);
+//   console.log(thisTrip.attributes);
+//   // console.log(thisTrip.attributes.get('name'));
+//   console.log(thisTrip.attributes.name);
+//   console.log(thisTrip.attributes['continent']);
+//
+//   // append that
+//   const generatedHtml = $(tripDetails(thisTrip.attributes));
+//   // const generatedHtml = tripDetails(thisTrip.attributes);
+//   tripDiv.append(generatedHtml);
+// });
