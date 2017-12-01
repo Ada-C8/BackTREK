@@ -17,6 +17,8 @@ let tripsTemplate;
 
 const renderTrips = function renderTrips(tripList) {
   console.log('it loaded!');
+  $('#load-trips').hide();
+  $('#add-new-trip').show();
   tripsTemplate = _.template($('#trips-template').html());
   //get the element to append to
   const tripListTable = $('#trips-list');
@@ -48,6 +50,7 @@ $(document).ready( () => {
   $('#reservation-form-container').hide();
   $('#add-a-trip-form-container').hide();
   $('#trips-table-container').hide();
+  $('#add-new-trip').hide();
   $('.clear').hide();
 
   $('#load-trips').on('click', function(){
@@ -61,6 +64,14 @@ $(document).ready( () => {
     renderSingleTrip(tripID);
     $('#reservation-form-container').show();
   });
+
+  //show form to Add a Trip
+  $('#add-new-trip').on('click', function() {
+    $('#add-a-trip-form-container').show();
+  });
+
+  //submit form to Add a Trip
+  //creates a new instance of the Trip model
 
   tripList.on('update', renderTrips, tripList);
 
