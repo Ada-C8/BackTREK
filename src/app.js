@@ -96,6 +96,18 @@ $(document).ready(() => {
       success: (model) => {
         const generatedHTML = $(aboutTemplate(model.attributes));
         aboutElement.html(generatedHTML);
+
+        // RENDER 'RESERVATION' FORM TO DOM
+        $('#new-reservation-btn').on('click', function() {
+          const newReservationElement = $('#new-reservation');
+          newReservationElement.html('');
+          const generatedHTML = $(newReservationTemplate());
+          newReservationElement.html(generatedHTML);
+
+          console.log('clicked');
+          console.log('load new reservation form: success');
+        });
+
       },
       error: (model) => {
         console.log('singleTrip fetch: failure');
@@ -103,6 +115,16 @@ $(document).ready(() => {
       },
     });
   })
+
+  // RENDER 'RESERVATION' FORM TO DOM
+  $('#new-reservation-btn').on('click', function() {
+    const newReservationElement = $('#new-reservation');
+    newReservationElement.html('');
+    const generatedHTML = $(newReservationTemplate());
+    newReservationElement.html(generatedHTML);
+
+    console.log('make reservation btn: clicked');
+  });
 
   // RENDER 'ADD NEW' FORM TO DOM
   $('#trip-create-new-btn').on('click', function() {

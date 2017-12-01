@@ -18,8 +18,8 @@
 <!-- /ADD TRIP -->
 
 <!-- SINGLE TRIP #trip-about -->
-    <section id="trip-about" class="columns large-8 small-12">
-    </section>
+    <article id="trip-about" class="columns large-8 small-12">
+    </article>
 <!-- /SINGLE TRIP -->
 
 <!-- TRIP LIST #trip-list -->
@@ -47,6 +47,9 @@
   <script type="text/template" id="trip-template">
     <h2><%- name %></h2>
     <p><%- about %></p>
+    <button id="new-reservation-btn" class="button secondary hollow">Reserve This Trip</button>
+    <section id="new-reservation"></section>
+
   </script>
 <!-- /SINGLE TRIP TEMPLATE -->
 
