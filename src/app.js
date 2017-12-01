@@ -150,7 +150,7 @@ const events = {
   if (classes.includes('current-sort-field')) {
     $(this).removeClass('current-sort-field');
     tripList.set(tripList.models.reverse());
-    render(tripList);
+    renderTrips(tripList);
 
   } else {
     $('.current-sort-field').removeClass('current-sort-field');
