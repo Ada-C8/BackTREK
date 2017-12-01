@@ -15,6 +15,13 @@ const tripFields = ['name', 'continent', 'about', 'category', 'weeks', 'cost'];
 const reservationFields = ['name', 'age', 'email'];
 
 const events = {
+  sortTrips(event){
+    console.log('Tried to sort!');
+    $('.sort').removeClass('current-sort-field');
+    $(this).addClass('current-sort-field');
+    const classes = $(this).attr('class').split(/\s+/);
+    console.log(classes);
+  },
   fetchTrip() {
     const trip = tripList.get($(this).data('id'));
     trip.fetch({
@@ -146,6 +153,7 @@ $(document).ready( () => {
 
   // render template for all trips
   tripList.on('update', render, tripList);
+  tripList.on('sort', render);
   tripList.fetch();
 
   // render template for trip details (on click)
@@ -155,7 +163,10 @@ $(document).ready( () => {
   $('#create-trip-btn').click(events.showModal);
   $('.close').click(events.hideModal);
 
-  //submit forms
+  // submit forms
   $('#create-trip-form').submit(events.addTrip);
   $(document).on('submit', '#create-reservation-form', events.addReservation);
+
+  // sort trips
+  $('.sort').click(events.sortTrips);
 });
