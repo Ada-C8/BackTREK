@@ -80,23 +80,6 @@ const events = {
     // $('#status-messages').show()
     trip.destroy();
   },
-
-  reserveSpot: function(event) {
-    console.log("I want to reserve a trip");
-    event.preventDefault();
-    const reservationData = {}
-      fields.forEach((field) => {
-        const val = $(`input[name=${field}]`).val();
-        if (val != '') {
-          reservationData[field] = val;
-        }
-      });
-
-      //need a new model, reservation.
-      const reservation = new Reservation(reservationData)
-      reservation.save()
-      console.log(reservation);
-    }
 }
 
 $(document).ready( () => {
@@ -120,9 +103,31 @@ $(document).ready( () => {
 
 
     $('#bookingForm form').remove('action') // takes off any previously appended action links
-    $('#bookingForm form').attr('action', `https://ada-backtrek-api.herokuapp.com/trips/${trip.id}/reservations`) //appends a new one.
+    $('#bookingForm form').attr('action', `https://ada-backtrek-api.herokuapp.com/trips/${trip.id}/reservations`)
+
     $('#bookingForm').show(); //shows the form.
   });
+
+  const $bookingForm = $('#bookingForm form')
+  $bookingForm.submit(function(event){
+    event.preventDefault()
+    const formData = $(this).serialize();
+
+    $.post($bookingForm.attr('action'), formData, (response)=>{
+      $('#trips').html(`Booked your trip!`)
+      console.log("BOOKED IT!")
+
+    }).fail(() => {
+      $('#trips').html('<p>Booking Trip Failed</p>')
+    }).always(()=> {
+
+    })
+  });
+
+
+
+    // events.reserveSpot()
+
 
   // $('#bookingForm').submit(events.reserveSpot(this.get('id')));
   $('#new-trip').on('focus', function(){
@@ -131,4 +136,5 @@ $(document).ready( () => {
 
   // $('#newTripForm').submit(events.addTrip);
   $('#newTripForm').on('click', 'button', events.addTrip);
+
 });
