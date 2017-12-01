@@ -32,6 +32,7 @@ const fetchTrips = function fetchTrips() {
 
 const syncReferenceList = function syncReferenceList() {
   referenceList.add(tripList.models);
+  $(referenceList).trigger('update');
 }
 
 const renderTrips = function renderTrips(list) {
