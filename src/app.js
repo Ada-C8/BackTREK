@@ -24,7 +24,9 @@ const render = function render(tripList) {
 };
 
 const fields = ['Name', 'continent', 'about', 'category', 'weeks', 'cost'];
+// const continents = ['Africa', 'Antarctica', 'Asia', 'Australasia', 'Europe', 'South America', 'North America', 'Null'];
 
+// ------------- Status Messages --------------
 const updateStatusMessageFrom = (messageHash) => {
   $('#status-messages ul').empty();
   for(let messageType in messageHash) {
@@ -42,6 +44,7 @@ const updateStatusMessageWith = (message) => {
 }
 
 const events = {
+  // ------------- Add a new Trip --------------
   addTrip(event) {
     event.preventDefault();
     const tripData = {};
@@ -75,21 +78,36 @@ const events = {
     updateStatusMessageFrom(response.responseJSON.errors);
     trip.destroy();
   },
+  sortTrips(event) {
+    $('.current-sort-field').removeClass('current-sort-field');
+    $(this).addClass('current-sort-field');
+
+    const classes = $(this).attr('class').split(/\s+/);
+
+    classes.forEach((className) => {
+      if (fields.includes(className)) {
+        // if (className === tripList.comparator) {
+        //   tripList.models.reverse();
+        //   tripList.trigger('sort', tripList);
+        // }
+        // else {
+          tripList.comparator = className;
+          tripList.sort();
+          // Leading white space issue
+          // Order of the if else
+        // }
+      }
+    });
+  },
 }
-
-// const continents = ['Africa', 'Antarctica', 'Asia', 'Australasia', 'Europe', 'South America', 'North America', 'Null'];
-
-// ------------- Reserve a Trip --------------
-
-
-// ------------- Add a new Trip --------------
-
 
 // ----------- All trips / Details ------------
 $(document).ready( () => {
   tripTemplate = _.template($('#trip-template').html());
   tripDetails = _.template($('#trip-details-template').html());
   $('.add-trip-form').submit(events.addTrip);
+  $('.sort').click(events.sortTrips);
+  tripList.on('sort', render, tripList);
 
   $('#trip-list').hide();
   tripList.on('update', render, tripList);
@@ -107,7 +125,6 @@ $(document).ready( () => {
     $(`#${id}`).css('background','pink');
 
     $.get(url, function(response) {
-      // const id = response.id;
       $(`#trip-details`).html(tripDetails(response));
     });
   });
@@ -126,6 +143,7 @@ $(document).ready( () => {
     }
   });
 
+  // ------------- Reserve a Trip --------------
   $('body').on('submit', '.book-trip', function form(e) {
     e.preventDefault();
     const url = $(this).attr('action');
