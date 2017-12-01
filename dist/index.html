@@ -46,6 +46,27 @@
 
       <!-- ALL TRIPS SECTION -->
       <section class="large-6 small-12 columns">
+        <!-- SORTING AND FILTERING SECTION -->
+        <section>
+          <form id="filter-form" class="row">
+            <label for="trip-fields" class="large-6 small-12 columns">
+              Field:
+              <select id="trip-fields" name="trip-fields">
+                <option value="name">Trip Name</option>
+                <option value="continent">Continent</option>
+                <option value="category">Category</option>
+                <option value="weeks">Weeks</option>
+                <option value="cost">Cost</option>
+              </select>
+            </label>
+
+            <label for="trip-query" class="large-6 small-12 columns">
+              Query:
+              <input id="trip-query" type="text" placeholder="Type query here!">
+            </label>
+          </form>
+        </section>
+
         <h1>View All Trips</h1>
         <table>
           <thead>
