@@ -1,6 +1,7 @@
 // Vendor Modules
 import $ from 'jquery';
 import _ from 'underscore';
+import 'jquery-modal';
 
 // CSS
 import './css/foundation.css';
@@ -22,7 +23,7 @@ const $resForm = $('#reservation-form');
 let tripTemplate;
 let tripDetailsTemplate;
 
-const tripList = new TripList();
+let tripList = new TripList();
 
 const fields = ['name', 'category', 'continent', 'weeks', 'cost', 'about', 'tripID'];
 
@@ -128,6 +129,23 @@ const events = {
         }
       }
     });
+  },
+  filterTrips(event) {
+    event.preventDefault();
+
+    const $tripQuery = $('#trip-query option:selected');
+    const query = $tripQuery.val();
+    console.log(query);
+    const $queryValue = $('#query-value');
+    const queryValue = $queryValue.val();
+    console.log($queryValue.val());
+
+    console.log(tripList);
+
+    const filteredTrips = tripList.filter(trip => trip.get(query) === queryValue);
+
+    console.log(filteredTrips);
+    render(filteredTrips);
   }
 }
 
@@ -189,10 +207,12 @@ $(document).ready( () => {
     }
   });
 
-  // Data Events
+  $('#trip-query').on('change', events.filterTrips);
+
+  // Backbone Events
   tripList.on('update', render, tripList);
   tripList.on('sort', render, tripList);
 
   // Implement when page loads
-  tripList.fetch();
+  tripList.fetch()
 });

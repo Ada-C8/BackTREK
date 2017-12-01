@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <title>Aventura</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 </head>
 <body>
   <header>
@@ -36,19 +37,20 @@
         <label for="about">About</label>
         <input type="text" name="about" required></input>
 
-        <input type="submit" value="Submit Trip!" class="button"></input>
+        <input type="submit" value="Submit Trip!" class="button">Click Me!</input>
       </form>
     </section>
     <section class="column small-12 large-6">
-      <form id="filter">
-        <input list="filter-fields" />
-        <datalist id="filter-fields">
+      <form id="filter-form">
+        <select id="trip-query" name="field">
           <option value="name">Name</option>
           <option value="category">Category</option>
           <option value="continent">Continent</option>
           <option value="weeks">Weeks</option>
           <option value="cost">Cost</option>
-        </datalist>
+        </select>
+        <input id="query-value" type="text" name="filter-req"></input>
+        <!-- <input type="submit" /> -->
       </form>
       <table>
         <thead>
@@ -76,7 +78,6 @@
         <input type="email" name="res-email" id="res-email"/>
 
         <input id="submit-res" type="submit" value="Make Reservation!" class="button" />
-
       </form>
     </section>
   </main>

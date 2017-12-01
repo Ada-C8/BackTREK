@@ -13,3 +13,7 @@
 #add-trip-form {
   display: none;
 }
+
+body {
+  background: pink;
+}
