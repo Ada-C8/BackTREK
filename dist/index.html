@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <title>backTREK</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- <link rel="stylesheet" href="tingle.min.css"> -->
 </head>
 <body>
   <header class = "columns small-12">
@@ -24,8 +25,7 @@
       </ul>
     </section>
     <section class="columns large-7 small-12" id = "all-trips">
-      <!-- <h2>All Trips</h2>
-
+      <h2>All Trips</h2>
         <table>
           <thead>
             <th class="sort id">ID</th>
@@ -37,7 +37,7 @@
           </thead>
           <tbody id="trip-list">
           </tbody>
-        </table> -->
+        </table>
     </section>
     <section class= "columns small-12 large-5" id = "trip-details">
 
@@ -47,6 +47,7 @@
 
   </footer>
   <script src="app.bundle.js" type="text/javascript"></script>
+  <!-- <script src="tingle.min.js"></script> -->
   <script type= "text/template" id = "trip-template">
     <tr class="trip" id= <%- id %> >
         <td>
@@ -96,5 +97,6 @@
       Make Reservation
     </button>
   </script>
+
 </body>
 </html>

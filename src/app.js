@@ -11,6 +11,27 @@ import TripList from './app/collections/trip_list';
 
 console.log('it loaded!');
 
+// var modal = new tingle.modal({
+//     footer: true,
+//     stickyFooter: false,
+//     closeMethods: ['overlay', 'button', 'escape'],
+//     closeLabel: "Close",
+//     cssClass: ['custom-class-1', 'custom-class-2'],
+//     onOpen: function() {
+//         console.log('modal open');
+//     },
+//     onClose: function() {
+//         console.log('modal closed');
+//     },
+//     beforeClose: function() {
+//         // here's goes some logic
+//         // e.g. save content before closing the modal
+//         return true; // close the modal
+//     	return false; // nothing happens
+//     }
+// });
+
+
 const tripList = new TripList();
 // let tripTemplate;
 
@@ -40,40 +61,35 @@ const formFields = ['name', 'continent', 'category', 'cost', 'about', 'weeks', '
 
 const events = {
   allTrips(event) {
-    $('#all-trips').empty();
-    const tripsTable = `<h2>All Trips</h2>
-      <table>
-        <thead>
-          <th class="sort id">ID</th>
-          <th class="sort name">name</th>
-          <th class="sort continent">Continent</th>
-          <th class="sort category">Category</th>
-          <th class="sort weeks">Weeks</th>
-          <th class="sort cost">Cost</th>
-        </thead>
-        <tbody id="trip-list">
-        </tbody>
-      </table>`;
-    $('#all-trips').append(tripsTable);
+    // $('#all-trips').empty();
+    // const tripsTable = `<h2>All Trips</h2>
+    //   <table>
+    //     <thead>
+    //       <th class="sort id">ID</th>
+    //       <th class="sort name">name</th>
+    //       <th class="sort continent">Continent</th>
+    //       <th class="sort category">Category</th>
+    //       <th class="sort weeks">Weeks</th>
+    //       <th class="sort cost">Cost</th>
+    //     </thead>
+    //     <tbody id="trip-list">
+    //     </tbody>
+    //   </table>`;
+    // $('#all-trips').append(tripsTable);
     render(tripList);
+    $('#all-trips').toggle();
+    console.log('showing all trips');
   },
   sortTrips(event) {
-    console.log('sorting');
     $('.current-sort-field').removeClass('current-sort-field');
     $(this).addClass('current-sort-field');
     const classes = $(this).attr('class').split(/\s+/);
-    // tripList.comparator = classes[1];
-    console.log(this);
-    console.log(classes);
-    // console.log(tripList.comparator);
     classes.forEach((className) => {
       if (formFields.includes(className)) {
         if (className === tripList.comparator) {
-          console.log('now reversing');
           tripList.models.reverse();
           tripList.trigger(('sort'), tripList);
         } else {
-          console.log('now sorting');
           tripList.comparator = className;
           tripList.sort();
         }
@@ -232,6 +248,7 @@ const render= function render(tripList) {
 };
 let tripTemplate;
 let showTemplate;
+$('#all-trips').hide();
 $(document).ready( () => {
   tripTemplate = _.template($('#trip-template').html());
   tripList.fetch();
@@ -245,5 +262,4 @@ $(document).ready( () => {
   $('#trip-details').on('submit', '#new-trip-form', events.addTrip);
   $('#all-trips').on('click', '.sort', events.sortTrips);
   tripList.on('sort', render, tripList);
-
 });
