@@ -1,6 +1,6 @@
 /* general */
-main {
-  height: 80vh;
+body {
+  height: 99vh;
 }
 
 .row {
@@ -17,6 +17,40 @@ main {
 
 .clear {
   clear: both;
+}
+
+table.tableSection {
+  display: table;
+  width: 100%;
+}
+
+/*thead, tbody {
+  width: 100%;
+}*/
+
+thead {
+  overflow-y: scroll;
+  display: table;
+  table-layout: fixed;
+  /*width: calc(100% - 16px);*/
+  /* assuming scrollbar width as 16px */
+}
+
+tbody {
+  overflow: auto;
+  height: 100vh;
+  display: block;
+}
+
+tr {
+  width: 100%;
+  text-align: left;
+  display: table;
+  table-layout: fixed;
+}
+
+td {
+  overflow-x: scroll;
 }
 
 #status-messages {
