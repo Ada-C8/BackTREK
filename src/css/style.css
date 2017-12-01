@@ -34,3 +34,14 @@ table, th, td {
   background-color: red;
   color: white;
 }
+
+#searchBar {
+}
+
+#filterSelector {
+  background-position: right -0.5rem center;
+}
+
+#filterForm {
+
+}

@@ -24,12 +24,20 @@ const reservationFields = ['name', 'age', 'email'];
 const newTripFields = ['name', 'continent', 'about', 'category', 'weeks', 'cost']
 
 const render = function render(tripList) {
-
-  // Get the element to append to
   const $tripList = $('#trip-list');
   $tripList.empty();
 
   tripList.forEach((trip) => {
+    $tripList.append(tripTemplate(trip.attributes));
+  });
+};
+
+const renderFiltered = function render(filteredTrips) {
+  console.log('INSIDE renderFiltered');
+  const $tripList = $('#trip-list');
+  $tripList.empty();
+
+  filteredTrips.forEach((trip) => {
     $tripList.append(tripTemplate(trip.attributes));
   });
 };
@@ -151,6 +159,27 @@ const events = {
     $('.current-sort-field').removeClass('current-sort-field');
     $(this).addClass('current-sort-field');
   },
+  filterTrips(event) {
+    console.log("IN FILTER TRIP FUNCTION")
+    const e = document.getElementById('filterSelector');
+    const searchCategory = e.options[e.selectedIndex].text;
+    console.log(searchCategory);
+    const searchTerm = document.getElementById('searchBar').value;
+    let filteredTrips = tripList;
+    const wordSearches = ['name', 'category', 'continent'];
+    const numericSearches = ['weeks', 'cost'];
+    if (wordSearches.includes(searchCategory.toLowerCase())) {
+      filteredTrips = tripList.filter(trip => trip.get(searchCategory.toLowerCase()).includes(searchTerm)
+    )
+    console.log(filteredTrips);
+    return filteredTrips;
+  } else if (numericSearches.includes(searchCategory.toLowerCase())) {
+    filteredTrips = tripList.filter(trip => trip.get(searchCategory.toLowerCase()) <= (searchTerm));
+    console.log(filteredTrips);
+    return filteredTrips;
+  }
+  console.log(filteredTrips);
+},
 };
 
 $('#all_trips_section').hide();
@@ -176,5 +205,7 @@ $(document).ready( () => {
   $('.sort').click(events.sortTrips);
   tripList.on('sort', render, tripList);
 
+  $('#searchBar').on('change keyup', renderFiltered, events.filterTrips)
+  // tripList.on('filterTrips', render, tripList);
 
 });
