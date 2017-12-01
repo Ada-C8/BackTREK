@@ -14,6 +14,7 @@ import Reservation from './app/models/reservation';
 let tripTemplate;
 let tripDetailTemplate;
 let reserveModalTemplate;
+let addTripModalTemplate;
 
 const tripList = new TripList();
 
@@ -47,6 +48,15 @@ const show = function show(e) {
       });
     }
   }
+};
+
+const addTripModal = function addTripModal() {
+  $('body').append(addTripModalTemplate());
+};
+
+const submitTrip = function submitTrip(e) {
+  e.preventDefault();
+  console.log(e);
 };
 
 const reserveModal = function reserveModal(e) {
@@ -134,14 +144,20 @@ $(document).ready( () => {
   tripTemplate = _.template($('#trip-template').html());
   tripDetailTemplate = _.template($('#trip-detail-template').html());
   reserveModalTemplate = _.template($('#reserve-modal-template').html());
+  addTripModalTemplate = _.template($('#add-trip-modal-template').html());
 
   tripList.on('update', render);
 
   $('#intro-button').on('click', (e) => {
-    $('#intro-button').hide();
+    $('#intro-button').hide(200);
     tripList.fetch();
-    $('#trip-list').show();
+    $('#trip-list').show(500);
   });
 
+  $('#add-trip').on('click', addTripModal);
+
   $('body').on('click', '.modal-close', clearModal);
+
+  // $(document).on('submit', '#add-trip-form', submitTrip;
+  $(document).on('submit', '#add-trip-form', submitTrip);
 });

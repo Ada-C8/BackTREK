@@ -10,7 +10,7 @@
     <div class="row">
 
       <h1>backTREK</h1>
-      <a class="button add-trip">+</a>
+      <a id="add-trip" class="button add-trip">+</a>
     </div>
     <form id="trip-search">
       <div class="form-holder category-holder small-12 medium-3 columns">
@@ -36,7 +36,7 @@
     <section id="intro-button">
       <a class="button intro-button small-10 medium-5 columns" id="show-trips">Show Trips</a>
     </section>
-    <section id="trip-list" class="trip-list">
+    <section id="trip-list" class="trip-list" style="display: none;">
       <ul>
         <li class="headers">
           <h4 class="name-col">Name</h4>
@@ -86,7 +86,7 @@
   <script id="reserve-modal-template" type="text/template">
     <section id="reserve-modal" class="reserve modal">
       <div class="modal-shadow modal-close" id="modal-shadow">
-        <div id="reservation-modal" class="modal-body small-11 medium-7 large-4 columns">
+        <div class="modal-body small-11 medium-7 large-4 columns">
           <a class="modal-close close-btn">X</a>
           <h2>Make a Reservation</h2>
           <form id="reservation-form" class="<%- id %>">
@@ -107,6 +107,44 @@
       </div>
     </section>
   </script>
+
+  <script id="add-trip-modal-template" type="text/template">
+    <section id="add-trip-modal" class="add-trip-modal modal">
+      <div class="modal-shadow modal-close" id="modal-shadow">
+        <div class="modal-body small-11 medium-7 large-4 columns">
+          <a class="modal-close close-btn">X</a>
+          <h2>Create A Trip</h2>
+          <form id="add-trip-form">
+            <span class="form-messages"></span>
+            <div id="trip-name" class="add-trip-form-holder small-12 columns">
+              <label for="name">Name:</label>
+              <input type="text" name="name" />
+            </div>
+            <div id="trip-continent" class="add-trip-form-holder small-12 columns">
+              <label for="continent">Continent:</label>
+              <input type="text" name="continent" />
+            </div>
+            <div id="trip-category" class="add-trip-form-holder small-12 columns">
+              <label for="category">Category:</label>
+              <input type="text" name="category" />
+            </div>
+            <div id="trip-weeks" class="add-trip-form-holder small-12 columns">
+              <label for="weeks">Duration (week):</label>
+              <input type="text" name="weeks" />
+            </div>
+            <div id="trip-cost" class="add-trip-form-holder small-12 columns">
+              <label for="cost">Cost:</label>
+              <input type="text" name="cost" />
+            </div>
+            <div class="add-trip-form-holder small-12 columns">
+              <input type="submit" class="button" />
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </script>
+
   <script src="app.bundle.js" type="text/javascript"></script>
 </body>
 </html>
