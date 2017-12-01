@@ -41,22 +41,15 @@ const renderDetails = function renderDetails(trip){
 // Add a new status message
 const reportStatus = function reportStatus(status, field, problem) {
   console.log('in reportStatus function');
-  console.log(`Reporting ${ status } status: |${ field }| problem ${problem}`);
-
-  let errors = {'problem': problem };
-  // console.log(errors);
+  console.log(`Reporting ${ status } status: ${ field } problem: ${problem}`);
   const errorSpanElement = $(`#form-${field}`)
   errorSpanElement.html('');
-  console.log(errorSpanElement);
-  const generatedHTML = $(statusTemplate(errors));
-  console.log(generatedHTML);
+  const generatedHTML = $(statusTemplate({'problem': problem }));
   errorSpanElement.append(generatedHTML);
-  // // Should probably use an Underscore template here.
-  // const statusHTML = `<li class="${ status }">${ message }</li>`;
-  //
-  // // note the symetry with clearStatus()
-  // $('#status-messages ul').append(statusHTML);
-  // $('#status-messages').show();
+};
+
+const clearFormMessages = function clearFormMessages() {
+  $('#add-trip-form span').html('')
 };
 
 const handleValidationFailures = function handleValidationFailures(errors) {
@@ -79,6 +72,25 @@ const addTripHandler = function(event) {
     return;
   }
 
+  tripList.add(trip);
+
+  trip.save({}, {
+    success: (model, response) => {
+      console.log('Successfully saved Trip!');
+      $('#myModal').hide();
+      // reportStatus('success', 'Successfully saved trip!');
+    },
+    error: (model, response) => {
+      console.log('Failed to save book! Server response:');
+      console.log(response);
+
+      // Server-side validations failed, so remove this bad
+      // book from the list
+      tripList.remove(model);
+      console.log(response.responseJSON["errors"]);
+      handleValidationFailures(response.responseJSON["errors"]);
+    },
+  });
   // console.log();
 };
 
@@ -148,6 +160,7 @@ $(document).ready( () => {
   $('body').on('click', '.modal-close', function(event){
     if($(event.target).hasClass('modal-close')) {
       modal.hide();
+      clearFormMessages();
     }
   });
 });

@@ -3,7 +3,7 @@ import Backbone from 'backbone';
 const Trip = Backbone.Model.extend({
 
   validate(attributes) {
-    const CONTINENTS = ['Africa', 'Antartica', 'Asia', 'Australasia', 'Europe', 'North America', 'South America']
+    const CONTINENTS = ['africa', 'antartica', 'asia', 'australasia', 'europe', 'north america', 'south america']
 
     const errors = {};
 
@@ -11,9 +11,9 @@ const Trip = Backbone.Model.extend({
       errors.title = ['cannot be blank'];
     }
 
-    if (!CONTINENTS.includes(attributes.continent)){
-      errors.continent = ["that isn't a continent"];
-    }
+    // if (!CONTINENTS.includes(attributes.continent.toLowerCase())){
+    //   errors.continent = ["that isn't a continent"];
+    // }
 
     if (!attributes.continent){
       errors.continent = ['cannot be blank'];
@@ -42,7 +42,7 @@ const Trip = Backbone.Model.extend({
     if (attributes.cost <= 0) {
       errors.cost = ['A trips cost must be greater than 0'];
     }
-    
+
     if (Object.keys(errors).length < 1) {
       return false;
     }
