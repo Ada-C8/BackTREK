@@ -65,6 +65,7 @@ const getIndividualTrip = function getIndividualTrip() {
   console.log(details.continent);
   console.log(details.about);
 
+  $('#trip-details').empty();
   $('#trip-details').append(detailTemplate(details));
 };
 
