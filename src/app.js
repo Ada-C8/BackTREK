@@ -14,6 +14,9 @@ console.log('it loaded!');
 
 const tripList = new TripList();
 let tripTemplate;
+let detailTemplate;
+
+const fields = ['name', 'continent', 'about', 'category', 'weeks', 'cost'];
 
 console.log(tripList);
 
@@ -22,13 +25,52 @@ const render = function render(tripList) {
   tripListElement.empty();
 
   tripList.forEach((trip) => {
-    console.log(`Rendering trip ${ trip.get('name') }`);
+    console.log(`Rendering trip ${trip.get('name')}`);
     let tripHTML = tripTemplate(trip.attributes);
     tripListElement.append($(tripHTML));
   });
 };
 
-const fields = ['name', 'continent', 'about', 'category', 'weeks', 'cost'];
+
+// =================================================================
+
+const getIndividualTrip = function getIndividualTrip() {
+  console.log('*****************');
+  console.log(this);
+  console.log('*****************');
+
+  // const tripDetails = $('#trip-list');
+  const id = $(this).attr('id');
+  let trip = tripList.get(id);
+  trip.fetch();
+
+  console.log('*****************');
+  console.log(trip);
+  console.log('*****************');
+  // console.log(trip.attributes);
+  // console.log(detailTemplate(trip.attributes));
+  // $('#trip-details').append(detailTemplate({
+  //   'name': 'n',
+  //   'category': 'c',
+  //   'continent': 'co',
+  //   'weeks': 'w',
+  //   'cost': 'c',
+  //   'about': 'a'
+  // }));
+
+  let details = trip.attributes;
+  // WHHHHAAAAAAATTT
+  details.about = 'fake about';
+  console.log(details.name);
+  console.log(details.continent);
+  console.log(details.about);
+
+  $('#trip-details').append(detailTemplate(details));
+};
+
+// =================================================================
+
+
 
 const events = {
   addTrip(event) {
@@ -49,6 +91,7 @@ const events = {
     })
     this.reset();
   },
+
 
   successfulSave(trip, response) {
     console.log('success!');
@@ -101,15 +144,8 @@ const events = {
   },
 
   showAllTrips() {
-    console.log('*****************');
     $('#trips-section').removeClass('hidden');
     $('#trips-section').addClass('show');
-  },
-
-  showTripDetails() {
-    const id = $(this).attr('id')
-    tripList.fetch(id);
-
   },
 };
 
@@ -117,17 +153,17 @@ const events = {
 $(document).ready( () => {
   // $('main').html('<h1>backTrek!</h1>');
   tripTemplate = _.template($('#trip-template').html());
-
-  $('.sort').click(events.sortTrips);
-  tripList.on('sort', render, tripList);
-
-  $('#add-trip-form').submit(events.addTrip);
-
-// TODO
-  $('.trip-info').click(events.showAllTrips);
+  detailTemplate = _.template($('#detail-template').html());
 
   tripList.on('update', render, tripList);
 
   tripList.fetch();
+
+  $('#trips-table').on('click', 'tr', getIndividualTrip);
+
+  $('#add-trip-form').submit(events.addTrip);
+  $('.trip-info').click(events.showAllTrips);
+  $('.sort').click(events.sortTrips);
+  tripList.on('sort', render, tripList);
 
 });

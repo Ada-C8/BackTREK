@@ -20,8 +20,8 @@
         <ul>
         </ul>
       </section>
-<!-- FORM -->
 
+<!-- FORM -->
       <aside class="columns large-4 small-12">
         <button class="button trip-info">View All Trips</button>
         <h2>Add a Trip</h2>
@@ -51,7 +51,6 @@
       <section id="trips-section" class="columns large-8 small-12 hidden">
         <h2>Trips!</h2>
 
-<!-- TABLE -->
         <table id="trips-table">
           <thead>
             <th class="sort name">Name</th>
@@ -65,10 +64,13 @@
           </tbody>
         </table>
       </section>
+
+      <div id="trip-details"></div>
     </main>
 
-    <script type="text/template" id="trip-template">
-      <tr class="trip">
+<!-- TRIPS TEMPLATE -->
+    <script id="trip-template" type="text/template">
+      <tr id="<%- id %>">
         <td><%- name %></td>
         <td><%- category %></td>
         <td><%- continent %></td>
@@ -76,6 +78,18 @@
         <td><%- cost %></td>
       </tr>
     </script>
+
+<!-- DETAILS TEMPLATE -->
+      <script id="detail-template" type="text/template">
+        <h4><%- name %></h4>
+        <ul>
+          <li>Category: <%- category %></li>
+          <li>Continent: <%- continent %></li>
+          <li>Weeks: <%- weeks %></li>
+          <li>Cost: <%- cost %></li>
+          <li>About: <%- about %></li>
+        </ul>
+      </script>
 
     <footer>backTrek 2017</footer>
 </body>
