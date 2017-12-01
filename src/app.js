@@ -59,62 +59,6 @@ const clearShow = function clearShow() {
 
 // Modals
 
-const saveIfValid = function saveIfValid(object, form) {
-  if (object.isValid()) {
-    object.save({}, {
-      success: (response) => {
-        formSuccess('reservation', form)
-      },
-      error: (status, response) => {
-        const errors = ($.parseJSON(response.responseText))['errors'];
-        printErrors(errors);
-      },
-    });
-  } else {
-    printErrors(object.validationError);
-  }
-};
-
-const printErrors = function printErrors(errors) {
-  for(let field in errors) {
-    let errorElement = $(`#reserve-${field} > label`);
-    errorElement.addClass('has-errors');
-    errorElement.append(`<p class="error">${errors[field]}</p>`);
-  }
-};
-
-const clearErrors = function clearErrors() {
-  $('.has-errors').removeClass('has-errors');
-  $('.error').remove();
-};
-
-const formSuccess = function formSuccess(item, form) {
-  const messageBox = $(form.find('.form-messages'));
-  console.log(messageBox);
-  messageBox.html(`<p class="success">Successfully created ${item}!</p>`);
-  form[0].reset();
-}
-
-const getFormData = function getFormData(target, values) {
-  const formData = {};
-  values.forEach((value) => {
-    let targetElement = target.find(`[name="${ value }"]`);
-    formData[value] = targetElement.val();
-  });
-  return formData;
-};
-
-const clearModal = function clearModal(e) {
-  if ($(e.target).hasClass('modal-close')) {
-    console.log('clearing modals');
-    $('.modal').remove();
-  }
-};
-
-const findElementTripID = function findElementTripID(e) {
-  return $(e.target).closest('li')[0].id;
-};
-
 const addTripModal = function addTripModal() {
   $('body').append(addTripModalTemplate());
 };
@@ -126,6 +70,15 @@ const reserveModal = function reserveModal(e) {
   form.on('submit', submitReservation);
   $('body').append(generatedHTML);
 };
+
+const clearModal = function clearModal(e) {
+  if ($(e.target).hasClass('modal-close')) {
+    console.log('clearing modals');
+    $('.modal').remove();
+  }
+};
+
+// Forms
 
 const submitTrip = function submitTrip(e) {
   e.preventDefault();
@@ -146,6 +99,55 @@ const submitReservation = function submitReservation(e) {
   formData['tripID'] = id;
   const newReservation = new Reservation(formData);
   saveIfValid(newReservation, form);
+};
+
+const getFormData = function getFormData(target, values) {
+  const formData = {};
+  values.forEach((value) => {
+    let targetElement = target.find(`[name="${ value }"]`);
+    formData[value] = targetElement.val();
+  });
+  return formData;
+};
+
+const saveIfValid = function saveIfValid(object, form) {
+  if (object.isValid()) {
+    object.save({}, {
+      success: (response) => {
+        formSuccess('reservation', form)
+      },
+      error: (status, response) => {
+        const errors = ($.parseJSON(response.responseText))['errors'];
+        printErrors(errors);
+      },
+    });
+  } else {
+    printErrors(object.validationError);
+  }
+};
+
+const formSuccess = function formSuccess(item, form) {
+  const messageBox = $(form.find('.form-messages'));
+  console.log(messageBox);
+  messageBox.html(`<p class="success">Successfully created ${item}!</p>`);
+  form[0].reset();
+}
+
+const printErrors = function printErrors(errors) {
+  for(let field in errors) {
+    let errorElement = $(`#reserve-${field} > label`);
+    errorElement.addClass('has-errors');
+    errorElement.append(`<p class="error">${errors[field]}</p>`);
+  }
+};
+
+const clearErrors = function clearErrors() {
+  $('.has-errors').removeClass('has-errors');
+  $('.error').remove();
+};
+
+const findElementTripID = function findElementTripID(e) {
+  return $(e.target).closest('li')[0].id;
 };
 
 $(document).ready( () => {
