@@ -3,6 +3,10 @@ import Backbone from 'backbone';
 const Trip = Backbone.Model.extend({
   urlRoot: 'https://ada-backtrek-api.herokuapp.com/trips',
 
+  initialize: function(attributes) {
+      // console.log(`In initialize: for the book ${ this.get('title') }`);
+    },
+    
   validate(attributes) {
     // Note the argument. We will read attribute values from
     // here instead of calling this.get()

@@ -20,6 +20,8 @@ const tripList = new TripList();
 // // once we know the template is available
 let tripTemplate;
 
+let statusMessagesTemplate;
+
 // Clear status messages
 const clearStatus = function clearStatus() {
   $('#status-messages ul').html('');
@@ -27,16 +29,48 @@ const clearStatus = function clearStatus() {
 };
 
 // Add a new status message
-const reportStatus = function reportStatus(status, message) {
-  console.log(`Reporting ${ status } status: ${ message }`);
 
-  // Should probably use an Underscore template here.
-  const statusHTML = $('#status-messages-template')//NEED TO FIX THIS - this is not correct
+const fields = ['name'];
 
-  // note the symetry with clearStatus()
-  $('#status-messages ul').append(statusHTML);
+const updateStatusMessageFrom = (messageHash) => {
+  $('#status-messages ul').empty();
+  for(let messageType in messageHash) {
+    messageHash[messageType].forEach((message) => {
+      $('#status-messages ul').append($(`<li>${messageType}:  ${message}</li>`));
+      console.log(`<li>${messageType}:  ${message}</li>`);
+    })
+  }
   $('#status-messages').show();
 };
+
+const updateStatusMessageWith = (message) => {
+  $('#status-messages ul').empty();
+  $('#status-messages ul').append(`${message}</li>`);
+  $('#status-messages').show();
+};
+
+//OTHER ATTEMPT
+// const reportStatus = function reportStatus(status, message) {
+//   console.log(`Reporting ${ status } status: ${ message }`);
+//
+//   // Should probably use an Underscore template here.
+//   const statusHTML = statusMessagesTemplate
+//   // const status HTML = $('#status-messages-template')//NEED TO FIX THIS - this is not correct
+//
+//   // note the symetry with clearStatus()
+//   $('#status-messages ul').append(statusHTML);
+//   $('#status-messages').show();
+// };
+//
+// const addTripHandleValidationFailures = function handleValidationFailures(errors) {
+//   // Since these errors come from a Rails server, the strucutre of our
+//   // error handling looks very similar to what we did in Rails.
+//   for (let field in errors) {
+//     for (let problem of errors[field]) {
+//       reportStatus('error', `${field}: ${problem}`);
+//     }
+//   }
+// };
 
 const renderTrips = function renderTrips(tripList) {
 //   iterate through the tripList, generate HTML
@@ -69,15 +103,6 @@ const renderSingleTrip = function renderSingleTrip(trip) {
     console.log("checking this");
 }
 
-const addTripHandleValidationFailures = function handleValidationFailures(errors) {
-  // Since these errors come from a Rails server, the strucutre of our
-  // error handling looks very similar to what we did in Rails.
-  for (let field in errors) {
-    for (let problem of errors[field]) {
-      reportStatus('error', `${field}: ${problem}`);
-    }
-  }
-};
 
 //ADDING A TRIP
 const addTripHandler = function(event) {
@@ -98,21 +123,44 @@ const addTripHandler = function(event) {
 
   const trip = new Trip(tripData);
 
-  if (!trip.isValid()) {
-    addTripHandleValidationFailures(trip.validationError);
-    return;
-  }
+  if (trip.isValid()) {
+      tripList.add(trip);
+      trip.save({}, {
+        success: events.successfullSave,
+        error: events.failedSave,
+      });
+    } else {
+      // getting here means there were client-side validation errors reported
+      // console.log("What's on book in an invalid book?");
+      // console.log(book);
+      updateStatusMessageFrom(trip.validationError);
+    }
 
-  trip.save({}, {
-    success: (model, response) => {
-      console.log('Successfully saved trip!');
-      tripList.add(model);
-    },
-    error: (model, response) => {
-      console.log('Failed to save trip! Server response:');
-      console.log(response);
-    },
-  });
+  let successfullSave = function(trip, response) {
+    updateStatusMessageWith(`${trip.get('name')} added!`)
+  };
+  let failedSave = function(trip, response) {
+    updateStatusMessageFrom(response.responseJSON.errors);
+    trip.destroy();
+  };
+
+
+//OLDER CODE:
+
+  // if (!trip.isValid()) {
+  //   addTripHandleValidationFailures(trip.validationError);
+  //   return;
+  // }
+  // trip.save({}, {
+  //   success: (model, response) => {
+  //     console.log('Successfully saved trip!');
+  //     tripList.add(model);
+  //   },
+  //   error: (model, response) => {
+  //     console.log('Failed to save trip! Server response:');
+  //     console.log(response);
+  //   },
+  // });
 };
 
 //ADDING A Reservation
@@ -155,6 +203,11 @@ const addReservationHandler = function(event) {
 $(document).ready(() => {
 
   // $('#reservation-form').hide()
+
+  // ERROR AND SUCCESS MESSAGES
+  statusMessagesTemplate = _.template($('#status-messages-template').html());
+
+
 
   tripTemplate = _.template($('#trip-template').html());
 
@@ -239,6 +292,9 @@ $(document).ready(() => {
     $('#trip-filter').val("");
   })
 
+  // $('#status-messages').hide().show('slow').html(generatedHTML);
+  //       setTimeout(function(){ $('#status-messages').hide(); }, 10000);
+  // $('#status-messages button.clear').on('click', clearStatus);
 });
 
 
