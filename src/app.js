@@ -46,6 +46,26 @@ const reportStatus = function reportStatus(status, message) {
   $('#status-messages').show();
 };
 
+// TODO: pull out into function so can DRY saving reservation and trip models
+const saveModel = function saveModel(modelToAdd, collection = 'none') {
+  modelToAdd.save({}, {
+    success: (model, response) => {
+      console.log(`Successfully saved!`);
+      if(collection != 'none') {
+        collection.add(model);
+      }
+      reportStatus('success', `Successfully saved!`);
+    },
+    error: (model, response) => {
+      console.log('Failed to save! Server response:');
+      console.log(response);
+      const errors = response.responseJSON["errors"];
+      handleValidationFailures(response.responseJSON["errors"]);
+    },
+  });
+};
+
+
 
 const render = function render(trips) {
 
@@ -83,7 +103,6 @@ const showTrip = function showTrip(id) {
       singleTrip.html(generatedHTML);
       $('#reserve-trip-form').on('submit', function(ev) {
         ev.preventDefault();
-        alert( "Handler for .submit() called." );
         addReservationHandler();
       })
     },
@@ -157,23 +176,7 @@ const addReservationHandler = function(ev) {
   }
   console.log(reservation);
 
-  // TODO: pull out into function so can DRY saving reservation and trip models
-  reservation.save({}, {
-    success: (model, response) => {
-      console.log('Successfully saved reservation!');
-      reportStatus('success', 'Successfully made reservation!');
-      trips.add(model);
-    },
-    error: (model, response) => {
-      console.log('Failed to save reservation! Server response:');
-      console.log(response);
-      const errors = response.responseJSON["errors"];
-      //TODO: tell Diane
-      // print server-side validation failures if client-side validation
-      // somehow misses a server-side validation
-      handleValidationFailures(response.responseJSON["errors"]);
-    },
-  });
+  saveModel(reservation);
 }
 
 const addTripHandler = function(event) {
@@ -204,20 +207,7 @@ const addTripHandler = function(event) {
   // console.log(trip.url)
 
 
-  trip.save({}, {
-    success: (model, response) => {
-      console.log('Successfully saved trip!');
-      reportStatus('success', 'Successfully added trip!');
-      trips.add(model);
-    },
-    error: (model, response) => {
-      console.log('Failed to save trip! Server response:');
-      console.log(response);
-      const errors = response.responseJSON["errors"];
-      handleValidationFailures(response.responseJSON["errors"]);
-
-    },
-  });
+  saveModel(trip, trips);
 };
 
 $(document).ready( () => {
