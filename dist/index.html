@@ -6,70 +6,106 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://fonts.googleapis.com/css?family=Bungee|Zilla+Slab+Highlight|Trirong:400,500i,900" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.1/css/foundation-flex.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+
 </head>
 
 <body id="foundation-override">
   <header class="row">
     <div class="column small-12 home">
-      <section id="get-list"><h1>TREK ON!</h1></section>
-
-      <section id="message"></section>
-    </div>
-  </header>
-  <main class="row">
-    <div id="list-wrapper" class="small-12 column small-order-2 large-order-1">
-      <section id="list" class="scrollbox hide">
-        <table>
-          <thead>
-            <th class="sort name">Name</th>
-            <th class="sort category">Category</th>
-            <th class="sort continent">Continent</th>
-            <th class="sort weeks">Weeks</th>
-            <th class="sort cost">Cost</th>
-          </thead>
-          <tbody id="trip-list">
-            <!--  template goes here -->
-          </tbody>
-        </table>
-
-      </section>
-    </div>
-    <div class="small-12 large-7 column small-order-1 large-order-2">
-      <section id="trip-detail">
-        <section id="details"></section>
-        <section id="reservation-form">
-          <form class="row align-center">
-            <section class="fields column small-12 medium-9">
-              <section class="row align-middle">
-                <label class="column small-2 text-left">Name</label>
-                <input class="column small-10" placeholder="Jamie Doe" type="text" id="name" name="name" required />
-              </section>
-              <section class="row align-middle">
-                <label class="column small-2 text-left">Age</label>
-                <input class="column small-10" placeholder="18" type="number" id="age" name="age" required />
-              </section>
-              <section class="row align-middle">
-                <label class="column small-2 text-left">Email</label>
-                <input class="column small-10" placeholder="jdoe@somewhere.com" type="email" id="email" name="email" required />
-              </section>
-            </section>
-            <section id="form-submit" class="column small-12 text-center">
-              <section class="button">
-                <button id="price" type="submit">Reserve!</button>
-              </section>
-            </section>
-          </form>
+      <section id="get-list">
+        <h1>TREK ON!</h1>
+        <a href="#new-trip-form" rel="modal:open" id="add-trip">Choose Your Adventure!</a>
         </section>
+
+        <section id="message">
+          <ul>
+            <!-- Error Messaging goes here -->
+          </ul>
+        </section>
+      </div>
+    </header>
+    <main class="row">
+      <div id="list-wrapper" class="small-12 column small-order-2 large-order-1">
+        <section id="list" class="scrollbox hide">
+          <table>
+            <thead>
+              <th class="sort name">Name</th>
+              <th class="sort category">Category</th>
+              <th class="sort continent">Continent</th>
+              <th class="sort weeks">Weeks</th>
+              <th class="sort cost">Cost</th>
+            </thead>
+            <tbody id="trip-list">
+              <!--  template goes here -->
+            </tbody>
+          </table>
+
+        </section>
+      </div>
+      <div class="small-12 large-7 column small-order-1 large-order-2">
+        <section id="trip-detail">
+          <section id="details"></section>
+          <section id="reservation-form">
+            <form class="row align-center">
+              <section class="fields column small-12 medium-9">
+                <section class="row align-middle">
+                  <label class="column small-2 text-left">Name</label>
+                  <input class="column small-10" placeholder="Jamie Doe" type="text" id="reserved-for" name="reserved-for" required />
+                </section>
+                <section class="row align-middle">
+                  <label class="column small-2 text-left">Age</label>
+                  <input class="column small-10" placeholder="18" type="number" id="age" name="age" required />
+                </section>
+                <section class="row align-middle">
+                  <label class="column small-2 text-left">Email</label>
+                  <input class="column small-10" placeholder="jdoe@somewhere.com" type="email" id="email" name="email" required />
+                </section>
+              </section>
+              <section id="form-submit" class="column small-12 text-center">
+                <section class="button">
+                  <button id="price" type="submit">Reserve!</button>
+                </section>
+              </section>
+            </form>
+          </section>
+        </section>
+      </div>
+    </main>
+    <footer class="home row align-bottom text-center">
+      <div class="column small-12 text-center">
+        <h6>&copy; Copyright 2017 J. Owens |
+          <a href="https://unsplash.com/photos/HC6Gkb9x4Ro"> photograph by Ezra Jeffrey</a>
+        </h6>
+      </div>
+    </footer>
+
+    <!-- Modals -->
+    <form id="new-trip-form" class="modal">
+      <section id="modal-message">
+        <ul>
+          <!-- Modal Messages go here -->
+        </ul>
       </section>
-    </div>
-  </main>
-  <footer class="home row align-bottom text-center">
-    <div class="column small-12 text-center">
-      <h6>&copy; Copyright 2017 J. Owens |
-        <a href="https://unsplash.com/photos/HC6Gkb9x4Ro"> photograph by Ezra Jeffrey</a>
-      </h6>
-    </div>
-  </footer>
+      <section class="fields">
+        <label>Name</label>
+        <input placeholder="Your Next Great Adventure" type="text" id="name" name="name" required />
+        <label>Category</label>
+        <input placeholder="Adventure" type="text" id="category" name="category" required />
+        <label>Continent</label>
+        <input placeholder="Antartica" type="text" id="continent" name="continent" required />
+        <label>Weeks</label>
+        <input placeholder="3" type="number" id="weeks" name="weeks" required />
+        <label>Cost</label>
+        <input placeholder="850.00" type="number" id="cost" name="cost" required />
+        <label>About</label>
+        <input placeholder="Enter a short description here." type="text" id="about" name="about" />
+      </section>
+      <section id="form-submit">
+        <button type="submit">Choose Your Adventure!</button>
+      </section>
+    </form>
+  <!-- END Modals -->
 
   <!-- _Underscore Templates -->
   <script type="text/template" id="trip-list-template">
@@ -93,7 +129,7 @@
   <script type="text/template" id="trip-detail-template">
     <h3><%- attributes.name %></h3>
     <h4><%- attributes.weeks %> <%- sPluralize('week', attributes.weeks) %> | <%- attributes.continent %> | <%- capitalize(attributes.category) %></h4>
-    <div id="about"><%- changed.about %></div>
+    <div id="about"><%- attributes.about %></div>
   </script>
   <!-- END _Underscore Templates -->
 

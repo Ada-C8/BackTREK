@@ -1,6 +1,7 @@
 // Vendor Modules
 import $ from 'jquery';
 import _ from 'underscore';
+import 'jquery-modal';
 
 // CSS
 import './css/foundation.css';
@@ -26,27 +27,68 @@ const render = function render(list) {
   });
 };
 
+// API Fields
+const fields = ['name', 'category', 'continent', 'weeks', 'about', 'cost'];
+
 const events = {
   // Display Details of Trip
   displayDetails() {
     const id = $(this)[0].id;
-    const trip = tripList.get(id);
+    const trip = new Trip({id: id});
     $('#list-wrapper').addClass('large-5');
     $('#reservation-form').show();
     $('#details').css('padding', '20px');
-    trip.fetch().done(() => {
+    trip.fetch({}).done(() => {
       $('#details').html(tripTemplate(trip));
+      $('#price').html(`$${trip.attributes.cost.toFixed(2)} - Reserve!`);
     });
     $('#reservation-form').children('form').attr('id', id);
-    $('#price').html(`$${trip.attributes.cost.toFixed(2)} - Reserve!`);
+  },
+  addTrip(event) {
+    event.preventDefault();
+    const tripData = {};
+    fields.forEach((field) => { //get values from form
+      const val = $(`input[name=${field}]`).val();
+      if (val != '') {
+        tripData[field] = val;
+      }
+      console.log(`field: ${field}, value: ${val}`);
+    });
+    const trip = new Trip(tripData);
+    console.log(tripData);
+    trip.save({}, {
+      success: events.successfulSave,
+      error: events.failedSave,
+    });
+    tripList.fetch();
+  },
+  successfulSave(trip, response) {
+    $('#message ul').empty();
+    $('#message ul').append(`<li>${trip.get('name')} added!</li>`);
+    $('#message').addClass('success').show();
+    $.modal.close();
+  },
+  failedSave(trip, response) {
+    $('#modal-message ul').empty();
+    console.log(response);
+    console.log(trip);
+    for (let key in response.responseJSON.errors) {
+      response.responseJSON.errors[key].forEach((error) => {
+        $('#modal-message ul').append(`<li>${key}: ${error}</li>`);
+      });
+    }
+    $('#modal-message').addClass('failure').show();
+    trip.destroy();
   }
 }
 
 $(document).ready( () => {
   // PREP
   $('#reservation-form').hide();
+  // $('#new-trip').hide();
   tripListTemplate = _.template($('#trip-list-template').html());
   tripTemplate = _.template($('#trip-detail-template').html());
+
   // BASICS
   $('#get-list').click(() => {
     $('.home').removeClass('home');
@@ -56,6 +98,11 @@ $(document).ready( () => {
   $('#list').on('click', 'tr', events.displayDetails);
   tripList.on('update', render, tripList);
   tripList.fetch();
+
+  //NEW Trip
+  // $('#add-trip').click(() => $('#new-trip').show());
+  $('#new-trip-form').submit(events.addTrip);
+
 });
 
 // $(document).ready(() => {
