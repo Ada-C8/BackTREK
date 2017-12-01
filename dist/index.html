@@ -10,6 +10,10 @@
     <h2>TREK</h2>
   </header>
   <main>
+<!-- MESSAGE -->
+  <span id="confirmation-msg"></span>
+<!-- MESSAGE -->
+
 <!-- ADD TRIP #trip-create-new -->
     <button id="trip-create-new-btn" class="button secondary hollow">Create New Trip</button>
     <aside id="trip-create-new" class="columns large-4 small-12">
@@ -26,7 +30,7 @@
     <section class="columns large-8 small-12">
       <table>
         <thead>
-          <th class="sort name">Name</th>
+          <th class="sort name" id="trip-name">Name</th>
           <th class="sort continent">Continent</th>
           <th class="sort category">Category</th>
           <th class="sort weeks">Weeks</th>
@@ -101,11 +105,11 @@
   <script type="text/template" id="new-reservation-template">
     <h2>Make Reservation</h2>
     <form id="reservation-form">
-      <label for="name">Name</label>
+      <label for="name"id="reservation-name">Name</label>
       <input type="text" name="name"></input>
-      <label for="age">Age</label>
+      <label for="age" id="reservation-age">Age</label>
       <input type="number" name="age"></input>
-      <label for="email">Email</label>
+      <label for="email" id="reservation-email">Email</label>
       <input type="text" name="email"></input>
 
       <input type="submit" value="Make Reservation" class="button"></input>
