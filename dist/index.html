@@ -12,13 +12,25 @@
     <div class="logo">Trek</div>
     <div id="view-all-trips">View All Trips</div>
     <div id="make-a-trip">Create a Trip</div>
-    <form id="filter-form">
-      <input type="text" id="myInput" placeholder="Search trips..">
-      <input type="submit" value="Create your trip!" class="button"></input>
-    </form>
+
 
   </header>
 
+  <div id="all-trips">
+    <form id="filter-form">
+      <span>
+        <select id="filter-query" name="filter-query">
+          <option value="Name">Name</option>
+          <option value="Category">Category</option>
+          <option value="Continent">Continent</option>
+          <option value="Weeks">Weeks</option>
+          <option value="Cost">Cost</option>
+        </select>
+      </span>
+
+      <input type="text" id="myInput" placeholder="Search trips..">
+      <input type="submit" value="Find your trip!" class="button"></input>
+    </form>
   <table id="trips-table">
     <thead>
       <th class="sort name">Title </th>
@@ -28,6 +40,8 @@
     <tbody id="trip-list">
     </tbody>
   </table>
+</div>
+
 
   <form id="new-trip-form">
     <span>

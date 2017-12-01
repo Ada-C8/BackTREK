@@ -17,6 +17,8 @@ const renderTrips = function renderTrips(tripList) {
   $('.reservation-form').hide();
   $('#trip-info').hide();
   $('#trip-list').empty();
+  $('#filter-form').show();
+
   console.log('here i am rendering trips');
   tripList.forEach((trip) => {
     $('#trip-list').append(tripTemplate(trip.attributes));
@@ -31,6 +33,9 @@ const renderOneTrip = function renderOneTrip(id) {
   $('#trips-table').hide();
   $('#trip-info').empty();
   $('#trip-info').show();
+  $('#filter-form').hide();
+  $('#new-trip-form').hide();
+
 
   $('.reservation-form').show();
 
@@ -159,15 +164,15 @@ const events = {
     }
   },
 
-  tripFilter() {
-    // Declare variables
-    var input, filter, table, tr, td, i;
-    input = document.getElementById("myInput");
-    filter = input.value.toUpperCase();
-    table = document.getElementById("trips-table");
-    tr = table.getElementsByTagName("tr");
+  tripFilter(event) {
+    event.preventDefault();
+    const input = document.getElementById("myInput");
+    const filter = input.value.toUpperCase();
+    const table = document.getElementById("trips-table");
+    let tr = table.getElementsByTagName("tr");
 
-    // Loop through all table rows, and hide those who don't match the search query
+    let i;
+    let td;
     for (i = 0; i < tr.length; i++) {
       td = tr[i].getElementsByTagName("td")[0];
       if (td) {
@@ -190,6 +195,8 @@ $(document).ready(() => {
   $('.reservation-form').hide();
   $('#trips-table').hide();
   $('#new-trip-form').hide();
+  $('#filter-form').hide();
+
 
   $('#trip-list').on('click', 'tr', function (){
     const tripID = $(this).attr('data-id');
@@ -205,6 +212,7 @@ $(document).ready(() => {
     $('#trips-table').hide();
     $('#trip-info').hide();
     $('#new-trip-form').show();
+    $('#filter-form').hide();
   });
 
   $('#new-trip-form').submit(events.addTrip);
@@ -231,8 +239,8 @@ $(document).ready(() => {
   $('#filter-form').submit(events.tripFilter);
 
 
-  tripList.on('update', renderTrips, tripList);
-  tripList.on('sort', renderTrips, tripList);
+    tripList.on('update', renderTrips, tripList);
+    tripList.on('sort', renderTrips, tripList);
 
 
 
