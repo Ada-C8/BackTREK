@@ -12,20 +12,9 @@ import Reservation from './app/models/reservation'
 
 let tripTemplate;
 let individualTripTemplate;
-let reportStatusTemplate;
+let errorsTemplate;
 
 const tripList = new TripList();
-
-//clearStatus messages
-const clearStatus = function clearStatus() {
-  $('#status-messages ul').html('');
-  $('#status-messages').hide();
-};
-
-//clearAddTripForm
-const clearAddTripForm = function clearAddTripForm() {
-  $('#trip-form-message').hide();
-}
 
 const CONDENSED_TRIP_FIELDS = ['name', 'continent', 'category', 'weeks', 'cost'];
 
@@ -41,15 +30,6 @@ const readReservationFormData = function readReservationFormData() {
     const value = inputElement.val();
 
     reservationData[field] = value;
-
-    //TODO: ERROR HANDLING
-    // Don't take empty strings, so that Backbone can
-    // fill in default values
-    // if (value != '') {
-    //   tripData[field] = value;
-    // }
-    //
-    // inputElement.val('');
   });
 
   console.log("Read reservation data");
@@ -57,7 +37,6 @@ const readReservationFormData = function readReservationFormData() {
 
   return reservationData;
 };
-
 
 const readFormData = function readFormData() {
   const tripData = {};
@@ -67,15 +46,6 @@ const readFormData = function readFormData() {
     const value = inputElement.val();
 
     tripData[field] = value;
-
-    //TODO: ERROR HANDLING
-    // Don't take empty strings, so that Backbone can
-    // fill in default values
-    // if (value != '') {
-    //   tripData[field] = value;
-    // }
-    //
-    // inputElement.val('');
   });
 
   console.log("Read trip data");
@@ -84,15 +54,40 @@ const readFormData = function readFormData() {
   return tripData;
 };
 
-const handleValidationFailures = function handleValidationFailures(errors) {
-  console.log('In handleValidationFailures()');
+// Now I need to display the template and then append it to the place that i want to append it to
+// const displayErrors = (errors) => {
+//   $('#display-errors').empty();
+//
+//   let errorObject = {};
+//   for (let key in errors) {
+//     errorObject[key] = errors[key];
+//   }
+//
+//   let generatedHtml = errorTemplate(errorObject);
+//   $('#display-errors').append(generatedHtml);
+// };
 
-  for (let field in errors) {
-    for (let problem of errors[field]) {
-      reportStatus('error', `${field}: ${problem}`);
-    }
+const handleValidationFailures = (errors) => {
+  $('#display-errors').empty();
+
+  let errorObject = {};
+  for (let key in errors) {
+    errorObject[key] = errors[key];
   }
+
+  let generatedHtml = errorsTemplate(errorObject);
+  $('#display-errors ul').append(generatedHtml);
 };
+//
+// const handleValidationFailures = function handleValidationFailures(errors) {
+//   console.log('In handleValidationFailures()');
+//
+//   for (let field in errors) {
+//     for (let problem of errors[field]) {
+//       reportStatus('error', `${field}: ${problem}`);
+//     }
+//   }
+// };
 
 // Add a new status message
 const reportStatus = function reportStatus(status, message) {
@@ -105,6 +100,17 @@ const reportStatus = function reportStatus(status, message) {
   $('#status-messages ul').append(statusHTML);
   $('#status-messages').show();
 };
+
+//clearStatus messages
+const clearStatus = function clearStatus() {
+  $('#status-messages ul').html('');
+  $('#status-messages').hide();
+};
+
+//clearAddTripForm
+const clearAddTripForm = function clearAddTripForm() {
+  $('#trip-form-message').hide();
+}
 
 ////////////////eventHandlers////////////////////
 
@@ -203,6 +209,7 @@ const render = function render(tripList) {
 
   $('#trip-table').show();
   $('#filter-triplist').show();
+  // $('#trip-form-button').show();
 
   //Visual feedback code for sorting
   $('th.sort').removeClass('current-sort-field');
@@ -212,7 +219,6 @@ const render = function render(tripList) {
   $('.trip').on('click', addIndividualTripHandler);
 };
 
-
 ///////////////////document.ready////////////////
 
 $(document).ready( () => {
@@ -221,7 +227,7 @@ $(document).ready( () => {
 
   individualTripTemplate = _.template($('#individual-trip-template').html());
 
-  reportStatusTemplate = _.template($('#report-status-template').html());
+  errorsTemplate = _.template($('#errors-template').html());
 
   // Register update listener first, to avoid the race condition
   tripList.on('update', render);
@@ -259,16 +265,16 @@ $(document).ready( () => {
     });
   });
 
+  //TODO: FILTERING
   // Listen for search typing
   $('#typing-search').keyup(function (event) {
     console.log(`In typing-search, this: ${this}`);
     console.log(`In #typing-search, event: ${$(this).val()}`);
 
     const letters = $(this).val();
-    // console.log(`Sibling of this: ${$('#typing-search').siblings('.select-header').val()}`);
+
     console.log(`Selected 1: ${$('#select-header').find(":selected").text()}`);
-    // console.log(`Selected 2: ${$('#select-header option:selected').val()}`);
-    // console.log(`Selected 3: ${$('#select-header').val()}`);
+
     const selectedHeader = $('#select-header').find(":selected").text();
 
     tripList.filterSearch(letters, selectedHeader);

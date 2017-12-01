@@ -34,6 +34,14 @@
       </ul>
     </section>
 
+    <section id="#display-errors">
+      <button class="clear float-right">
+        <img src="http://www.pvhc.net/img223/xeiwtpbbgpmyhtcnjvwt.png" alt="Clear">
+      </button>
+      <ul>
+      </ul>
+    </section>
+
     <section id="trip-form-message">
       <button id="trip-form-button">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/X-circle.svg/1024px-X-circle.svg.png" alt="Clear">
@@ -64,10 +72,10 @@
     <section class="row">
       <!-- Table for all trips -->
       <section class="columns large-6 small-12">
-        <!-- <button id="trip-form-button">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/X-circle.svg/1024px-X-circle.svg.png" alt="Clear">
-        </button> -->
         <table id="trip-table">
+          <button id="trip-form-button">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/X-circle.svg/1024px-X-circle.svg.png" alt="Clear">
+          </button>
           <thead>
             <th class="sort name">Name</th>
             <th class="sort continent">Continent</th>
@@ -146,9 +154,32 @@
     </form>
   </script>
 
-  <script type="text/template" id="report-status-template">
-    <li class="<%- status %>"></li>
+  <script type="text/template" id="errors-template">
+    <li>
+      <% if (obj.name) { %> Name: <%- name %><% } %>
+    </li>
+    <li>
+      <% if (obj.continent) { %> Continent: <%- continent %><% } %>
+    </li>
+    <li>
+      <% if (obj.about) { %> About: <%- about %><% } %>
+    </li>
+    <li>
+      <% if (obj.category) { %> Category: <%- category %><% } %>
+    </li>
+    <li>
+      <% if (obj.category) { %> Category: <%- category %><% } %>
+    </li>
+    <li>
+      <% if (obj.weeks) { %> Weeks: <%- weeks %><% } %>
+    </li>
+    <li>
+      <% if (obj.cost) { %> Cost: <%- cost %><% } %>
+    </li>
   </script>
+  <!-- <script type="text/template" id="report-status-template">
+    <li class="<%- status %>"></li>
+  </script> -->
 
   <script src="app.bundle.js" type="text/javascript"></script>
 </body>

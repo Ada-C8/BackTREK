@@ -47,6 +47,10 @@ h1 {
   table-layout: fixed;
 }
 
+#trip-form-button {
+  display: none;
+}
+
 #trip-table tr {
   word-wrap: break-word;
 }
