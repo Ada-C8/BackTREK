@@ -21,6 +21,7 @@ let addTripModalTemplate;
 const tripList = new TripList();
 
 const render = function render(tripList) {
+  $('.trip-row').remove();
   const tripListElement = $('#trip-list ul');
   tripList.forEach((trip) => {
     const generatedHTML = $(tripTemplate(trip.attributes));
@@ -55,6 +56,14 @@ const show = function show(e) {
 const clearShow = function clearShow() {
   $('.trip-row').removeClass('show');
   $('.trip-detail-holder').remove();
+};
+
+const sort = function sort(e) {
+  let field = $(e.target)[0].id;
+  console.log(field);
+  tripList.comparator = field;
+  tripList.sort();
+  render(tripList);
 };
 
 // Modals
@@ -169,10 +178,12 @@ $(document).ready( () => {
     $('#trip-list').show(500);
   });
 
-  $('#add-trip').on('click', addTripModal);
+  $('.sort').on('click', sort);
 
+  $('#add-trip').on('click', addTripModal);
   $('body').on('click', '.modal-close', clearModal);
 
-  // $(document).on('submit', '#add-trip-form', submitTrip;
+  // $(document).on('submit', '#reservation-form', submitTrip;
   $(document).on('submit', '#add-trip-form', submitTrip);
+
 });
