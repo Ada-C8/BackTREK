@@ -15,6 +15,13 @@
 
   <main class='row'>
 
+    <section id="status-messages">
+        <button class="clear float-right">
+          <img src="http://www.pvhc.net/img223/xeiwtpbbgpmyhtcnjvwt.png" alt="Clear">
+        </button>
+        <ul></ul>
+      </section>
+
     <section class="columns medium-6 small-12">
       <form>
         <input type="text" name="name" placeholder='temp form'>
@@ -36,11 +43,11 @@
     <div id='add-trip'>
       <form class='add-trip-form'>
         <h4>Add a trip</h4>
-        <input type='text' name='name' placeholder='Name' />
+        <input type='text' name='Name' placeholder='Name' />
         <input type='text' name='continent' placeholder='Continent' />
         <input type='text' name='about' placeholder='About' />
         <input type='text' name='category' placeholder='Category' />
-        <input type='text' name='weeks' placeholder='Weeks' />
+        <input type='number' name='weeks' placeholder='Weeks' />
         <input type='text' name='cost' placeholder='Cost' />
         <input type="submit" value="Add trip" class="button"></input>
       </form>
