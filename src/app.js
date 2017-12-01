@@ -33,7 +33,19 @@ const events = {
     });
   },
   filterTrips(event){
-    console.log($(this).val());
+    console.log($('#trip-query').val());
+    const query = $('#trip-query').val().toLowerCase();
+    console.log($('#trip-fields').find(":selected").val());
+    const attr = $('#trip-fields').find(":selected").val();
+    // name, category, continent needs .includes
+    // weeks, cost needs less than
+    const filteredTrips = tripList.filter((trip) => trip.get(attr).toLowerCase().includes(query));
+
+    let $tripList = $('#trip-list');
+    $tripList.empty();
+    filteredTrips.forEach((trip) => {
+      $tripList.append(allTripsTemplate(trip.attributes));
+    });
   },
   fetchTrip() {
     const trip = tripList.get($(this).data('id'));
@@ -185,4 +197,5 @@ $(document).ready( () => {
 
   // filter trips
   $("#trip-query").keyup(events.filterTrips);
+  $('#trip-fields').change(events.filterTrips);
 });
