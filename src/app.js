@@ -54,17 +54,12 @@ $(document).ready( () => {
   tripList.on('sort', loadTrips);
   tripList.on('update', loadTrips)
 
-  $('#createTripForm').on('submit', () => {
+  $('#createTripForm').on('submit', (e) => {
     console.log('Submission started');
+    e.preventDefault();
+
     const url = 'https://ada-backtrek-api.herokuapp.com/trips';
-    const name = $('#nameField')[0].value;
-    const continent = $('#continentField')[0].value;
-    const about = $('#aboutField')[0].value;
-    const category = $('#categoryField')[0].value;
-    const weeks = parseInt($('#weeksField')[0].value);
-    const cost = parseFloat($('#costField')[0].value);
-    const data = `name=${name}&continent=${continent}&about=${about}&category=${category}&weeks=${weeks}&cost=${cost}`
-    const form = $('#createTripForm').serialize();
+    const data = $('#createTripForm').serialize();
 
     $.post(url, data, (response) => {
       console.log('POST worked');
@@ -101,6 +96,35 @@ $(document).ready( () => {
       tripList.comparator = field;
       tripList.sort();
     });
+  });
+
+
+  $('#filter').on('change', () => {
+    console.log('event working');
+    const filter = $('#filter')[0].value;
+    if (filter === 'blank') {
+      return false;
+    } else if (filter === 'cost' || filter === 'weeks') {
+      $('#textFilter').hide();
+      $('#numberFilter').show();
+    } else {
+      $('#textFilter').show();
+      $('#numberFilter').hide();
+    }
+  });
+
+  $('#filterForm').on('submit', () => {
+    const filter = $('#filter')[0].value;
+    let value;
+    if($('#numberFilter').is(':visible')){
+      value = $('#numberFilter')[0].value;
+    } else {
+      value = $('#textFilter')[0].value;
+    }
+    
+
+
+    return false;
   });
 
 });

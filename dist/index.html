@@ -33,6 +33,26 @@
         <li>Cost: <%- cost %> </li>
     </script>
 
+    <section>
+      <form id='filterForm' class='columns small-6 large-6'>
+        <label>Select Filter:</label>
+        <select id='filter'>
+          <option value='blank'></option>
+          <option value='name'>Name</option>
+          <option value='category'>Category</option>
+          <option value='continent'>Continent</option>
+          <option value='cost'>Cost</option>
+          <option value='weeks'>Weeks</option>
+        </select>
+
+        <input type='text' id='textFilter'></input>
+        <input type='number' id='numberFilter'></input>
+        
+
+        <input type='submit' value='Filter trips' id='filterSubmit'></input>
+      </form>
+    </section>
+
     <section id='showAllTrips'>
       <button class='button' id='tripButton'>See Available Trips! </button>
       <button class='button' id='createTripButton'>Create a new trip! </button>
