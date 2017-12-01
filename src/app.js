@@ -30,13 +30,9 @@ const renderTrips = function renderTrips(tripList) {
 
 let singleTripTemplate;
 const renderOneTrip = function renderOneTrip(id) {
-  $('#trips-table').hide();
   $('#trip-info').empty();
   $('#trip-info').show();
-  $('#filter-form').hide();
   $('#new-trip-form').hide();
-
-
   $('.reservation-form').show();
 
   let trip;

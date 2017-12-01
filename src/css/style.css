@@ -1,7 +1,6 @@
 
 /* Your styles go here! */
 html {
-  font-family: serif;
   min-width: 100%;
 }
 
@@ -11,6 +10,7 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
+  min-width: 100%;
 }
 
 a, a:visited {
@@ -35,13 +35,31 @@ header {
   font-size: 6rem;
 }
 
-#trips-table, .show, #new-trip-form, #filter-form  {
+#all-trips {
+  margin-top: 3rem;
+  text-align: left;
+  width: 40%;
+  margin-right: 5%;
+  margin-left: 5%;
+  float: left;
+}
+
+.show {
+  margin-top: 3rem;
+  text-align: left;
+  width: 40%;
+  margin-right: 5%;
+  margin-left: 5%;
+  float: right;
+}
+
+/*#trips-table, .show, #new-trip-form, #filter  {
   margin-top: 3rem;
   text-align: left;
   width: 50%;
   margin-right: 25%;
   margin-left: 25%;
-}
+}*/
 
 #trips-table, .show p {
   font-family: 'Spectral SC', serif;
