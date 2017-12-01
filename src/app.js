@@ -37,6 +37,7 @@ const loadTrips = function loadTrips(tripList) {
 };
 
 const createNewTripHandler = function(event) {
+  // keep it from doing normal form things
   event.preventDefault();
 
   const tripData = {};
@@ -45,6 +46,7 @@ const createNewTripHandler = function(event) {
     const value = inputElement.val();
     tripData[field] = value;
 
+    // clears form after submitted
     inputElement.val('');
   });
 
@@ -62,35 +64,47 @@ const createNewTripHandler = function(event) {
 };
 
 $(document).ready(() => {
-  // templates
+  // TEMPLATES
   tripsTemplate = _.template($('#trips-template').html());
   aboutTemplate = _.template($('#trip-template').html());
   createNewTripTemplate = _.template($('#create-new-trip-template').html());
   newReservationTemplate = _.template($('#new-reservation-template').html());
 
+  ///// need clarification on this /////
   tripList.on('update', loadTrips);
   tripList.on('sort', loadTrips);
   tripList.fetch();
 
-  // render single trip details using 'click'
+  // RENDER SINGLE TRIP DETAILS TO DOM
   $('#trip-list').on('click', 'tr', function() {
     const aboutElement = $('#trip-about');
     aboutElement.html('');
 
     console.log('clicked');
+    // uses 'data' from html data-id
     let tripID = $(this).data('id');
     console.log(tripID);
+    // uses tripID to find api address for single trip
     let singleTrip = new Trip({id: tripID});
     console.log(singleTrip.url());
 
+    // apparently 'model' is cheating???
+    // model refers to singleTrip?
+    // model.fetch(): takes urlRoot and adds id?
+    //https://stackoverflow.com/questions/16544984/how-backbone-js-model-fetch-method-works
     singleTrip.fetch({
       success: (model) => {
         const generatedHTML = $(aboutTemplate(model.attributes));
         aboutElement.html(generatedHTML);
       },
+      error: (model) => {
+        console.log('singleTrip fetch: failure');
+        console.log(response);
+      },
     });
   })
 
+  // RENDER 'ADD NEW' FORM TO DOM
   $('#trip-create-new-btn').on('click', function() {
     const newTripElement = $('#trip-create-new');
     newTripElement.html('');
@@ -102,8 +116,10 @@ $(document).ready(() => {
   });
 })
 
+// SUBMIT NEW TRIP FROM FORM
 $('#trip-create-new').on('submit', createNewTripHandler);
 
+// SORT BY CLICKED FIELD
 TRIP_FIELDS.forEach((field) => {
   const headerElement = $(`th.sort.${ field }`);
   headerElement.on('click', (event) => {
