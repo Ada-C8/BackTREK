@@ -54,13 +54,53 @@
         <!-- Modal content -->
         <div class="modal-content">
           <span class="close">&times;</span>
-          <h2 id='message'></h2>
-          <p>
-            my modal
-          </p>
-          <form id="add-trip-form">
+          <!-- <div class= small-10 columns centered > -->
 
-          </form>
+            <h2 id='message'>Add a Trip</h2>
+            <form id="add-trip-form">
+              <div class="row">
+                <div class="large-12 columns">
+                  <label for="name">Name:</label>
+                  <input type="text" name="name" placeholder="trip name"></input>
+                </div>
+              </div>
+              <div class="row">
+                <div class="large-4 columns">
+                  <label for="category">Category:</label>
+                  <input type="text" name="category" placeholder="category"></input>
+                </div>
+                <div class="large-4 columns">
+                  <label for="weeks">Weeks:</label>
+                  <input type="number" name="weeks" placeholder="1" min="1"></input>
+                </div>
+                <div class="large-4 columns">
+                  <label for="cost">Cost: $</label>
+                  <input type="number" min="0.01" step="0.01" max="2500" value="00.00" />
+                </div>
+              </div>
+              <div class="row">
+                <div class="small-12 columns">
+                  <label>Choose Your Favorite</label>
+                  <input type="radio" name="continent" value="Africa" id="contAfrica"><label for="contAfrica">Africa</label>
+                  <input type="radio" name="continent" value="Antartica" id="contAntartica"><label for="contAntartica">Antartica</label>
+                </div>
+              </div>
+
+
+              <div class="row">
+                <div class="small-12 columns">
+                  <label for="about">About:</label>
+                  <!-- <input type="text" name="about" placeholder="trip description"></input> -->
+                  <textarea name="about" placeholder="trip description"></textarea>
+                </div>
+              </div>
+                <!-- <label for="continent">Continent:</label>
+                <input type="text" name="continent" placeholder="continent"></input> -->
+                <div class='row'>
+                  <input id='myBtn' type="submit" class='button' value="Add Trip!"></input>
+                </div>
+            </form>
+          <!-- </div> -->
         </div>
       </div>
 

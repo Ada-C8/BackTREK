@@ -2,10 +2,6 @@ import Backbone from 'backbone';
 
 const Trip = Backbone.Model.extend({
 
-//   cost: params[:cost]
-
-// validates :cost, presence: true, numericality: { greater_than: 0 }
-
   validate(attributes) {
     const CONTINENTS = ['Africa', 'Antartica', 'Asia', 'Australasia', 'Europe', 'North America', 'South America']
 
