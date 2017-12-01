@@ -9,6 +9,7 @@ const Trip = Backbone.Model.extend({
     about: 'no info',
     cost: 0,
   },
+  urlRoot: 'https://ada-backtrek-api.herokuapp.com/trips/',
 });
 
 export default Trip;

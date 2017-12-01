@@ -16,6 +16,8 @@ let tripDetailTemplate;
 let reserveModalTemplate;
 let addTripModalTemplate;
 
+// Trip List
+
 const tripList = new TripList();
 
 const render = function render(tripList) {
@@ -50,37 +52,16 @@ const show = function show(e) {
   }
 };
 
-const addTripModal = function addTripModal() {
-  $('body').append(addTripModalTemplate());
+const clearShow = function clearShow() {
+  $('.trip-row').removeClass('show');
+  $('.trip-detail-holder').remove();
 };
 
-const submitTrip = function submitTrip(e) {
-  e.preventDefault();
-  console.log(e);
-};
+// Modals
 
-const reserveModal = function reserveModal(e) {
-  const id = findElementTripID(e);
-  const generatedHTML = $(reserveModalTemplate({'id': id}));
-  const form = generatedHTML.find('#reservation-form');
-  form.on('submit', submitReservation);
-  $('body').append(generatedHTML);
-};
-
-const submitReservation = function submitReservation(e) {
-  e.preventDefault();
-  clearErrors();
-  $('.form-messages').html('');
-  const form = $('#reservation-form');
-  const id = form[0].classList[0];
-  // can this ID be transmitted with the form instead?
-  const formData = getFormData($(e.target), ['name', 'email']);
-  formData['tripID'] = id;
-  const newReservation = new Reservation(formData);
-  console.log(newReservation.isValid());
-  console.log(newReservation.validationError);
-  if (newReservation.isValid()) {
-    newReservation.save({}, {
+const saveIfValid = function saveIfValid(object, form) {
+  if (object.isValid()) {
+    object.save({}, {
       success: (response) => {
         formSuccess('reservation', form)
       },
@@ -90,7 +71,7 @@ const submitReservation = function submitReservation(e) {
       },
     });
   } else {
-    printErrors(newReservation.validationError);
+    printErrors(object.validationError);
   }
 };
 
@@ -123,11 +104,6 @@ const getFormData = function getFormData(target, values) {
   return formData;
 };
 
-const clearShow = function clearShow() {
-  $('.trip-row').removeClass('show');
-  $('.trip-detail-holder').remove();
-};
-
 const clearModal = function clearModal(e) {
   if ($(e.target).hasClass('modal-close')) {
     console.log('clearing modals');
@@ -137,6 +113,39 @@ const clearModal = function clearModal(e) {
 
 const findElementTripID = function findElementTripID(e) {
   return $(e.target).closest('li')[0].id;
+};
+
+const addTripModal = function addTripModal() {
+  $('body').append(addTripModalTemplate());
+};
+
+const reserveModal = function reserveModal(e) {
+  const id = findElementTripID(e);
+  const generatedHTML = $(reserveModalTemplate({'id': id}));
+  const form = generatedHTML.find('#reservation-form');
+  form.on('submit', submitReservation);
+  $('body').append(generatedHTML);
+};
+
+const submitTrip = function submitTrip(e) {
+  e.preventDefault();
+  const form = $(e.target);
+  const formData = getFormData(form, ['name', 'continent', 'category', 'weeks', 'cost']);
+  const newTrip = new Trip(formData);
+  saveIfValid(newTrip, form);
+};
+
+const submitReservation = function submitReservation(e) {
+  e.preventDefault();
+  clearErrors();
+  $('.form-messages').html('');
+  const form = $('#reservation-form');
+  const id = form[0].classList[0];
+  // can this ID be transmitted with the form instead?
+  const formData = getFormData($(e.target), ['name', 'email']);
+  formData['tripID'] = id;
+  const newReservation = new Reservation(formData);
+  saveIfValid(newReservation, form);
 };
 
 $(document).ready( () => {
