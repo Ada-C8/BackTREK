@@ -34,6 +34,13 @@ h2 {
   font-size: 2rem;
 }
 
+h3 {
+  /* loading message */
+  color: var(--transpwhite);
+  font-size: 3rem;
+  text-align: center;
+}
+
 h4 {
   /* list headers */
   color: var(--indigo);
@@ -124,7 +131,9 @@ header {
 
 /* SEARCH */
 
-form {
+header form {
+  float: none !important;
+  margin: auto;
   overflow: auto;
 }
 
@@ -137,11 +146,12 @@ form {
 /*************/
 
 .intro-button {
-  display: block;
+  align-items: center;
+  display: flex;
   float: none;
   font-size: 8vh;
   height: 30vh;
-  padding-top: 8vh;
+  justify-content: center;
   margin: 1rem auto;
 }
 

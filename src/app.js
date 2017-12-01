@@ -72,9 +72,11 @@ const sort = function sort(e) {
 
 const filter = function filter(e) {
   e.preventDefault();
-  const form = $(e.target);
-  const searchData = getFormData(form, ['category', 'query']);
-  const newList = tripList.filterBy(searchData['category'], searchData['query']);
+  const form = $('#trip-search');
+  console.log(form);
+  const searchData = getFormData(form, ['search-type', 'query']);
+  console.log(searchData);
+  const newList = tripList.filterBy(searchData['search-type'], searchData['query']);
   render(newList);
 };
 
@@ -94,7 +96,6 @@ const reserveModal = function reserveModal(e) {
 
 const clearModal = function clearModal(e) {
   if ($(e.target).hasClass('modal-close')) {
-    console.log('clearing modals');
     $('.modal').remove();
   }
 };
@@ -176,7 +177,7 @@ const findElementTripID = function findElementTripID(e) {
 };
 
 $(document).ready( () => {
-  $('#trip-list').hide();
+  $('.on-load').hide();
   tripTemplate = _.template($('#trip-template').html());
   tripDetailTemplate = _.template($('#trip-detail-template').html());
   reserveModalTemplate = _.template($('#reserve-modal-template').html());
@@ -186,8 +187,14 @@ $(document).ready( () => {
 
   $('#intro-button').on('click', (e) => {
     $('#intro-button').hide(200);
-    tripList.fetch();
-    $('#trip-list').show(500);
+    $('#loading').show(500);
+    tripList.fetch({
+      success: () => {
+        $('#loading').hide(200);
+        $('#trip-list').show(500);
+      },
+    });
+    $('.on-load').show(500);
   });
 
   $('.sort').on('click', sort);
@@ -195,7 +202,8 @@ $(document).ready( () => {
   $('#add-trip').on('click', addTripModal);
   $('body').on('click', '.modal-close', clearModal);
 
-  $('#trip-search').on('submit', filter);
+  $('body').on('keyup', '#trip-search', filter);
+  $('#trip-search').on('submit', e => e.preventDefault());
 
   // $(document).on('submit', '#reservation-form', submitTrip;
   $(document).on('submit', '#add-trip-form', submitTrip);

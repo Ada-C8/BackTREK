@@ -6,11 +6,17 @@ const TripList = Backbone.Collection.extend({
   url: 'https://ada-backtrek-api.herokuapp.com/trips/',
 
   filterBy: function(field, value) {
-    console.log('you are here');
     const newList = this.filter(function(trip) {
-      return trip.get(field) === value;
+      if (['cost', 'weeks'].includes(field)){
+        value = parseFloat(value);
+        console.log('is: ' + value);
+        console.log('larger than: ' + trip.get(field));
+        console.log(value >= trip.get(field));
+        return value >= trip.get(field);
+      } else {
+        return trip.get(field).includes(value);
+      }
     });
-    console.log('now you are here');
     return new TripList(newList);
   },
 });
