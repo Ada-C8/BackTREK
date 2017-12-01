@@ -12,11 +12,13 @@ import TripList from './app/collections/trip_list';
 import Reservation from './app/models/reservation';
 
 const tripList = new TripList();
+let referenceList = new TripList();
 let allTripsTemplate;
 let tripHeadersTemplate;
 let showTripTemplate;
 let formTemplate;
 let filterTemplate;
+let filterCategory;
 
 const url = 'https://ada-backtrek-api.herokuapp.com/trips';
 const tableFields = ['id', 'name', 'category', 'continent', 'weeks', 'cost'];
@@ -28,20 +30,16 @@ const fetchTrips = function fetchTrips() {
   tripList.fetch();
 }
 
+const syncReferenceList = function syncReferenceList() {
+  referenceList.add(tripList.models);
+}
+
 const renderTrips = function renderTrips(list) {
   $('#all-trips').empty();
   list.forEach((trip) => {
     $('#all-trips').append(allTripsTemplate(trip.attributes));
   });
-}
-
-const loadFilters = function loadFilters() {
-  $('#filter').show();
-  filterFields.forEach((filter) => {
-    const capitalFilter = filter.charAt(0).toUpperCase() + filter.slice(1);
-    $('#filter-select').append(filterTemplate({item: filter, capitalized: capitalFilter}))
-  });
-}
+};
 
 const loadTripsTable = function loadTripsTable(list) {
   clearContent();
@@ -50,6 +48,31 @@ const loadTripsTable = function loadTripsTable(list) {
   });
   renderTrips(list);
   loadFilters();
+};
+
+const loadFilters = function loadFilters() {
+  $('#filter').show();
+  filterFields.forEach((filter) => {
+    const capitalFilter = filter.charAt(0).toUpperCase() + filter.slice(1);
+    $('#filter-select').append(filterTemplate({item: filter, capitalized: capitalFilter}))
+  });
+  $('#filter-select').prop('selectedIndex', -1);
+};
+
+const setfilterCategory = function setfilterCategory() {
+  const capital = $('#filter-select').find(':selected').text();
+  filterCategory = capital.charAt(0).toLowerCase() + capital.slice(1);
+};
+
+const filterTrips = function filterTrips(event) {
+  if (filterCategory) {
+    const filterInput = event.currentTarget.value.toLowerCase();
+    const filteredTrips = tripList.models.filter(function(trip) {
+      return trip.attributes[filterCategory].toLowerCase().includes(filterInput);
+    });
+    referenceList.reset(filteredTrips);
+    renderTrips(referenceList);
+  }
 };
 
 const showTrip = function showTrip(event) {
@@ -108,6 +131,7 @@ const saveTrip = function saveTrip(event) {
 
 const successfulTripSave = function successfulTripSave(trip) {
   tripList.add(trip);
+  referenceList.add(trip);
   addTripFields.forEach((field) => {
     $(`#add-trip-form input[name=${field}]`).val('');
   });
@@ -181,17 +205,17 @@ const sortTrips = function sortTrips() {
       sortClass = classes[i];
     }
   }
-  tripList.comparator = sortClass;
+  referenceList.comparator = sortClass;
   $('.sortorder').empty();
   if (classes.includes('desc')) {
-    const descModels = tripList.models.reverse();
+    const descModels = referenceList.models.reverse();
     renderTrips(descModels);
     $(this).removeClass('desc');
     $(`.${sortClass} .sortorder`).html('&#x25B2');
   } else {
-    tripList.sort();
+    referenceList.sort();
     $(this).addClass('desc').siblings().removeClass('desc');
-    renderTrips(tripList);
+    renderTrips(referenceList);
     $(`.${sortClass} .sortorder`).html('&#x25BC');
   }
   $(this).addClass('current-sort-field').siblings().removeClass('current-sort-field');
@@ -204,7 +228,11 @@ $(document).ready( () => {
   formTemplate = _.template($('#form-template').html());
   filterTemplate = _.template($('#filter-trips-template').html());
   $('#load-trips').on('click', fetchTrips);
-  tripList.on('update', loadTripsTable, tripList);
+  $('#load-trips').on('click', loadTripsTable, referenceList);
+  tripList.on('update', syncReferenceList);
+  referenceList.on('update', loadTripsTable, referenceList);
+  $('#filter-select').on('change', setfilterCategory);
+  $('#filter-input').on('input', filterTrips);
   $('#all-trips').on('click', '.trip', showTrip);
   $('thead').on('click', '.sort', sortTrips);
   $('#add-trip').on('click', addTripForm);
