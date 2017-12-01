@@ -1,8 +1,10 @@
 import Backbone from 'backbone';
+import _underscore from 'underscore';
 
 const Reservation = Backbone.Model.extend({
+  initialize: function(attributes) {
+  },
   validate: function(attributes){
-    console.log('reservation attributes');
     const errors = {};
     const reservationFields = ['name', 'age', 'email'];
 
@@ -13,7 +15,6 @@ const Reservation = Backbone.Model.extend({
         errors[attr] = `cannot be blank`;
       });
     }
-    console.log(errors);
 
     if (Object.keys(errors).length > 0) {
       return errors;
@@ -22,3 +23,5 @@ const Reservation = Backbone.Model.extend({
     }
   }
 });
+
+export default Reservation;
