@@ -239,16 +239,36 @@ const events = {
     trip.destroy();
   },
   filtering() {
-    const filterCategory = $('#filter-category :selected').val();
-    const filterInput = $('#filter-query').val();
+    const filterCategory = $('#filter-category :selected').val().toLowerCase();
+    const filterInput = $('#filter-query').val().toLowerCase();
     console.log(filterCategory);
     console.log(filterInput);
+    // const filteredTrips = tripList.filter( trip => { (trip.get(filterCategory)).includes(filterInput);
+    // });
+    const matches = []
+    const filteredTrips = tripList.forEach( (trip) => {
+      const lowercased = trip.get(filterCategory).toLowerCase();
+      if (lowercased.includes(filterInput)) {
+        matches.push(trip);
+      }
+    });
+
+    const filteredMatches = new TripList(matches);
+    showFiltered(filteredMatches);
+
+    // console.log(filteredTrips);
   },
 };
 const render= function render(tripList) {
   $('#trip-list').empty();
   tripList.fetch();
   tripList.forEach((trip) => {
+    $('#trip-list').append(tripTemplate(trip.attributes));
+  });
+};
+const showFiltered= function showFiltered(filteredMatches) {
+  $('#trip-list').empty();
+  filteredMatches.forEach((trip) => {
     $('#trip-list').append(tripTemplate(trip.attributes));
   });
 };
