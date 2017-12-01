@@ -129,9 +129,7 @@ const events = {
       }
     });
   }
-
 }
-
 
 $(document).ready( () => {
 
