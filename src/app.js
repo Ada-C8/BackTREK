@@ -23,12 +23,22 @@ let showTemplate;
 const reservationFields = ['name', 'age', 'email'];
 const newTripFields = ['name', 'continent', 'about', 'category', 'weeks', 'cost']
 
+const render = function render(tripList) {
+
+  // Get the element to append to
+  const $tripList = $('#trip-list');
+  $tripList.empty();
+
+  tripList.forEach((trip) => {
+    $tripList.append(tripTemplate(trip.attributes));
+  });
+};
+
 const updateStatusMessageFrom = (messageHash) => {
   $('#status-messages ul').empty();
   for(let messageType in messageHash) {
     messageHash[messageType].forEach((message) => {
       $('#status-messages ul').append($(`<li>${messageType}:  ${message}</li>`));
-      // console.log(`<li>${messageType.charAt(0).toUpperCase()}:  ${message}</li>`);
     })
   }
   $('#status-messages').show();
@@ -81,7 +91,6 @@ const events = {
     const url = $(this).attr('action'); // Retrieve the action from the form
     const formData = $(this).serialize();
     $('#show_trip').hide();
-    // $(this).hide();
     $.post(url, formData, function(response) {
       $('#message').empty();
       $('#message').html('<p> Trip Reserved! </p>');
@@ -94,7 +103,6 @@ const events = {
   },
   addTrip(event) {
     event.preventDefault();
-    console.log("IN ADDTRIP FUNCTION");
     const tripData = {};
     newTripFields.forEach( (field) => {
       const val = $(`input[name=${field}]`).val();
@@ -114,18 +122,34 @@ const events = {
       // getting here means there were client-side validation errors reported
       updateStatusMessageFrom(trip.validationError);
     }
-    // need to add in validations!
   },
   successfulSave(trip, response) {
     $('#message').html('<p> Trip Added! </p>')
     $('#message').delay(2000).hide(1);
-    // updateStatusMessageWith(`${trip.get('name')} added!`);
     $.modal.close();
     $.modal.empty;
   },
   failedSave(trip, response) {
     updateStatusMessageFrom(response.responseJSON.errors);
     trip.destroy();
+  },
+  sortTrips(event) {
+    // Get the class list of the selected element
+    const classes = $(this).attr('class').split(/\s+/);
+    classes.forEach((className) => {
+      if (newTripFields.includes(className)) {
+        if (className === tripList.comparator) {
+          tripList.models.reverse();
+          tripList.trigger('sort', tripList);
+        } else {
+          tripList.comparator = className;
+          console.log(tripList.comparator);
+          tripList.sort();
+        }
+      }
+    });
+    $('.current-sort-field').removeClass('current-sort-field');
+    $(this).addClass('current-sort-field');
   },
 };
 
@@ -139,15 +163,18 @@ $(document).ready( () => {
 
   $('#trips_button').click(events.allTrips);
 
-  $('#all_trips_section').on('click', 'tr', function() {
+  $('#trip-list').on('click', 'tr', function() {
     $('.current-select-row').removeClass('current-select-row');
     const tripID = $(this).attr('data-id');
-    console.log(this);
     $(this).addClass('current-select-row');
     events.showTrip(tripID);
   });
 
   $('#show_trip').on('submit', 'form', events.finalizeReservation);
   $('#newTrip').submit(events.addTrip);
+
+  $('.sort').click(events.sortTrips);
+  tripList.on('sort', render, tripList);
+
 
 });

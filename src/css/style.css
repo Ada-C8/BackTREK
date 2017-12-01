@@ -1,10 +1,25 @@
 
 /* Your styles go here! */
 
-.current-select-row, .current-select-row:nth-of-type(even), .current-select-row:nth-of-type(odd) {
+.current-select-row, .current-select-row:nth-of-type(even), .current-select-row:nth-of-type(odd), .current-sort-field {
   background-color: darkgrey;
   color: white;
 }
+
+h1 {
+  text-align: center;
+}
+
+#allTripsButton {
+  text-align: center;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+/*#tripTable {
+  border: 1px;
+}*/
 
 #status-messages ul {
   color: red;
@@ -13,4 +28,9 @@
 #message {
   color: green;
   font-size: 2rem;
+}
+
+#modalButton {
+  background-color: red;
+  color: white;
 }
