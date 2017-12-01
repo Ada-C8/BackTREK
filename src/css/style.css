@@ -27,12 +27,14 @@ h1 {
   /* website title */
   color: var(--white);
   display: inline-block;
+  font-family: 'Comfortaa', sans-serif;
 }
 
 h2 {
   /* modal titles */
   color: var(--indigo);
   font-size: 2rem;
+  font-family: 'Comfortaa', sans-serif;
 }
 
 h3 {
@@ -40,15 +42,17 @@ h3 {
   color: var(--transpwhite);
   font-size: 3rem;
   text-align: center;
+  font-family: 'Comfortaa', sans-serif;
 }
 
 h4 {
   /* list headers */
   color: var(--indigo);
   display: inline-block;
+  font-family: 'Comfortaa', sans-serif;
   margin: 0;
   overflow: hidden;
-  padding: 0;
+  padding: .5rem 0 0;
 }
 
 h6 {
@@ -66,6 +70,10 @@ ul {
   list-style: none;
 }
 
+form {
+  overflow: auto;
+}
+
 .row {
   max-width: 100%;
 }
@@ -73,6 +81,7 @@ ul {
 .button {
   border-radius: 1rem;
   background-color: var(--ltblue);
+  font-family: 'Comfortaa', sans-serif;
 }
 
 .button:hover {
