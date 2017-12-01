@@ -95,6 +95,7 @@ $(document).ready(() => {
     newTripElement.html(generatedHTML);
 
     console.log('clicked');
+    console.log('load add new form: success');
   });
 })
 
