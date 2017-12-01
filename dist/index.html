@@ -39,11 +39,11 @@
     <section id="trip-list" class="trip-list" style="display: none;">
       <ul>
         <li class="headers">
-          <h4 class="name-col">Name</h4>
-          <h4 class="cont-col">Continent</h4>
-          <h4 class="cat-col">Category</h4>
-          <h4 class="weeks-col">Duration</h4>
-          <h4 class="cost-col">Cost</h4>
+          <h4 id="name" class="sort name-col">Name</h4>
+          <h4 id="continent" class="sort cont-col">Continent</h4>
+          <h4 id="category" class="sort cat-col">Category</h4>
+          <h4 id="weeks" class="sort weeks-col">Duration</h4>
+          <h4 id="cost" class="sort cost-col">Cost</h4>
         </li>
       </ul>
     </section>
@@ -91,11 +91,11 @@
           <h2>Make a Reservation</h2>
           <form id="reservation-form" class="<%- id %>">
             <span class="form-messages"></span>
-            <div id="reserve-name" class="reservation-form-holder small-12 columns">
+            <div id="reservation-name" class="reservation-form-holder small-12 columns">
               <label for="name">Name:</label>
               <input type="text" name="name" />
             </div>
-            <div id="reserve-email" class="reservation-form-holder small-12 columns">
+            <div id="reservation-email" class="reservation-form-holder small-12 columns">
               <label for="name">Email:</label>
               <input type="text" name="email" />
             </div>
@@ -135,6 +135,10 @@
             <div id="trip-cost" class="add-trip-form-holder small-12 columns">
               <label for="cost">Cost:</label>
               <input type="text" name="cost" />
+            </div>
+            <div id="trip-about" class="add-trip-form-holder small-12 columns">
+              <label for="about">Description:</label>
+              <textarea name="about" />
             </div>
             <div class="add-trip-form-holder small-12 columns">
               <input type="submit" class="button" />

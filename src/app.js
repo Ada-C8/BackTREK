@@ -35,8 +35,8 @@ const show = function show(e) {
     if (tripElement.hasClass('show')) {
       clearShow();
     } else {
-      const id = findElementTripID(e);
-      const trip = tripList.findWhere({id: 2});
+      const id = parseInt(findElementTripID(e));
+      const trip = tripList.findWhere({id: id});
       trip.fetch({
         success: () => {
           clearShow();
@@ -82,10 +82,12 @@ const clearModal = function clearModal(e) {
 
 const submitTrip = function submitTrip(e) {
   e.preventDefault();
+  clearErrors();
   const form = $(e.target);
-  const formData = getFormData(form, ['name', 'continent', 'category', 'weeks', 'cost']);
+  const formData = getFormData(form, ['name', 'continent', 'category', 'weeks', 'cost', 'about']);
+  console.log(formData);
   const newTrip = new Trip(formData);
-  saveIfValid(newTrip, form);
+  saveIfValid(newTrip, form, 'trip');
 };
 
 const submitReservation = function submitReservation(e) {
@@ -98,7 +100,7 @@ const submitReservation = function submitReservation(e) {
   const formData = getFormData($(e.target), ['name', 'email']);
   formData['tripID'] = id;
   const newReservation = new Reservation(formData);
-  saveIfValid(newReservation, form);
+  saveIfValid(newReservation, form, 'reservation');
 };
 
 const getFormData = function getFormData(target, values) {
@@ -110,19 +112,20 @@ const getFormData = function getFormData(target, values) {
   return formData;
 };
 
-const saveIfValid = function saveIfValid(object, form) {
+const saveIfValid = function saveIfValid(object, form, type) {
   if (object.isValid()) {
     object.save({}, {
       success: (response) => {
-        formSuccess('reservation', form)
+        formSuccess(type, form)
       },
       error: (status, response) => {
         const errors = ($.parseJSON(response.responseText))['errors'];
-        printErrors(errors);
+        printErrors(errors, type);
       },
     });
   } else {
-    printErrors(object.validationError);
+    console.log(object.validationError);
+    printErrors(object.validationError, type);
   }
 };
 
@@ -133,9 +136,10 @@ const formSuccess = function formSuccess(item, form) {
   form[0].reset();
 }
 
-const printErrors = function printErrors(errors) {
+const printErrors = function printErrors(errors, type) {
   for(let field in errors) {
-    let errorElement = $(`#reserve-${field} > label`);
+    let errorElementID = `#${type}-${field} label`
+    let errorElement = $(errorElementID);
     errorElement.addClass('has-errors');
     errorElement.append(`<p class="error">${errors[field]}</p>`);
   }
