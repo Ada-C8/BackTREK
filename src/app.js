@@ -68,6 +68,16 @@ const sort = function sort(e) {
   render(tripList);
 };
 
+// Filtering
+
+const filter = function filter(e) {
+  e.preventDefault();
+  const form = $(e.target);
+  const searchData = getFormData(form, ['category', 'query']);
+  const newList = tripList.filterBy(searchData['category'], searchData['query']);
+  render(newList);
+};
+
 // Modals
 
 const addTripModal = function addTripModal() {
@@ -184,6 +194,8 @@ $(document).ready( () => {
 
   $('#add-trip').on('click', addTripModal);
   $('body').on('click', '.modal-close', clearModal);
+
+  $('#trip-search').on('submit', filter);
 
   // $(document).on('submit', '#reservation-form', submitTrip;
   $(document).on('submit', '#add-trip-form', submitTrip);
