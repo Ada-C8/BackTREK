@@ -19,11 +19,19 @@
         <input type="text" name="name" placeholder='temp form'>
         <input type="submit" value="Submit">
       </form>
+      <button id='all-trips' class='button'>Trips</button>
+      <table>
+        <thead>
+          <th class="sort name">Name</th>
+          <th class="sort continent">Continent</th>
+          <th class="sort weeks">Weeks</th>
+        </thead>
+        <tbody id="trip-list">
+        </tbody>
+      </table>
     </section>
     <section class="columns medium-6 small-12 trips">
-      <button id='all-trips' class='button'>Trips</button>
-      <section id="trip-list">
-      </section>
+
     </section>
   </main>
 
@@ -32,15 +40,18 @@
   </footer>
 
   <script type="text/template" id="trip-template">
-      <article class="trip">
-        <h2><%- name %></h2>
-        <h5><%- continent %></h5>
-        <h5><%- weeks %> weeks</h5>
-      </article>
+      <tr class="trip">
+        <td><%- name %></td>
+        <td><%- continent %></td>
+        <td><%- weeks %> weeks</td>
+      </tr>
     </script>
 
   <script type="text/template" id="trip-details-template">
       <article class="trip">
+        <h2><%- name %></h2>
+        <h5><%- continent %></h5>
+        <h5><%- weeks %> weeks</h5>
         <h5><%- category %></h5>
         <p><%- about %></p>
         <h3><%- cost %></h3>
