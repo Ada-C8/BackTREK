@@ -73,7 +73,25 @@ const events = {
   failRenderTrip() {
     console.log('FAILED TO RENDER SINGLE TRIP INFO');
     $('#single-trip-table').append('ERROR: Trip details were not successfully loaded.');
-  }
+  },
+  succesReservation(reservation, response) {
+    console.log('RESERVATION SUCCESSFULLY SUBMITTED')
+    console.log(reservation);
+
+    $('#reservation-form .user-input').val('');
+    $('#ReservationStatusModal ul').empty();
+    $('#ReservationStatusModal p').empty();
+    $('#ReservationStatusModal p').append('Your trip is now reserved!');
+    $('#ReservationStatusModal').foundation('open');
+  },
+  failReservation() {
+    console.log('RESERVATION SUBMISSION FAILURE')
+    console.log(reservation);
+    $('#ReservationStatusModal ul').empty();
+    $('#ReservationStatusModal p').empty();
+    $('#ReservationStatusModal p').append('Sorry, your request could not be completed.');
+    $('#ReservationStatusModal').foundation('open');
+  },
 };
 
 // makeTripReservation FUNCTION
@@ -95,21 +113,26 @@ const makeTripReservation = function makeTripReservation(id) {
   //const reservation = trip.reserve({age: "21", email:"jedrzo@ada.com"});
   // Validations Test with simple error message:
   // reservation.on("invalid", function(model, error) {
-  //   $('#errorModal ul').append('<li>Something went wrong!</li>');
-  //   $('#errorModal').foundation('open');
+  //   $('#ReservationStatusModal ul').append('<li>Something went wrong!</li>');
+  //   $('#ReservationStatusModal').foundation('open');
   // });
   //reservation.save();
 
   reservation.on("invalid", function(model, errors) {
+    console.log('INSIDE .ONinvalidevent');
+    $('#ReservationStatusModal p').empty();
+    $('#ReservationStatusModal p').append('Sorry, your request could not be completed. Please resolve the following:');
+    $('#ReservationStatusModal ul').empty();
     for (let key in errors) {
-      $('#errorModal ul').append(`<li>${key.charAt(0).toUpperCase() + key.slice(1)}: ${errors[key]}</li>`);
-      $('#errorModal').foundation('open');
+      $('#ReservationStatusModal ul').append(`<li>${key.charAt(0).toUpperCase() + key.slice(1)}: ${errors[key]}</li>`);
+      $('#ReservationStatusModal').foundation('open');
     };
   });
-  reservation.save();
-  console.log('RESERVATION SUBMITTED')
-  console.log(reservation);
 
+  reservation.save({}, {
+    success: events.succesReservation,
+    error: events.failReservation,
+  });
 };
 
 $(document).ready( () => {

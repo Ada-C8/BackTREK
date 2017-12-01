@@ -14,31 +14,61 @@
     <nav>
       <button href="index.html" class="button">HOME</button>
       <button id="all-trips" class="button">ALL TRIPS</button>
-      <!-- <button data-reveal-id="new-trip-modal" class="button">NEW TRIP</button> -->
-      <a href="#" data-open="errorModal">Click Me For A Modal</a>
+      <button data-open="newTripModal" class="button">NEW TRIP</button>
+      <!-- <a href="#" data-open="ReservationStatusModal">Click Me For A Modal</a> -->
     </nav>
 
   </header>
 
   <main>
-    <section id="status-messages">
+    <!-- <section id="status-messages">
       <button class="clear float-right">
         <img src="http://www.pvhc.net/img223/xeiwtpbbgpmyhtcnjvwt.png" alt="Clear">
       </button>
 
       <ul>
       </ul>
-    </section>
+    </section> -->
 
-    <div id="errorModal" class="reveal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
-      <h2 id="modalTitle">Reservation Errors</h2>
-        <p>Something went wrong! Please resolve:</p>
+    <div id="newTripModal" class="reveal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+      <h2 id="modalTitle">Add A New Trip</h2>
+      <form id="new-trip-form">
+        <label for="name">Name</label>
+        <input type="text" name="name"></input>
+
+        <label for="continent">Continent</label>
+        <input type="text" name="continent"></input>
+
+        <label for="about">About</label>
+        <input type="text" name="about"></input>
+
+        <label for="category">Category</label>
+        <input type="text" name="category"></input>
+
+        <label for="weeks">Weeks</label>
+        <input type="number" name="weeks" min="0"></input>
+
+        <label for="cost">Cost</label>
+        <input type="number" name="cost" min="0" step="0.01"></input>
+
+        <input type="submit" value="Add Trip!" class="button"></input>
+      </form>
+
+      <button class="close-button" data-close aria-label="Close modal" type="button">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div id="ReservationStatusModal" class="reveal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+      <h2 id="modalTitle">Reservation Status</h2>
+        <p></p>
         <ul>
 
         </ul>
+
       <button class="close-button" data-close aria-label="Close modal" type="button">
-  <span aria-hidden="true">&times;</span>
-</button>
+        <span aria-hidden="true">&times;</span>
+      </button>
     </div>
 
     <section id="all-trips-table" class="columns large-7 small-12">
@@ -61,27 +91,6 @@
     </aside>
 
     <!-- <section id="new-trip-modal" class="reveal-modal" aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
-      <form id="new-trip-form">
-          <label for="name">Name</label>
-          <input type="text" name="name"></input>
-
-          <label for="continent">Continent</label>
-          <input type="text" name="continent"></input>
-
-          <label for="about">About</label>
-          <input type="text" name="about"></input>
-
-          <label for="category">Category</label>
-          <input type="text" name="category"></input>
-
-          <label for="weeks">Weeks</label>
-          <input type="number" name="weeks" min="0"></input>
-
-          <label for="cost">Cost</label>
-          <input type="number" name="cost" min="0" step="0.01"></input>
-
-          <input type="submit" value="Add Trip!" class="button"></input>
-        </form>
 
     </section> -->
 
@@ -128,17 +137,18 @@
     <p><%- about %></p>
 
     <button id="reserve-trip-button" class="button expanded"><strong>MAKE A RESERVATION</strong></button>
+
     <section id="reservation-form">
       <form id="reservation" data-id="<%- id %>">
 
         <label for="name">Name:</label>
-        <input type="text" name="name" placeholder="Firstname Lastname"></input>
+        <input type="text" name="name" class="user-input" placeholder="Firstname Lastname"></input>
 
         <label for="age">Age:</label>
-        <input type="number" name="age"></input>
+        <input type="number" name="age" class="user-input"></input>
 
         <label for="email">Email:</label>
-        <input type="text" name="email"></input>
+        <input type="text" name="email" class="user-input"></input>
 
         <button class="button expanded" type="submit"><strong>RESERVE TRIP</strong></button>
       </form>
