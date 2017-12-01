@@ -17,11 +17,11 @@
     <div class="row" id="status-message">
       <h3></h3>
     </div>
-    <div id="form-modal">
-      <div id="modal-content">
+    <div id="add-form-modal">
+      <div id="add-modal-content">
         <h2>Add a Trip</h2>
-        <div id="in-form-status-message"><h3>Could not save trip: </h3><ul>
-          
+        <div id="add-form-status-message"><h3>Could not save trip: </h3><ul>
+
         </ul></div>
         <form id="add-trip-form">
           <label for="name">Name</label>
@@ -76,8 +76,8 @@
           <p>
             Drink wine, farm olives, restore a villa, and fall in love!
           </p>
+          <h2>Reserve This Trip</h2>
         </section>
-        <h2>Reserve This Trip</h2>
       </div>
     </div>
   </main>
@@ -95,12 +95,26 @@
     </tr>
   </script>
   <script id="trip-details-template" type="text/template">
-    <h4><%- name %></h4>
+    <h3><%- name %></h3>
     <p><strong>continent: </strong><%- continent %></p>
     <p><strong>category: </strong><%- category %></p>
     <p><strong>cost: </strong><%- cost %></p>
     <p><strong>weeks: </strong><%- weeks %></p>
     <p><strong>description: </strong><%- about %></p>
+    <h4>Reserve this Trip</h4>
+    <div id="reserve-form-status-message"><h3>Could not create reservation: </h3><ul>
+
+    </ul></div>
+    <form id="reserve-trip-form" action='https://ada-backtrek-api.herokuapp.com/trips/<%-id%>/reservations' method="post">
+      <label for="name">Name</label>
+      <input type="text" name="name"></input>
+      <label for="age">Age</label>
+      <input type="number" name="age"></input>
+      <label for="email">Email</label>
+      <input type="text" name="email"></input>
+      <input id="<%-id%>" type="submit" value="Create Reservation!" class="button"></input>
+      <input type="button" value="Cancel" class="button" />
+    </form>
   </script>
 </body>
 </html>

@@ -13,11 +13,11 @@
   display: none;
 }
 
-#in-form-status-message {
+#add-form-status-message, #reserve-form-status-message {
   display: none;
 }
 
-#form-modal {
+#add-form-modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
@@ -30,7 +30,7 @@
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
-#modal-content {
+#add-modal-content {
   background-color: #fefefe;
   margin: 15% auto; /* 15% from the top and centered */
   padding: 20px;

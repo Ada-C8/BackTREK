@@ -9,13 +9,15 @@ import './css/style.css';
 // Models and Collections
 import Trip from './app/models/trip';
 import TripList from './app/collections/trip_list';
+import Reservation from './app/models/reservation';
 
 // Vars that need to be defined up front
 let tripRowTemplate;
 let tripDetailsTemplate;
 let trip = new Trip();
 const tripList = new TripList();
-const fields = ['name', 'category', 'continent', 'weeks', 'cost', 'about']
+const tripFields = ['name', 'category', 'continent', 'weeks', 'cost', 'about'];
+const reservationFields = ['name', 'age', 'email'];
 
 // Callback functions
 const render = function render(tripList) {
@@ -33,16 +35,16 @@ const getTrip = function getTrip() {
 
 const getTripList = function getTripList() {
   tripList.fetch({success: events.successfulGetTripList, error: events.failedGetTripList});
-}
+};
 
 const addTrip = function addTrip() {
-  $('#form-modal').show();
-}
+  $('#add-form-modal').show();
+};
 
 const leaveForm = function leaveForm() {
-  $('#form-modal').hide();
+  $('#add-form-modal').hide();
   $('#add-trip-form').trigger('reset');
-  $('#in-form-status-message').hide();
+  $('#add-form-status-message').hide();
 }
 
 const events = {
@@ -63,9 +65,9 @@ const events = {
   },
   addTrip(event) {
     event.preventDefault();
-    $('#in-form-status-message').hide();
+    $('#add-form-status-message').hide();
     const tripData = {};
-    fields.forEach((field) => {
+    tripFields.forEach((field) => {
       const value = $(`input[name=${field}]`).val();
       if (value != '') {
         tripData[field] = value;
@@ -73,35 +75,58 @@ const events = {
     })
     const trip = new Trip(tripData);
     if (trip.isValid()) {
-      trip.save({}, {success: events.successfulSave, error: events.failedSave});
+      trip.save({}, {success: events.successfulTripSave, error: events.failedTripSave});
     } else {
-      console.log(trip.validationError);
-      $('#in-form-status-message ul').empty();
+      $('#add-form-status-message ul').empty();
       for(let key in trip.validationError) {
         trip.validationError[key].forEach((error) => {
-          $('#in-form-status-message ul').append(`<li>${key}: ${error}</li>`);
+          $('#add-form-status-message ul').append(`<li>${key}: ${error}</li>`);
         })
       }
-      $('#in-form-status-message').show();
+      $('#add-form-status-message').show();
     }
   },
-  successfulSave(trip) {
+  reserveTrip(event) {
+    event.preventDefault();
+    console.log(event.target);
+    $('#reserve-form-status-message').hide();
+    const reservationData = {};
+    reservationFields.forEach((field) => {
+      const value = $(`#reserve-trip-form input[name=${field}]`).val();
+      if (value != '') {
+        reservationData[field] = value;
+      }
+    })
+    const reservation = new Reservation(reservationData);
+    reservation.urlRoot = $(event.target).attr('action');
+    reservation.save({}, {success: events.successfulResSave, error: events.failedResSave});
+  },
+  successfulTripSave(trip) {
     $('#status-message h3').empty();
     $('#status-message h3').append(`${trip.get('name')} added!`);
     $('#status-message').show();
     tripList.add(trip);
-    $('#form-modal').hide();
+    $('#add-form-modal').hide();
     $('#add-trip-form').trigger('reset');
   },
-  failedSave(trip, response) {
-    $('#in-form-status-message ul').empty();
+  failedTripSave(trip, response) {
+    $('#add-form-status-message ul').empty();
     for(let key in response.responseJSON.errors) {
       response.responseJSON.errors[key].forEach((error) => {
-        $('#in-form-status-message ul').append(`<li>${key}: ${error}</li>`);
+        $('#add-form-status-message ul').append(`<li>${key}: ${error}</li>`);
       })
     }
-    $('#in-form-status-message').show();
+    $('#add-form-status-message').show();
   },
+  successfulResSave(reservation) {
+    $('#status-message h3').empty();
+    $('#status-message h3').append(`Pack your bags! Successfully reserved a spot for ${reservation.get('name')} on the ${tripList.get(reservation.get('trip_id')).get('name')} trip!`);
+    $('#status-message').show();
+    $('#reserve-trip-form').trigger('reset');
+  },
+  failedResSave() {
+    console.log('failed save')
+  }
 };
 
 
@@ -109,13 +134,14 @@ $(document).ready( () => {
   tripRowTemplate = _.template($('#trip-row-template').html());
   tripDetailsTemplate = _.template($('#trip-details-template').html());
   $('#add-trip-form').submit(events.addTrip);
+  $('#trip-info').on('submit', '#reserve-trip-form', events.reserveTrip);
   $('#explore-trips').on('click', getTripList);
 
   tripList.on('update', render, tripList)
 
   $('#trip-list').on('click', 'tr', getTrip);
   $('#add-trip').on('click', addTrip);
-  $('#form-modal').on('click', leaveForm);
+  $('#add-form-modal').on('click', leaveForm);
   $(':button').on('click', leaveForm);
-  $('#modal-content').click(function(e){ e.stopPropagation();});
+  $('#add-modal-content').click(function(e){ e.stopPropagation();});
 });
