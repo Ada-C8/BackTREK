@@ -23,7 +23,7 @@ const render = function render(tripList) {
   });
 };
 
-const fields = ['Name', 'continent', 'about', 'category', 'weeks', 'cost'];
+const fields = ['name', 'continent', 'about', 'category', 'weeks', 'cost'];
 // const continents = ['Africa', 'Antarctica', 'Asia', 'Australasia', 'Europe', 'South America', 'North America', 'Null'];
 
 // ------------- Status Messages --------------
@@ -46,6 +46,7 @@ const updateStatusMessageWith = (message) => {
 const events = {
   // ------------- Add a new Trip --------------
   addTrip(event) {
+    console.log(this);
     event.preventDefault();
     const tripData = {};
     fields.forEach((field) => {
@@ -56,17 +57,14 @@ const events = {
 
     const trip = new Trip(tripData);
 
-    // if (book.isValid()) {
+    // if (trip.isValid()) {
 
       trip.save({}, {
         success: events.successfullSave,
         error: events.failedSave,
       });
     // } else {
-    //   // getting here means there were client-side validation errors reported
-    //   // console.log("What's on book in an invalid book?");
-    //   // console.log(book);
-    //   updateStatusMessageFrom(book.validationError);
+    //   updateStatusMessageFrom(trip.validationError);
     // }
 
   },
@@ -86,16 +84,15 @@ const events = {
 
     classes.forEach((className) => {
       if (fields.includes(className)) {
-        // if (className === tripList.comparator) {
-        //   tripList.models.reverse();
-        //   tripList.trigger('sort', tripList);
-        // }
-        // else {
+        console.log(className);
+        if (className === tripList.comparator) {
+          tripList.models.reverse();
+          tripList.trigger('sort', tripList);
+        }
+        else {
           tripList.comparator = className;
           tripList.sort();
-          // Leading white space issue
-          // Order of the if else
-        // }
+        }
       }
     });
   },
