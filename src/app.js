@@ -13,6 +13,7 @@ import './css/style.css';
 
 // MODELS
 import Trip from './app/models/trip';
+import Reservation from './app/models/reservation';
 
 // COLLECTION
 import TripList from './app/collections/trip_list';
@@ -20,6 +21,7 @@ import TripList from './app/collections/trip_list';
 // INITITAL SET UP CHECK
 console.log('it loaded!');
 
+// GENERATE TRIPLIST COLLECTION
 const tripList = new TripList();
 // console.log('TRIPLIST:');
 // console.log(tripList);
@@ -39,11 +41,13 @@ const render = function render(tripList) {
   });
 };
 
+// loadTrips FUNCTION
 const loadTrips = function loadTrips() {
   tripList.fetch();
   tripList.on('update', render, tripList);
 };
 
+// getTripDetails FUNCTION
 let singleTripTemplate;
 
 const getTripDetails = function getTripDetails(attrID) {
@@ -72,6 +76,27 @@ const events = {
   }
 };
 
+// makeTripReservation FUNCTION
+const makeTripReservation = function makeTripReservation(id) {
+  const trip = tripList.findWhere({id: parseInt(id)});
+
+  // Validations: Testing missing parameters
+  // const reservation = trip.reserve({age: "21", email:"jedrzo@ada.com"});
+  // reservation.on("invalid", function(model, error) {
+  //   $('#myModal ul').append('<li>Something went wrong!</li>');
+  //   $('#myModal').foundation('open');
+  // });
+
+  reservation.on("invalid", function(model, error) {
+    // $('#myModal ul').append(`<li>Something went wrong! Please resolve: ${reservation.validationError['age'][0]}</li>`);
+    $('#myModal ul').append(`<li>Something went wrong! Please resolve: ${JSON.stringify(error)}</li>`);
+    $('#myModal').foundation('open');
+  });
+  reservation.save();
+  console.log(reservation);
+
+};
+
 $(document).ready( () => {
   $(document).foundation();
   $('#all-trips-table').hide();
@@ -90,7 +115,7 @@ $(document).ready( () => {
   // To view a single Trip
   $('#all-trips-table').on('click', '.trip', function() {
     $('#single-trip-details').show();
-    let tripID = $(this).attr('data-id');
+    const tripID = $(this).attr('data-id');
     getTripDetails(tripID);
   });
 
@@ -100,5 +125,10 @@ $(document).ready( () => {
   });
 
   // To Show New Trip Form Modal
+  $('#single-trip-details').on('submit', '#reservation', function(e) {
+    e.preventDefault();
+    const tripID = $(this).attr('data-id');
+    makeTripReservation(tripID);
+  });
 
 });
