@@ -12,6 +12,7 @@ import TripList from './app/collections/trip-list';
 import Reservation from './app/models/reservation';
 
 let tripTemplate;
+let emptyTripTemplate;
 let tripDetailTemplate;
 let reserveModalTemplate;
 let addTripModalTemplate;
@@ -23,11 +24,16 @@ const tripList = new TripList();
 const render = function render(tripList) {
   $('.trip-row').remove();
   const tripListElement = $('#trip-list ul');
-  tripList.forEach((trip) => {
-    const generatedHTML = $(tripTemplate(trip.attributes));
-    generatedHTML.on('click', show);
+  if (tripList.length > 0) {
+    tripList.forEach((trip) => {
+      const generatedHTML = $(tripTemplate(trip.attributes));
+      generatedHTML.on('click', show);
+      tripListElement.append(generatedHTML);
+    });
+  } else {
+    const generatedHTML = $(emptyTripTemplate());
     tripListElement.append(generatedHTML);
-  });
+  }
 };
 
 const show = function show(e) {
@@ -73,9 +79,7 @@ const sort = function sort(e) {
 const filter = function filter(e) {
   e.preventDefault();
   const form = $('#trip-search');
-  console.log(form);
   const searchData = getFormData(form, ['search-type', 'query']);
-  console.log(searchData);
   const newList = tripList.filterBy(searchData['search-type'], searchData['query']);
   render(newList);
 };
@@ -179,6 +183,7 @@ const findElementTripID = function findElementTripID(e) {
 $(document).ready( () => {
   $('.on-load').hide();
   tripTemplate = _.template($('#trip-template').html());
+  emptyTripTemplate = _.template($('#empty-trip-template').html());
   tripDetailTemplate = _.template($('#trip-detail-template').html());
   reserveModalTemplate = _.template($('#reserve-modal-template').html());
   addTripModalTemplate = _.template($('#add-trip-modal-template').html());

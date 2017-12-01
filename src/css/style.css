@@ -10,6 +10,7 @@
 --transpltblue: rgba(152, 193, 217, 0.7);
 --salmon: #EE6352;
 --indigo: #223843;
+--dkgrey: #6D696A;
 --grey: #E3E4E8;
 --transpgrey: rgba(227, 227, 232, 0.7);
 }
@@ -204,6 +205,15 @@ header form {
 .current-sort {
   color: var(--salmon);
   text-decoration: underline;
+}
+
+.empty-col {
+  color: var(--dkgrey);
+  display: block;
+  font-size: 1.25rem;
+  font-style: italic;
+  margin: auto;
+  text-align: center;
 }
 
 /* TRIP DISPLAY */
