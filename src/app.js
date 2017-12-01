@@ -95,16 +95,6 @@ $(document).ready(() => {
     newTripElement.html(generatedHTML);
 
     console.log('clicked');
-    // let tripID = $(this).data('id');
-    // console.log(tripID);
-    // let singleTrip = new Trip({id: tripID});
-    // console.log(singleTrip.url());
-    //
-    // singleTrip.fetch({
-    //   success: (model) => {
-    //     const generatedHTML = $(aboutTemplate(model.attributes));
-    //     aboutElement.html(generatedHTML);
-
   });
 })
 
