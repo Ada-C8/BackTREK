@@ -25,10 +25,36 @@
     <div class="header">
       <h1 class="header_word">Travel Trek<h1>
         <button id="load" class="button">  See all trips </button>
+        <!-- <button id="add_trip" class="button">  Add a Trip </button> -->
     </div>
   </header>
 
     <main>
+      <aside class="columns large-4 small-12">
+        <h2>Add a Trip</h2>
+        <form id="add-trip-form">
+          <label for="name">Name</label>
+          <input type="text" name="name"></input>
+
+          <label for="continent">Continent</label>
+          <input type="text" name="continent"></input>
+
+          <label for="about">About</label>
+          <input type="text" name="about"></input>
+
+          <label for="category">Category</label>
+          <input type="text" name="category"></input>
+
+          <label for="weeks">Weeks</label>
+          <input type="number" name="weeks"></input>
+
+          <label for="cost">Cost</label>
+          <input type="string" name="cost" step=".01"></input>
+
+          <input type="submit" value="create!" class="button"></input>
+        </form>
+      </aside>
+
       <section>
         <div id='trips'>
           <table>
@@ -45,14 +71,15 @@
           </table>
         </div>
       </section>
-    <!-- <div id="fail"></div> -->
+
       <div id="trip">
-        <!-- <p><strong><%- name %></strong></p>
-        <p>Continent: <%- continent %></p>
-        <p>Category: <%- category %></p>
-        <p>Weeks: <%- weeks %></p>
-        <p>Cost: <%- cost %></p>
-      </script> -->
+        <!-- <script>
+          <p><strong><%- name %></strong></p>
+          <p>Continent: <%- continent %></p>
+          <p>Category: <%- category %></p>
+          <p>Weeks: <%- weeks %></p>
+          <p>Cost: <%- cost %></p>
+        </script> -->
       </div>
     </main>
     <footer>

@@ -4,9 +4,12 @@ const Trip = Backbone.Model.extend({
   defaults: {
     name: 'Unknown'
   },
-//urlRoot(){
-//return `https://ada-backtrek-api.herokuapp.com/trips/${this.get('tripID')}/reservations`
-//}
+urlRoot: 'https://ada-backtrek-api.herokuapp.com/trips/'
+
+
+// urlRoot(){
+// return `https://ada-backtrek-api.herokuapp.com/trips/${this.get('tripID')}/reservations`
+// }
   // validate(attributes) {
   //   const errors = {};
   //   if (!attributes.name) {
