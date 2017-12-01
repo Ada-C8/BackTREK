@@ -57,7 +57,7 @@ const renderTrip = function renderTrip(trip) {
 const addTripHandler = function(event) {
   event.preventDefault();
 
-  console.log('in the add trip handler');
+  // console.log('in the add trip handler');
   const tripData = {};
   TRIP_FIELDS.forEach((field) => {
     // select the input corresponding to the field we want
@@ -86,15 +86,20 @@ const addTripHandler = function(event) {
 
   const trip = new Trip(tripData);
 
+  if (!trip.isValid()) {
+    handleValidationErrors(trip.validationError);
+    return;
+  }
+
   trip.save({}, {
     success: (model, response) => {
       tripsList.add(model);
-      console.log("Success!")
+      // console.log("Success!")
       reportStatus('success', 'Successfully add a trip!');
     },
     error: (model, response) => {
-      console.log('Failed to save a trip! Server response:');
-      console.log(response);
+      // console.log('Failed to save a trip! Server response:');
+      // console.log(response);
 
       const errors = response.responseJSON["errors"];
       for (let field in errors) {
@@ -106,10 +111,20 @@ const addTripHandler = function(event) {
   });
 };
 
+
+//////////////// HANDLE VALIDATION ERRORS ///////////
+
+const handleValidationErrors = function handleValidationErrors(errors){
+  for (let field in errors) {
+    for (let problem of errors[field]) {
+      reportStatus('error', `${field}: ${problem}`);
+    }
+  }
+};
+
 //////////////// ADD RESERVATION HANDLER ////////////////
 const addReservationHandler = function(event) {
   event.preventDefault();
-  console.log('in the reservation handler');
 
   const reservationData = {
     trip_id: $(this).data('id'),
@@ -117,27 +132,28 @@ const addReservationHandler = function(event) {
 
   RES_FIELDS.forEach((field) => {
     const inputElement = $(`#makeReservation input[name=" ${ field } "]`);
-    let value = inputElement.val();
+    const value = inputElement.val();
 
     reservationData[field] = value;
 
     inputElement.val('');
-    console.log('reading reservation data');
-    console.log(reservationData);
   });
+
   const reservation = new Reservation (reservationData);
 
-  console.log(reservation);
-  console.log(`the reservation data is ${reservationData}`);
+  if (!reservation.isValid()) {
+    handleValidationErrors(reservation.validationError);
+    return;
+  }
 
   reservation.save({}, {
     success: (model, response) => {
-      console.log('Successfully added a reservation')
+      // console.log('Successfully added a reservation')
       reportStatus('success', 'Successfully made a reservation!');
     },
     error: (model, response) => {
-      console.log('Failed to save a trip! Server response:');
-      console.log(response);
+      // console.log('Failed to save a trip! Server response:');
+      // console.log(response);
 
       const errors = response.responseJSON["errors"];
       for (let field in errors) {
@@ -189,11 +205,9 @@ $(document).ready(() => {
 // Weeks
 // Cost
 // user needs to be given some sort of visual feedback that the data has been sorted
-/// WAVE 3 /////////
+/// WAVE 3 ///////// optional
 // filtering --- the challenging piece of the project
 // 1. figure out the modal situation
-
-
 // work on continent error handling issues
 
 
@@ -207,3 +221,5 @@ $(document).ready(() => {
 
 //Thursday
 // 4. work on error handling
+
+// Friday 
