@@ -16,6 +16,7 @@ const TRIP_FIELDS = ["id", "about", "name", "continent", "category", "weeks", "c
 
 let tripTemplate;
 let detailsTemplate;
+let statusTemplate;
 
 const renderDetails = function renderDetails(trip){
   const detailsElement = $('#trip-details');
@@ -24,23 +25,32 @@ const renderDetails = function renderDetails(trip){
   if (trip.get('about')) {
     const generatedHTML = $(detailsTemplate(trip.attributes));
     detailsElement.append(generatedHTML);
-    // console.log(`my trip already has info`);
+    console.log(`my trip already has info`);
   } else {
     trip.fetch({
       success: (model) => {
         const generatedHTML = $(detailsTemplate(trip.attributes));
         detailsElement.append(generatedHTML);
-        // console.log(trip);
+        console.log(trip);
+        console.log(trip.attributes);
       }
     });
   }
 };
 
 // Add a new status message
-const reportStatus = function reportStatus(status, message) {
+const reportStatus = function reportStatus(status, field, problem) {
   console.log('in reportStatus function');
-  console.log(`Reporting ${ status } status: ${ message }`);
+  console.log(`Reporting ${ status } status: |${ field }| problem ${problem}`);
 
+  let errors = {'problem': problem };
+  // console.log(errors);
+  const errorSpanElement = $(`#form-${field}`)
+  errorSpanElement.html('');
+  console.log(errorSpanElement);
+  const generatedHTML = $(statusTemplate(errors));
+  console.log(generatedHTML);
+  errorSpanElement.append(generatedHTML);
   // // Should probably use an Underscore template here.
   // const statusHTML = `<li class="${ status }">${ message }</li>`;
   //
@@ -53,7 +63,7 @@ const handleValidationFailures = function handleValidationFailures(errors) {
   console.log('in handleValidationFailures function');
   for (let field in errors) {
     for (let problem of errors[field]) {
-      reportStatus('error', `${field}: ${problem}`);
+      reportStatus('error', field,  problem);
     }
   }
 };
@@ -117,6 +127,7 @@ $(document).ready( () => {
   // compiled underscore templates
   detailsTemplate = _.template($('#details-template').html());
   tripTemplate = _.template($('#trip-template').html());
+  statusTemplate = _.template($('#status-message-template').html());
 
   // adding new models to a collection triggers an update event
   tripList.on('update', render);
