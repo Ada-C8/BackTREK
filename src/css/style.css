@@ -67,3 +67,7 @@ header{
     text-decoration: none;
     cursor: pointer;
 }
+
+#status-messages {
+  display: none;
+}
