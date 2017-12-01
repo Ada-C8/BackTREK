@@ -26,12 +26,17 @@ const events = {
     $tripDetails.empty();
     $tripDetails.append(tripDetailsTemplate(trip.attributes));
   },
-  failedTripFetch(trip) {
+  failedTripFetch() {
     console.log('failed trip fetch');
   },
-  hideModal(event){
+  hideModal(){
     // TODO: click out of the modal and close
     console.log('hid modal!');
+    // clear error messages
+    $('#status-title').empty();
+    $('#status-messages ul').empty();
+    $('#status-messages').hide();
+
     $('#create-trip-modal').hide();
   },
   showModal(){
@@ -52,7 +57,43 @@ const events = {
     console.log(tripData);
 
     const trip = new Trip(tripData);
-    console.log(trip.isValid());
+    if (trip.isValid()) {
+      console.log('it is valid!');
+      trip.save({}, {
+        success: events.successfulSaveTrip,
+        error: events.failSaveTrip
+      });
+    } else { // save is invalid
+      $('#status-title').empty();
+      $('#status-messages ul').empty();
+
+      $('#status-title').text('Errors:');
+      for(let error in trip.validationError) {
+        $('#status-messages ul').append(`<li>${trip.validationError[error]}</li>`);
+      }
+      $('#status-messages').css('background-color', 'pink');
+      $('#status-messages').show();
+    }
+  },
+  successfulSaveTrip(trip, response){
+    $('#create-trip-form .input').val("");
+    events.hideModal();
+    tripList.add(trip);
+  },
+  failSaveTrip(trip, response){
+    // TODO: redundant with fail case when trip isn't valid
+    $('#status-title').empty();
+    $('#status-messages ul').empty();
+
+    $('#status-title').text('Errors:');
+    for (let key in response.responseJSON.errors) {
+      response.responseJSON.errors[key].forEach((error) => {
+        $('#status-messages ul').append(`<li>${key}:${error}</li>`);
+      });
+    }
+    $('#status-messages').css('background-color', 'pink');
+    $('#status-messages').show();
+    trip.destroy();
   }
 }
 
@@ -62,12 +103,13 @@ const tripList = new TripList();
 let allTripsTemplate;
 let tripDetailsTemplate;
 
-const renderAllTrips = function renderAllTrips(tripList) {
+const render = function render(tripList) {
   let $tripList = $('#trip-list');
   $tripList.empty();
   tripList.forEach((trip) => {
     $tripList.append(allTripsTemplate(trip.attributes));
   });
+  console.log('rendered it');
 };
 
 $(document).ready( () => {
@@ -76,7 +118,7 @@ $(document).ready( () => {
   tripDetailsTemplate = _.template($('#trip-details-template').html());
 
   // render template for all trips
-  tripList.on('update', renderAllTrips, tripList);
+  tripList.on('update', render, tripList);
   tripList.fetch();
 
   // render template for trip details (on click)
