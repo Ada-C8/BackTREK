@@ -9,6 +9,7 @@ import './css/style.css';
 // Import Trip Model and Collection
 import Trip from './app/models/trip';
 import TripList from './app/collections/trip_list';
+import Reservation from './app/models/reservation';
 
 const tripFields = ['name', 'continent', 'about', 'category', 'weeks', 'cost'];
 const reservationFields = ['name', 'age', 'email'];
@@ -85,6 +86,27 @@ const events = {
     }
     $('#status-messages').css('background-color', 'pink');
     $('#status-messages').show();
+  },
+  addReservation(event){
+    event.preventDefault();
+    console.log('submitted a reservation!');
+    console.log($(this));
+    const reservationData = {};
+    reservationFields.forEach( (field) => {
+      // needs the #id attribute
+      const val = $(`#create-reservation-form input[name=${field}]`).val();
+      console.log(`val: ${val}`);
+      if (val != '') reservationData[field] = val;
+    });
+    console.log('in addReservation in app.js');
+    console.log(reservationData);
+    const reservation = new Reservation(reservationData);
+    console.log(`Reservation valid: ${reservation.isValid()}`);
+    if (reservation.isValid()) {
+      const tripID = $(this).data('id');
+      reservation.urlRoot = `${(new Trip()).urlRoot}${tripID}/reservations`;
+      reservation.save({});
+    }
   }
 }
 
@@ -121,4 +143,5 @@ $(document).ready( () => {
 
   //submit forms
   $('#create-trip-form').submit(events.addTrip);
+  $(document).on('submit', '#create-reservation-form', events.addReservation);
 });
