@@ -8,6 +8,9 @@ import TripList from './app/collections/tripList';
 import './css/foundation.css';
 import './css/style.css';
 
+const TRIP_FIELDS = ['name', 'category', 'weeks', 'cost', 'about', 'continent']
+
+let tripTemplate;
 
 const loadTrips = function loadTrips(trips) {
   console.log('function working');
@@ -21,7 +24,7 @@ const loadTrips = function loadTrips(trips) {
 }
 
 $(document).ready( () => {
-  const tripTemplate = _.template($('#tripTemplate').html());
+  tripTemplate = _.template($('#tripTemplate').html());
   const singleTripTemplate = _.template($('#singleTripTemplate').html());
   const tripList = new TripList();
   tripList.fetch();
@@ -46,9 +49,9 @@ $(document).ready( () => {
       console.log(generatedHTML);
       $('#singleTrip').html(generatedHTML);
     });
-
-
   });
+
+  tripList.on('sort', loadTrips);
 
   $('#createTripForm').on('submit', () => {
     console.log('Submission started');
@@ -89,4 +92,14 @@ $(document).ready( () => {
     });
     return false;
   });
+
+  TRIP_FIELDS.forEach((field) => {
+    const header = $(`.sort.${field}`);
+    header.on('click', () => {
+      console.log(`sorting by ${field}`);
+      tripList.comparator = field;
+      tripList.sort();
+    });
+  });
+
 });
