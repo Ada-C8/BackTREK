@@ -59,13 +59,13 @@ const loadTrips = function loadTrips(tripList) {
 $(document).ready(() => {
   tripsTemplate = _.template($('#trips-template').html());
   aboutTemplate = _.template($('#trip-template').html());
+  reservationTemplate = _.template($('#reservation-template').html());
 
   tripList.on('update', loadTrips);
   tripList.on('sort', loadTrips);
   tripList.fetch();
 
-  // render single trip details
-  // using 'click'
+  // render single trip details using 'click'
   $('#trip-list').on('click', 'tr', function() {
     const aboutElement = $('#trip-about');
     aboutElement.html('');

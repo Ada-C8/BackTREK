@@ -10,38 +10,19 @@
     <h2>TREK</h2>
   </header>
   <main>
-<!-- ADD TRIP -->
-    <aside class="columns large-4 small-12">
-      <h2>Add a Trip</h2>
-      <form id="add-trip-form">
-        <label for="name">Name</label>
-        <input type="text" name="name"></input>
-
-        <label for="continent">Continent</label>
-        <input type="text" name="continent"></input>
-
-        <label for="category">Category</label>
-        <input type="text" name="category"></input>
-
-        <label for="weeks">Weeks</label>
-        <input type="number" name="weeks"></input>
-
-        <label for="cost">Cost</label>
-        <input type="number" name="cost"></input>
-
-        <input type="submit" value="Shelve it!" class="button"></input>
-      </form>
+<!-- ADD TRIP #trip-reservation -->
+    <aside id="trip-reservation" class="columns large-4 small-12">
+      <!-- reservation form -->
     </aside>
 <!-- ADD TRIP -->
 
-<!-- SINGLE TRIP -->
+<!-- SINGLE TRIP #trip-about -->
     <section id="trip-about" class="columns large-8 small-12">
     </section>
 <!-- SINGLE TRIP -->
 
-<!-- TRIP LIST -->
+<!-- TRIP LIST #trip-list -->
     <section class="columns large-8 small-12">
-
       <table>
         <thead>
           <th class="sort name">Name</th>
@@ -90,6 +71,30 @@
     </tr>
   </script>
 <!-- TRIPS TEMPLATE -->
+
+<!-- RESERVE TRIP TEMPLATE -->
+  <script type="text/template" id="reservation-template">
+    <h2>Add a Trip</h2>
+    <form id="add-trip-form">
+      <label for="name">Name</label>
+      <input type="text" name="name"></input>
+
+      <label for="continent">Continent</label>
+      <input type="text" name="continent"></input>
+
+      <label for="category">Category</label>
+      <input type="text" name="category"></input>
+
+      <label for="weeks">Weeks</label>
+      <input type="number" name="weeks"></input>
+
+      <label for="cost">Cost</label>
+      <input type="number" name="cost"></input>
+
+      <input type="submit" value="Create New Trip" class="button"></input>
+    </form>
+  </script>
+<!-- RESERVE TRIP TEMPLATE -->
 
   <script src="app.bundle.js" type="text/javascript"></script>
 </body>
