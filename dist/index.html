@@ -12,6 +12,7 @@
     <div class="logo">Trek</div>
     <div id="view-all-trips">View All Trips</div>
     <div id="make-a-trip">Create a Trip</div>
+    <span id='status-messages'></span>
 
 
   </header>
@@ -47,11 +48,11 @@
 
   <form id="new-trip-form">
     <span>
-      <label>Name</label>
+      <label>Name<span class="errors-name"></span></label>
       <input type="text" id="name" name="name"></input>
     </span>
     <span>
-      <label>Cost</label>
+      <label>Cost<span class="errors-cost"></span></label>
       <input type="text" id="cost" name="cost"></input>
     </span>
     <!-- <span>
@@ -64,7 +65,7 @@
       </select>
     </span> -->
     <span>
-      <label>Weeks</label>
+      <label>Weeks<span class="errors-weeks"></span></label>
       <input type="text" id="weeks" name="weeks"></input>
     </span>
     <!-- <span>
@@ -77,7 +78,7 @@
       </select>
     </span> -->
     <span>
-      <label>Continent</label>
+      <label>Continent<span class="errors-continent"></span></label>
       <input type="text" id="continent" name="continent"></input>
     </span>
     <span>
@@ -85,7 +86,7 @@
       <input type="text" id="about" name="about"></input>
     </span>
     <span>
-      <label>Category</label>
+      <label>Category<span class="errors-name"></span></label>
       <input type="text" id="category" name="category"></input>
     </span>
     <span>

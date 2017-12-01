@@ -82,18 +82,29 @@ const events = {
   successfulSave(trip, response){
     tripList.add(trip);
 
-    $('#status-messages ul').empty();
-    $('#status-messages ul').append(`<li>${trip.get('name')} added!</li>`);
-    $('#status-messages ul').show();
+    $('#status-messages').empty();
+    $('#status-messages').append(`${trip.get('name')} added!`);
+    $('#status-messages').show();
     $('#new-trip-form').hide();
     $('#trips-table').show();
   },
 
   failedSave(trip, response) {
+    const errors = trip.validate(trip.attributes);
+    tripFields.forEach((field) => {
+      console.log(field);
+      if (errors[field]) {
+        console.log(errors[field]);
+        console.log(`.errors-${field}`);
+
+        $(`.errors-${field}`).html(errors[field]);
+      }
+    });
+    console.log(trip.validate(trip.attributes));
     trip.destroy();
-    $('#status-messages ul').empty();
-    $('#status-messages ul').append('<li>Your book was unable to be added.</li>');
-    $('#status-messages ul').show();
+    $('#status-messages').empty();
+    $('#status-messages').append('Your book was unable to be added.');
+    $('#status-messages').show();
   },
 
   sortTrips(event) {
