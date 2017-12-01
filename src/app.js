@@ -41,6 +41,12 @@ const getTrips = function(tripList) {
     tripTableElement.append(generatedHTML);
   }
 
+  $('nav').on('click', '#new-trip', function() {
+    $('#add-trip').append(addTripTemplate);
+    $('.wrapper').show();
+    $('#add-trip-form').on('submit', addTrip);
+  })
+
   //hide header and #trips button and show nav section
   $('h1').hide();
   $('#trips').hide();
@@ -53,6 +59,16 @@ const getTrips = function(tripList) {
   let trip = tripList.first();
   trip.on('change', getTrip);
   trip.fetch();
+
+  //sort by columns in trips table
+  TRIP_FIELDS.forEach((field) => {
+    const headerElement = $(`th.sort.${ field }`);
+    headerElement.on('click', (event) => {
+      console.log(`sorting trips by ${ field }`);
+      tripList.comparator = field;
+      tripList.sort();
+    });
+  });
 
 } // end of getTrips
 
@@ -131,25 +147,27 @@ $(document).ready( () => {
   })
 
   //get trip info
-  $('.trips').on('click', 'table tr', function() {
+  $('.trips').on('click', 'table tbody tr', function() {
     let tripID = $(this).attr('data-id');
     let trip = tripList.findWhere({ id: parseInt(tripID) });
-    // trip.fetch({
-    //   success: (model, response) => {
-    //     console.log('success');
-    //     getTrip(response);
-    //   }
-    // })
-    trip.on('change', getTrip);
-    trip.fetch();
+    trip.fetch({
+      success: (model, response) => {
+        console.log('success');
+        getTrip(model);
+      }
+    })
+    // trip.on('change', getTrip);
+    // trip.fetch();
   })
 
-  //add new trip
+  // add new trip
   $('nav').on('click', '#new-trip', function() {
     $('#add-trip').append(addTripTemplate);
     $('.wrapper').show();
     $('#add-trip-form').on('submit', addTrip);
   })
+
+
 
 
 
