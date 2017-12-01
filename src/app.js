@@ -36,7 +36,7 @@ const tripList = new TripList();
 //   console.log('called TripInfo');
 //   console.log(this);
 // };
-const formFields = ['name', 'continent', 'category', 'cost', 'about', 'weeks'];
+const formFields = ['name', 'continent', 'category', 'cost', 'about', 'weeks', 'id'];
 
 const events = {
   allTrips(event) {
@@ -56,6 +56,30 @@ const events = {
       </table>`;
     $('#all-trips').append(tripsTable);
     render(tripList);
+  },
+  sortTrips(event) {
+    console.log('sorting');
+    $('.current-sort-field').removeClass('current-sort-field');
+    $(this).addClass('current-sort-field');
+    const classes = $(this).attr('class').split(/\s+/);
+    // tripList.comparator = classes[1];
+    console.log(this);
+    console.log(classes);
+    // console.log(tripList.comparator);
+    classes.forEach((className) => {
+      if (formFields.includes(className)) {
+        if (className === tripList.comparator) {
+          console.log('now reversing');
+          tripList.models.reverse();
+          tripList.trigger(('sort'), tripList);
+        } else {
+          console.log('now sorting');
+          tripList.comparator = className;
+          tripList.sort();
+        }
+      }
+    });
+
   },
   tripInfo(event) {
     console.log('called TripInfo');
@@ -155,17 +179,15 @@ const events = {
     console.log(trip);
     if (trip.isValid()) {
       console.log('this trip is valid')
-      tripList.add(trip);
+      // console.log(trip);
       trip.save({}, {
         success: events.successfulSave,
         error: events.failedSave,
       });
+      // render(tripList);
     } else {
       console.log('there was a client error for this trip');
-      console.log(trip);
       const errorTypes = Object.keys(trip.validationError);
-      console.log(' the error types we got are:');
-      console.log(errorTypes);
 
       $('#messages ul').empty();
 
@@ -206,7 +228,8 @@ const render= function render(tripList) {
   $('#trip-list').empty();
   tripList.fetch();
   tripList.forEach((trip) => {
-    const tripCost= (trip.attributes.cost);
+    const tripCost= (trip.get('cost'));
+    // console.log(tripCost);
     trip.set('cost', tripCost.toFixed(2));
     $('#trip-list').append(tripTemplate(trip.attributes));
   });
@@ -219,10 +242,12 @@ $(document).ready( () => {
   showTemplate = _.template($('#show-template').html());
   $('#all-trips-btn').click(events.allTrips);
   $('#all-trips').on('update', render);
-  $('#all-trips').on('click', 'tr', events.tripInfo);
+  $('#all-trips').on('click', '.trip', events.tripInfo);
   $('#trip-details').on('click', '#reserve-btn', events.reservationForm);
   $('#trip-details').on('submit', '#reservation-form', events.finalizeReservation);
   $('body').on('click', '#add-trip-btn', events.newTripForm);
   $('#trip-details').on('submit', '#new-trip-form', events.addTrip);
-  // $('#add-trip-btn').click(events.newTripForm);
+  $('#all-trips').on('click', '.sort', events.sortTrips);
+  tripList.on('sort', render, tripList);
+
 });
