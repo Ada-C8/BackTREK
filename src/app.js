@@ -114,7 +114,7 @@ $(document).ready( () => {
 
   $('#filterForm').on('submit', () => {
     const filter = $('#filter')[0].value;
-    
+
     let value;
     if($('#numberFilter').is(':visible')){
       value = $('#numberFilter')[0].value;
@@ -140,6 +140,38 @@ $(document).ready( () => {
       });
     });
     return false;
+  });
+
+  $('#numberFilter').on('keyup', () => {
+      const value = $('#numberFilter')[0].value;
+      const filter = $('#filter')[0].value;
+      const elements = $('#tripSection').children();
+
+      if (value <= 0){
+          $('#tripSection tr').each((index) => {
+            const rowID = elements[index].id;
+            $(`tr#${rowID}`).show();
+          });
+      } else {
+
+        //console.log($(`tr#${0}`).hide());
+        $('#tripSection tr').each((index) => {
+          //const temp = $(`tr#${index}`).children()[2];
+          const rowID = elements[index].id;
+          const rowValue = $(`tr#${rowID} td:nth-child(3)`).html();
+          if (filter === 'weeks'){
+            console.log("############");
+            if (parseInt(rowValue) <= value){
+              console.log(`${rowValue} is less than ${value}`);
+              $(`tr#${rowID}`).show();
+            } else {
+              $(`tr#${rowID}`).hide();
+            }
+          }
+        });
+      }
+
+
   });
 
 });
