@@ -30,10 +30,16 @@
     </section>
 
     <section class="trip large-6 columns">
-      <!-- <button id="close" class="button" type="button">&#10006;</button> -->
       <ul id="trip"></ul>
       <article id="reservation"></article>
     </section>
+
+    <div class="wrapper">
+      <section id="add-trip">
+        <h3>Add a Trip</h3>
+      </section>
+      <button id="close" class="button" type="button">&#10006;</button>
+    </div>
 
   </main>
   <footer>
@@ -84,6 +90,36 @@
           <input type="text" name="email"></input>
         </div>
         <input id="submit" class="button blue white-text" type="submit" value="Reserve a trip"></input>
+      </form>
+  </script>
+  <script type="text/template" id="trip-form-template">
+    <form id="add-trip-form">
+        <div class="input-form">
+          <label for="name"><strong>Name: </strong></label>
+          <input type="text" name="name"></input>
+        </div>
+        <div class="input-form">
+          <label for="continent"><strong>Continent: </strong></label>
+          <input type="number" name="continent"></input>
+        </div>
+        <div class="input-form">
+          <label for="about"><strong>About: </strong></label>
+          <input type="text" name="about"></input>
+        </div>
+        <div class="input-form">
+          <label for="category"><strong>Category: </strong></label>
+          <input type="text" name="category"></input>
+        </div>
+        <div class="input-form">
+          <label for="weeks"><strong>Duration in weeks: </strong></label>
+          <input type="text" name="weeks"></input>
+        </div>
+        <div class="input-form">
+          <label for="cost"><strong>Cost: </strong></label>
+          <input type="text" name="cost"></input>
+        </div>
+
+        <input id="submit" class="button blue white-text" type="submit" value="Add a trip"></input>
       </form>
   </script>
 </body>

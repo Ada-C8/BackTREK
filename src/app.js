@@ -25,6 +25,7 @@ let backTemplate;
 let headTemplate;
 let tripTemplate;
 let reserveTemplate;
+let addTripTemplate;
 
 const getTrips = function(tripList) {
   let back = backTemplate();
@@ -88,9 +89,17 @@ const makeReservation = function(event) {
    reservation.set('tripID', $(this).data('id'));
 
   reservation.save({});
-  console.log('making reservation');
-}
+  console.log('reservation was made');
+}//and of make reservation
 
+//add new trip
+const addTrip = function(event) {
+  event.preventDefault();
+
+  const trip = new Trip(readFormData(TRIP_FIELDS));
+  trip.save({});
+  console.log('new trip added');
+}//end of add trip
 
 $(document).ready( () => {
   //templates
@@ -99,6 +108,7 @@ $(document).ready( () => {
   headTemplate = _.template($('#tripsHead').html());
   tripTemplate = _.template($('#trip-template').html());
   reserveTemplate = _.template($('#reserve-form-template').html());
+  addTripTemplate = _.template($('#trip-form-template').html());
 
   //get all trips on click
   $('main').on('click', '#trips', function() {
@@ -127,6 +137,12 @@ $(document).ready( () => {
     // })
     trip.on('change', getTrip);
     trip.fetch();
+  })
+
+  //add new trip
+  $('nav').on('click', '#new-trip', function() {
+    $('#add-trip').append(addTripTemplate);
+    $('.wrapper').show();
   })
 
 
