@@ -47,4 +47,16 @@ $(document).ready( () => {
       $(`#trip-details`).html(tripDetails(response));
     });
   });
+
+  $('#add-trip-button').on('click', function() {
+    $('#add-trip').css('display', 'block');
+  });
+
+  $(document).on('click', function() {
+    const modal = document.getElementById('add-trip');
+
+    if (event.target == modal) {
+      modal.style.display = 'none';
+    }
+  });
 });

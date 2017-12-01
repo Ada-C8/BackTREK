@@ -10,7 +10,7 @@
 </head>
 <body>
   <header>
-    <h1>BackTREK<span class='float-right button'>Add a trip</span></h1>
+    <h1>BackTREK<span class='float-right button' id='add-trip-button'>Add a trip</span></h1>
   </header>
 
   <main class='row'>
@@ -32,6 +32,19 @@
     </section>
 
     <section class="columns medium-6 small-12" id="trip-details"></section>
+
+    <div id='add-trip'>
+      <form class='add-trip-form'>
+        <h4>Add a trip</h4>
+        <input type='text' name='name' placeholder='Name' />
+        <input type='text' name='continent' placeholder='Continent' />
+        <input type='text' name='about' placeholder='About' />
+        <input type='text' name='category' placeholder='Category' />
+        <input type='text' name='weeks' placeholder='Weeks' />
+        <input type='text' name='cost' placeholder='Cost' />
+        <input type="submit" value="Add trip" class="button"></input>
+      </form>
+    </div>
 
   </main>
 
@@ -55,8 +68,16 @@
         <h5><%- category %></h5>
         <p><%- about %></p>
         <h3>$ <%- cost %></h3>
+
+        <form>
+          <input type='text' name='name' placeholder='Name' />
+          <input type='text' name='age' placeholder='Age' />
+          <input type='text' name='email' placeholder='Email' />
+          <input type="submit" value="Book it" class="button"></input>
+        </form>
       </article>
     </script>
+
   <script src="app.bundle.js" type="text/javascript"></script>
 </body>
 </html>
