@@ -59,7 +59,6 @@
     TRIP_FIELDS.forEach((field) => {
       const headerData = $(`th.sort.${ field }`);
       headerData.on('click', (event) => {
-        // console.log(`sorting table by ${ field }`);
         tripList.comparator = field;
         tripList.sort();
       });
@@ -81,6 +80,9 @@
       $('#trips').hide();
       $('#trip').hide();
     });
+
+
+    
 
     // Adding trip to the DB
     $("#add-trip-form").on('submit', function(event){
