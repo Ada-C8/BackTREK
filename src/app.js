@@ -9,11 +9,13 @@ import './css/style.css';
 // CLASSES
 import Trip from 'app/models/trip';
 import TripList from 'app/collections/trip_list';
+import Reservation from 'app/models/reservation';
 
 console.log('it loaded!');
 
-// array of fields for sorting
+// array of fields
 const TRIP_FIELDS = ['name', 'continent', 'category', 'weeks', 'cost'];
+const RESERVATION_FIELDS = ['name', 'age', 'email'];
 // create variable for using in document.ready
 const tripList = new TripList();
 
@@ -58,8 +60,37 @@ const getTrip = function(trip) {
   console.log(trip);
   let generatedHTML = tripTemplate(trip.attributes);
   $('#trip').html(generatedHTML);
-  $('#reservation').html(reserveTemplate());
+  $('#reservation').html(reserveTemplate(trip));
+  //make new reservation
+  $('#reservation-form').on('submit', makeReservation);
 } // end of getTrip
+
+// read data from forms
+const readFormData = function(formFields) {
+  const formData = {};
+  formFields.forEach((field) => {
+    const inputElement = $(`#reservation-form input[name="${ field }"]`);
+    const value = inputElement.val();
+    formData[field] = value;
+    //reset the form after submitting the input
+    inputElement.val('');
+  });
+  console.log(formData);
+  return formData;
+}
+
+//make reservation
+const makeReservation = function(event) {
+  console.log('hello');
+  event.preventDefault();
+
+  const reservation = new Reservation(readFormData(RESERVATION_FIELDS));
+   reservation.set('tripID', $(this).data('id'));
+
+  reservation.save({});
+  console.log('making reservation');
+}
+
 
 $(document).ready( () => {
   //templates
@@ -97,6 +128,9 @@ $(document).ready( () => {
     trip.on('change', getTrip);
     trip.fetch();
   })
+
+
+
 
 
 

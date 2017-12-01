@@ -70,7 +70,7 @@
     <li><strong>Cost: </strong><%- cost %></li>
   </script>
   <script type="text/template" id="reserve-form-template">
-    <form data-id=${id}>
+    <form data-id=<%- id %> id="reservation-form">
         <div class="input-form">
           <label for="name"><strong>Name: </strong></label>
           <input type="text" name="name"></input>
