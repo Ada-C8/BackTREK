@@ -15,6 +15,7 @@ import TripList from './app/collections/trip_list';
 const tripList = new TripList();
 let tripsTemplate;
 
+
 const renderTrips = function renderTrips(tripList) {
   console.log('it loaded!');
   $('#load-trips').hide();
@@ -46,12 +47,57 @@ const renderSingleTrip = function renderSingleTrip(tripID) {
   console.log(trip);
 }
 
+//EVENT LISTENER
+//1. Create listener:
+const bogusListener = function bogusListener(event)  {
+  console.log('Event Occurred!');
+  console.log(event);
+  console.log(this);
+};
+// // 2.  Register the Event Handler with the Component
+tripList.on('bogus', bogusListener);
+// // 3.  Trigger the event
+tripList.trigger('bogus', 'Argument!');
+
+const fields = ["name", "category", "continent", "cost", "weeks", "about"];
+
+const events = {
+  addTrip(event) {
+    event.preventDefault();
+    const tripData = {};
+    fields.forEach( (field) => {
+      tripData[field] = $(`input[name=${field}]`).val();
+    });
+    console.log('Trip Added');
+    console.log(tripData);
+    const trip = new Trip(tripData);
+
+    trip.save({}, {
+      success: events.successfullSave,
+      error: events.failedSave,
+    });
+  },
+  successfullSave(trip, response) {
+    tripList.add(trip);
+    console.log('Success!');
+    console.log(trip);
+    console.log(response);
+    $('#status-messages ul').empty();
+    $('#status-messages ul').append(`<li>${trip.get('name')} added!</li>`);
+    $('#status-messages').show();
+  },
+  failedSave(trip, response) {
+    console.log('ERROR!');
+    console.log(trip);
+    console.log(response);
+  },
+};
+
 $(document).ready( () => {
   $('#reservation-form-container').hide();
   $('#add-a-trip-form-container').hide();
   $('#trips-table-container').hide();
   $('#add-new-trip').hide();
-  $('.clear').hide();
 
   $('#load-trips').on('click', function(){
     $('#trips-table-container').show();
@@ -72,11 +118,11 @@ $(document).ready( () => {
 
   //submit form to Add a Trip
   //creates a new instance of the Trip model
+  //tripsTemplate = _.template($('#trips-template').html());
+  $('#add-trip-form').submit(events.addTrip);
 
+  //update table
   tripList.on('update', renderTrips, tripList);
-
-
-
 
 
   // $('.sort').click(events.sortTrips);
