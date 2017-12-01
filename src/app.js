@@ -36,6 +36,37 @@ const loadTrips = function loadTrips(tripList) {
   $(`th.sort.${ tripList.comparator }`).addClass('current-sort-field');
 };
 
+const newReservationHandler = function(event) {
+  // keep it from doing normal form things
+  event.preventDefault();
+
+  /////////////////////////////
+  // read information from form
+  const reservationData = {};
+  TRIP_FIELDS.forEach((field) => {
+    const inputElement = $(`#reservation-form input[name="${ field }"]`);
+    const value = inputElement.val();
+    reservationData[field] = value;
+
+    // clears form after submitted
+    inputElement.val('');
+  });
+
+  ///////////////////////////////
+  ///////////////////////////////
+  const reservation = tripList.add(reservationData);
+  reservation.save({}, {
+    success: (model, response) => {
+      console.log('Create new reservation: success');
+    },
+    error: (model, response) => {
+      console.log('Create new reservation: failure');
+      console.log('Server response:');
+      console.log(response);
+    },
+  });
+};
+
 const createNewTripHandler = function(event) {
   // keep it from doing normal form things
   event.preventDefault();
@@ -88,6 +119,10 @@ $(document).ready(() => {
     let singleTrip = new Trip({id: tripID});
     console.log(singleTrip.url());
 
+    let suffix = '/reservations'
+    let newReservation = new Trip({id: tripID + suffix});
+    console.log(newReservation.url());
+
     // apparently 'model' is cheating???
     // model refers to singleTrip?
     // model.fetch(): takes urlRoot and adds id?
@@ -97,7 +132,9 @@ $(document).ready(() => {
         const generatedHTML = $(aboutTemplate(model.attributes));
         aboutElement.html(generatedHTML);
 
+        ///////////////////////////////////
         // RENDER 'RESERVATION' FORM TO DOM
+        ///////////////////////////////////
         $('#new-reservation-btn').on('click', function() {
           const newReservationElement = $('#new-reservation');
           newReservationElement.html('');
@@ -107,7 +144,6 @@ $(document).ready(() => {
           console.log('clicked');
           console.log('load new reservation form: success');
         });
-
       },
       error: (model) => {
         console.log('singleTrip fetch: failure');
@@ -115,16 +151,6 @@ $(document).ready(() => {
       },
     });
   })
-
-  // RENDER 'RESERVATION' FORM TO DOM
-  $('#new-reservation-btn').on('click', function() {
-    const newReservationElement = $('#new-reservation');
-    newReservationElement.html('');
-    const generatedHTML = $(newReservationTemplate());
-    newReservationElement.html(generatedHTML);
-
-    console.log('make reservation btn: clicked');
-  });
 
   // RENDER 'ADD NEW' FORM TO DOM
   $('#trip-create-new-btn').on('click', function() {
@@ -137,6 +163,10 @@ $(document).ready(() => {
     console.log('load add new form: success');
   });
 })
+
+/////////////////////////////////
+// MAKE NEW RESERVATION FROM FORM
+$('#reservation-form').on('submit', newReservationHandler);
 
 // SUBMIT NEW TRIP FROM FORM
 $('#trip-create-new').on('submit', createNewTripHandler);
