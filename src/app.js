@@ -191,6 +191,7 @@ const failedSave = function failedSave(model, response) {
 
 const reserveForm = function reserveForm(event) {
   clearContent();
+  $('#reserve-header').append('Reserve');
   const tripId = $(event.currentTarget.attributes.tripid).val();
   $('#reserve-trip-form').attr('tripid', tripId);
   reservationFields.forEach((item) => {
