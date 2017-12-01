@@ -24,9 +24,26 @@
                 <img src="http://www.pvhc.net/img223/xeiwtpbbgpmyhtcnjvwt.png" alt="Clear">
               </button>
               <ul>
+                <!-- display template here -->
               </ul>
             </section>
           </div>
+          <h1>Form Demo</h1>
+<form>
+   <fieldset>
+      <legend>Selecting elements</legend>
+      <p>
+         <label>Select list</label>
+         <select id = "myList">
+           <option value = "1">one</option>
+           <option value = "2">two</option>
+           <option value = "3">three</option>
+           <option value = "4">four</option>
+         </select>
+      </p>
+   </fieldset>
+</form>
+
           <div id="show-trip"></div>
           <div id="add-trip">
             <h2>Add a Trip</h2>
@@ -99,14 +116,15 @@
 </script>
 
 <script type="text/template" id="show-trip-template">
-  <h2 data-id=<%- id %>> <%- name %> </h2>
+  <h2> <%- name %> </h2>
   <p> <%- about %> </p>
   <p> <strong>Continent:</strong> <%- continent %></p>
   <p> <strong>Category: </strong><%- category %> </p>
   <p> <strong>Weeks: </strong> <%- weeks %></p>
   <p> <strong>Cost: </strong><%- cost %> </p>
   <section>
-    <form id="reserve-trip-form" data-id=<%- id %>>
+    <form id="reserve-trip-form">
+      <input type="hidden" name="tripId" value="<%-id%>"></input>
       <label for="name"> Name:</label>
       <input type="text" name="name"></input>
       <label for="email">Email:</label>
@@ -120,6 +138,9 @@
       </form>
     </section>
   </script>
+  <!-- <script type="text/template" id="">
+    <li class="${ status }">${ message }</li>`
+  </script> -->
   <!-- </div> -->
 </body>
 </html>

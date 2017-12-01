@@ -2,6 +2,7 @@ import Backbone from 'backbone';
 
 const Trip = Backbone.Model.extend({
   urlRoot: 'https://ada-backtrek-api.herokuapp.com/trips',
+  // const CONTINENTS = ['', ];
 
 
   validate(attributes) {
@@ -14,6 +15,7 @@ const Trip = Backbone.Model.extend({
     //   author: ['cannot be blank']
     // }
     // continents mabye client-side validation??
+    const CONTINENTS = ['Africa', 'Antartica', 'Asia', 'Australasia', 'Europe', 'North America', 'South America']
 
     const errors = {};
     if (!attributes.name) {
@@ -22,6 +24,10 @@ const Trip = Backbone.Model.extend({
 
     if (!attributes.continent) {
       errors.continent = ['cannot be blank'];
+    }
+
+    if (!CONTINENTS.includes(attributes.continent)) {
+      errors.continent = ['must be an existing continent'];
     }
 
     if (!attributes.category) {

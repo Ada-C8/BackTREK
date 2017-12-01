@@ -17,7 +17,7 @@ import Reservation from './app/models/reservation'
 
 
 const TRIP_FIELDS = ['name', 'about', 'continent', 'category', 'weeks', 'cost'];
-const RESERVATION_FIELDS = ['name', 'email', 'age'];
+const RESERVATION_FIELDS = ['tripId', 'name', 'email', 'age'];
 
 const trips = new TripList();
 
@@ -33,10 +33,11 @@ const clearStatus = function clearStatus() {
 
 // Add a new status message
 const reportStatus = function reportStatus(status, message) {
-  console.log(`Reporting ${ status } status: ${ message }`);
+  // console.log(`Reporting ${ status } status: ${ message }`);
 
   // TODO: use an underscore method for this
   // Should probably use an Underscore template here.
+
   const statusHTML = `<li class="${ status }">${ message }</li>`;
 
   // note the symetry with clearStatus()
@@ -85,6 +86,13 @@ const showTrip = function showTrip(id) {
       const generatedHTML = showTripTemplate(response);
       // singleTrip.append(generatedHTML);
       singleTrip.html(generatedHTML);
+      $('#reserve-trip-form').on('submit', function(ev) {
+        ev.preventDefault();
+        // ev.stopPropagation()
+        alert( "Handler for .submit() called." );
+
+        addReservationHandler();
+      })
     },
   })
   $('#show-trip').show();
@@ -104,13 +112,7 @@ console.log(event);
 //     // addReservationHandler();
 //
 // });
-  // $('#reserve-trip-form').on('submit', function(ev) {
-  //   ev.preventDefault();
-  //   ev.stopPropagation()
-  //   alert( "Handler for .submit() called." );
-  //
-  //   // addReservationHandler();
-  // })
+
 
   // addReservationHandler
 
@@ -149,7 +151,8 @@ const readFormData = function readFormData() {
     // break this out into a clear inputs and a method that reads inputs and one that does both
     // methods that don't have side effects
     // pure functions are guaranteed to be idempotent
-    inputElement.val('');
+    //TODO: check
+    // inputElement.val('');
   });
 
   return tripData;
@@ -164,16 +167,21 @@ const handleValidationFailures = function handleValidationFailures(errors) {
 };
 
 const addReservationHandler = function(ev) {
-  ev.preventDefault();
+  // ev.preventDefault();
   console.log('in addReservationHandler')
   const reservationData = {};
 
   RESERVATION_FIELDS.forEach((field) => {
 
 
-    const inputElement = $(`#add-reservation-form input[name="${ field }"]`);
-    const value = inputElement.val();
+    // const inputElement = $(`#add-reservation-form input[name="${ field }"]`);
+    const inputElement = $(`#reserve-trip-form input[name="${ field }"]`);
 
+    const value = inputElement.val();
+    console.log(field);
+    console.log(value);
+
+    // console.log($(`#add-reservation-form input[name="tripId"]`).val());
     // Don't take empty strings, so that Backbone can
     // // fill in default values
     // if (value != '') {
@@ -181,19 +189,31 @@ const addReservationHandler = function(ev) {
     // }
 
 
-    tripData[field] = value;
+    reservationData[field] = value;
     // clears the field
     // break this out into a clear inputs and a method that reads inputs and one that does both
     // methods that don't have side effects
     // pure functions are guaranteed to be idempotent
-    inputElement.val('');
+    //TODO: check
+    // inputElement.val('');
   });
-  const tripId = $('#add-reservation-form').attr('data-id').val();
-  tripData['id'] = tripId;
-  console.log(tripId);
-  return tripData;
+  // $(`#reserve-trip-form input[name="tripId"]`).value
+  // const TripIdResult = $(`#reserve-trip-form input[name="tripId"]`).value
+  // console.log('trip id result');
+  //
+  // console.log(TripIdResult);
+  // const tripId = $('#add-reservation-form').attr('data-id').val();
+  // tripData['id'] = tripId;
+  // console.log(tripId);
+  // return tripData;
+  console.log(reservationData)
+  const reservation = new Reservation(reservationData);
 
-  const reservation = new Reservation(tripData);
+  if (!reservation.isValid()) {
+    handleValidationFailures(reservation.validationError);
+    return;
+  }
+  console.log(reservation);
 
   // TODO: pull out into function so can DRY saving reservation and trip models
   reservation.save({}, {
@@ -206,11 +226,9 @@ const addReservationHandler = function(ev) {
       console.log('Failed to save reservation! Server response:');
       console.log(response);
       const errors = response.responseJSON["errors"];
-      for (let field in errors) {
-        for (let problem of errors[field]) {
-          // reportStatus('error', `${field}: ${problem}`);
-        }
-      }
+      // print server-side validation failures if client-side validation
+      // somehow misses a server-side validation
+      handleValidationFailures(response.responseJSON["errors"]);
     },
   });
 }
@@ -253,11 +271,10 @@ const addTripHandler = function(event) {
       console.log('Failed to save trip! Server response:');
       console.log(response);
       const errors = response.responseJSON["errors"];
-      for (let field in errors) {
-        for (let problem of errors[field]) {
-          // reportStatus('error', `${field}: ${problem}`);
-        }
-      }
+      // print server-side validation failures if client-side validation
+      // somehow misses a server-side validation
+      handleValidationFailures(response.responseJSON["errors"]);
+
     },
   });
 };
@@ -280,7 +297,7 @@ $(document).ready( () => {
   $('#load-add-trip').on('click', () => $('#add-trip').toggle());
 
   $('#trip-list').on('click', 'tr td', function () {
-    event.preventDefault();
+    // event.preventDefault();
     // event.stopPropagation();
     let tripId = $(this).attr('data-id');
     console.log(`this is the trip id ${$(this).attr('data-id')}`);
