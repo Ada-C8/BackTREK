@@ -32,26 +32,21 @@ const events = {
     event.preventDefault();
     const tripData = {};
     tripFields.forEach((field) => {
-      const value = $(`input[name=${field}]`).val();
+      const value = $(`#newTripForm input[name=${field}]`).val();
       if (value !== "") {
         tripData[field] = value
       }
     });
-
     const trip = new Trip(tripData);
-    console.log("this trip is: ")
-    console.log(trip);
-    console.log("Trip not yet saved.")
 
     if (trip.isValid()){
       console.log("SUCCESSSSSSS")
       console.log();
-      tripList.add(trip)
       trip.save({}, {
         success: events.successfulSave,
         error: events.failedSave,
       });
-      console.log("Now the trip has been saved.")
+
     } else {
       console.log("What's on book is invalid on the client side")
       console.log(trip)
@@ -67,6 +62,7 @@ const events = {
 
   failedSave(trip, response){
     console.log("Failed Save");
+    console.log(response);
     // for (let key in response.responseJSON.errors) {
     //   response.responseJSON.errors[key].forEach((error) => {
     //     $('#status-messages ul').append(`<li>${key}: ${error}</li>`)
@@ -120,14 +116,17 @@ $(document).ready( () => {
 
   $('#new-trip').on('focus', function(){
     $('#newTripForm').modal();
+    $('#newTripForm').submit(function(event) {
+
+
+      events.addTrip(event)
+      $.modal.close();
+      tripList.fetch();
+    });
+
     // $('#newTripForm').show();
   });
 
-  $('#newTripForm').on('click', 'button', function() {
 
-    events.addTrip
-    $.modal.close();
-
-  });
 
 });
