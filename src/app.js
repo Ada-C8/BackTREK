@@ -10,6 +10,9 @@ import Trip from './app/models/trip';
 import TripList from './app/collections/trip_list';
 
 
+// import Reservation from './app/models/reservation';
+// import ReservationList from './app/collections/reservation_list';
+
 console.log('it loaded!');
 
 const tripList = new TripList();
@@ -47,6 +50,7 @@ const getIndividualTrip = function getIndividualTrip() {
   console.log('*****************');
   console.log(trip);
   console.log('*****************');
+
   // console.log(trip.attributes);
   // console.log(detailTemplate(trip.attributes));
   // $('#trip-details').append(detailTemplate({
@@ -60,12 +64,12 @@ const getIndividualTrip = function getIndividualTrip() {
 
   let details = trip.attributes;
   // WHHHHAAAAAAATTT
-  details.about = 'fake about';
-  console.log(details.name);
-  console.log(details.continent);
-  console.log(details.about);
+  // details.about = 'fake about';
+  // console.log(details.name);
+  // console.log(details.continent);
+  // console.log(details.about);
 
-  $('#trip-details').empty();
+  $('#trip-details').empty()
   $('#trip-details').append(detailTemplate(details));
 };
 
