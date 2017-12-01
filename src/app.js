@@ -18,7 +18,7 @@ const  tripList = new TripList();
 let tripTemplate;
 let individualTripTemplate;
 let reserveTemplate;
-
+let modal;
 //////////////////////////
 // Status reporting
 //////////////////////////
@@ -26,6 +26,7 @@ const clearStatus = function clearStatus() {
   $('#status-messages ul').html();
   $('#status-messages').hide();
 };
+// to make this work we need an underscore template
 const reportStatus = function reportStatus(status, message) {
   const statusHTML = `<li class="status${ status }">${ message }</li>`;
   $('#status-messages ul').append(statusHTML);
@@ -74,7 +75,7 @@ const showTripDetails = function showTripDetails(trip){
   $('#reserve').show(); //button display
   $('#reserve').on('click', function(event) {
     $('#add-reservation').show();
-    $('#status-messages').html('');
+    clearStatus();
   });
   $('#add-reservation').on('submit', function(event) {
     event.preventDefault();
@@ -110,12 +111,12 @@ const render = function render(tripList) {
 };
 
 const readFormData = function readFormData() {
-  const tripData = {};
-  TRIP_FIELDS.forEAch((field) => {
+  const tripData = { id: null };
+  TRIP_FIELDS.forEach((field) => {
     const inputElement = $(`#add-trip-form input[name=${ field }]`);
     const value = inputElement.val();
     if (value != '') {
-      tripDarta[field] = value;
+      tripData[field] = value;
     }
     inputElement.val('');
   });
@@ -131,7 +132,9 @@ const handleValidationFailures = function handleValidationFailures(errors) {
 };
 const addTripHandler = function(event) {
   event.preventDefault();
-  const trip = Trip(readFormData);
+  const trip = new Trip(readFormData());
+  // $('#status-messages ul').html('');
+  clearStatus();
   if (!trip.isValid()) {
     handleValidationFailures(trip.validationError);
     return;
@@ -143,6 +146,7 @@ const addTripHandler = function(event) {
       console.log('successfully saved trip!');
       reportStatus('success', 'Successfully saved trip!');
       tripList.add(model);
+      modal.hide();
     },
     error: (model, response) => {
       console.log('failed to save trip.');
@@ -153,7 +157,10 @@ const addTripHandler = function(event) {
   });
 };
 
+
 $(document).ready( () => {
+  modal = $('#myModal')
+
   individualTripTemplate = _.template($('#individual-trip-template').html());
   tripTemplate = _.template($('#trip-template').html());
   // reserveTemplate = _.template($('#reserve-trip-template').html());
@@ -163,7 +170,6 @@ $(document).ready( () => {
   tripList.on('sort', render);
   tripList.fetch(); //overrides anything youve added
 
-  $('#add-trip-form').on('submit', addTripHandler);
   TRIP_FIELDS.forEach((field) => {
     const headerElement = $(`th.sort.${ field }`);
     headerElement.on('click', (event) => {
@@ -172,28 +178,38 @@ $(document).ready( () => {
       tripList.sort();
     });
   });
+
+  $('#add-trip-form').on('submit', addTripHandler);
   $('#status-messages button.clear').on('click', clearStatus);
   $('#reserve').hide();
   $('#add-reservation').hide();
+
+  // $('#add-trip-form').hide();
+
   // ///////// MODAL ///////// in doc ready? ///////
+  const showAddForm = function showAddForm() {
+    modal.css("display", "block")
+    // modal.style.display = "block";
+    // $('#add-trip-form').show();
+    $('.close').on('click', function(){
+      modal.hide();
+    });
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    };
+  };
+  $('#add-trip-button').on('click', showAddForm);
+
+
   // Get the modal
-  var modal = document.getElementById('myModal');
-  // Get the button that opens the modal
-  var btn = document.getElementById("myBtn");
-  // Get the <span> element that closes the modal
-  var span = document.getElementsByClassName("close")[0];
-  // When the user clicks on the button, open the modal
-  btn.onclick = function() {
-    modal.style.display = "block";
-  }
-  // When the user clicks on <span> (x), close the modal
-  span.onclick = function() {
-    modal.style.display = "none";
-  };
-  // When the user clicks anywhere outside of the modal, close it
-  window.onclick = function(event) {
-    if (event.target == modal) {
-      modal.style.display = "none";
-    }
-  };
+  // document.getElementById('myModal');
+  // // Get the button that opens the modal
+  // var btn = document.getElementById("myBtn");
+  // // Get the <span> element that closes the modal
+  // var span = document.getElementsByClassName("close")[0];
+  //
+
 });

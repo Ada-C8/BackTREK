@@ -8,16 +8,6 @@
 <body>
   <header>
     <!-- Trigger/Open The Modal -->
-    <button id="add-trip-button myBtn" class="button float-right">Add a trip</button>
-    <div id="myModal" class="modal">
-      <!-- Modal content -->
-      <div class="modal-content">
-        <span class="close">&times;</span>
-        <p>Some text in the Modal..</p>
-      </div>
-    </div>
-    <!--  end of modal -->
-
     <h1>BackTREK</h1>
     <section id="messages"></section>
   </header>
@@ -30,71 +20,106 @@
       <ul>
       </ul>
     </section>
+    <button id="add-trip-button" class="button float-right">Add a trip</button>
+    <div id="myModal" class="modal">
+      <!-- Modal content -->
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <form id="add-trip-form">
+          <h2>Add a Trip</h2>
+          <label for="name">Name</label>
+          <input type="text" name="name"></input>
 
-    <!--  <TODO> need to add a 'add a trip' form </TODO>-->
+          <label for="category">Category</label>
+          <input type="text" name="category"></input>
 
-    <section class="columns large-5 small-12">
-      <h2>Trips</h2>
+          <label>Choose a Continent</label>
+          <input type="radio" name="continent" value="Africa" id="contAfrica"><label for="contAfrica">Africa</label>
+          <input type="radio" name="continent" value="Antartica" id="contAntartica"><label for="contAntartica">Antartica</label>
+          <input type="radio" name="continent" value="Asia" id="contAsia"><label for="contAsia">Asia</label>
+          <input type="radio" name="continent" value="Australasia" id="contAustralasia"><label for="contAustralasia">Australasia</label>
 
-      <table>
-        <thead>
-          <th class="sort name">Name</th>
-          <th class="sort category">Category</th>
-          <th class="sort continent">Continent</th>
-          <th class="sort cost">Cost</th>
-          <th class="sort weeks">Number of Weeks</th>
-        </thead>
-        <tbody id="trip-list">
-        </tbody>
-      </table>
+          <label for="cost">Cost</label>
+          <input type="number" name="cost"></input>
+
+          <label for="weeks">Weeks</label>
+          <input type="text" name="weeks"></input>
+
+          <label for="about">About</label>
+          <input type="text" name="about"></input>
+
+          <input type="submit" value="Add this trip!" class="button"></input>
+        </form>
+      </aside>
+
+      <!-- <p>Some text in the Modal..</p> -->
+    </div>
+  </div>
+  <!--  end of modal -->
+
+  <section class="columns large-5 small-12">
+    <h2>Trips</h2>
+    <table>
+      <thead>
+        <th class="sort name">Name</th>
+        <th class="sort category">Category</th>
+        <th class="sort continent">Continent</th>
+        <th class="sort cost">Cost</th>
+        <th class="sort weeks">Number of Weeks</th>
+      </thead>
+      <tbody id="trip-list">
+      </tbody>
+    </table>
+  </section>
+
+  <!-- individual trip display -->
+  <section class="columns large-4 small-12">
+    <ul id="individual-trip-detail"></ul>
+
+    <h2 id="reserve" class="button" >Reserve</h2>
+    <form id="add-reservation">
+      <label for="name">Name:</label>
+      <input type="text" name="name"></input>
+      <label for="age">Age:</label>
+      <input type="number" name="age"></input>
+      <label for="email">Email:</label>
+      <input type="text" name="email"></input>
+      <input id="reservationSubmit" type="submit" value="Make Reservation"</input></form>
     </section>
-    <!-- individual trip display -->
-    <section class="columns large-4 small-12">
-      <ul id="individual-trip-detail"></ul>
 
-      <h2 id="reserve" class="button" >Reserve</h2>
-      <form id="add-reservation">
-        <label for="name">Name:</label>
-        <input type="text" name="name"></input>
-        <label for="age">Age:</label>
-        <input type="number" name="age"></input>
-        <label for="email">Email:</label>
-        <input type="text" name="email"></input>
-        <input id="reservationSubmit" type="submit" value="Make Reservation"</input></form>
-      </section>
-
-    </main>
+  </main>
 
 
 
-  </aside>
-  <footer>
-    &copy; 2017, Lauren Lee & Ada Developers Academy
-  </footer>
+</aside>
+<footer>
+  &copy; 2017, Lauren Lee & Ada Developers Academy
+</footer>
 
-  <script id="trip-template" type="text/template">
-    <tr class="trip" data-id="<%- id %>">
-      <!-- <% const TRIP_FIELDS = ['name', 'category', 'continent', 'cost', 'weeks']; %>
-      <% TRIP_FIELDS.forEach((field) => { %>
-      <td> <%- field %>
-    </td>
-    <% }); %> jQuery -->
-    <td>
-      <%- name %>
-    </td>
-    <td>
-      <%- category %>
-    </td>
-    <td>
-      <%- continent %>
-    </td>
-    <td>
-      $<%- cost %>
-    </td>
-    <td>
-      <%- weeks %>
-    </td>
-  </tr>
+<script id="trip-template" type="text/template">
+  <tr class="trip" data-id="<%- id %>">
+    <!--  -->
+    <!-- <% const TRIP_FIELDS = ['name', 'category', 'continent', 'cost', 'weeks']; %>
+    <% TRIP_FIELDS.forEach((field) => { %>
+    <td> <%- field %>
+  </td>
+  <% }); %> jQuery -->
+  <td>
+    <%- name %>
+  </td>
+  <td>
+    <%- category %>
+  </td>
+  <td>
+    <%- continent %>
+  </td>
+  <td>
+    $<%- cost %>
+  </td>
+  <td>
+    <%- weeks %>
+  </td>
+</tr>
 </script>
 
 <!-- individual trip -->
@@ -122,7 +147,24 @@
 <!--  reservation template 11/30/17 no currently using-->
 
 <script id="reserve-trip-template" type="text/template">
-<!-- <input type="hidden" value= "<%- id %>"> -->
+  <!-- <input type="hidden" value= "<%- id %>"> -->
+  <tr class="trip" value="<%- id %>">
+    <td>
+      <%- name %>
+    </td>
+    <td>
+      <%- category %>
+    </td>
+    <td>
+      <%- continent %>
+    </td>
+    <td>
+      $<%- cost %>
+    </td>
+    <td>
+      <%- weeks %>
+    </td>
+  </tr>
 </script>
 
 
