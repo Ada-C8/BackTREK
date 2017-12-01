@@ -140,6 +140,25 @@ const events = {
     $('#status-messages ul').show();
   },
 
+  sortTrips(event) {
+  console.log(event);
+  console.log(this);
+  const classes = $(this).attr('class').split(/\s+/);
+
+  tripList.comparator = classes[1];
+
+  if (classes.includes('current-sort-field')) {
+    $(this).removeClass('current-sort-field');
+    tripList.set(tripList.models.reverse());
+    render(tripList);
+
+  } else {
+    $('.current-sort-field').removeClass('current-sort-field');
+    $(this).addClass('current-sort-field');
+    tripList.sort();
+  };
+},
+
 };
 
 
@@ -190,8 +209,12 @@ $(document).ready(() => {
     });
   });
 
+  $('.sort').click(events.sortTrips);
+
 
   tripList.on('update', renderTrips, tripList);
+  tripList.on('sort', renderTrips, tripList);
+
 
 
 });
