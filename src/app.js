@@ -141,29 +141,47 @@ const events = {
   },
 
   sortTrips(event) {
-  console.log(event);
-  console.log(this);
-  const classes = $(this).attr('class').split(/\s+/);
+    console.log(event);
+    console.log(this);
+    const classes = $(this).attr('class').split(/\s+/);
 
-  tripList.comparator = classes[1];
+    tripList.comparator = classes[1];
 
-  if (classes.includes('current-sort-field')) {
-    $(this).removeClass('current-sort-field');
-    tripList.set(tripList.models.reverse());
-    renderTrips(tripList);
+    if (classes.includes('current-sort-field')) {
+      $(this).removeClass('current-sort-field');
+      tripList.set(tripList.models.reverse());
+      renderTrips(tripList);
 
-  } else {
-    $('.current-sort-field').removeClass('current-sort-field');
-    $(this).addClass('current-sort-field');
-    tripList.sort();
-  };
-},
+    } else {
+      $('.current-sort-field').removeClass('current-sort-field');
+      $(this).addClass('current-sort-field');
+      tripList.sort();
+    }
+  },
+
+  tripFilter() {
+    // Declare variables
+    var input, filter, table, tr, td, i;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("trips-table");
+    tr = table.getElementsByTagName("tr");
+
+    // Loop through all table rows, and hide those who don't match the search query
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[0];
+      if (td) {
+        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+
 
 };
-
-
-
-
 
 $(document).ready(() => {
   tripTemplate = _.template($('#trip-template').html());
@@ -210,10 +228,12 @@ $(document).ready(() => {
   });
 
   $('.sort').click(events.sortTrips);
+  $('#filter-form').submit(events.tripFilter);
 
 
   tripList.on('update', renderTrips, tripList);
   tripList.on('sort', renderTrips, tripList);
+
 
 
 
