@@ -78,6 +78,7 @@ const events = {
     $('#status-messages ul').empty();
     $('#status-messages ul').append(`<li>You added ${trip.get('name')}!</li>`);
     $('#status-messages').show();
+    setTimeout(function() {$('#status-messages').hide()}, 3000);
   },
   failedSave(trip, response) {
     $('#status-messages ul').empty();
@@ -87,6 +88,7 @@ const events = {
       }
     });
     $('#status-messages').show();
+    setTimeout(function() {$('#status-messages').hide()}, 3000);
     trip.destroy();
   },
   addReservation(event) {
@@ -116,6 +118,7 @@ const events = {
     $('#status-messages ul').empty();
     $('#status-messages ul').append(`<li>Your reservation has been saved!</li>`);
     $('#status-messages').show();
+    setTimeout(function() {$('#status-messages').hide()}, 3000);
   },
   failedBook(reservation, response) {
     $('#status-messages ul').empty();
@@ -123,6 +126,7 @@ const events = {
       $('#status-messages ul').append(`<li>${error[0]}: ${error[1]}</li>`);
     });
     $('#status-messages').show();
+    setTimeout(function() {$('#status-messages').hide()}, 3000);
     reservation.destroy();
   },
   sortTrips() {
@@ -181,22 +185,24 @@ const events = {
 console.log('it loaded!');
 
 // -------------------------------------------------------
-// Get the modal
+// Modal
 const $modal = $('.modal');
 
 $('#add-trip').on('click', function() {
-  $('.modal').css('display', 'block');
+  $modal.css('display', 'block');
 });
 
-// When the user clicks on <span> (x), close the modal
+$('#close').on('click', function(e) {
+  e.preventDefault();
+  $modal.css('display', 'none');
+});
 $('.close').on('click', function() {
-  $('.modal').css('display: none');
+  $modal.css('display', 'none');
 });
 
-// When the user clicks anywhere outside of the modal, close it
 $(window).on('click', function(event) {
   if (event.target.id == 'myModal') {
-    $('.modal').css('display','none');
+    $modal.css('display','none');
   }
 });
 // -------------------------------------------------------

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <title>BackTREK</title>
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-  <link href="https://fonts.googleapis.com/css?family=PT+Sans+Narrow|Walter+Turncoat|Oswald:300:700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Oswald:300:700" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
@@ -25,7 +25,7 @@
     </article>
     <article class="row page-wrap">
       <section class="show-trips">
-        <button class='button' id="show-trips">TREK!</button>
+        <button id="show-trips">TREK!</button>
       </section>
 
       <section class="columns small-12 large-6">
@@ -36,7 +36,7 @@
               <option value="name">Name</option>
               <option value="category">Category</option>
               <option value="continent">Continent</option>
-              <option value="weeks">Trip Length</option>
+              <option value="weeks">Weeks</option>
               <option value="cost">Cost</option>
             </select>
             <input type="text" name="search" />
@@ -48,7 +48,7 @@
               <th class="sort name">Name</th>
               <th class="sort continent">Continent</th>
               <th class="sort category">Category</th>
-              <th class="sort weeks">Trip Length</th>
+              <th class="sort weeks">Weeks</th>
               <th class="sort cost">Cost</th>
             </thead>
             <tbody id="trip-list">
@@ -92,8 +92,12 @@
 
       <div class="modal-content">
         <span class="close">&times;</span>
-        <h3>Add A Trip!</h3>
+        <h3>Add A Trip</h3>
         <div class="top-border"></div>
+        <div class="center italic">
+          <p>Offering a trip? Great!</p>
+          <p>Provide us the information below and we will add it to our list!</p>
+        </div>
         <form id="add-trip-form" action='https://ada-backtrek-api.herokuapp.com/trips/new' method="post">
           <section>
             <label for="name">Name</label>
@@ -130,7 +134,8 @@
             <textarea type="text" id="about" name="about"></textarea>
           </section>
           <section class="center">
-            <button type="submit" class="button">ADD!</button>
+            <button type="submit" class="button"> ADD! </button>
+            <button id="close" class="button outline"> CANCEL </button>
           </section>
         </form>
       </div>
@@ -156,7 +161,7 @@
           <%- weeks %>
         </td>
         <td>
-          <%- cost %>
+          $<%- cost.toFixed(2) %>
         </td>
       </tr>
     </script>

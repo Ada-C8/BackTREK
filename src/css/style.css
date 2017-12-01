@@ -100,10 +100,11 @@ footer p {
 /* Modal Content/Box */
 .modal-content {
   background-color: #fefefe;
-  margin: 15% auto; /* 15% from the top and centered */
+  margin: 5% auto; /* 15% from the top and centered */
   padding: 20px;
-  border: 1px solid #888;
-  width: 80%; /* Could be more or less, depending on screen size */
+  /*border: 1px solid #888;*/
+  width: 50%; /* Could be more or less, depending on screen size */
+  border-radius: 10px;
 }
 
 .modal h3, .modal .center {
@@ -111,9 +112,26 @@ footer p {
   margin: auto;
 }
 
+.italic p {
+  font-style: italic;
+  margin-bottom: 0.25em;
+}
+
 .modal-content .top-border {
   text-align: center;
   margin: auto;
+}
+
+.modal-content button {
+  margin-bottom: 0;
+  margin: 0 0.5em;
+}
+
+button.outline {
+  background-color: white;
+  color: #3120f6;
+  border: 3px solid #3120f6;
+  padding: 0.75em 1em;
 }
 
 /* The Close Button */
@@ -132,6 +150,8 @@ footer p {
 }
 
 /*------------------------------*/
+
+
 #trip-table {
   width: 100%;
   height: 75vh;
@@ -142,7 +162,8 @@ footer p {
   width: 100%;
   max-height: 18vh;
   overflow: scroll;
-  background-color: rgba(255, 255, 255,0.6);
+  background-color: rgba(255, 255, 255,0.75);
+  padding: 5px;
 }
 
 .trip li {
@@ -206,6 +227,15 @@ tr.selected-trip td{
   color: white;
 }
 
+table td {
+  text-align: center;
+}
+
+table thead th {
+  text-transform: uppercase;
+  text-align: center;
+}
+
 #filter select {
   display: inline;
   width: 30%;
@@ -231,5 +261,12 @@ tr.selected-trip td{
 
   h1 {
     font-size: 3em;
+  }
+  .modal-content {
+    width: 80%;
+  }
+
+  .trip h2 {
+    padding-top: 1em;
   }
 }
