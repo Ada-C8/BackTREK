@@ -81,14 +81,16 @@
 
       <article>
         <h5><%- name %></h5>
-        <ul class="list-upper-alpha">
+        <ul class="list-upper-alpha" id = "<%- id %>" >
           <li><em>Cost:</em> <%- cost %></li>
           <li><em>Continent:</em> <%- continent %></li>
           <li><em>Duration (weeks):</em> <%- weeks %></li>
           <li><em>Id:</em> <%- id %></li>
         </ul>
         <p>
-          <%- about %><button name="button" class="button reserve" id = "reserve-button">Reserve</button>
+          <%- about %>
+        </br>
+        <button name="button" class="button reserve" id = "reserve-button">Reserve</button>
 
         </p>
       </article>
@@ -97,19 +99,36 @@
   </script>
 
   <script type="text/template" id="reserve-trip-form-template">
-    <form id="add-trip-form">
+    <form id="add-reservation-form">
         <label for="name">Name</label>
         <input type="text" name="name"></input>
 
-        <label for="continent"><em>email</em></label>
-        <input type="text" name="continent"></input>
+        <label for="email"><em>email</em></label>
+        <input type="text" name="email"></input>
 
-        <label for="weeks"><em>Age</em>(weeks)</label>
-        <input type="number" name="weeks"></input>
+        <label for="age"><em>Age</em></label>
+        <input type="number" name="age"></input>
 
-        <input type="submit" value="Reserve It!" class="button"></input>
+        <input type="submit" value="Reserve Now" class="button" id="submit-reservation"></input>
       </form>
   </script>
+
+
+  <script type="text/template" id="add-trip-form-template">
+    <form id="add-trip-form">
+        <label for="name">Title</label>
+        <input type="text" name="name"></input>
+
+        <label for="continent"><em>Continent</em></label>
+        <input type="text" name="continent"></input>
+
+        <label for="weeks"><em>Duration</em>(weeks)</label>
+        <input type="number" name="weeks"></input>
+
+        <input type="submit" value="Add Trip" class="button" id="submit-reservation"></input>
+      </form>
+  </script>
+
 
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 
