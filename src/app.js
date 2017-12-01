@@ -12,7 +12,7 @@ import Trip from './app/models/trip';
 
 const tripList = new TripList();
 
-const TRIP_FIELDS = ["id", "name", "continent", "category", "weeks", "cost"];
+const TRIP_FIELDS = ["id", "about", "name", "continent", "category", "weeks", "cost"];
 
 let tripTemplate;
 let detailsTemplate;
@@ -37,8 +37,36 @@ const renderDetails = function renderDetails(trip){
 };
 
 const addTripHandler = function(event) {
+  console.log('addTripHandler entered');
   event.preventDefault();
-}
+  const trip = new Trip(readResFormData());
+  // const form = document.querySelector("form");
+  // const form = $('#add-trip-form');
+  // var data = $(this).serializeArray();
+  console.log(trip);
+};
+
+const readResFormData = function readResFormData(){
+  const tripData = {};
+
+  TRIP_FIELDS.forEach((field) => {
+    // select the input corresponding to the field we want
+    const inputElement = $(`#add-trip-form input[name="${ field }"]`);
+    const value = inputElement.val();
+
+    // Don't take empty strings, so that Backbone can
+    // fill in default values
+    if (value != '') {
+      tripData[field] = value;
+    }
+
+    inputElement.val('');
+  });
+  console.log("Read trip data");
+  console.log(tripData);
+
+  return tripData;
+};
 
 const render = function render(tripList) {
   // iterate through the bookList, generate HTML

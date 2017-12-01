@@ -73,14 +73,19 @@
               </div>
               <div class="large-4 columns">
                 <label for="cost">Cost: $</label>
-                <input type="number" min="0.01" step="0.01" max="2500" value="00.00" />
+                <input type="number" name="cost" min="0.01" step="0.01" max="2500" />
               </div>
             </div>
             <div class="row">
               <div class="small-12 columns">
-                <label>Choose Your Favorite</label>
+                <label>Choose a Continent</label>
                 <input type="radio" name="continent" value="Africa" id="contAfrica"><label for="contAfrica">Africa</label>
                 <input type="radio" name="continent" value="Antartica" id="contAntartica"><label for="contAntartica">Antartica</label>
+                <input type="radio" name="continent" value="Asia" id="contAsia"><label for="contAsia">Asia</label>
+                <input type="radio" name="continent" value="Australasia" id="contAustralasia"><label for="contAustralasia">Australasia</label>
+                <input type="radio" name="continent" value="Europe" id="contEurope"><label for="contEurope">Europe</label>
+                <input type="radio" name="continent" value="North America" id="contNorthAmerica"><label for="contNorthAmerica">North America</label>
+                <input type="radio" name="continent" value="South America" id="contSouthAmerica"><label for="contSouthAmerica">South America</label>
               </div>
             </div>
 
@@ -89,7 +94,7 @@
               <div class="small-12 columns">
                 <label for="about">About:</label>
                 <!-- <input type="text" name="about" placeholder="trip description"></input> -->
-                <textarea name="about" placeholder="trip description"></textarea>
+                <input type="text" name="about" placeholder="trip description"></input>
               </div>
             </div>
             <!-- <label for="continent">Continent:</label>
