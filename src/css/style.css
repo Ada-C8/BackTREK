@@ -60,9 +60,9 @@ th.sort {
   color: green;
 }
 
-#trips-table {
+/*#trips-table {
   z-index: 1000;
-}
+}*/
 
 .page-header {
   max-width:  100%;
@@ -115,7 +115,7 @@ th.sort {
   font-weight: 200;
 }
 
-#trips {
+#trips table {
   margin-top: 2%;
   display: none;
 }

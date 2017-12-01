@@ -226,6 +226,8 @@ $(document).ready( () => {
   // $('#load-trips').on('click', render);
 
   $('#load-add-trip').on('click', () => $('#add-trip').toggle());
+  $('#load-trips').on('click', () => $('#trips table').toggle());
+
 
   $('#trip-list').on('click', 'tr td', function () {
     // event.preventDefault();
