@@ -10,151 +10,180 @@
 
   </header>
   <main>
-    <div>
 
-      <section class="columns small-8">
-        <h2>Available trips!</h2>
-        <table>
-          <thead>
-            <th class="sort name">
-              Name
-            </th>
-            <th class="sort continent"> continent
-            </th>
-            <th class="sort category"> Category
-            </th>
-            <th class="sort weeks"> Weeks
-            </th>
-            <th class="sort cost">
-              Cost
-            </th>
-            <th>
-            </th>
-          </thead>
-          <tbody id="trip-list">
-          </tbody>
-        </table>
-      </section>
-
-      <section class="sticky columns small-4">
-        <div>
-          <button class = "button add-trips">Add New Trip</button>
-        </div>
-        <div id="form-container">
-          <h1 class= "text-center">Your <br />journey <br />awaits!</h1>
-        </div>
-      </section>
-
-      <section class = "columns small-12">
-        <form id="add-trip-form" method="post">
-          <h3>Make a new trip!</h3>
-          <p class="status-messages add-trip">
-
-          </p>
-          <section class ="name error">
-            <label>Name</label>
-            <input type="text" id="name" name="name"></input>
-          </section>
-          <section class ="continent error">
-            <label>Continent</label>
-            <input type="text" id="continent" name="continent"></input>
-          </section>
-          <section class ="category error">
-            <label>Category</label>
-            <input type="text" id="category" name="category"></input>
-          </section>
-          <section class ="weeks error">
-            <label>Weeks</label>
-            <input type="text" id="weeks" name="weeks"></input>
-          </section>
-          <section class ="cost error">
-            <label>Cost</label>
-            <input type="text" id="cost" name="cost"></input>
-          </section>
-          <section class ="description error">
-            <label>Description</label>
-            <input type="text" id="Description" name="about"></input>
-          </section>
-          <section class= "<%-id%>" >
-            <button class="button" id = "new-trip-button">Make a New Trip!</button>
-          </section>
-        </form>
-      </section>
+    <!-- <form action="">
+      <input list="Options">
+      <datalist id="">
+        <option value="Name">
+        <option value="Category">
+        <option value="Continent">
+        <option value="Weeks">
+        <option value="Cost">
+      </datalist>
+    </form> -->
 
 
+    <!-- <section class= "dropdown data-dropdown-menu">
+      <select name="Sort By">
 
-    </main>
-    <footer>
+        <option value="name">Name</option>
+        <option value="category">Category</option>
+        <option value="continent">Continent</option>
+        <option value="weeks">Weeks</option>
+        <option value="weeks">Weeks</option>
+      </select>
+    </section> -->
 
-    </footer>
-    <script src="app.bundle.js" type="text/javascript"></script>
+    <section class="columns small-8">
+      <h2>Available trips!</h2>
+      <table>
+        <thead>
+          <th class="sort name">
+            Name
+          </th>
+          <th class="sort continent"> continent
+          </th>
+          <th class="sort category"> Category
+          </th>
+          <th class="sort weeks"> Weeks
+          </th>
+          <th class="sort cost">
+            Cost
+          </th>
+          <th>
+          </th>
+        </thead>
+        <tbody id="trip-list">
+        </tbody>
+      </table>
+    </section>
 
-    <script type="text/template" id="form-template">
-      <div class= "form-container">
-        <h3 id="trip-name" class ="text-center"><%- name %></h3>
-        <form id="reserve-form">
+    <section class="sticky columns small-4">
+      <div>
+        <button class = "button add-trips">Add New Trip</button>
+      </div>
+      <div id="form-container">
+        <h1 class= "text-center">Your <br />journey <br />awaits!</h1>
+      </div>
+    </section>
 
-          <input type="hidden" value="<%-id%>" name="tripID"></input>
-          <section>
-            <label>Name</label>
-            <input type="text" id="name" name="name"></input>
-          </section>
-          <section>
-            <label>Age</label>
-            <input type="text" id="age" name="age"></input>
-          </section>
-          <section>
-            <label>Email</label>
-            <input type="text" id="email" name="email"></input>
-          </section>
-          <section class= "<%-id%>" >
-            <button class= "submit-reservation button" >Make Reservation!</button>
-          </section>
-        </form>
+    <section class = "columns small-12">
+      <form id="add-trip-form" method="post">
+        <h3>Make a new trip!</h3>
+        <p class="trip-status-messages">
 
-      </script>
+        </p>
+        <section class ="name error">
+          <label>Name</label>
+          <input type="text" id="name" name="name"></input>
+        </section>
+        <section class ="continent error">
+          <label>Continent</label>
+          <input type="text" id="continent" name="continent"></input>
+        </section>
+        <section class ="category error">
+          <label>Category</label>
+          <input type="text" id="category" name="category"></input>
+        </section>
+        <section class ="weeks error">
+          <label>Weeks</label>
+          <input type="text" id="weeks" name="weeks"></input>
+        </section>
+        <section class ="cost error">
+          <label>Cost</label>
+          <input type="text" id="cost" name="cost"></input>
+        </section>
+        <section class ="description error">
+          <label>Description</label>
+          <input type="text" id="Description" name="about"></input>
+        </section>
+        <section class= "<%-id%>" >
+          <button class="button" id = "new-trip-button">Make a New Trip!</button>
+        </section>
+      </form>
+    </section>
 
-      <script type="text/template" id="trip-template">
-        <tr>
-          <div>
-            <td>
-              <strong><%- name %></strong>
-            </td>
-            <td>
-              <%- continent %>
-            </td>
-            <td>
-              <%- category %>
-            </td>
-            <td>
-              <%- weeks %>
-            </td>
-            <td>
-              <%- cost %>
-            </td>
-            <td id="<%-id%>">
-              <button class=" button button-<%-id%>"> Show details </button>
-              <button class=" button button-<%-id%> hide"> Hide details </button>
-            </td>
-          </tr>
-          <tr>
-            <td class="details-<%-id%> hide" colspan="6">
-              <strong>Details:</strong> <%- about %>
-              <div class = "<%-id%>">
-                <button class="reserve button">
-                  Reserve Trip
-                </button>
-              </div>
-            </td>
-          </tr>
-        </li>
-      </script>
 
-      <!-- <script>
-      <form>
 
+  </main>
+  <footer>
+
+  </footer>
+  <script src="app.bundle.js" type="text/javascript"></script>
+
+  <script type="text/template" id="form-template">
+    <div class= "form-container">
+      <h3 id="trip-name" class ="text-center"><%- name %></h3>
+      <p class="reservation-status-messages">
+      </p>
+      <form id="reserve-form">
+        <!-- <form id="reserve-form" method="post"> -->
+        <input type="hidden" value=  "<%-id%>" name="tripID"></input>
+        <section>
+          <label>Name</label>
+          <input type="text" id="name" name="name"></input>
+        </section>
+        <section>
+          <label>Age</label>
+          <input type="text" id="age" name="age"></input>
+        </section>
+        <section>
+          <label>Email</label>
+          <input type="text" id="email" name="email"></input>
+        </section>
+        <section class= "<%-id%>" >
+          <button class= "submit-reservation button" >Make Reservation!</button>
+        </section>
+        <!-- Sometime in the future, it would be nice to
+        report the data just submitted into a
+        succesful post. -->
+        <!-- <section class="success-reservation hide">
+      </section> -->
     </form>
-  </script> -->
+
+  </script>
+
+  <script type="text/template" id="trip-template">
+    <tr>
+      <div>
+        <td>
+          <strong><%- name %></strong>
+        </td>
+        <td>
+          <%- continent %>
+        </td>
+        <td>
+          <%- category %>
+        </td>
+        <td>
+          <%- weeks %>
+        </td>
+        <td>
+          <%- cost %>
+        </td>
+        <td id="<%-id%>">
+          <button class=" button button-<%-id%>"> Show details </button>
+          <button class=" button button-<%-id%> hide"> Hide details </button>
+        </td>
+      </tr>
+      <tr>
+        <td class="details-<%-id%> hide" colspan="6">
+          <strong>Details:</strong> <%- about %>
+          <div class = "<%-id%>">
+            <button class="reserve button">
+              Reserve Trip
+            </button>
+          </div>
+        </td>
+      </tr>
+    </li>
+  </script>
+
+  <!-- <script>
+  <form>
+
+</form>
+</script> -->
 
 
 </body>

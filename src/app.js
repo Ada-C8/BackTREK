@@ -15,9 +15,12 @@ const tripList = new TripList();
 
 const TRIP_FIELDS = [ 'id', 'name', 'continent', 'category', 'weeks','cost', 'about']
 
+const TABLE_HEADERS = [ 'name', 'continent', 'category', 'weeks','cost']
+
 const RESERVATION_FIELDS = [ 'tripID', 'name', 'age', 'email']
 
 const render = function render(tripList) {
+  $('#trip-list').html('')
   console.log(tripList);
   tripList.forEach((trip) => {
     let currentTrip = new Trip({id: trip.id});
@@ -58,10 +61,11 @@ const reserveFormUpdate = function (event){
 
 const addTripHandler = function(event){
   event.preventDefault();
+  $('.trip-status-messages').html('<p> </p>')
   const trip = new Trip(readTripFormData());
 
   if (!trip.isValid()) {
-    handleValidationFailures(trip.validationError);
+    handleValidationFailuresTrip(trip.validationError);
     return;
   }
   console.log('I am getting ready to make a trip!')
@@ -70,49 +74,89 @@ const addTripHandler = function(event){
   trip.save({}, {
     success: (model, response) => {
       console.log('Successfully saved trip!');
-      reportStatus('success', 'Successfully saved book!');
+      reportNewTripStatus('success', 'Successfully saved book!');
     },
     error: (model, response) => {
       console.log('Failed to save trip! Server response:');
       console.log(response);
       tripList.remove(model);
 
-      handleValidationFailures(response.responseJSON["errors"]
-    );
-  },
-});
+      handleValidationFailuresReservations(response.responseJSON["errors"]);
+    },
+  });
 };
 
 
 const addReservationHandler = function addReservationHandler(event) {
   event.preventDefault();
-  console.log('this is the reserve function')
-
+  $('.reservation-status-messages').html('<p> </p>')
   const reservation = new Reservation(readReservationFormData());
 
-  // if (!reservation.isValid()) {
-  //   handleValidationFailures(reservation.validationError);
-  //   return;
-  // }
-}
+  if (!reservation.isValid()) {
+    handleValidationFailuresReservation(reservation.validationError);
+    return;
+  }
+  console.log('I am getting ready to reserve a trip!')
+  console.log(reservation.attributes)
 
-const handleValidationFailures = function handleValidationFailures(errors) {
+  // trip.add(trip);
+  reservation.save({}, {
+    success: (model, response) => {
+      console.log('Successfully saved trip!');
+      reportNewReservationStatus('success', 'Successfully saved reservation!');
+      $('#reserve-form').addClass('hide')
+      $
+    },
+    error: (model, response) => {
+      console.log('Failed to save reservation! Server response:');
+      console.log(response);
+      // tripList.remove(model); <--what should I do here?
+
+      handleValidationFailuresReservation(response.responseJSON["errors"]);
+    },
+  });
+};
+
+//Having two nearly identical funtions to handle errors is a poor
+//solution to the problem of errors being appended to the wrong
+// form. It would be better to find a way to pass some parameter
+// into these functions to tell it where to place the errors.
+const handleValidationFailuresTrip = function handleValidationFailures(errors) {
   for (let field in errors) {
     for (let problem of errors[field]) {
-      reportStatus('error', `${field}: ${problem}`);
+      reportNewTripStatus('error', `${field}: ${problem}`);
     }
   }
 };
 
-// Add a new status message
-const reportStatus = function reportStatus(status, message) {
+const handleValidationFailuresReservation = function handleValidationFailures(errors) {
+  for (let field in errors) {
+    for (let problem of errors[field]) {
+      reportNewReservationStatus('error', `${field}: ${problem}`);
+    }
+  }
+};
+
+// Similarly to the ValidationFailures... this is not a good way
+// to solve the problem.
+const reportNewTripStatus = function reportNewTripStatus(status, message) {
   console.log(`Reporting ${ status } status: ${ message }`);
   // Should probably use an Underscore template here.
   const statusHTML = ` <p class="${ status }">${ message }</p>`;
   // note the symetry with clearStatus()
-  $('.status-messages').append(statusHTML);
-  $('.status-messages').show();
+  $('.trip-status-messages').append(statusHTML);
+  $('.trip-status-messages').show();
 };
+
+const reportNewReservationStatus = function reportNewReservationStatus(status, message) {
+  console.log(`Reporting ${ status } status: ${ message }`);
+  // Should probably use an Underscore template here.
+  const statusHTML = ` <p class="${ status }">${ message }</p>`;
+  // note the symetry with clearStatus()
+  $('.reservation-status-messages').append(statusHTML);
+  $('.reservation-status-messages').show();
+};
+
 
 
 const readTripFormData = function readTripFormData() {
@@ -143,7 +187,7 @@ const readReservationFormData = function readReservationFormData() {
     if (value != '') {
       reservationData[field] = value;
     }
-    inputElement.val('');
+    // inputElement.val('');
   });
   console.log("Read reservation data");
   console.log(reservationData.attributes);
@@ -158,10 +202,23 @@ $(document).ready( () => {
     let currentTrip = new Trip();
   });
 
+ tripList.on('sort', render);
+
+
   $('#trip-list').on('click', 'button', tripDetailHandler);
 
   $('#trip-list').on('click', '.reserve', reserveFormUpdate);
   // $('.new-trip-button').on('click', addReservationHandler);
   // $('#reserve-form').on('submit', addReservationHandler);
   $('#add-trip-form').on('submit', addTripHandler);
+
+  TABLE_HEADERS.forEach((field) => {
+    const headerElement = $(`th.sort.${ field }`);
+    headerElement.on('click', (event) => {
+      console.log(`Sorting table by ${ field }`);
+      tripList.comparator = field;
+      tripList.sort();
+    });
+  });
+
 });
