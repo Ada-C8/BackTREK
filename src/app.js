@@ -63,6 +63,7 @@ const render = function render(tripList) {
   $('.trip').on('click', function(event) {
     // event.preventDefault();
     console.log('in the trip click');
+    $('html,body').scrollTop(0);
 
     // get the id of the trip you clicked on
     let tripId = $(this).attr('data-id');
