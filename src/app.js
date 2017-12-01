@@ -36,12 +36,15 @@ $(document).ready( () => {
     $('#trip-list').toggle();
   });
 
-  $('#trip-list').on('click', 'article', function() {
+  $('#trip-list').on('click', 'tr', function() {
+    $('tr').css('background', '');
     const id = $(this).attr('id');
     const url = new Trip(this).url();
 
+    $(`#${id}`).css('background','pink');
+
     $.get(url, function(response) {
-      $(`#${id}`).append(tripDetails(response));
+      $(`#trip-details`).html(tripDetails(response));
     });
   });
 });

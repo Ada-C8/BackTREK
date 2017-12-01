@@ -14,10 +14,10 @@
   </header>
 
   <main class='row'>
-    <section class="columns medium-6 small-12 search">
+
+    <section class="columns medium-6 small-12">
       <form>
         <input type="text" name="name" placeholder='temp form'>
-        <input type="submit" value="Submit">
       </form>
       <button id='all-trips' class='button'>Trips</button>
       <table>
@@ -30,9 +30,9 @@
         </tbody>
       </table>
     </section>
-    <section class="columns medium-6 small-12 trips">
 
-    </section>
+    <section class="columns medium-6 small-12" id="trip-details"></section>
+
   </main>
 
   <footer>
@@ -54,7 +54,7 @@
         <h5><%- weeks %> weeks</h5>
         <h5><%- category %></h5>
         <p><%- about %></p>
-        <h3><%- cost %></h3>
+        <h3>$ <%- cost %></h3>
       </article>
     </script>
   <script src="app.bundle.js" type="text/javascript"></script>
