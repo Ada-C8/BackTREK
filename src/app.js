@@ -70,64 +70,29 @@ const render = function render(trips) {
 };
 
 const showTrip = function showTrip(id) {
-  // console.log(parseInt(id));
   const singleTrip = $('#show-trip');
 
-  // singleTrip.html('');
-
   const trip = trips.findWhere({id: parseInt(id)});
-  // console.log(trip.url);
-  // let result = trip.fetch();
+
   trip.fetch({
     success: (model, response) => {
       console.log('Successfully found trip!');
-      // reportStatus('success', 'Successfully saved trip!');
       console.log(response);
 
       const generatedHTML = showTripTemplate(response);
-      // singleTrip.append(generatedHTML);
       singleTrip.html(generatedHTML);
       $('#reserve-trip-form').on('submit', function(ev) {
         ev.preventDefault();
-        // ev.stopPropagation()
         alert( "Handler for .submit() called." );
-
         addReservationHandler();
       })
     },
   })
   $('#show-trip').show();
 
-
-  //   $( "#target" ).submit(function( event ) {
-  //   alert( "Handler for .submit() called." );
-  //   event.preventDefault();
-  // });
   console.log(`this is the show trip click event`);
   console.log(event);
   console.log(`this is the show trip id ${id}`);
-  // $( "#reserve-trip-form" ).submit(function( e ) {
-  //   e.preventDefault();
-  //
-  //   alert( "Handler for .submit() called." );
-  //     // addReservationHandler();
-  //
-  // });
-
-
-  // addReservationHandler
-
-  // console.log(result);
-  // // trips.fetch(trip.url)
-  // const generatedHTML = showTripTemplate(result.responseJSON);
-  //
-  //
-  //
-  //
-  // singleTrip.append(generatedHTML);
-
-  // $('#show-trip').html(id);
-  // $('#show-trip').show();
 };
 
 const readFormData = function readFormData() {
@@ -147,6 +112,8 @@ const readFormData = function readFormData() {
     // pure functions are guaranteed to be idempotent
     //TODO: check
     // inputElement.val('');
+
+
   });
 
   return tripData;
@@ -161,27 +128,16 @@ const handleValidationFailures = function handleValidationFailures(errors) {
 };
 
 const addReservationHandler = function(ev) {
-  // ev.preventDefault();
   console.log('in addReservationHandler')
   const reservationData = {};
 
   RESERVATION_FIELDS.forEach((field) => {
 
-
-    // const inputElement = $(`#add-reservation-form input[name="${ field }"]`);
     const inputElement = $(`#reserve-trip-form input[name="${ field }"]`);
 
     const value = inputElement.val();
     console.log(field);
     console.log(value);
-
-    // console.log($(`#add-reservation-form input[name="tripId"]`).val());
-    // Don't take empty strings, so that Backbone can
-    // // fill in default values
-    // if (value != '') {
-    //   bookData[field] = value;
-    // }
-
 
     reservationData[field] = value;
     // clears the field
@@ -191,15 +147,7 @@ const addReservationHandler = function(ev) {
     //TODO: check
     // inputElement.val('');
   });
-  // $(`#reserve-trip-form input[name="tripId"]`).value
-  // const TripIdResult = $(`#reserve-trip-form input[name="tripId"]`).value
-  // console.log('trip id result');
-  //
-  // console.log(TripIdResult);
-  // const tripId = $('#add-reservation-form').attr('data-id').val();
-  // tripData['id'] = tripId;
-  // console.log(tripId);
-  // return tripData;
+
   console.log(reservationData)
   const reservation = new Reservation(reservationData);
 
@@ -213,8 +161,8 @@ const addReservationHandler = function(ev) {
   reservation.save({}, {
     success: (model, response) => {
       console.log('Successfully saved reservation!');
+      reportStatus('success', 'Successfully made reservation!');
       trips.add(model);
-      // reportStatus('success', 'Successfully saved trip!');
     },
     error: (model, response) => {
       console.log('Failed to save reservation! Server response:');
@@ -259,16 +207,13 @@ const addTripHandler = function(event) {
   trip.save({}, {
     success: (model, response) => {
       console.log('Successfully saved trip!');
+      reportStatus('success', 'Successfully added trip!');
       trips.add(model);
-      // reportStatus('success', 'Successfully saved trip!');
     },
     error: (model, response) => {
       console.log('Failed to save trip! Server response:');
       console.log(response);
       const errors = response.responseJSON["errors"];
-      //TODO: tell Diane
-      // print server-side validation failures if client-side validation
-      // somehow misses a server-side validation
       handleValidationFailures(response.responseJSON["errors"]);
 
     },
@@ -301,27 +246,8 @@ $(document).ready( () => {
     showTrip(tripId);
   });
 
-  // $('#reserve-trip-form').on('submit', function (event) {
-  //   event.preventDefault();
-  //   addReservationHandler
-  // });
-
-  //
-  // $('#reserve-trip-form').on('submit', function () {
-  //   let tripId = $(this).attr('data-id');
-  //   console.log(`this is the trip id ${$(this).attr('data-id')}`);
-  //   // render();
-  //   showTrip(tripId);
-  // });
-
-  //   $('#trips table').on('click', 'tr .id', function () {
-  //   let tripID = $(this).attr('data-id');
-  //   console.log(`this is the trip id${$(this).attr('data-id')}`);
-  //   loadTrip(tripID);
-  // });
 
 
-  // method in triplist and return array with results if no search return all
 
   TRIP_FIELDS.forEach((field) => {
     const headerElement = $(`th.sort.${ field }`)
@@ -337,6 +263,7 @@ $(document).ready( () => {
   $('#status-messages button.clear').on('click', clearStatus);
 
   // TODO: continue implementing filtering if time allows and move collection filtering to method in collection
+  // method in triplist and return array with results if no search return all
   // $('#search-field').keypress(function (event) {
   //   // const value = inputElement.val();
   //   // const value = $(`#search-field input[name="query"]`);
