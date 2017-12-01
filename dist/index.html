@@ -58,7 +58,7 @@
         <h3><%- name %></h3>
         <a id='reserve' tripid=<%- id %> href='#'>Reserve</a>
         <h5><%- weeks %> week<%- plural %></h5>
-        <h5><%- cost %></h5>
+        <h5>$<%- cost.toFixed(2) %></h5>
         <p class='scrollable'><%- about %></p>
       </script>
     </section>
