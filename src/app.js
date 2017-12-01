@@ -20,12 +20,12 @@ let tripTemplate;
 const render = function(tripList) {
   // const $tripList = $('#trip-list');
   console.log('in render');
-  console.log(tripList.models);
+  // console.log(tripList.models);
   // $tripList.empty();
   tripTemplate = _.template($('#trip-button-template').html());
   tripList.forEach((trip) => {
-    console.log(trip);
-    console.log('in trip forEach');
+    // console.log(trip);
+    // console.log('in trip forEach');
     $('#trip-list').append(tripTemplate(trip.toJSON()));
   });
   // for(let i =0; i< tripList.models.length; i++) {
@@ -36,10 +36,13 @@ const render = function(tripList) {
 
 $(document).ready( () => {
   // $('main').html('<h1>Hello World!</h1>');
-  $('#load-trips').click(function(event) {
-  tripList.on('update', render, tripList);
-  tripList.fetch();
-});
+  $('#load-trips').focus(function(event) {
+    console.log(`in focus`);
+    $('#trip-list').toggle();
+    tripList.on('update', render, tripList);
+    tripList.fetch();
+    $(this).blur();
+  });
 
   // console.log(tripList);
   // render(tripList);
