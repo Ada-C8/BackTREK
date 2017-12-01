@@ -41,12 +41,11 @@
         <tbody id='all-trips'>
           <script type="text/template" id="all-trips-template">
             <tr>
-              <td><%- id %></td>
               <td><a id=<%- id %> class='trip' href='#'><%- name %></a></td>
               <td><%- category %></td>
               <td><%- continent %></td>
               <td><%- weeks %></td>
-              <td><%- cost %></td>
+              <td>$<%- cost.toFixed(2) %></td>
             </tr>
           </script>
         </tbody>

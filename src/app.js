@@ -21,9 +21,8 @@ let filterTemplate;
 let filterCategory;
 
 const url = 'https://ada-backtrek-api.herokuapp.com/trips';
-const tableFields = ['id', 'name', 'category', 'continent', 'weeks', 'cost'];
+const tableFields = ['name', 'category', 'continent', 'weeks', 'cost'];
 const addTripFields = ['name', 'category', 'continent', 'weeks', 'cost', 'about'];
-const filterFields = ['name', 'category', 'continent', 'weeks', 'cost']
 const reservationFields = ['name', 'age', 'email'];
 
 const fetchTrips = function fetchTrips() {
@@ -55,7 +54,7 @@ const loadTripsTable = function loadTripsTable(list) {
 const loadFilters = function loadFilters() {
   $('#filter-select').empty();
   $('#filter').show();
-  filterFields.forEach((filter) => {
+  tableFields.forEach((filter) => {
     const capitalFilter = filter.charAt(0).toUpperCase() + filter.slice(1);
     $('#filter-select').append(filterTemplate({item: filter, capitalized: capitalFilter}))
   });
@@ -96,7 +95,8 @@ const filterTrips = function filterTrips(event) {
 };
 
 const splitScreen = function splitScreen() {
-  $('.left-half, .right-half').addClass('columns small-5 float-left');
+  $('.left-half').addClass('columns small-5 float-left');
+  $('.right-half').addClass('columns small-5 float-right');
 };
 
 const unSplitScreen = function unSplitScreen() {
