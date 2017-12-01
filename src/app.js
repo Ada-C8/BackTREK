@@ -90,24 +90,38 @@ const events = {
   addReservation(event){
     event.preventDefault();
     console.log('submitted a reservation!');
-    console.log($(this));
     const reservationData = {};
     reservationFields.forEach( (field) => {
       // needs the #id attribute
       const val = $(`#create-reservation-form input[name=${field}]`).val();
-      console.log(`val: ${val}`);
       if (val != '') reservationData[field] = val;
     });
-    console.log('in addReservation in app.js');
     console.log(reservationData);
     const reservation = new Reservation(reservationData);
-    console.log(`Reservation valid: ${reservation.isValid()}`);
     if (reservation.isValid()) {
       const tripID = $(this).data('id');
       reservation.urlRoot = `${(new Trip()).urlRoot}${tripID}/reservations`;
-      reservation.save({});
+      reservation.save({}, {
+        success: events.successfulSaveReservation,
+        error: events.failSaveReservation,
+      });
+    } else { // save is invalid
+      console.log('Reservation Validation Error');
+      console.log(reservation.validationError);
+      // events.addStatusMessagesFromHash("Errors", reservation.validationError);
+      console.log(reservation.validationError);
     }
-  }
+  },
+  successfulSaveReservation(reservation, response){
+    // TODO: add confirmation message in trip-details somewhere
+    $('#create-reservation-form .input').val("");
+    console.log('successfully saved a resrevation');
+  },
+  failSaveReservation(reservation, response){
+    console.log('Response Validation Errors');
+    console.log(response.responseJSON.errors);
+    reservation.destroy();
+  },
 }
 
 
