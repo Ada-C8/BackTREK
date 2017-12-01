@@ -71,18 +71,20 @@
         success: function(collection, response){
           $('#trips').show();
           $('#trip').hide();
+          $('#show_form').hide();
         }
       });
     });
 
-    $('#add_trip').on('click', function(){
-      event.preventDefault();
+    $('header').on('click', '#add_trip', function(){
       $('#show_form').show();
-    };
+      $('#trips').hide();
+      $('#trip').hide();
+    });
 
     // Adding trip to the DB
     $("#add-trip-form").on('submit', function(event){
-      event.preventDefault(); // stops after reading user input, doesn't do anything yet
+      event.preventDefault(); // stops after reading user input, doesn't do anything yet. Prevents default event handling
       let tripData = {};
 
       TRIP_FIELDS.forEach((field) => {
@@ -108,9 +110,7 @@
       });
 
       let reservation = new Reservation(reservationData);
-      console.log(`hello ${reservation}`);
       reservation.set('trip_id', $(this).data('tripId'));
-      console.log(`hello ${reservation}`);
 
       reservation.save({}, {
         success: function(model, response){

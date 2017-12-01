@@ -83,9 +83,12 @@ strong{
   color: green; /* Success message */
 }
 
-/*#show_form{
+#show_form{
   display: none;
-}*/
+  text-align: center;
+  padding-left: 15%;
+  width: 80%;
+}
 /*footer{
   position: absolute;
   right: 0;
