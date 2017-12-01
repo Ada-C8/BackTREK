@@ -14,7 +14,7 @@ import Reservation from 'app/models/reservation';
 console.log('it loaded!');
 
 // array of fields
-const TRIP_FIELDS = ['name', 'continent', 'category', 'weeks', 'cost'];
+const TRIP_FIELDS = ['name', 'continent', 'about', 'category', 'weeks', 'cost'];
 const RESERVATION_FIELDS = ['name', 'age', 'email'];
 // create variable for using in document.ready
 const tripList = new TripList();
@@ -67,10 +67,10 @@ const getTrip = function(trip) {
 } // end of getTrip
 
 // read data from forms
-const readFormData = function(formFields) {
+const readFormData = function(formFields, form) {
   const formData = {};
   formFields.forEach((field) => {
-    const inputElement = $(`#reservation-form input[name="${ field }"]`);
+    const inputElement = $(`${ form } input[name="${ field }"]`);
     const value = inputElement.val();
     formData[field] = value;
     //reset the form after submitting the input
@@ -85,7 +85,7 @@ const makeReservation = function(event) {
   console.log('hello');
   event.preventDefault();
 
-  const reservation = new Reservation(readFormData(RESERVATION_FIELDS));
+  const reservation = new Reservation(readFormData(RESERVATION_FIELDS, '#reservation-form'));
    reservation.set('tripID', $(this).data('id'));
 
   reservation.save({});
@@ -96,7 +96,12 @@ const makeReservation = function(event) {
 const addTrip = function(event) {
   event.preventDefault();
 
-  const trip = new Trip(readFormData(TRIP_FIELDS));
+  const trip = new Trip(readFormData(TRIP_FIELDS, '#add-trip-form'));
+  trip.set('id', $(this).cid);
+  console.log('my new trip:');
+  console.log(trip);
+
+  tripList.add(trip);
   trip.save({});
   console.log('new trip added');
 }//end of add trip
@@ -143,6 +148,7 @@ $(document).ready( () => {
   $('nav').on('click', '#new-trip', function() {
     $('#add-trip').append(addTripTemplate);
     $('.wrapper').show();
+    $('#add-trip-form').on('submit', addTrip);
   })
 
 
