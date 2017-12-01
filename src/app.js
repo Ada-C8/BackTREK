@@ -43,6 +43,7 @@ const renderTrips = function renderTrips(list) {
 };
 
 const loadTripsTable = function loadTripsTable(list) {
+  $('#trip-headers').html('');
   clearContent();
   tableFields.forEach((field) => {
     $('#trip-headers').append(tripHeadersTemplate({header: field}))
@@ -52,6 +53,7 @@ const loadTripsTable = function loadTripsTable(list) {
 };
 
 const loadFilters = function loadFilters() {
+  $('#filter-select').empty();
   $('#filter').show();
   filterFields.forEach((filter) => {
     const capitalFilter = filter.charAt(0).toUpperCase() + filter.slice(1);
@@ -93,8 +95,18 @@ const filterTrips = function filterTrips(event) {
   }
 };
 
+const splitScreen = function splitScreen() {
+  $('.left-half, .right-half').addClass('columns small-5 float-left');
+};
+
+const unSplitScreen = function unSplitScreen() {
+  $('.left-half, .right-half').removeClass('columns small-5 float-left');
+  $('#filter-input').val('');
+}
+
 const showTrip = function showTrip(event) {
   clearContent();
+  splitScreen();
   const tripId = event.currentTarget.id;
   const tripUrl = `${url}/${tripId}`;
   $.get(tripUrl, (response) => {
@@ -109,8 +121,6 @@ const showTrip = function showTrip(event) {
 
 const clearContent = function clearContent() {
   $('.content').empty();
-  $('#filter-input').val('');
-  $('#filter').hide();
 };
 
 const clearMessages = function clearMessages() {
@@ -245,6 +255,7 @@ $(document).ready( () => {
   showTripTemplate = _.template($('#show-trip-template').html());
   formTemplate = _.template($('#form-template').html());
   filterTemplate = _.template($('#filter-trips-template').html());
+  $('#load-trips').on('click', unSplitScreen);
   $('#load-trips').on('click', fetchTrips);
   $('#load-trips').on('click', loadTripsTable, referenceList);
   tripList.on('update', syncReferenceList);

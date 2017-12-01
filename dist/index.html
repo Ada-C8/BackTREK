@@ -7,46 +7,50 @@
 </head>
 <body>
   <header>
-    <a id='load-trips' href='#'>All Trips</a>
-    <a id='add-trip' href='#'>Add Trip</a>
+    <h1 class='columns small-6'>BackTREK</h1>
+    <span id='buttons' class='float-right'>
+      <a id='load-trips' class='button' href='#'>All Trips</a>
+      <a id='add-trip' class='button' href='#'>Add Trip</a>
+    </span>
   </header>
-  <main>
+  <main class='row'>
     <section id="status-messages">
       <button class="clear float-right">[x]</button>
       <ul></ul>
     </section>
-    <section>
-      <form id='filter'>
-        <select id='filter-select' class='content'>
-          <script type="text/template" id="filter-trips-template">
-            <option value='<%- item %>'><%- capitalized %></option>
+
+    <form id='filter'>
+      <select id='filter-select'>
+        <script type="text/template" id="filter-trips-template">
+          <option value='<%- item %>'><%- capitalized %></option>
+        </script>
+      </select>
+      <input type='text' id='filter-input'/>
+    </form>
+    <table class='left-half'>
+      <thead>
+        <tr id='trip-headers'>
+          <script type="text/template" id="trip-headers-template">
+            <th class='sort <%- header %>'><a><%- header %></a><span class='sortorder'></span></th>
           </script>
-        </select>
-        <input type='text' id='filter-input'/>
-      </form>
-      <table>
-        <thead>
-          <tr id='trip-headers' class='content'>
-            <script type="text/template" id="trip-headers-template">
-              <th class='sort <%- header %>'><a><%- header %></a><span class='sortorder'></span></th>
-            </script>
+        </tr>
+      </thead>
+      <tbody id='all-trips'>
+        <script type="text/template" id="all-trips-template">
+          <tr>
+            <td><%- id %></td>
+            <td><a id=<%- id %> class='trip' href='#'><%- name %></a></td>
+            <td><%- category %></td>
+            <td><%- continent %></td>
+            <td><%- weeks %></td>
+            <td><%- cost %></td>
           </tr>
-        </thead>
-        <tbody id='all-trips' class='content'>
-          <script type="text/template" id="all-trips-template">
-            <tr>
-              <td><%- id %></td>
-              <td><a id=<%- id %> class='trip' href='#'><%- name %></a></td>
-              <td><%- category %></td>
-              <td><%- continent %></td>
-              <td><%- weeks %></td>
-              <td><%- cost %></td>
-            </tr>
-          </script>
-        </tbody>
-      </table>
-    </section>
-    <section id='show-trip' class='content'>
+        </script>
+      </tbody>
+    </table>
+
+
+    <section id='show-trip' class='content right-half'>
       <script type="text/template" id="show-trip-template">
         <h3><%- name %></h3>
         <a id='reserve' tripid=<%- id %> href='#'>Reserve</a>
@@ -56,11 +60,11 @@
       </script>
     </section>
     <section>
-      <form id='reserve-trip-form' class='content'>
+      <form id='reserve-trip-form' class='content right-half'>
       </form>
     </section>
     <section>
-      <form id='add-trip-form' class='content'>
+      <form id='add-trip-form' class='content right-half'>
         <script type="text/template" id="form-template">
           <section>
             <label><%- field %></label>
