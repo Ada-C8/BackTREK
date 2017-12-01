@@ -91,6 +91,8 @@ $(document).ready(() => {
   $('#trip-create-new-btn').on('click', function() {
     const newTripElement = $('#trip-create-new');
     newTripElement.html('');
+    const generatedHTML = $(createNewTripTemplate());
+    newTripElement.html(generatedHTML);
 
     console.log('clicked');
     // let tripID = $(this).data('id');
