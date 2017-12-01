@@ -32,6 +32,9 @@ const events = {
       }
     });
   },
+  filterTrips(event){
+    console.log($(this).val());
+  },
   fetchTrip() {
     const trip = tripList.get($(this).data('id'));
     trip.fetch({
@@ -179,4 +182,7 @@ $(document).ready( () => {
 
   // sort trips
   $('.sort').click(events.sortTrips);
+
+  // filter trips
+  $("#trip-query").keyup(events.filterTrips);
 });
