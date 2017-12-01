@@ -25,6 +25,8 @@
       </ul>
     </section>
 
+
+
     <section id="add-a-trip-form-container">
       <h2>Add a Trip</h2>
       <form id="add-trip-form">
@@ -68,6 +70,21 @@
     <section id="trip-details-container" class="columns large-5 small-12 float-right">
     </section>
 
+    <section id="reservation-form-container" class="columns large-5 small-12 float-right" >
+      <h2>Reserve Your Spot</h2>
+      <form id="add-trip-form">
+        <label for="name">Name:</label>
+        <input type="text" name="name"></input>
+
+        <label for="age">Age:</label>
+        <input type="text" name="age"></input>
+
+        <label for="email">Email:</label>
+        <input type="text" name="email"></input>
+
+        <input type="submit" value="Submit Reservation" class="button"></input>
+      </form>
+    </section>
 
   </main>
 
@@ -97,8 +114,8 @@
 
     <script type="text/template" id="single-trip-template">
         <ul class="trip-ul" data-id=<%- id %>>
-          <li>Name:
-            <%- name %>
+          <li>
+            <h2><%- name %></h2>
           </li>
           <li>Category:
             <%- category %>

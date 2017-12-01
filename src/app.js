@@ -45,7 +45,7 @@ const renderSingleTrip = function renderSingleTrip(tripID) {
 }
 
 $(document).ready( () => {
-
+  $('#reservation-form-container').hide();
   $('#add-a-trip-form-container').hide();
   $('#trips-table-container').hide();
   $('.clear').hide();
@@ -59,6 +59,7 @@ $(document).ready( () => {
   $('#trips-table-container').on('click', 'tr', function () {
     const tripID = $(this).attr('data-id');
     renderSingleTrip(tripID);
+    $('#reservation-form-container').show();
   });
 
   tripList.on('update', renderTrips, tripList);
