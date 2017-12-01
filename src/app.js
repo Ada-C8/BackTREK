@@ -129,18 +129,31 @@ const events = {
     };
 
     let x = findTdIndex[column];
-    console.log(x);
     let i;
     let td;
     for (i = 0; i < tr.length; i++) {
       td = tr[i].getElementsByTagName("td")[x];
-      if (td) {
-        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-          tr[i].style.display = "";
-        } else {
-          tr[i].style.display = "none";
+    if (column === 'Weeks' || column === 'Cost') {
+        if (td) {
+          if (parseInt(td.innerHTML) <= parseInt(filter)) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
         }
+
+      } else {
+
+        if (td) {
+          if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+
       }
+
     }
   }
 
