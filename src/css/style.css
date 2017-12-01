@@ -53,13 +53,15 @@ header {
   float: right;
 }
 
-/*#trips-table, .show, #new-trip-form, #filter  {
-  margin-top: 3rem;
-  text-align: left;
-  width: 50%;
-  margin-right: 25%;
-  margin-left: 25%;
-}*/
+@media screen and (max-width: 1200px) {
+  #all-trips, .show, #new-trip-form {
+    margin-top: 3rem;
+    text-align: left;
+    width: 50%;
+    margin-right: 25%;
+    margin-left: 25%;
+  }
+}
 
 #trips-table, .show p {
   font-family: 'Spectral SC', serif;
