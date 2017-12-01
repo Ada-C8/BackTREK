@@ -19,13 +19,10 @@ const renderTrips = function renderTrips(tripList) {
   $('#trip-list').empty();
   $('#filter-form').show();
 
-  console.log('here i am rendering trips');
   tripList.forEach((trip) => {
     $('#trip-list').append(tripTemplate(trip.attributes));
   });
   $('#trips-table').show();
-
-
 };
 
 let singleTripTemplate;
@@ -43,8 +40,6 @@ const renderOneTrip = function renderOneTrip(id) {
 };
 
 const tripFields = ['name', 'cost', 'weeks', 'continent', 'about', 'category'];
-const reservationFields = ['name', 'age', 'email'];
-
 
 const events = {
   addTrip(event) {
@@ -77,12 +72,10 @@ const events = {
     }  else {
       events.failedSave(trip);
     }
-
   },
 
   successfulSave(trip, response){
     tripList.add(trip);
-
     $('#status-messages').empty();
     $('#status-messages').append(`${trip.get('name')} added!`);
     $('#status-messages').show();
@@ -95,31 +88,24 @@ const events = {
   failedSave(trip, response) {
     const errors = trip.validate(trip.attributes);
     tripFields.forEach((field) => {
-      console.log(field);
       if (errors[field]) {
-        console.log(errors[field]);
-        console.log(`.errors-${field}`);
-
         $(`.errors-${field}`).html(errors[field]);
       }
     });
-    console.log(trip.validate(trip.attributes));
     trip.destroy();
     $('#status-messages').empty();
     $('#status-messages').append('Your book was unable to be added.');
     $('#status-messages').show();
   },
 
-  sortTrips(event) {
+  sortTrips() {
     const classes = $(this).attr('class').split(/\s+/);
-
     tripList.comparator = classes[1];
 
     if (classes.includes('current-sort-field')) {
       $(this).removeClass('current-sort-field');
       tripList.set(tripList.models.reverse());
       renderTrips(tripList);
-
     } else {
       $('.current-sort-field').removeClass('current-sort-field');
       $(this).addClass('current-sort-field');
@@ -129,9 +115,7 @@ const events = {
 
   tripFilter(event) {
     event.preventDefault();
-
     const column = document.getElementById("filter-query").value;
-    console.log(column);
     const input = document.getElementById("myInput");
     const filter = input.value.toUpperCase();
     const table = document.getElementById("trips-table");
@@ -158,9 +142,7 @@ const events = {
             tr[i].style.display = "none";
           }
         }
-
       } else {
-
         if (td) {
           if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
             tr[i].style.display = "";
@@ -168,14 +150,28 @@ const events = {
             tr[i].style.display = "none";
           }
         }
-
       }
-
     }
   }
-
-
 };
+
+const newReservation = $('.reservation-form').submit( function(e) {
+  e.preventDefault();
+  let tripID = $('.show .trip').attr('data-id');
+  tripID = tripID.match(/\d+/g)[0];
+
+  const url = `https://trektravel.herokuapp.com/trips/${tripID}/reservations`;
+  const formData = $(this).serialize();
+
+  $.post(url, formData, (response) => {
+    $('.reservation-form').hide();
+    $('#status-messages').append('<p> Reservation confirmed! </p>');
+    document.getElementById("new-trip-form").reset();
+
+  }).fail(() => {
+    $('#status-messages').append('<p>Adding Reservation Failed</p>');
+  });
+});
 
 const modalStuff = function() {
   const modal = document.getElementById('the-modal');
@@ -199,10 +195,8 @@ $(document).ready(() => {
   singleTripTemplate = _.template($('#single-trip-template').html());
 
   $('.reservation-form').hide();
-  $('#trips-table').hide();
-  $('#new-trip-form').hide();
-  $('#filter-form').hide();
 
+  renderTrips(tripList);
   modalStuff();
 
   $('#trip-list').on('click', 'tr', function (){
@@ -223,35 +217,11 @@ $(document).ready(() => {
   });
 
   $('#new-trip-form').submit(events.addTrip);
-
-  $('.reservation-form').submit( function(e) {
-    e.preventDefault();
-    let tripID = $('.show .trip').attr('data-id');
-    console.log(tripID);
-    tripID = tripID.match(/\d+/g)[0];
-
-    const url = `https://trektravel.herokuapp.com/trips/${tripID}/reservations`;
-    console.log(url);
-    const formData = $(this).serialize();
-
-    $.post(url, formData, (response) => {
-      $('.reservation-form').hide();
-      $('#status-messages').append('<p> Reservation confirmed! </p>');
-      document.getElementById("new-trip-form").reset();
-
-    }).fail(() => {
-      $('#status-messages').append('<p>Adding Reservation Failed</p>');
-    });
-  });
-
   $('.sort').click(events.sortTrips);
   $('#filter-form').submit(events.tripFilter);
 
+  newReservation();
 
   tripList.on('update', renderTrips, tripList);
   tripList.on('sort', renderTrips, tripList);
-
-
-
-
 });
