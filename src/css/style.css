@@ -42,8 +42,8 @@ td, th {
   overflow-x: scroll;
 }
 
-.show-right {
-  height: 80vh;
+.scrollable {
+  max-height: 60vh;
   overflow-y: scroll;
 }
 
