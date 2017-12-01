@@ -12,9 +12,26 @@ console.log('it loaded!');
 
 let tripsTemplate;
 let tripDescriptionTemplate;
+let reserveFormTemplate;
 
 const tripList = new TripList();
 
+const renderReserveForm = function renderReserveForm() {
+
+  const reserveFormDivElement = $('#hidden-form');
+  console.log(reserveFormDivElement);
+  reserveFormDivElement.html('');
+  console.log(this)
+  console.log(' about to fetch')
+
+
+      const reserveFormHTML = $(reserveFormTemplate());
+      console.log(`this is reserveformhtml ${reserveFormHTML}`)
+        $("#reserve-button").remove();
+      reserveFormDivElement.append(reserveFormHTML);
+
+
+};
 
 const renderTrips = function renderTrips(tripList) {
 
@@ -37,13 +54,15 @@ const renderTrips = function renderTrips(tripList) {
 
 const renderTripDetails = function renderTripDetails(trip) {
 
-  const tripDivElement = $('.side-bar');
+  const tripDivElement = $('#trip-details');
   tripDivElement.html('');
   trip.fetch({
     success: (model) => {
     const detailsHTML = $(tripDescriptionTemplate(trip.attributes));
     tripDivElement.append(detailsHTML);
-    }
+    $('#reserve-button').on('click', renderReserveForm);
+      $(".add-trip-form").remove();
+  }
   });
 
   console.log(trip);
@@ -67,13 +86,12 @@ const singleTrip = function singleTrip(tripId){
 $(document).ready( () => {
   tripsTemplate = _.template($('#trips-template').html());
   tripDescriptionTemplate = _.template($('#trips-description-template').html());
-
+  reserveFormTemplate = _.template($('#reserve-trip-form-template').html());
   tripList.fetch();
 
   $('.sort').on('click', sortTrips);
-  // $('.trip').on('click', singleTrip(`${$(this).attr('id')}`));
+  console.log(renderReserveForm);
+  // $('#reserve-button').on('click', renderReserveForm);
   tripList.on('update', renderTrips);
   tripList.on('sort', renderTrips);
-
-
 });
