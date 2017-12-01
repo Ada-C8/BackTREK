@@ -179,7 +179,6 @@ const events = {
     console.log(trip);
     if (trip.isValid()) {
       console.log('this trip is valid')
-      // console.log(trip);
       trip.save({}, {
         success: events.successfulSave,
         error: events.failedSave,
@@ -228,9 +227,6 @@ const render= function render(tripList) {
   $('#trip-list').empty();
   tripList.fetch();
   tripList.forEach((trip) => {
-    const tripCost= (trip.get('cost'));
-    // console.log(tripCost);
-    trip.set('cost', tripCost.toFixed(2));
     $('#trip-list').append(tripTemplate(trip.attributes));
   });
 };
