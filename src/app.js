@@ -83,6 +83,7 @@ const events = {
     $('#status-messages').show();
     $('#new-trip-form').hide();
     $('#trips-table').show();
+    document.getElementById('the-modal').style.display = "none";
   },
 
   failedSave(trip, response) {
@@ -143,7 +144,7 @@ const events = {
     let td;
     for (i = 0; i < tr.length; i++) {
       td = tr[i].getElementsByTagName("td")[x];
-    if (column === 'Weeks' || column === 'Cost') {
+      if (column === 'Weeks' || column === 'Cost') {
         if (td) {
           if (parseInt(td.innerHTML) <= parseInt(filter)) {
             tr[i].style.display = "";
@@ -170,6 +171,23 @@ const events = {
 
 };
 
+const modalStuff = function() {
+  const modal = document.getElementById('the-modal');
+  const openModal = document.getElementById('make-a-trip');
+  const closeModal = document.getElementsByClassName("close")[0];
+  openModal.onclick = function() {
+    modal.style.display = "block";
+  };
+  closeModal.onclick = function() {
+    modal.style.display = "none";
+  };
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  };
+}
+
 $(document).ready(() => {
   tripTemplate = _.template($('#trip-template').html());
   singleTripTemplate = _.template($('#single-trip-template').html());
@@ -179,6 +197,7 @@ $(document).ready(() => {
   $('#new-trip-form').hide();
   $('#filter-form').hide();
 
+  modalStuff();
 
   $('#trip-list').on('click', 'tr', function (){
     const tripID = $(this).attr('data-id');
@@ -221,8 +240,8 @@ $(document).ready(() => {
   $('#filter-form').submit(events.tripFilter);
 
 
-    tripList.on('update', renderTrips, tripList);
-    tripList.on('sort', renderTrips, tripList);
+  tripList.on('update', renderTrips, tripList);
+  tripList.on('sort', renderTrips, tripList);
 
 
 
