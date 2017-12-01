@@ -84,6 +84,7 @@ const events = {
     $('#new-trip-form').hide();
     $('#trips-table').show();
     document.getElementById('the-modal').style.display = "none";
+    document.getElementById("new-trip-form").reset();
   },
 
   failedSave(trip, response) {
@@ -230,9 +231,11 @@ $(document).ready(() => {
 
     $.post(url, formData, (response) => {
       $('.reservation-form').hide();
-      $('.message').append('<p> Reservation confirmed! </p>');
+      $('#status-messages').append('<p> Reservation confirmed! </p>');
+      document.getElementById("new-trip-form").reset();
+
     }).fail(() => {
-      $('.message').append('<p>Adding Reservation Failed</p>');
+      $('#status-messages').append('<p>Adding Reservation Failed</p>');
     });
   });
 
