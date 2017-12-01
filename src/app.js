@@ -16,10 +16,12 @@ let allTripsTemplate;
 let tripHeadersTemplate;
 let showTripTemplate;
 let formTemplate;
+let filterTemplate;
 
 const url = 'https://ada-backtrek-api.herokuapp.com/trips';
 const tableFields = ['id', 'name', 'category', 'continent', 'weeks', 'cost'];
 const addTripFields = ['name', 'category', 'continent', 'weeks', 'cost', 'about'];
+const filterFields = ['name', 'category', 'continent', 'weeks', 'cost']
 const reservationFields = ['name', 'age', 'email'];
 
 const fetchTrips = function fetchTrips() {
@@ -33,16 +35,25 @@ const renderTrips = function renderTrips(list) {
   });
 }
 
+const loadFilters = function loadFilters() {
+  $('#filter').show();
+  filterFields.forEach((filter) => {
+    const capitalFilter = filter.charAt(0).toUpperCase() + filter.slice(1);
+    $('#filter-select').append(filterTemplate({item: filter, capitalized: capitalFilter}))
+  });
+}
+
 const loadTripsTable = function loadTripsTable(list) {
-  $('.content').empty();
+  clearContent();
   tableFields.forEach((field) => {
     $('#trip-headers').append(tripHeadersTemplate({header: field}))
   });
   renderTrips(list);
+  loadFilters();
 };
 
 const showTrip = function showTrip(event) {
-  $('.content').empty();
+  clearContent();
   const tripId = event.currentTarget.id;
   const tripUrl = `${url}/${tripId}`;
   $.get(tripUrl, (response) => {
@@ -55,13 +66,19 @@ const showTrip = function showTrip(event) {
   })
 };
 
+const clearContent = function clearContent() {
+  $('.content').empty();
+  $('#filter-input').val('');
+  $('#filter').hide();
+};
+
 const clearMessages = function clearMessages() {
   $('#status-messages ul').empty();
   $('#status-messages').hide();
 };
 
 const addTripForm = function addTripForm() {
-  $('.content').empty();
+  clearContent();
   addTripFields.forEach((item) => {
     $('#add-trip-form').append(formTemplate({field: item, lowercaseField: item}));
   });
@@ -112,7 +129,7 @@ const failedSave = function failedSave(model, response) {
 }
 
 const reserveForm = function reserveForm(event) {
-  $('.content').empty();
+  clearContent();
   const tripId = $(event.currentTarget.attributes.tripid).val();
   $('#reserve-trip-form').attr('tripid', tripId);
   reservationFields.forEach((item) => {
@@ -159,7 +176,7 @@ const successfulReservationSave = function successfulReservationSave(reservation
 const sortTrips = function sortTrips() {
   const classes = $(this).attr('class').split(/\s+/);
   let sortClass;
-  for (let i = 0; i < classes.length; i += 1) {
+  for (let i = 0; i < classes.length && sortClass === undefined; i += 1) {
     if (tableFields.includes(classes[i])) {
       sortClass = classes[i];
     }
@@ -185,6 +202,7 @@ $(document).ready( () => {
   tripHeadersTemplate = _.template($('#trip-headers-template').html());
   showTripTemplate = _.template($('#show-trip-template').html());
   formTemplate = _.template($('#form-template').html());
+  filterTemplate = _.template($('#filter-trips-template').html());
   $('#load-trips').on('click', fetchTrips);
   tripList.on('update', loadTripsTable, tripList);
   $('#all-trips').on('click', '.trip', showTrip);

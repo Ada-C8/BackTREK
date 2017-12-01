@@ -15,28 +15,38 @@
       <button class="clear float-right">[x]</button>
       <ul></ul>
     </section>
-    <table>
-      <thead>
-        <tr id='trip-headers' class='content'>
-          <script type="text/template" id="trip-headers-template">
-            <th class='sort <%- header %>'><a><%- header %></a><span class='sortorder'></span></th>
+    <section>
+      <form id='filter'>
+        <select id='filter-select' class='content'>
+          <script type="text/template" id="filter-trips-template">
+            <option value='<%- item %>'><%- capitalized %></option>
           </script>
-        </tr>
-      </thead>
-      <tbody id='all-trips' class='content'>
-        <script type="text/template" id="all-trips-template">
-          <tr>
-            <td><%- id %></td>
-            <td><a id=<%- id %> class='trip' href='#'><%- name %></a></td>
-            <td><%- category %></td>
-            <td><%- continent %></td>
-            <td><%- weeks %></td>
-            <td><%- cost %></td>
+        </select>
+        <input type='text' id='filter-input'/>
+      </form>
+      <table>
+        <thead>
+          <tr id='trip-headers' class='content'>
+            <script type="text/template" id="trip-headers-template">
+              <th class='sort <%- header %>'><a><%- header %></a><span class='sortorder'></span></th>
+            </script>
           </tr>
-        </script>
-      </tbody>
-    </table>
-    <div id='show-trip' class='content'>
+        </thead>
+        <tbody id='all-trips' class='content'>
+          <script type="text/template" id="all-trips-template">
+            <tr>
+              <td><%- id %></td>
+              <td><a id=<%- id %> class='trip' href='#'><%- name %></a></td>
+              <td><%- category %></td>
+              <td><%- continent %></td>
+              <td><%- weeks %></td>
+              <td><%- cost %></td>
+            </tr>
+          </script>
+        </tbody>
+      </table>
+    </section>
+    <section id='show-trip' class='content'>
       <script type="text/template" id="show-trip-template">
         <h3><%- name %></h3>
         <a id='reserve' tripid=<%- id %> href='#'>Reserve</a>
@@ -44,17 +54,19 @@
         <h5><%- cost %></h5>
         <p><%- about %></p>
       </script>
-    </div>
-    <form id='reserve-trip-form' class='content'>
-    </form>
-    <form id='add-trip-form' class='content'>
-      <script type="text/template" id="form-template">
-        <section>
-          <label><%- field %></label>
-          <input type='text' id=<%- field %> name=<%- field %> />
-        </section>
-      </script>
-    </form>
+    </section>
+    <section>
+      <form id='reserve-trip-form' class='content'>
+      </form>
+      <form id='add-trip-form' class='content'>
+        <script type="text/template" id="form-template">
+          <section>
+            <label><%- field %></label>
+            <input type='text' id=<%- field %> name=<%- field %> />
+          </section>
+        </script>
+      </form>
+    </section>
   </main>
   <footer>
 
