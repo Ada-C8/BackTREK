@@ -91,6 +91,11 @@ h2 {
   text-shadow: 0 0 .8rem #075B69;
 }
 
+.sort-field {
+  background: rgba(184,226,247,.8);
+  text-shadow: 0 0 .8rem #075B69;
+}
+
 /*NAV*/
 nav {
   display: none;

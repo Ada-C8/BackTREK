@@ -27,6 +27,9 @@ let tripTemplate;
 let reserveTemplate;
 let addTripTemplate;
 
+//define clobal variable
+var showFirst = false;
+
 const getTrips = function(tripList) {
   let back = backTemplate();
   let tableHead = headTemplate();
@@ -56,9 +59,12 @@ const getTrips = function(tripList) {
   $('.back').html(back);
   $('.trip').show();
   //fill out .trip section with first trip of collection
-  let trip = tripList.first();
-  trip.on('change', getTrip);
-  trip.fetch();
+  if (showFirst === false) {
+    let trip = tripList.first();
+    trip.on('change', getTrip);
+    trip.fetch();
+    showFirst = true;
+  }
 
   //sort by columns in trips table
   TRIP_FIELDS.forEach((field) => {
@@ -70,7 +76,12 @@ const getTrips = function(tripList) {
     });
   });
 
-} // end of getTrips
+  //provide visual feedback for sorting
+  $('th.sort').removeClass('sort-field');
+  $(`th.sort.${ tripList.comparator }`).addClass('sort-field');
+
+
+}; // end of getTrips
 
 const getTrip = function(trip) {
   console.log('get trip');
@@ -80,7 +91,7 @@ const getTrip = function(trip) {
   $('#reservation').html(reserveTemplate(trip));
   //make new reservation
   $('#reservation-form').on('submit', makeReservation);
-} // end of getTrip
+}; // end of getTrip
 
 // read data from forms
 const readFormData = function(formFields, form) {
@@ -94,7 +105,7 @@ const readFormData = function(formFields, form) {
   });
   console.log(formData);
   return formData;
-}
+};
 
 //make reservation
 const makeReservation = function(event) {
@@ -106,7 +117,7 @@ const makeReservation = function(event) {
 
   reservation.save({});
   console.log('reservation was made');
-}//and of make reservation
+};//and of make reservation
 
 //add new trip
 const addTrip = function(event) {
@@ -120,7 +131,7 @@ const addTrip = function(event) {
   tripList.add(trip);
   trip.save({});
   console.log('new trip added');
-}//end of add trip
+};//end of add trip
 
 $(document).ready( () => {
   //templates
