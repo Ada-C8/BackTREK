@@ -88,7 +88,6 @@ const events = {
   },
   reserveTrip(event) {
     event.preventDefault();
-    console.log(event.target);
     $('#reserve-form-status-message').hide();
     const reservationData = {};
     reservationFields.forEach((field) => {
@@ -99,7 +98,17 @@ const events = {
     })
     const reservation = new Reservation(reservationData);
     reservation.urlRoot = $(event.target).attr('action');
-    reservation.save({}, {success: events.successfulResSave, error: events.failedResSave});
+    if (reservation.isValid()) {
+      reservation.save({}, {success: events.successfulResSave, error: events.failedResSave});
+    } else {
+      $('#reserve-form-status-message ul').empty();
+      for(let key in reservation.validationError) {
+        reservation.validationError[key].forEach((error) => {
+          $('#reserve-form-status-message ul').append(`<li>${key}: ${error}</li>`);
+        })
+      }
+      $('#reserve-form-status-message').show();
+    }
   },
   successfulTripSave(trip) {
     $('#status-message h3').empty();
