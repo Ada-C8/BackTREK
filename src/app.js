@@ -76,56 +76,7 @@ const events = {
 
   },
 
-  // addReservation(event) {
-  //   console.log(this);
-  //   const id = this.id;
-  //   event.preventDefault();
-  //   const reservationData = {};
-  //   reservationFields.forEach( (field) => {
-  //     let val = $(`input[name=${field}]`).val();
-  //     if (field === 'age') {
-  //       val = parseInt(val);
-  //     }
-  //     if (val != '') {
-  //       reservationData[field] = val;
-  //     }
-  //   });
-  //
-  //   const reservation = reservationData;
-  //
-  //   reservation.save({}, {
-  //     url: `https://ada-backtrek-api.herokuapp.com/trips/${id}/reservations`,
-  //     success: events.successfulSave,
-  //     error: events.failedSave
-  //   });
-  //
-  // },
-
-
-
-  // sortBooks(event) {
-  //   console.log(event);
-  //   console.log(this);
-  //   const classes = $(this).attr('class').split(/\s+/);
-  //
-  //   bookList.comparator = classes[1];
-  //
-  //   if (classes.includes('current-sort-field')) {
-  //     $(this).removeClass('current-sort-field');
-  //     bookList.set(bookList.models.reverse());
-  //     render(bookList);
-  //
-  //   } else {
-  //     $('.current-sort-field').removeClass('current-sort-field');
-  //     $(this).addClass('current-sort-field');
-  //     bookList.sort();
-  //   };
-  // },
-
   successfulSave(trip, response){
-    console.log('success!');
-    console.log(trip);
-    console.log(response);
     tripList.add(trip);
 
     $('#status-messages ul').empty();
@@ -136,9 +87,6 @@ const events = {
   },
 
   failedSave(trip, response) {
-    console.log('error');
-    console.log(trip);
-    console.log(response);
     trip.destroy();
     $('#status-messages ul').empty();
     $('#status-messages ul').append('<li>Your book was unable to be added.</li>');
@@ -146,8 +94,6 @@ const events = {
   },
 
   sortTrips(event) {
-    console.log(event);
-    console.log(this);
     const classes = $(this).attr('class').split(/\s+/);
 
     tripList.comparator = classes[1];
@@ -166,15 +112,28 @@ const events = {
 
   tripFilter(event) {
     event.preventDefault();
+
+    const column = document.getElementById("filter-query").value;
+    console.log(column);
     const input = document.getElementById("myInput");
     const filter = input.value.toUpperCase();
     const table = document.getElementById("trips-table");
     let tr = table.getElementsByTagName("tr");
 
+    const findTdIndex = {
+      Name: 0,
+      Continent: 1,
+      Category: 2,
+      Weeks: 3,
+      Cost: 4
+    };
+
+    let x = findTdIndex[column];
+    console.log(x);
     let i;
     let td;
     for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td")[0];
+      td = tr[i].getElementsByTagName("td")[x];
       if (td) {
         if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
           tr[i].style.display = "";
