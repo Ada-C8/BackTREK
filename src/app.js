@@ -59,7 +59,7 @@ const loadTrips = function loadTrips(tripList) {
 $(document).ready(() => {
   tripsTemplate = _.template($('#trips-template').html());
   aboutTemplate = _.template($('#trip-template').html());
-  reservationTemplate = _.template($('#reservation-template').html());
+  createNewTripTemplate = _.template($('#create-new-trip-template').html());
 
   tripList.on('update', loadTrips);
   tripList.on('sort', loadTrips);
