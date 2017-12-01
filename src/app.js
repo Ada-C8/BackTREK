@@ -24,6 +24,8 @@ let tripDetailsTemplate;
 
 const tripList = new TripList();
 
+const fields = ['name', 'category', 'continent', 'weeks', 'cost', 'about', 'tripID'];
+
 // render trips table
 const render = function render(tripList) {
   tripDetailsTemplate = _.template($('#trip-details-template').html());
@@ -37,7 +39,7 @@ const render = function render(tripList) {
 // const newTrip = function newTrip() {
 //   console.log('button clicked!');
 // }
-const fields = ['name', 'category', 'continent', 'weeks', 'cost', 'about', 'tripID'];
+
 
 const events = {
   addTrip(event){
@@ -94,18 +96,11 @@ const events = {
     trip.destroy();
   },
   successReservation(reservation, response) {
-    console.log('success!')
-    console.log(reservation);
-    console.log(response);
     $('#status-messages ul').empty();
     $('#status-messages ul').append(`<li>${reservation.get('name')} added!<li>`)
     $('#status-messages').show();
   },
   failedReservation(reservation, response) {
-    console.log(response);
-    console.log(reservation);
-    console.log('uh oh');
-
     for (let key in response.responseJSON.errors) {
       response.responseJSON.errors[key].forEach((error) => {
         $('#status-messages ul').append(`<li>${key}: ${error}</li>`)
@@ -113,6 +108,26 @@ const events = {
     }
     $('#status-messages').show();
     reservation.destroy();
+  },
+  sortTrips(event) {
+    console.log(event);
+    console.log('begin sorting!');
+    $('.current-sort-field').removeClass('current-sort-field');
+
+    // get the class list of the selected element
+    const classes = $(this).attr('class').split(/\s+/);
+
+    classes.forEach((className) => {
+      if (fields.includes(className)) {
+        if (className === tripList.comparator) {
+          tripList.models.reverse();
+          tripList.trigger('sort', tripList);
+        } else {
+          tripList.comparator = className;
+          tripList.sort();
+        }
+      }
+    });
   }
 
 }
@@ -124,6 +139,8 @@ $(document).ready( () => {
 
 
   // User Events
+  $('.sort').click(events.sortTrips);
+
   $tripsList.on('click', 'tr', function getTrip() {
     const trip = new Trip({ id: $(this).attr('data-id') })
     $tripDescription.empty();
@@ -176,6 +193,7 @@ $(document).ready( () => {
 
   // Data Events
   tripList.on('update', render, tripList);
+  tripList.on('sort', render, tripList);
 
   // Implement when page loads
   tripList.fetch();
