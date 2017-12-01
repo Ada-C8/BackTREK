@@ -21,22 +21,16 @@ const renderDetails = function renderDetails(trip){
   const detailsElement = $('#trip-details');
   detailsElement.html('');
 
-  // trip.fetch({
-  //   success: (model) => {
-  //     const generatedHTML = $(detailsTemplate(trip.attributes));
-  //     detailsElement.append(generatedHTML);
-  //   }
-  // });
-
-  // API doesn't happen if model has already been clicked on and updated
   if (trip.get('about')) {
     const generatedHTML = $(detailsTemplate(trip.attributes));
     detailsElement.append(generatedHTML);
+    // console.log(`my trip already has info`);
   } else {
     trip.fetch({
       success: (model) => {
         const generatedHTML = $(detailsTemplate(trip.attributes));
         detailsElement.append(generatedHTML);
+        // console.log(trip);
       }
     });
   }
@@ -60,6 +54,12 @@ const render = function render(tripList) {
 };
 
 
+// MODALS
+// Get the modal
+const modal = document.getElementById('myModal');
+
+// Get the <span> element that closes the modal
+const span = document.getElementsByClassName("close")[0];
 
 $(document).ready( () => {
   detailsTemplate = _.template($('#details-template').html());
@@ -71,11 +71,22 @@ $(document).ready( () => {
   // get all of the trips from the API
   tripList.fetch();
 
-  let myTrip = new Trip ({
-    "continent":"Africa",
-    "category":"everything",
-    "weeks":5,
-    "cost":9599.99
+  // EVENTS
+  // $('#add-book-form').on('submit', addBookHandler);
+
+  // MODAL
+  // changes modal class so that that is displays when add trip button is clicked on
+  $('#add-trip-button').on('click', function() {
+    modal.style.display = "block";
   });
-  console.log(myTrip.isValid());
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function() {
+    modal.style.display = "none";
+  };
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  };
 });

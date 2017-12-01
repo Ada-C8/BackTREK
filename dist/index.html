@@ -8,13 +8,15 @@
   <body>
     <header>
       <h1>Trek!</h1>
+      <div>
+        <button id='add-trip-button' class='button'>Add a trip</button>
+      </div>
     </header>
     <main>
       <div id='main-content' class='row'>
         <div id='left' class='small-6 columns'>
           <section>
             <h3>Trips!</h3>
-            
             <table>
               <thead>
                 <th class="sort name">Name</th>
@@ -46,6 +48,22 @@
           </div>
         </div>
       </div>
+
+      <!-- The Modal -->
+      <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <h2 id='message'></h2>
+          <p>
+            my modal
+          </p>
+          <form id="add-trip-form">
+
+          </form>
+        </div>
+      </div>
+
     </main>
     <footer>
 
@@ -75,8 +93,8 @@
           <li><strong>Continent: </strong><%- continent %></li>
           <li><strong>Category:</strong> <%- category %></li>
           <li><strong>Weeks:</strong> <%- weeks %></li>
-          <li>Cost: $<%- cost %></li>
-          <li>About: <%- about %></li>
+          <li><strong>Cost:</strong> $<%- cost %></li>
+          <li><strong>About:</strong> <%- about %></li>
         </ul>
     </script>
     <script src="app.bundle.js" type="text/javascript"></script>
