@@ -54,8 +54,8 @@ const events = {
     event.preventDefault();
     const tripData = {};
     fields.forEach((field) => {
-      $(`label[for=${field}] span`).remove();
-      $(`input[name=${field}]`).removeClass('error');
+      $(`#add-trip-form label[for=${field}] span`).remove();
+      $(`#add-trip-form input[name=${field}]`).removeClass('error');
       tripData[field] = $(`#add-trip-form [name=${field}]`).val();
     });
     const trip = new Trip(tripData);
@@ -66,9 +66,9 @@ const events = {
       });
     } else {
       Object.entries(trip.validationError).forEach((error) => {
-        $(`label[for=${error[0]}] span`).remove();
-        $(`label[for=${error[0]}]`).append(`<span class="error">: ${error[1]}</span>`);
-        $(`input[name=${error[0]}]`).addClass('error');
+        $(`#add-trip-form label[for=${error[0]}] span`).remove();
+        $(`#add-trip-form label[for=${error[0]}]`).append(`<span class="error">: ${error[1]}</span>`);
+        $(`#add-trip-form input[name=${error[0]}]`).addClass('error');
       });
     }
   },
