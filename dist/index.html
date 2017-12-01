@@ -8,8 +8,9 @@
 </head>
 <body>
   <header>
-    <h1>BackBoneTREK</h1>
-    <a id="load-trips" href="#">Show All Trips</a>
+    <h1>Welcome to BackBoneTREK!</h1>
+    <h3>Don't think too hard about your next adventure. Get out of your comfort zone and explore!</h3>
+    <a id="load-trips" href="#"></a>
   </header>
   <main>
 
@@ -19,6 +20,44 @@
       </ul>
     </section>
     <!-- END ERROR AND SUCCESS MESSAGES -->
+
+    <!-- THIS FORM WILL FILTER ON KEYUP -->
+       <form id="filterForm">
+         <select id="filterType">
+           <option value="name">Name</option>
+           <option value="category">Category</option>
+           <option value="continent">Continent</option>
+           <option value="weeks">Weeks</option>
+           <option value="cost">Cost</option>
+         </select>
+         <input type='text' id="filter"></input>
+       </form>
+    <!-- END FORM  -->
+
+    <!-- TABLE RENDERS ALL TRIPS  -->
+    <table>
+      <thead>
+      <tr id="trip-list-headers">
+       <script type="text/template" id="trip-headers-template">
+         <th><%- header %></th>
+       </script>
+     </tr>
+   </thead>
+      <tbody id='trip-list'>
+        <script type="text/template" id="trip-list-template">
+          <tr class="trip" data-id="<%- id %>">
+            <td><%- id %></td>
+            <td><%- name %></td>
+            <td><%- continent %></td>
+            <td><%- category %></td>
+            <td><%- weeks %></td>
+            <td><%- cost %></td>
+          </tr>
+        </script>
+      </tbody>
+    </table>
+
+    <!-- END TRIP LIST TABLE  -->
 
     <!-- ADD TRIP FORM  -->
     <form id="add-trip-form">
@@ -55,6 +94,7 @@
         <p><%- weeks %></p>
         <p><%- cost %></p>
 
+
         <form id="reserve-trip-form" data-id="<%- id %>">
           <label for="name">Name</label>
           <input type="text" name="name"></input>
@@ -64,46 +104,9 @@
           <input type="text" name="age"></input>
           <input type="submit" value="Reserve This Trip" class="button"></input>
           <input type="hidden" value="<%- id %>" name="trip_id"></input>
-
       </form>
       </script>
     </div>
-
-    <form id="filterForm">
-      <select id="filterType">
-        <option value="name">Name</option>
-        <option value="category">Category</option>
-        <option value="continent">Continent</option>
-        <option value="weeks">Weeks</option>
-        <option value="cost">Cost</option>
-      </select>
-      <input type='text' id="filter"></input>
-    </form>
-
-    <!-- TABLE RENDERS ALL TRIPS  -->
-    <table>
-      <thead>
-      <tr id="trip-list-headers">
-       <script type="text/template" id="trip-headers-template">
-         <th><%- header %></th>
-       </script>
-     </tr>
-   </thead>
-      <tbody id='trip-list'>
-        <script type="text/template" id="trip-list-template">
-          <tr class="trip" data-id="<%- id %>">
-            <td><%- id %></td>
-            <td><%- name %></td>
-            <td><%- continent %></td>
-            <td><%- category %></td>
-            <td><%- weeks %></td>
-            <td><%- cost %></td>
-          </tr>
-        </script>
-      </tbody>
-    </table>
-
-    <!-- END TRIP LIST TABLE  -->
 
   </main>
   <footer>

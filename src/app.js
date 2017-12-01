@@ -13,7 +13,6 @@ import Reservation from './app/models/reservation';
 let tripsTemplate ;
 let headerTemplate;
 let showTripTemplate;
-let formTemplate;
 
 const tripFields = ['id', 'name', 'continent', 'category','weeks','cost'];
 
@@ -49,6 +48,7 @@ $(document).ready( () => {
     const trip = new Trip({id: tripId});
     trip.on('change', loadTrip);
     trip.fetch();
+    $('#trip-list').hide();
   });
 
   $('#add-trip-form').submit(function(event) {
@@ -132,4 +132,5 @@ $(document).ready( () => {
     $('#filter').val('');
     loadTrips(tripList.models);
   });
+
 });
