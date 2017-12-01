@@ -44,6 +44,20 @@ const events = {
     });
     $('#reservation-form').children('form').attr('id', id);
   },
+  // Make a Reservation
+  postReservation(response) {
+    const formData = response;
+    const url = `https://ada-backtrek-api.herokuapp.com/trips/${response[0].id}/reservations`;
+    $.post(url, formData.serialize(), (data) => {
+      $('#form-submit').children('section').addClass('success');
+      $('#price').html(`${data.name} is booked!`);
+    })
+    .fail(() => {
+      $('#message').addClass('failure').html('Uhh... Something happened. Please try again.');
+    });
+    // TODO: Clear form and make it so it doesn't repetitively book.
+},
+  // Add a New Trip
   addTrip(event) {
     event.preventDefault();
     const tripData = {};
@@ -52,31 +66,26 @@ const events = {
       if (val != '') {
         tripData[field] = val;
       }
-      console.log(`field: ${field}, value: ${val}`);
     });
     const trip = new Trip(tripData);
-    console.log(tripData);
     trip.save({}, {
       success: events.successfulSave,
       error: events.failedSave,
     });
     tripList.fetch();
   },
-  successfulSave(trip, response) {
+  successfulSave(trip) {
     $('#modal-message ul').empty();
     $('#modal-message ul').append(`<li>${trip.get('name')} added!</li>`);
     $('#modal-message').addClass('success').show();
-    // $.modal.close();
     $("#new-trip-form").modal({
- escapeClose: true,
- clickClose: true,
- showClose: true
-});
+      escapeClose: true,
+      clickClose: true,
+      showClose: true
+    });
   },
   failedSave(trip, response) {
     $('#modal-message ul').empty();
-    console.log(response);
-    console.log(trip);
     for (let key in response.responseJSON.errors) {
       response.responseJSON.errors[key].forEach((error) => {
         $('#modal-message ul').append(`<li>${key}: ${error}</li>`);
@@ -106,13 +115,9 @@ $(document).ready( () => {
   //NEW Trip
   $('#new-trip-form').submit(events.addTrip);
 
+  // FORM
+  $('#reservation-form').children('form').submit(function fx(e) {
+    e.preventDefault();
+    events.postReservation($(this));
+  });
 });
-
-// $(document).ready(() => {
-//
-//   // FORM
-//   $('form').submit(function fx(e) {
-//     e.preventDefault();
-//     postReservation($(this));
-//   });
-// });
