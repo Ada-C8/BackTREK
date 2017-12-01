@@ -104,7 +104,15 @@ const unSplitScreen = function unSplitScreen() {
   $('#filter-input').val('');
 }
 
+const highlightCurrentTrip = function highlightCurrentTrip(event) {
+  const currentRow = $(event.currentTarget).parent().parents('tr:first').children();
+  console.log(currentRow);
+  $('#all-trips tr td').removeClass('current-trip');
+  $(currentRow).addClass('current-trip');
+};
+
 const showTrip = function showTrip(event) {
+  highlightCurrentTrip(event);
   clearContent();
   splitScreen();
   const tripId = event.currentTarget.id;
