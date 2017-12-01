@@ -124,8 +124,14 @@ const events = {
     $('#status-message').show();
     $('#reserve-trip-form').trigger('reset');
   },
-  failedResSave() {
-    console.log('failed save')
+  failedResSave(reservation, response) {
+    $('#reserve-form-status-message ul').empty();
+    for(let key in response.responseJSON.errors) {
+      response.responseJSON.errors[key].forEach((error) => {
+        $('#reserve-form-status-message ul').append(`<li>${key}: ${error}</li>`);
+      })
+    }
+    $('#reserve-form-status-message').show();
   }
 };
 
