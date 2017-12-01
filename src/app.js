@@ -19,8 +19,18 @@ const events = {
     console.log('Tried to sort!');
     $('.sort').removeClass('current-sort-field');
     $(this).addClass('current-sort-field');
-    const classes = $(this).attr('class').split(/\s+/);
-    console.log(classes);
+    let classes = $(this).attr('class').split(/\s+/);
+    classes.forEach((className) => {
+      if(tripFields.includes(className)){
+        if (className === tripList.comparator){
+          tripList.models.reverse();
+          tripList.trigger('sort', tripList);
+        } else {
+          tripList.comparator = className;
+          tripList.sort();
+        }
+      }
+    });
   },
   fetchTrip() {
     const trip = tripList.get($(this).data('id'));
