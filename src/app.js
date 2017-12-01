@@ -52,6 +52,7 @@ $(document).ready( () => {
   });
 
   tripList.on('sort', loadTrips);
+  tripList.on('update', loadTrips)
 
   $('#createTripForm').on('submit', () => {
     console.log('Submission started');
