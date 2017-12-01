@@ -7,16 +7,19 @@ const Reservation = Backbone.Model.extend({
   },
 
   validate: function(attributes) {
-    // Save errors into a hash
     const errors = {};
-
     if (!attributes.email) {
       errors['email'] = ['Email cannot be blank!'];
-    } else if (!attributes.name) {
+    }
+    if (!attributes.name) {
       errors['name'] = ['Name cannot be blank!'];
     }
+    // If you are using in an if statment, then you want it to evaluate to false
+    if (Object.keys(errors).length < 1) {
+      return false;
+    }
+    return errors;
   },
-
 });
 
 

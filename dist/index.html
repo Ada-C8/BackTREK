@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>My JavaScript App</title>
+  <title>BackTREK</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
@@ -17,8 +17,24 @@
 </header>
 
 <main>
+  <!-- DISPLAY ERRORS HERE! -->
+  <section id="display-errors">
+  </section>
+
   <div id="table-wrapper" class="small-12 large-6 columns">
-    <table class="hover">
+
+    <select id="filter">
+      <option selected disabled style='display: none' value=''>Choose by category</option>
+      <option value="id">ID</option>
+      <option value="name">Name</option>
+      <option value="continent">Continent</option>
+      <option value="weeks">Weeks</option>
+      <option value="cost">Cost</option>
+    </select>
+
+    <input type="text" id="search-bar" placeholder="Search for a trip..." title="Search">
+
+    <table id="all-trips" class="hover">
       <thead>
         <th class="sort id">ID</th>
         <th class="sort name">Name</th>
@@ -27,26 +43,22 @@
         <th class="sort weeks">Weeks</th>
         <th class="sort cost">Cost</th>
       </thead>
-      <tbody id="trip-list"> <!-- ADD ALL TRIPS HERE -->
+
+      <!-- APPEND ALL TRIPS  -->
+      <tbody id="trip-list">
       </tbody>
     </table>
+
   </div>
 
   <section class="small-12 large-6 columns">
-    <div id="create-trip-form"> <!-- CREATE TRIP FORM -->
+    <!-- CREATE TRIP FORM -->
+    <div id="create-trip-form">
       <header>
         <h4 id="info-header" class="header-styling cardo-font">Create New Trip</h4>
       </header>
-      <!-- accepted params:
-      name (string)
-      continent (string)
-      about (string)
-      category (string)
-      weeks (integer)
-      cost (float) -->
-      <form id="new-trip-form" class="small-11 small-centered columns cardo-font padding">
-        <!-- <small class="error">FIELDS CANNOT BE BLANK</small> -->
 
+      <form id="new-trip-form" class="small-11 small-centered columns cardo-font padding">
         <label>Name</label>
         <input type="text" id="name" name="name"></input>
 
@@ -69,8 +81,9 @@
       </form>
     </div>
 
-    <div id="trip-info">  <!-- TRIP INFO HERE -->
-    </div>
+    <!-- TRIP INFO HERE WITH THE RESERVE FORM -->
+    <section id="trip-info">
+    </section>
 
   </section>
 
@@ -82,7 +95,7 @@
   </p>
 </footer>
 
-<!-- TEMPLATES -->
+<!-- ALL TRIP TEMPLATE -->
 
 <script id="trip-template" type="text/template">
   <tr id="trip<%-id%>">
@@ -106,6 +119,8 @@
     </td>
   </tr>
 </script>
+
+<!-- TRIP TEMPLATE -->
 
 <script id="trip-info-template" type="text/template">
   <section>
@@ -148,7 +163,23 @@
   </div>
 </script>
 
+<!-- ERROR TEMPLATE -->
 
+<script id="error-template" type= "text/template">
+  <% if (obj.name) { %> Name: <%- name %><% } %>
+
+  <% if (obj.email) { %> Email: <%- email %><% } %>
+
+  <% if (obj.continent) { %> Continent: <%- continent %><% } %>
+
+  <% if (obj.category) { %> Category: <%- category %><% } %>
+
+  <% if (obj.weeks) { %> Weeks: <%- weeks %><% } %>
+
+  <% if (obj.continent) { %> Continent: <%- continent %><% } %>
+
+  <% if (obj.cost) { %> Cost: <%- cost %><% } %>
+</script>
 
 <script src="app.bundle.js" type="text/javascript"></script>
 
