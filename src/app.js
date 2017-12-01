@@ -24,11 +24,6 @@ const render = function(tripList) {
   })
 }
 
-//next: reserve a spot on a trip. need
-// 1. method to add/post
-// 2. validations to ensure required data is present
-// 3. error messages
-// 4.
 const reservationFields = ['name', 'age', 'email']
 const tripFields = ['name', 'continent', 'about', 'weeks', 'cost', 'category'];
 const events = {
@@ -84,28 +79,27 @@ const events = {
 
 $(document).ready( () => {
   $('#newTripForm').hide();
-  $('#bookingForm').hide(); //hide the form
+  $('#bookingForm').hide();
   $('#all-trips').hide();
-  tripList.on('update', render, tripList); // renders the trip list each time update is called.
-  tripList.fetch(); //fetches the trip list from the API
+  tripList.on('update', render, tripList);
+  tripList.fetch();
 
   $('#show-all').on('focus', function(){
-    $('#trip-description').empty(); // removes any previously appended info from the trip description section
+    $('#trip-description').empty();
     $('#newTripForm').hide()
-    $('#all-trips').show(); // shows all trips.
+    $('#all-trips').show();
   });
 
-  $('#trip-list').on('click', 'tr', function(){ // when you focus a row in the table
+  $('#trip-list').on('click', 'tr', function(){
     $('#trip-description').empty();
-    const tripTemplate = _.template($('#description-template').html()); //make a new template for the new section (for displaying individual trips)
-    const trip = new Trip(this) //create a new instance of trip because it doesn't yet exist.
-    trip.fetch({}, ).done(() => {$('#trip-description').html($(tripTemplate(trip.attributes)))}) // fetch a new trip. the first arg means "fetch the entire object". //.done waits until it is done loading; this is necessary because it loads asynchronously. arrow function appends the fetched attributes to the specified feild.
+    const tripTemplate = _.template($('#description-template').html());
+    const trip = new Trip(this);
+    trip.fetch({}, ).done(() => {$('#trip-description').html($(tripTemplate(trip.attributes)))});
 
+    $('#bookingForm form').remove('action');
+    $('#bookingForm form').attr('action', `https://ada-backtrek-api.herokuapp.com/trips/${trip.id}/reservations`);
 
-    $('#bookingForm form').remove('action') // takes off any previously appended action links
-    $('#bookingForm form').attr('action', `https://ada-backtrek-api.herokuapp.com/trips/${trip.id}/reservations`)
-
-    $('#bookingForm').show(); //shows the form.
+    $('#bookingForm').show();
   });
 
   const $bookingForm = $('#bookingForm form')
@@ -120,21 +114,14 @@ $(document).ready( () => {
     }).fail(() => {
       $('#trips').html('<p>Booking Trip Failed</p>')
     }).always(()=> {
-
+      console.log("You did something with a reservation form!")
     })
   });
 
-
-
-    // events.reserveSpot()
-
-
-  // $('#bookingForm').submit(events.reserveSpot(this.get('id')));
   $('#new-trip').on('focus', function(){
     $('#newTripForm').show();
   });
 
-  // $('#newTripForm').submit(events.addTrip);
   $('#newTripForm').on('click', 'button', events.addTrip);
 
 });
