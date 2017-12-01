@@ -20,6 +20,7 @@ const tripList = new TripList();
 let tripsTemplate;
 let aboutTemplate;
 let createNewTripTemplate;
+let newReservationTemplate;
 
 // render list of trips
 const loadTrips = function loadTrips(tripList) {
@@ -61,9 +62,11 @@ const createNewTripHandler = function(event) {
 };
 
 $(document).ready(() => {
+  // templates
   tripsTemplate = _.template($('#trips-template').html());
   aboutTemplate = _.template($('#trip-template').html());
   createNewTripTemplate = _.template($('#create-new-trip-template').html());
+  newReservationTemplate = _.template($('#new-reservation-template').html());
 
   tripList.on('update', loadTrips);
   tripList.on('sort', loadTrips);
