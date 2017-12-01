@@ -93,6 +93,13 @@ const events = {
     $('#status-messages').show();
     trip.destroy();
   },
+  successReservation(reservation, response) {
+    console.log('success!');
+  },
+  failedReservation(reservation, response) {
+    console.log('uh oh');
+  }
+
 }
 
 
@@ -126,11 +133,11 @@ $(document).ready( () => {
     const resData = {};
     event.preventDefault();
 
-    const formfields = ['res-name', 'res-age', 'res-email', 'tripID']
+    const formfields = ['name', 'age', 'email', 'tripID']
     event.preventDefault();
 
     formfields.forEach( (field) => {
-      const val = $(`form input[name=${field}]`).val();
+      const val = $(`form input[name=res-${field}]`).val();
       if (val !== '') {
         resData[field] = val;
       }
@@ -147,10 +154,17 @@ $(document).ready( () => {
 
     if (reservation.isValid()) {
       console.log('valid!')
-      // reservation.save({}, {
-      //   success: events.successfullSave,
-      //   error: events.failedSave,
-      // });
+      reservation.save({}, {
+        success: events.successReservation,
+        error: events.failedReservation,
+      });
+    } else {
+      console.log('uh oh! Invalid reservation! :(');
+      console.log(reservation.validationError);
+      Object.keys(reservation.validationError).forEach((error) => {
+        $('#status-messages ul').append(`<li>${error}: ${reservation.validationError[error]}<li>}`)
+      });
+      $('#status-messages').show();
     }
   });
 
@@ -160,23 +174,3 @@ $(document).ready( () => {
   // Implement when page loads
   tripList.fetch();
 });
-
-
-// if (trip.isValid()) {
-//   console.log('valid!')
-//   trip.save({}, {
-//     success: events.successfullSave,
-//     error: events.failedSave,
-//   });
-// } else {
-//   console.log('uh oh! Invalid trip :(')
-//   console.log(trip.validationError);
-//
-//   // TODO: FORMAT ERROR MESSGES!
-//   // multiple messages per key
-//   Object.keys(trip.validationError).forEach((error) => {
-//     $('#status-messages ul').append(`<li>${error}: ${trip.validationError[error]}</li>`)
-//   });
-//   $('#status-messages').show();
-// }
-// }

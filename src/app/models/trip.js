@@ -18,29 +18,29 @@ const Trip = Backbone.Model.extend({
 
     //TODO: should add to keys array, not replace?
     if (!attributes.name) {
-      errors['name'] = ['Name cannot be blank'];
+      errors['name'] = 'Name cannot be blank';
     }
 
     if (!attributes.continent) {
-      errors['continent'] = ['continent cannot be blank'];
+      errors['continent'] = 'continent cannot be blank';
     } else if (!continents.includes(attributes.continent)) {
-      errors['continent'] = ['continent must be from the dropdown list'];
+      errors['continent'] = 'continent must be from the dropdown list';
     }
 
     if (!attributes.category) {
-      errors['category'] = ['category cannot be blank'];
+      errors['category'] = 'category cannot be blank';
     }
 
     if (!attributes.weeks) {
-      errors['weeks'] = ['weeks cannot be blank'];
+      errors['weeks'] = 'weeks cannot be blank';
     } else if (isNaN(attributes.weeks)){
-      errors['weeks'] = ['weeks must be number'];
+      errors['weeks'] = 'weeks must be number';
     }
 
     if (!attributes.cost) {
-      errors['cost'] = ['cost cannot be blank']
+      errors['cost'] = 'cost cannot be blank';
     } else if (isNaN(attributes.cost)) {
-      errors['cost'] = ['cost must be a number']
+      errors['cost'] = 'cost must be a number'
     }
 
     console.log('errors!');
