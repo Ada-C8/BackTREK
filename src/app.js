@@ -30,7 +30,7 @@ const clearStatus = function clearStatus() {
 
 // Add a new status message
 
-const fields = ['name'];
+const fields = ['name', 'category', 'continent', 'weeks', 'cost'];
 
 const updateStatusMessageFrom = (messageHash) => {
   $('#status-messages ul').empty();
@@ -123,11 +123,19 @@ const addTripHandler = function(event) {
 
   const trip = new Trip(tripData);
 
+  let successfullSave = function(trip, response) {
+    updateStatusMessageWith(`${trip.get('name')} added!`)
+  };
+  let failedSave = function(trip, response) {
+    updateStatusMessageFrom(response.responseJSON.errors);
+    trip.destroy();
+  };
+
   if (trip.isValid()) {
       tripList.add(trip);
       trip.save({}, {
-        success: events.successfullSave,
-        error: events.failedSave,
+        success: successfullSave,
+        error: failedSave,
       });
     } else {
       // getting here means there were client-side validation errors reported
@@ -136,13 +144,8 @@ const addTripHandler = function(event) {
       updateStatusMessageFrom(trip.validationError);
     }
 
-  let successfullSave = function(trip, response) {
-    updateStatusMessageWith(`${trip.get('name')} added!`)
-  };
-  let failedSave = function(trip, response) {
-    updateStatusMessageFrom(response.responseJSON.errors);
-    trip.destroy();
-  };
+
+
 
 
 //OLDER CODE:
@@ -268,10 +271,12 @@ $(document).ready(() => {
   $('#trip-filter').on('keyup', function(event) {
 
     //$ here is syntax used to indicate got this from jquery
-    let $filter = $(this);
-    let filteredTrips = _.filter(tripList.models, (trip) => {
+    let $filter = $('#trips-filter'); //this is the form input element (search bar)
+    let filteredTrips = tripList.select((trip) => {
+      // $filter.val is the value of everything in the serach bar and trim takes out whitespace
       if ($filter.val().trim() === "") {
         return true;
+        //if nothing has been typed in, select everything
       }
 
       let filterType = $('#filter-type').val();

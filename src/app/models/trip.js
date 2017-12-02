@@ -6,7 +6,7 @@ const Trip = Backbone.Model.extend({
   initialize: function(attributes) {
       // console.log(`In initialize: for the book ${ this.get('title') }`);
     },
-    
+
   validate(attributes) {
     // Note the argument. We will read attribute values from
     // here instead of calling this.get()
@@ -23,15 +23,25 @@ const Trip = Backbone.Model.extend({
       errors.name = ['cannot be blank'];
     }
 
-    // if (!attributes.category) {
-    //   errors.category = ['cannot be blank'];
-    // }
-    //
-    // if (!attributes.weeks) {
-    //   errors.weeks = ['cannot be blank'];
-    // } else if (isNaN(attributes.weeks)
-    //     errors.weeks = ['must be a number'];
-    //   }
+    if (!attributes.continent) {
+      errors.continent = ['cannot be blank'];
+    }
+
+    if (!attributes.category) {
+      errors.category = ['cannot be blank'];
+    }
+
+    if (!attributes.weeks) {
+      errors.weeks = ['cannot be blank'];
+    } else if (isNaN(attributes.weeks)){
+        errors.weeks = ['must be a number'];
+    }
+
+    if (!attributes.cost) {
+      errors.cost = ['cannot be blank'];
+    } else if (isNaN(attributes.cost)) {
+        errors.cost = ['must be a number'];
+    }
 
     if (Object.keys(errors).length < 1) {
       return false;
