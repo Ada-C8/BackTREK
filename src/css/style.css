@@ -118,7 +118,7 @@ th.sort {
 }
 
 /* The Close Button */
-.close {
+#close {
     color: #aaa;
     float: right;
     font-size: 28px;

@@ -12,13 +12,12 @@ import TripList from './app/collections/trip_list';
 import Reservation from  './app/models/reservation';
 
 const TRIP_FIELDS = ['name', 'category', 'continent', 'cost', 'weeks'];
-
 const  tripList = new TripList();
-// const reservation = new Reservation();
 let tripTemplate;
 let individualTripTemplate;
 let reserveTemplate;
 let modal;
+
 //////////////////////////
 // Status reporting
 //////////////////////////
@@ -60,7 +59,6 @@ const addReservation = function addReservation(trip, formElement){
 // Trip Details
 //////////////////////////
 const showTripDetails = function showTripDetails(trip){
-  console.log(trip.attributes); // has the about
   const individualTripListElement = $('#individual-trip-detail');
   individualTripListElement.html('');
 
@@ -134,7 +132,6 @@ const handleValidationFailures = function handleValidationFailures(errors) {
 const addTripHandler = function(event) {
   event.preventDefault();
   const trip = new Trip(readFormData());
-  // $('#status-messages ul').html('');
   clearStatus();
   if (!trip.isValid()) {
     handleValidationFailures(trip.validationError);
@@ -185,32 +182,26 @@ $(document).ready( () => {
   $('#reserve').hide();
   $('#add-reservation').hide();
 
-  // $('#add-trip-form').hide();
-
   // ///////// MODAL ///////// in doc ready? ///////
   const showAddForm = function showAddForm() {
     modal.css("display", "block")
-    // modal.style.display = "block";
-    // $('#add-trip-form').show();
-    $('.close').on('click', function(){
+    $('#close').on('click', function(){
       modal.hide();
     });
+
     // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-      if (event.target == modal) {
-        modal.style.display = "none";
-      }
-    };
+    $('body').on('click', '.modal-close', function(event){
+    if($(event.target).hasClass('modal-close')) {
+      modal.hide();
+      // clearFormMessages();
+    }
+  });
+    // window.onclick = function(event) {
+    //   if (event.target == modal) {
+    //     modal.style.display = "none";
+    //   }
+    // };
   };
   $('#add-trip-button').on('click', showAddForm);
-
-
-  // Get the modal
-  // document.getElementById('myModal');
-  // // Get the button that opens the modal
-  // var btn = document.getElementById("myBtn");
-  // // Get the <span> element that closes the modal
-  // var span = document.getElementsByClassName("close")[0];
-  //
 
 });
