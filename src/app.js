@@ -74,6 +74,24 @@ const events = {
     console.log('FAILED TO RENDER SINGLE TRIP INFO');
     $('#single-trip-table').append('ERROR: Trip details were not successfully loaded.');
   },
+  succesReservation(reservation, response) {
+    console.log('RESERVATION SUCCESSFULLY SUBMITTED')
+    console.log(reservation);
+
+    $('#reservation-form .user-input').val('');
+    $('#ReservationStatusModal ul').empty();
+    $('#ReservationStatusModal p').empty();
+    $('#ReservationStatusModal p').append('Your trip is now reserved!');
+    $('#ReservationStatusModal').foundation('open');
+  },
+  failReservation() {
+    console.log('RESERVATION SUBMISSION FAILURE')
+    console.log(reservation);
+    $('#ReservationStatusModal ul').empty();
+    $('#ReservationStatusModal p').empty();
+    $('#ReservationStatusModal p').append('Sorry, your request could not be completed.');
+    $('#ReservationStatusModal').foundation('open');
+  },
 };
 
 // makeTripReservation FUNCTION
