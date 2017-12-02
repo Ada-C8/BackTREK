@@ -3,6 +3,7 @@ import $ from 'jquery';
 import _ from 'underscore';
 
 // CSS
+// import './backTrek.jpg';
 import './css/foundation.css';
 import './css/style.css';
 
@@ -160,6 +161,9 @@ const displayErrors = (errors) => {
 
   let generatedHtml = errorTemplate(errorObject);
   $('#display-errors').append(generatedHtml);
+  $('.close-button').on('click', (event) => {
+    $('#display-errors').empty();
+  });
 };
 
 /////////////////////////////////////////////////////////////////
@@ -188,6 +192,36 @@ const sortingHandler = () => {
 //////////////////////////// FILTER /////////////////////////////
 /////////////////////////////////////////////////////////////////
 
+const filterDropdown = () => {
+  let value = $("#filter")[0].selectedIndex;
+  return value;
+}
+
+const filterResults = () => {
+  let input, filter, table, tr, td, i;
+  input = $('#search-bar')[0];
+  filter = input.value.toUpperCase();
+  table = $('#all-trips')[0];
+  tr = table.getElementsByTagName('tr');
+
+  // Run this function to get the current value of the selected index
+  let index = filterDropdown();
+  // console.log("Value of the index: " + index);
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName('td')[index];
+    if (td) {
+      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  };
+};
+
+/////////////////////////////////////////////////////////////////
+///////////////////////// DOCUMENT READY ////////////////////////
+/////////////////////////////////////////////////////////////////
 
 
 $(document).ready(() => {
@@ -215,54 +249,8 @@ $(document).ready(() => {
   // On sort of the TripList
   tripList.on('sort', renderList);
 
-  // const myFunction = () => {
-  //   console.log('this function runs');
-  // }
+  $('#search-bar').on('keyup', filterResults);
 
-//   var activities = document.getElementById("activitySelector");
-//
-// activities.addEventListener("click", function() {
-//     var options = activities.querySelectorAll("option");
-//     var count = options.length;
-//     if(typeof(count) === "undefined" || count < 2)
-//     {
-//         addActivityItem();
-//     }
-// });
+  // On Error
 
-  const filter = $('#filter').value;
-  // TODO: I am right here
-  filter.click(function() {
-    let options = filter.querySelectorAll('option');
-    let count = options.length;
-    console.log('Options:' + options);
-    console.log('Count: '+ count);
-  });
-
-
-
-  $('#search-bar').keyup(() => {
-      var input, filter, table, tr, td, i;
-      input = document.getElementById("search-bar");
-      filter = input.value.toUpperCase();
-      table = document.getElementById("all-trips");
-      tr = table.getElementsByTagName("tr");
-      for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[0];
-        if (td) {
-          if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-            tr[i].style.display = "";
-          } else {
-            tr[i].style.display = "none";
-          }
-        }
-      };
-  });
-
-  // It works for ID but it does not work for Name
-
-
-});
-
-
-// SAVE THEN ADD TO THE LOCAL COLLECTION
+}); // DOCUMENT READY
