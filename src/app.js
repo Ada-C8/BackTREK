@@ -10,7 +10,7 @@ import TripList from 'app/collections/trip_list';
 import Trip from 'app/models/trip';
 
 
-// const TRIP_FIELDS = ['name', 'continent', 'category', 'weeks', 'cost'];
+const TRIP_FIELDS = ['name', 'continent', 'category', 'weeks', 'cost'];
 
 const tripList = new TripList();
 // initalize templates
@@ -57,6 +57,42 @@ const renderTrips = function renderTrips(list) {
     //   })
   }
 
+  const readFormData = function readFormData() {
+    const tripData = {};
+
+    TRIP_FIELDS.forEach((field) => {
+
+      const inputElement = $(`#add-trip-form input[name="${field}"]`);
+      const value = inputElement.val();
+
+      if (value != '') {
+        tripData[field] = value;
+      }
+      inputElement.val('');
+    });
+    console.log("reading trip data");
+    console.log(tripData);
+    return tripData;
+  };
+
+  const addTripHandler = function(event) {
+    event.preventDefault();
+
+    const trip = new Trip(readFormData());
+
+    tripList.add(trip);
+
+    trip.save({}, {
+      success: (model, response) => {
+        console.log('successfully saved trip');
+      },
+      error: (model, response) => {
+        console.log('failed to save trip');
+        console.log(response);
+      }
+    });
+  };
+
   $(document).ready( () => {
     // compile underscore templates
     listTemplate = _.template($('#list-template').html());
@@ -79,5 +115,7 @@ const renderTrips = function renderTrips(list) {
     $('#trips').on('click', (event) => {
       renderTrips(tripList);
     }); // end tripsList event handler
+
+    $('#add-trip-form').on('submit', addTripHandler);
 
   }); // end doc.ready
