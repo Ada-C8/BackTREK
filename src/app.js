@@ -54,29 +54,11 @@ const readFormData = function readFormData() {
   return tripData;
 };
 
-// Now I need to display the template and then append it to the place that i want to append it to
-// const displayErrors = (errors) => {
-//   $('#display-errors').empty();
-//
-//   let errorObject = {};
-//   for (let key in errors) {
-//     errorObject[key] = errors[key];
-//   }
-//
-//   let generatedHtml = errorTemplate(errorObject);
-//   $('#display-errors').append(generatedHtml);
-// };
-
 const handleStatusMessages = (messages) => {
   console.log('In handleStatusMessages()');
   console.log(messages);
 
   $('#status-messages div').empty();
-
-  // let errorObject = {};
-  // for (let key in errors) {
-  //   errorObject[key] = errors[key];
-  // }
 
   let generatedHtml = statusMessagesTemplate(messages);
   console.log(generatedHtml);
@@ -85,28 +67,6 @@ const handleStatusMessages = (messages) => {
   messagesElem.append(generatedHtml);
   $('#status-messages').show();
 };
-//
-// const handleStatusMessages = function handleValidationFailures(errors) {
-//   console.log('In handleValidationFailures()');
-//
-//   for (let field in errors) {
-//     for (let problem of errors[field]) {
-//       reportStatus('error', `${field}: ${problem}`);
-//     }
-//   }
-// };
-
-// Add a new status message
-// // TODO: success handling!
-// const reportStatus = function reportStatus(status, message) {
-//   console.log(`Reporting ${ status } status: ${ message }`);
-//
-//   // const statusHTML = reportStatusTemplate(trip.attributes);
-//   const statusHTML = `<li class="${ status }">${ message }</li>`;
-//
-//   $('#status-messages ul').append(statusHTML);
-//   $('#status-messages').show();
-// };
 
 //clearStatus messages
 const clearStatus = function clearStatus() {
@@ -121,7 +81,7 @@ const clearAddTripForm = function clearAddTripForm() {
 
 ////////////////eventHandlers////////////////////
 
-const addIndividualTripHandler = function addIndividualTripHandler(event) {
+const showIndividualTripHandler = function showIndividualTripHandler(event) {
   console.log('in the trip click');
   $('html,body').scrollTop(0);
 
@@ -142,7 +102,7 @@ const addIndividualTripHandler = function addIndividualTripHandler(event) {
         $('#reserve-trip').on('submit', addReservationHandler);
       }//success function
     });//fetch
-  };//addIndividualTripHandler function
+  };//showIndividualTripHandler function
 
 const addTripHandler = function(event) {
   event.preventDefault();
@@ -187,12 +147,15 @@ const addReservationHandler = function(event) {
     success: (model, response) => {
       console.log('Successfully saved trip!');
       $('#individual-trip-details').hide();
-      reportStatus('success', 'Successfully made reservation!');
+      const successObject = {
+        success: 'Successfully made reservation!',
+      }
+      handleStatusMessages(successObject);
+      reportStatus(successObject);
     },
     error: (model, response) => {
       console.log('Failed to make reservation! Server response:');
       console.log(response);
-
       handleStatusMessages(response.responseJSON["errors"]);
     },
   });
@@ -226,10 +189,10 @@ const render = function render(tripList) {
   $(`th.sort.${tripList.comparator}`).addClass('current-sort-field');
 
   //Listen for click event on .trip
-  $('.trip').on('click', addIndividualTripHandler);
+  $('.trip').on('click', showIndividualTripHandler);
 };
 
-///////////////////document.ready////////////////
+///////////////////document.ready///////////////////
 
 $(document).ready( () => {
   // compile templates
@@ -245,6 +208,13 @@ $(document).ready( () => {
   //Listen for sort event when user clicks on column
   tripList.on('sort', render);
 
+  // Listen for click event on #all-trip
+  $('#all-trips').on('click', function() {
+    console.log('#all-trip has been clicked, in event handler');
+    tripList.fetch();
+    console.log('#all-trip has been clicked, in event handler, after fetch()');
+  });
+
   // Listen for user click on add trip button
   $('#add-trip').on('click', function() {
     console.log('#add-trip clicked');
@@ -253,13 +223,6 @@ $(document).ready( () => {
 
   // Listen for when user submits trip form
   $('#add-trip-form').on('submit', addTripHandler);
-
-  // Listen for click event on #all-trip
-  $('#all-trips').on('click', function() {
-    console.log('#all-trip has been clicked, in event handler');
-    tripList.fetch();
-    console.log('#all-trip has been clicked, in event handler, after fetch()');
-  });
 
   $('#status-messages button.clear').on('click', clearStatus);
 
