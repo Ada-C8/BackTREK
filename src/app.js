@@ -131,21 +131,24 @@ const events = {
     });
   },
   filterTrips(event) {
-    console.log('entering!');
+
     event.preventDefault();
 
     const $tripQuery = $('#trip-query option:selected');
     const query = $tripQuery.val();
-    console.log(query);
+
     const $queryValue = $('#query-value');
     const queryValue = $queryValue.val();
-    console.log($queryValue.val());
 
-    console.log(tripList);
+    const filteredTrips = tripList.filter(function(trip) {
+      const attr_value = trip.attributes[query].toLowerCase();
+      const search_term = queryValue.toLowerCase();
 
-    // const filteredTrips = tripList.filter(trip => trip.get(query) === queryValue);
-
-    const filteredTrips = tripList.filter(trip => trip.get(query).includes(queryValue));
+      if (attr_value.includes(search_term)) {
+        console.log('found a match!');
+        return true;
+      }
+    })
 
     console.log(filteredTrips);
     render(filteredTrips);
