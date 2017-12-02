@@ -8,17 +8,45 @@ body {
   background-color: #262626;
 }
 
+header div {
+  color: white;
+}
+
+.site-title {
+  font-family: 'Skranji', cursive;
+  font-size: 3.5rem;
+}
+
+.button {
+  background-color: #FCB00C;
+  color: #262626;
+}
+
+.button:hover {
+  background-color: #DA8800;
+}
+
+.button:focus {
+  background-color: #DA8800;
+  outline: none;
+}
+
+#add-trip:hover, #explore-trips:hover {
+  color: #FCB00C;
+}
+
 #trip-table {
   /* Hide by default */
   display: none;
 }
 
-#trip-not-found, #list-not-found {
+#status-message, #trip-not-found, #list-not-found {
   display: none;
-}
-
-#status-message {
-  display: none;
+  background-color: #FCB00C;
+  color: #262626;
+  padding: 1rem;
+  border-radius: 10px;
+  margin-bottom: 10px;
 }
 
 #add-form-status-message, #reserve-form-status-message {
@@ -43,12 +71,13 @@ body {
   margin: 15% auto; /* 15% from the top and centered */
   padding: 20px;
   border: 1px solid #888;
+  /*border-radius: 10px;*/
   width: 80%; /* Could be more or less, depending on screen size */
 }
 
 .current-sort-field {
-  background-color: #262626;
-  color: white;
+  background-color: #FCB00C;
+  color: #262626;
 }
 
 .row {
@@ -64,4 +93,14 @@ header {
 .trip-info-container {
   background-color: white;
   padding: 1rem;
+}
+
+footer {
+  color: #262626;
+  background-color: #FCB00C;
+  padding: .5em;
+  position: fixed;
+  bottom: 0;
+  text-align: center;
+  width: 100%;
 }

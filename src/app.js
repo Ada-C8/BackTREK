@@ -102,6 +102,9 @@ const events = {
     $('#status-message h3').empty();
     $('#status-message h3').append(`${trip.get('name')} added!`);
     $('#status-message').show();
+    setTimeout(function() {
+      $('#status-message').hide();
+    }, 3000);
     tripList.add(trip);
     $('#add-form-modal').hide();
     $('#add-trip-form').trigger('reset');
@@ -144,6 +147,9 @@ const events = {
     $('#status-message h3').append(`Pack your bags! Successfully reserved a spot for ${reservation.get('name')} on the ${tripList.get(reservation.get('trip_id')).get('name')} trip!`);
     $('#status-message').show();
     $('#reserve-trip-form').trigger('reset');
+    setTimeout(function() {
+      $('#status-message').hide();
+    }, 3000);
   },
   failedResSave(reservation, response) {
     $('#reserve-form-status-message ul').empty();

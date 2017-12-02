@@ -6,12 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="css/foundation.css" />
   <link rel="stylesheet" href="css/style.css" />
-  <link rel="icon" href="./favicon.ico">
+  <link rel="icon" href="dist/favicon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat+Subrayada:700|Piedra|Skranji" rel="stylesheet">
 </head>
 <body>
   <header>
     <div class="row">
-      <h1 class="small-12 large-4 columns site-title">BackTREK</h1>
+      <h1 class="small-12 large-4 columns site-title">backTREK</h1>
       <h2 class="small-12 large-4 columns" id="explore-trips" role="button">Explore Trips</h2>
       <h2 class="small-12 large-4 columns" id="add-trip" role="button">Add a Trip</h2>
     </div>
@@ -55,18 +56,20 @@
         <section id="list-not-found">
           <h3>Oh no! We're not able to find trips right now. Please try again later!</h3>
         </section>
-        <table id="trip-table">
-          <thead>
-            <th class="sort name">Name</th>
-            <th class="sort continet">Continent</th>
-            <th class="sort category">Category</th>
-            <th class="sort cost">Cost</th>
-            <th class="sort weeks">Weeks</th>
-          </thead>
-          <tbody id="trip-list">
+        <div id="table-container">
+          <table id="trip-table">
+            <thead>
+              <th class="sort name">Name</th>
+              <th class="sort continet">Continent</th>
+              <th class="sort category">Category</th>
+              <th class="sort cost">Cost</th>
+              <th class="sort weeks">Weeks</th>
+            </thead>
+            <tbody id="trip-list">
 
-          </tbody>
-        </table>
+            </tbody>
+          </table>
+        </div>
       </div>
       <div class="small-12 large-4 columns">
         <section id="trip-not-found">
@@ -79,7 +82,7 @@
     </div>
   </main>
   <footer>
-
+    Gale Harrington 2017
   </footer>
   <script src="app.bundle.js" type="text/javascript"></script>
   <script id="trip-row-template" type="text/template">
@@ -94,11 +97,11 @@
   <script id="trip-details-template" type="text/template">
     <div class="trip-info-container">
       <h3><%- name %></h3>
-      <p><strong>continent: </strong><%- continent %></p>
-      <p><strong>category: </strong><%- category %></p>
-      <p><strong>cost: </strong><%- cost %></p>
-      <p><strong>weeks: </strong><%- weeks %></p>
-      <p><strong>description: </strong><%- about %></p>
+      <p><strong>Continent: </strong><%- continent %></p>
+      <p><strong>Category: </strong><%- category %></p>
+      <p><strong>Cost: </strong><%- cost %></p>
+      <p><strong>Weeks: </strong><%- weeks %></p>
+      <p><strong>Description: </strong><%- about %></p>
       <h4>Reserve this Trip</h4>
       <div id="reserve-form-status-message"><h3>Could not create reservation: </h3><ul>
 
