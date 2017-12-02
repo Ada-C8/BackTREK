@@ -127,15 +127,15 @@
     </script>
 
     <script type="text/template" id="single-trip-template">
-      <p class="trip" data-id=<%- id %> >
-        <%- name %>
-        $<%- cost %>
-        <%- weeks %> Weeks
-      </p>
+      <span class="trip" data-id=<%- id %> >
+        <h3><%- name %></h3>
+        <h4><%- continent %></h4>
+        <h4>$<%- cost %></h4>
+        <h4><%- weeks %> Weeks</h4>
+        <br />
+      </span>
 
-      <p>
-        <%- about %>
-      </p>
+      <p><%- about %></p>
     </script>
 
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
