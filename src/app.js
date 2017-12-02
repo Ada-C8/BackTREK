@@ -158,10 +158,6 @@ const events = {
     console.log(filteredTrips);
     render(filteredTrips);
   },
-  placeHolderText(event) {
-    event.preventDefault();
-    
-  }
 }
 
 $(document).ready( () => {
@@ -233,7 +229,6 @@ $(document).ready( () => {
 
   // $('#trip-query').on('change', events.filterTrips);
   $('#query-value').on('keyup', events.filterTrips);
-  $('#trip-query').on('change', events.placeHolderText);
 
   // Backbone Events
   tripList.on('update', render, tripList);
