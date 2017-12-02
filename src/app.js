@@ -96,12 +96,12 @@ const filterTrips = function filterTrips(event) {
 };
 
 const splitScreen = function splitScreen() {
-  $('.left-half').addClass('columns small-5 float-left');
-  $('.right-half').addClass('columns small-5 float-right');
+  $('.left-half').addClass('columns small-6 float-left');
+  $('.right-half').addClass('columns small-6 float-right');
 };
 
 const unSplitScreen = function unSplitScreen() {
-  $('.left-half, .right-half').removeClass('columns small-5 float-left');
+  $('.left-half, .right-half').removeClass('columns small-6 float-left');
   $('#filter-input').val('');
 }
 
