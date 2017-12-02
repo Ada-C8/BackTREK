@@ -16,16 +16,18 @@ import TripList from './app/collections/trip_list';
 const $tripsList = $('#trips-list')
 const $tripDescription = $('#trip-description')
 
+// Templates for trip list and details.
 let tripTemplate;
 let tripDetailsTemplate;
 
+// Start of trip list.
 const tripList = new TripList();
 
 const render = function render(tripList) {
   console.log(tripList);
   const $trips = $('#trips-list')
-  // Remember to empty, so things don't repeat.
 
+  // Remember to empty, so things don't repeat.
   $trips.empty();
   tripList.forEach((trip) => {
     $trips.append(tripTemplate(trip.attributes));
@@ -34,21 +36,47 @@ const render = function render(tripList) {
   });
 };
 
-$(document).ready( () => {
 
+// Trip details - user can click to see trip deets.
+
+// User can create a new trip.
+
+// User can reserve a spot on a trip. *Please note you will need to do validations with the second wave.
+
+// Sort the list of the trips.
+
+// Flash message to user that the list has been sorted, even if they can't see the actual sorting has happened.
+
+
+$(document).ready( () => {
 
   $tripsList.on('click', 'tr', function getTrip() {
     const trip = new Trip({ id: $(this).attr('data-id') })
+    $tripDescription.empty();
 
     trip.fetch().done(() => {
-      $tripDescription.append(tripDetailsTemplate(trip.attributes));
+      const element = $tripDescription;
+      const appendFunction = element.append.bind(element);
+      const attrs = trip.attributes;
+      const templateResult = tripDetailsTemplate(attrs);
+      const appendResult = appendFunction(templateResult);
+
+      // $tripDescription.append(tripDetailsTemplate(trip.attributes));
     });
   });
+
 
   tripTemplate = _.template($('#trip-template').html());
   tripList.on('update', render, tripList);
   tripList.fetch();
+
+  tripDetailsTemplate = _.template($('#trip-details-template').html());
 });
+
+
+
+
+
 
 
 
