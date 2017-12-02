@@ -1,13 +1,40 @@
 
 /* Your styles go here! */
+body {
+  background-color: lightblue
+}
+body, header, h1, h2, h3, h4, h5{
+  font-family: 'Yanone Kaffeesatz', sans-serif;
+}
 
 ul {
   list-style: None;
 }
 
+.button {
+  font-size: 1.1em;
+}
+
+#triplist
+
+header {
+    /*background-image: url( "http://blog.creativelive.com/wp-content/uploads/2015/09/140914_BURKARD_90134.jpg");*/
+    background-color: darkblue;
+    color: white;
+    height: 150px
+}
+
+#side {
+  color: darkblue;
+
+  background-color: white;
+  background-size: cover;
+  padding: 2%;
+}
+
 .sticky {
   position: fixed;
-  top: 200px;
+  top: 425px;
   right: 10px;
 }
 
@@ -19,8 +46,13 @@ ul {
   background-color: lightgrey;
 }
 
-tr :hover {
-  background-color: grey;
+th.sort {
+  cursor: pointer;
+}
+
+.current-sort-field {
+  background-color: darkgrey;
+  color: white;
 }
 
 
@@ -30,4 +62,65 @@ tr :hover {
 
 .success {
   color: green;
+}
+
+.modal {
+    position: fixed; /* Stay in place */
+    z-index: 100; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+
+#modalBtn {
+  margin: 10%;
+  margin-left: 0%;
+  width: 200px;
+}
+/* The Close Button */
+.close.button {
+    color: #aaa;
+    float: right;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.close:hover, .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+
+h1 {
+  background-color: darkblue;
+  color: white;
+  font-size: 3em;
+  padding: 50px;
+}
+
+#textbox, #exampleList {
+  display: inline-block;
+}
+
+button {
+  color: gold;
+}
+
+body{
+  color: darkblue;
 }

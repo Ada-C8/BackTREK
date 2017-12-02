@@ -33,19 +33,25 @@ const Trip = Backbone.Model.extend({
 
     if (!attributes.weeks) {
       errors.weeks = [' cannot be blank'];
-    } else if (Number.isInteger(attributes.weeks))  {
-      errors.weeks = ['  is not a number'];
+    } else if (Number(attributes.weeks))  {
+      this.set("weeks", Number(attributes.weeks));
+    }else if (!Number(attributes.weeks)){
+      errors.weeks = [`"${attributes.weeks}" is not a number`];
     }
 
     if (!attributes.cost) {
       errors.cost = [' cannot be blank'];
-    } else if (Number.isInteger(attributes.weeks)) {
-      errors.cost = ['  is not a number'];
+    } else if (Number(attributes.cost)) {
+      this.set("cost", Number(attributes.cost));
+    }else if (!Number(attributes.cost)){
+      errors.cost = [`"${attributes.cost}" is not a number`];
     }
 
     if (Object.keys(errors).length < 1) {
       return false;
     }
+    console.log('Client-side validations on trip failed');
+    console.log(errors);
     return errors;
   },
 });

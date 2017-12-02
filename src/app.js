@@ -19,7 +19,9 @@ const TABLE_HEADERS = [ 'name', 'continent', 'category', 'weeks','cost']
 
 const RESERVATION_FIELDS = [ 'tripID', 'name', 'age', 'email']
 
+//************************** Render ***************
 const render = function render(tripList) {
+  //clear table before adding new lines
   $('#trip-list').html('')
   console.log(tripList);
   tripList.forEach((trip) => {
@@ -32,11 +34,14 @@ const render = function render(tripList) {
       $('#trip-list').append(tripHTML);
       let id = currentTrip.get('id')
       console.log(`.current-trip-${id}`);
-      // $('#submit-reservation').on('submit', addReservationHandler);
+
+      $('th.sort').removeClass('current-sort-field');
+      $(`th.sort.${ tripList.comparator }`).addClass('current-sort-field');
     });
   });
 };
 
+// toggles trip about information
 const tripDetailHandler = function (event){
   console.log(event.target.parentElement.id);
   let id = event.target.parentElement.id;
@@ -44,6 +49,7 @@ const tripDetailHandler = function (event){
   $(`.button-${id}`).toggleClass('hide');
 }
 
+// shows the reservation form and updates trip name
 const reserveFormUpdate = function (event){
   console.log(event.target.parentElement.className);
   let id = event.target.parentElement.className
@@ -59,6 +65,7 @@ const reserveFormUpdate = function (event){
   });
 }
 
+//**************************ADDING THINGS ***************
 const addTripHandler = function(event){
   event.preventDefault();
   $('.trip-status-messages').html('<p> </p>')
@@ -68,24 +75,26 @@ const addTripHandler = function(event){
     handleValidationFailuresTrip(trip.validationError);
     return;
   }
-  console.log('I am getting ready to make a trip!')
+  console.log('I am getting ready to make a trip.')
   console.log(trip.attributes)
   tripList.add(trip);
   trip.save({}, {
     success: (model, response) => {
       console.log('Successfully saved trip!');
-      reportNewTripStatus('success', 'Successfully saved book!');
+      // reportNewTripStatus('success', 'Successfully saved trip!');
+      $('.modal').addClass('hide');
+      $('.trip-success-messages').append('Successfully saved trip!');
+      $('.trip-success-messages').show();
     },
     error: (model, response) => {
       console.log('Failed to save trip! Server response:');
       console.log(response);
       tripList.remove(model);
 
-      handleValidationFailuresReservations(response.responseJSON["errors"]);
+      handleValidationFailuresTrip(response.responseJSON["errors"]);
     },
   });
 };
-
 
 const addReservationHandler = function addReservationHandler(event) {
   event.preventDefault();
@@ -99,7 +108,6 @@ const addReservationHandler = function addReservationHandler(event) {
   console.log('I am getting ready to reserve a trip!')
   console.log(reservation.attributes)
 
-  // trip.add(trip);
   reservation.save({}, {
     success: (model, response) => {
       console.log('Successfully saved trip!');
@@ -117,6 +125,9 @@ const addReservationHandler = function addReservationHandler(event) {
   });
 };
 
+
+
+//**************************ValidationFailures ***************
 //Having two nearly identical funtions to handle errors is a poor
 //solution to the problem of errors being appended to the wrong
 // form. It would be better to find a way to pass some parameter
@@ -137,13 +148,13 @@ const handleValidationFailuresReservation = function handleValidationFailures(er
   }
 };
 
+//**************************Report Status ***************
 // Similarly to the ValidationFailures... this is not a good way
 // to solve the problem.
 const reportNewTripStatus = function reportNewTripStatus(status, message) {
   console.log(`Reporting ${ status } status: ${ message }`);
   // Should probably use an Underscore template here.
   const statusHTML = ` <p class="${ status }">${ message }</p>`;
-  // note the symetry with clearStatus()
   $('.trip-status-messages').append(statusHTML);
   $('.trip-status-messages').show();
 };
@@ -152,13 +163,12 @@ const reportNewReservationStatus = function reportNewReservationStatus(status, m
   console.log(`Reporting ${ status } status: ${ message }`);
   // Should probably use an Underscore template here.
   const statusHTML = ` <p class="${ status }">${ message }</p>`;
-  // note the symetry with clearStatus()
   $('.reservation-status-messages').append(statusHTML);
   $('.reservation-status-messages').show();
 };
 
 
-
+//**************************READ FORMS ***************
 const readTripFormData = function readTripFormData() {
   const tripData = {};
   TRIP_FIELDS.forEach((field) => {
@@ -187,13 +197,34 @@ const readReservationFormData = function readReservationFormData() {
     if (value != '') {
       reservationData[field] = value;
     }
-    // inputElement.val('');
   });
   console.log("Read reservation data");
   console.log(reservationData.attributes);
   return reservationData;
 };
 
+//***********************start of Filter  ***************
+
+const filterHandler = function filterHandler(event) {
+  console.log(document.getElementById('exampleList').value);
+  console.log(document.getElementById('textbox').value);
+}
+
+//***********************modal open and close ***************
+const modalOpener= function modalOpener() {
+  // console.log(event)
+  console.log('opening modal')
+  $('.modal').removeClass('hide');
+  $('#close').on('click', modalCloser)
+}
+
+const modalCloser= function modalCloser() {
+  // console.log(event)
+  console.log('closing modal')
+  $('.modal').addClass('hide');
+}
+
+//**************************DOC.READY ***************
 
 $(document).ready( () => {
   tripList.fetch().done(function() {
@@ -202,15 +233,16 @@ $(document).ready( () => {
     let currentTrip = new Trip();
   });
 
- tripList.on('sort', render);
-
+  tripList.on('sort', render);
 
   $('#trip-list').on('click', 'button', tripDetailHandler);
-
   $('#trip-list').on('click', '.reserve', reserveFormUpdate);
-  // $('.new-trip-button').on('click', addReservationHandler);
-  // $('#reserve-form').on('submit', addReservationHandler);
   $('#add-trip-form').on('submit', addTripHandler);
+
+  $('#modalBtn').on('click', modalOpener);
+  // $('#close').on('click', modalCloser)
+  $('#textbox').keyup(filterHandler);
+
 
   TABLE_HEADERS.forEach((field) => {
     const headerElement = $(`th.sort.${ field }`);
@@ -220,5 +252,4 @@ $(document).ready( () => {
       tripList.sort();
     });
   });
-
 });
