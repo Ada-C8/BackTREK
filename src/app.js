@@ -30,6 +30,7 @@ const events = {
 
   loadTrip(id) {
     const singleTripElement = $('#single-trip');
+    singleTripElement.empty();
     const trip = new Trip({id: id});
     console.log('THIS IS THE TRIP ID');
     console.log(trip);
@@ -51,6 +52,7 @@ const events = {
 $(document).ready( () => {
   tripTemplate = _.template($('#trip-template').html());
   showTemplate = _.template($('#show-template').html());
+
   tripList.fetch();
 
   $('#trips_button').click(events.allTrips);
