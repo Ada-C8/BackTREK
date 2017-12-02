@@ -138,14 +138,7 @@ $(document).ready(() => {
   });
 })
 
-
-
-
-
-
-
-
-
+///// RESERVATION FORM /////
 const newReservationHandler = function(event) {
   event.preventDefault();
 
@@ -175,13 +168,6 @@ const newReservationHandler = function(event) {
   });
 };
 $('#trip-about').on('submit', '#reservation-form', newReservationHandler);
-
-
-
-
-
-
-
 
 // SUBMIT NEW TRIP FROM FORM
 $('#trip-create-new').on('submit', createNewTripHandler);
