@@ -183,6 +183,7 @@ const events = {
     $('#trip-details').append(tripForm);
   },
   addTrip(event) {
+    const modal = document.getElementById('myModal');
     event.preventDefault();
     const tripData = {};
     formFields.forEach((field) => {
@@ -205,40 +206,42 @@ const events = {
     } else {
       console.log('there was a client error for this trip');
       const errorTypes = Object.keys(trip.validationError);
-      $('#messages').append(`<h3>Error:</h3>`);
-      $('#messages ul').empty();
+      $('#add-trip-error-msgs h3').html(`<h3>Error:</h3>`);
+      $('#add-trip-error-msgs ul').empty();
 
       errorTypes.forEach((type) => {
         const eMessages = trip.validationError[type];
         eMessages.forEach((message) => {
-          $('#messages ul').append(`<li> ${message}</li>`);
+          $('#add-trip-error-msgs ul').append(`<li> ${message}</li>`);
         });
       });
-
-      $('#messages').show();
+      $('#add-trip-error-msgs').show();
     }
   },
   successfulSave(trip, response) {
+    const modal = document.getElementById('myModal');
     console.log('success! the successfulsave method worked');
     // console.log(trip);
     // console.log(response);
     $('#messages ul').empty();
     $('#messages ul').append(`<li>${trip.get('name')} succesfully added!</li>`);
+    modal.style.display = "none";
     $('#messages').show();
+    $('#new-trip-form')[0].reset();
     // setTimeout($('#messages').hide(), 2000);
   },
   failedSave(trip, response) {
     console.log('fail :( we are in the failedSave method');
     console.log(trip);
     console.log(response);
-    $('#messages ul').empty();
+    $('#add-trip-error-msgs ul').empty();
     const errs = response.responseJSON.errors;
     for (let key in errs) {
       errs[key].forEach((error) => {
-        $('#messages ul').append(`<li>${key}: ${error}</li>`);
+        $('#add-trip-error-msgs ul').append(`<li>${key}: ${error}</li>`);
       })
     }
-    target.show();
+    $('#add-trip-error-msgs').show();
     // setInterval($('#messages').hide(), 3000);
     trip.destroy();
   },
@@ -311,7 +314,7 @@ $(document).ready( () => {
   // $('#filter-btn').on('click', $('#filter-form')[0].reset());
 
   // modal stuff
-    var modal = document.getElementById('myModal');
+    const modal = document.getElementById('myModal');
 
   // Get the button that opens the modal
   var btn = document.getElementById("add-trip-btn");
