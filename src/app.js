@@ -78,6 +78,8 @@ const addTripHandler = function(event) {
     success: (model, response) => {
       console.log('Successfully saved Trip!');
       $('#myModal').hide();
+      $(`#add-trip-form input`).val('');
+      // TODO: get line of code above working
       // reportStatus('success', 'Successfully saved trip!');
     },
     error: (model, response) => {
@@ -108,7 +110,7 @@ const readResFormData = function readResFormData(){
       tripData[field] = value;
     }
 
-    inputElement.val('');
+    // inputElement.val('');
   });
   console.log("Read trip data");
   console.log(tripData);
