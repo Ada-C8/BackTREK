@@ -16,6 +16,7 @@ const tripList = new TripList();
 // initalize templates
 let listTemplate;
 let tripTemplate;
+let reserveTemplate;
 
 const renderTrips = function renderTrips(list) {
   const tripTableElement = $('#trip-list');
