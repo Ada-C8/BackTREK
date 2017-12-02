@@ -4,13 +4,14 @@
   <meta charset="utf-8">
   <title>My JavaScript App</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 </head>
 <body>
   <header>
     <h1 class='columns small-6'>BackTREK</h1>
     <span id='buttons' class='float-right'>
       <a id='load-trips' class='button' href='#'>All Trips</a>
-      <a id='add-trip' class='button' href='#'>Add Trip</a>
+      <a id='add-trip' class='button' href="#add-trip-modal" rel="modal:open">Add Trip</a>
     </span>
   </header>
   <main class='row clear'>
@@ -63,15 +64,16 @@
       </script>
     </section>
     <section>
-      <h1 id='reserve-header' class='content right-half'></h1>
+      <h2 id='reserve-header' class='content right-half'></h2>
       <form id='reserve-trip-form' class='content right-half'>
       </form>
     </section>
-    <section>
-      <form id='add-trip-form' class='content right-half'>
+    <section class='modal' id='add-trip-modal'>
+      <h2 id='add-trip-header' class='content'></h2>
+      <form id='add-trip-form' class='content'>
         <script type="text/template" id="form-template">
           <section>
-            <label><%- field %></label>
+            <label><%- field %><span id=<%- `label-${field}` %>></span></label>
             <input type='text' id=<%- field %> name=<%- field %> />
           </section>
         </script>

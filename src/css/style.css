@@ -27,7 +27,7 @@ thead {
 
 tbody {
   display: block;
-  height: 75vh;
+  height: 76vh;
   overflow: auto;
 }
 
@@ -53,6 +53,14 @@ td, th {
   display: none;
   margin: 1rem;
   padding: .8rem;
+}
+
+.input-error {
+  background-color: #ffbbb7;
+}
+
+.input-error:focus {
+  background-color: #ffbbb7;
 }
 
 /* filter form styling */

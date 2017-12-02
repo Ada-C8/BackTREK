@@ -1,6 +1,7 @@
 // Vendor Modules
 import $ from 'jquery';
 import _ from 'underscore';
+import 'jquery-modal';
 
 // CSS
 import './css/foundation.css';
@@ -139,11 +140,11 @@ const clearMessages = function clearMessages() {
 
 const addTripForm = function addTripForm() {
   clearContent();
-  splitScreen();
+  $('#add-trip-header').append('Add Trip');
   addTripFields.forEach((item) => {
-    $('#add-trip-form').append(formTemplate({field: item, lowercaseField: item}));
+    $('#add-trip-form').append(formTemplate({field: item}));
   });
-  $('#add-trip-form').append('<section><button type="submit" class="button">Submit</button></section></form>');
+  $('#add-trip-form').append('<section><button type="submit" class="button">Submit</button></section>');
 }
 
 const saveTrip = function saveTrip(event) {
@@ -156,19 +157,22 @@ const saveTrip = function saveTrip(event) {
   if (trip.isValid()) {
     trip.save({}, {
       success: successfulTripSave,
-      error: failedSave,
+      error: failedTripSave,
     })
   } else {
-    $('#status-messages ul').empty();
-      for (let error in trip.validationError) {
-        trip.validationError[error].forEach((message) => $('#status-messages ul').append(`<li>${message}</li>`));
-      }
-      $('#status-messages').show();
+    $('#add-trip-form input').removeClass('input-error');
+    $('#add-trip-form label span').empty();
+    for (let error in trip.validationError) {
+      trip.validationError[error].forEach((message) => {
+        $(`#add-trip-form label span#label-${error}`).append(`: ${message}`);
+      });
+      $(`#add-trip-form input#${error}`).addClass('input-error');
+    }
   }
 }
 
 const successfulTripSave = function successfulTripSave(trip) {
-  unSplitScreen();
+  $.modal.close();
   tripList.add(trip);
   referenceList.add(trip);
   addTripFields.forEach((field) => {
@@ -179,7 +183,7 @@ const successfulTripSave = function successfulTripSave(trip) {
   $('#status-messages').show();
 }
 
-const failedSave = function failedSave(model, response) {
+const failedTripSave = function failedTripSave(model, response) {
   model.destroy
   $('#status-messages ul').empty();
   const errors = response.responseJSON.errors;
@@ -215,7 +219,7 @@ const saveReservation = function saveReservation(event) {
   if (reservation.isValid()) {
     reservation.save({}, {
       success: successfulReservationSave,
-      error: failedSave,
+      error: failedReservationSave,
     })
   } else {
     $('#status-messages ul').empty();
@@ -235,6 +239,18 @@ const successfulReservationSave = function successfulReservationSave(reservation
   $('#status-messages').show();
   const fakeEvent = {currentTarget: {id: response.trip_id}};
   showTrip(fakeEvent);
+}
+
+const failedReservationSave = function failedReservationSave(model, response) {
+  model.destroy
+  $('#status-messages ul').empty();
+  const errors = response.responseJSON.errors;
+  for (let key in errors) {
+    errors[key].forEach((issue) => {
+      $('#status-messages ul').append(`<li>${key}: ${issue}</li>`);
+    })
+  }
+  $('#status-messages').show();
 }
 
 const sortTrips = function sortTrips() {
