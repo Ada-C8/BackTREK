@@ -5,7 +5,10 @@ import 'jquery-modal';
 
 // CSS
 import './css/foundation.css';
+import './css/responsive-tables.css';
 import './css/style.css';
+
+import './responsive-tables';
 
 import Trip from './app/models/trip';
 import TripList from './app/collections/trip_list';
@@ -20,11 +23,8 @@ let tripTemplate;
 // renders
 const renderTripList = function renderTripList(tripList) {
   // empty existing list and res form
-  console.log('rendering');
-  console.log(tripList);
   const $tripList = $('#trip-list');
   $tripList.empty();
-  console.log('empty trip list');
   $('#reservation').empty();
 
   tripList.forEach((trip) => {
@@ -42,7 +42,8 @@ const renderTrip = function renderTrip(trip) {
 
 const cancelSubmit = function cancelSubmit() {
   $(this).parent().trigger('reset');
-  $('.error-messages').empty();
+  $(this).parent().find('p').remove();
+  // $('.error-messages').empty();
 };
 
 const readForm = function readForm(form) {
@@ -85,7 +86,7 @@ const renderError = function renderError(field, error, form) {
   const $errorInput = form.find(`input[name=${field}]`);
 
   $errorInput.before(html);
-  $errorInput.parent().addClass('error');
+  $errorInput.addClass('error');
 };
 
 const handleValidationErrors = function handleValidationErrors(errors, form) {
@@ -252,7 +253,8 @@ $(document).ready( () => {
   $('#add-trip-form').on('submit', addTrip);
 
   $('#trip-detail').on('submit', '#add-res-form', addRes);
-  $('#filter').on('change keyup', 'input', filterTrips);
+  $('#filter').on('change keyup', 'input, select', filterTrips);
+  // $('#filter').on('change', 'select', filterTrips);
 
   allTrips.fetch();
 });

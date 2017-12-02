@@ -1,5 +1,26 @@
 
 /* Your styles go here! */
+.all-trips table {
+  /*overflow: auto;*/
+}
+
+table {
+  overflow: scroll;
+  width: 100%;
+  table-layout: fixed;
+}
+
+@media screen and (min-width: 64em) {
+  table {
+    table-layout: fixed;
+    overflow: auto;
+    width: 100%;
+  }
+}
+
+input[type], select, textarea {
+  border-radius: 5px;
+}
 
 a[href] {
   color: white;
@@ -26,6 +47,7 @@ a[href] {
 
 .error-message {
   color: red;
+  text-align: right;
 }
 
 .success {
