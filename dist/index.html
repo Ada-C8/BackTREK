@@ -53,56 +53,61 @@
       <div id="myModal" class="modal modal-close">
         <!-- Modal content -->
         <div class="modal-content">
-          <span id="close" class='modal-close'>&times;</span>
-          <h2 id='message'>Add a Trip</h2>
+
+
+          <div class='row'>
+            <div class="small-4 columns">
+              <h2 id='message'>Add a Trip</h2>
+            </div>
+            <div class="small-2 small-offset-3 columns text-center">
+              <h2 id="close" class='modal-close'>X</h2>
+            </div>
+          </div>
           <form id="add-trip-form">
             <div class="row">
-              <div class="large-12 columns">
+              <div class="small-12 columns">
                 <label for="name">Name:<span id='form-title'></span></label>
                 <input type="text" name="name" placeholder="trip name"></input>
               </div>
             </div>
             <div class="row">
-              <div class="large-4 columns">
+              <div class="small-4 columns">
                 <label for="category">Category: <span id='form-category'></span></label>
                 <input type="text" name="category" placeholder="category"></input>
               </div>
-              <div class="large-4 columns">
+              <div class="small-4 columns">
                 <label for="weeks">Weeks: <span  id='form-weeks'></span></label>
                 <input type="number" name="weeks" placeholder="1" min="1"></input>
               </div>
-              <div class="large-4 columns">
+              <div class="small-4 columns">
                 <label for="cost" >Cost: <span id='form-cost'></span></label>
-                <input type="number" name="cost" />
+                <input type="number" name="cost" placeholder="10.00"></input>
               </div>
             </div>
             <div class="row">
               <div class="small-12 columns">
-                <label for="continent"> Continent: <span id='form-continent'></span></label>
-                <input type="text" name="continent" />
-                <!-- <label >Choose a Continent <span id='form-continent'></span></label>
-                <input type="radio" name="continent" value="Africa" id="contAfrica"><label for="contAfrica">Africa</label>
-                <input type="radio" name="continent" value="Antartica" id="contAntartica"><label for="contAntartica">Antartica</label>
-                <input type="radio" name="continent" value="Asia" id="contAsia"><label for="contAsia">Asia</label>
-                <input type="radio" name="continent" value="Australasia" id="contAustralasia"><label for="contAustralasia">Australasia</label>
-                <input type="radio" name="continent" value="Europe" id="contEurope"><label for="contEurope">Europe</label>
-                <input type="radio" name="continent" value="North America" id="contNorthAmerica"><label for="contNorthAmerica">North America</label>
-                <input type="radio" name="continent" value="South America" id="contSouthAmerica"><label for="contSouthAmerica">South America</label>
-              </div> -->
+                <label for="continent">Continent:</label>
+                <select>
+                  <option value="Africa">Africa</option>
+                  <option value="Antartica">Antartica</option>
+                  <option value="Asia">Asia</option>
+                  <option value="Australasia">Australasia</option>
+                  <option value="Europe">Europe</option>
+                  <option value="North America">North America</option>
+                  <option value="South America">South America</option>
+                </select>
+              </div>
             </div>
-
-
             <div class="row">
               <div class="small-12 columns">
                 <label for="about">About: <span id='form-about'></span></label>
-                <!-- <input type="text" name="about" placeholder="trip description"></input> -->
                 <input type="text" name="about" placeholder="trip description"></input>
               </div>
             </div>
-            <!-- <label for="continent">Continent:</label>
-            <input type="text" name="continent" placeholder="continent"></input> -->
             <div class='row'>
-              <input id='myBtn' type="submit" class='button' value="Add Trip!"></input>
+              <div class="small-3 small-centered columns ">
+                <input id='myBtn' type="submit" class='button' value="Add Trip!"></input>
+              </div>
             </div>
           </form>
           <!-- </div> -->

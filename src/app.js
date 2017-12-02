@@ -79,8 +79,7 @@ const addTripHandler = function(event) {
       console.log('Successfully saved Trip!');
       $('#myModal').hide();
       $(`#add-trip-form input`).val('');
-      // TODO: get line of code above working
-      // reportStatus('success', 'Successfully saved trip!');
+      reportStatus('success', 'Successfully saved trip!');
     },
     error: (model, response) => {
       console.log('Failed to save book! Server response:');
