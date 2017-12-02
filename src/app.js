@@ -17,34 +17,52 @@ let tripTemplate;
 let tripInfoTemplate;
 const render = function(tripList) {
   console.log('in render');
-  tripTemplate = _.template($('#trip-list-template').html());
-  tripInfoTemplate = _.template($('#trip-info-template').html());
   $('#trip-list').append('<tr><th>ID</th><th>CONTINENT</th><th>COST</th><th>CATEGORY</th></tr>');
   tripList.forEach((trip) => {
-    $('#trip-list').append(tripTemplate(trip.toJSON())).attr('id', `${trip.id}`);
+    $('#trip-list').append(tripTemplate(trip.toJSON()));
   });
-
+  $('tr').click(function() {
+    console.log('inside click');
+    const selectedId = parseInt($(this)[0].id);
+    console.log(selectedId);
+    const url = `http://ada-backtrek-api.herokuapp.com/trips/`;
+    // const selectedTrip = new Trip({id: selectedId});
+    const selectedTrip = tripList.findWhere({id: selectedId});
+    // debugger;
+    selectedTrip.fetch(
+      {
+        success: function(selectedTrip){
+          console.log('hey it logged success lol');
+          $('header').html(tripInfoTemplate(selectedTrip));
+        },
+        error: function() {
+          console.log('doesnt work sorry lol');
+        }
+      // })
+    }); // truly the end of fetch
+    // $.get(url, function(response) {
+    //   console.log('trying to get trip');
+    //   $('#trip-details').html(tripInfoTemplate(response));
+    // });
+  });
   console.log(tripList.models.length);
 }
 
 $(document).ready( () => {
+  tripTemplate = _.template($('#trip-list-template').html());
+  tripInfoTemplate = _.template($('#trip-info-template').html());
+  $('#trip-list').hide();
   tripList.on('update', render, tripList);
   tripList.fetch();
-  $('#load-trips').focus(function(event) {
+
+
+  $('#load-trips').click(function(event) {
+    event.preventDefault();
     console.log(`in focus`);
     $('#trip-list').toggle();
     $(this).blur();
-  });
-  $('#trip-list').on('click', 'tr', function() {
-    // const id = $(this).attr('id');
-    const url = 'http://ada-backtrek-api.herokuapp.com/trips';
-    $.get(url, function(response) {
-      $('#trip-details').html(tripInfoTemplate(response));
-    });
 
   });
 
-  // console.log(tripList);
-  // render(tripList);
 
-});
+}); // end of document ready

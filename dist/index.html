@@ -31,7 +31,7 @@
 
   </footer>
   <script type="text/template" id="trip-list-template">
-      <tr id='trip-<%-id %>'>
+      <tr id='<%-id %>'>
         <td>
           <%- id %>
         </td>
@@ -46,27 +46,27 @@
         </td>
       </tr>
   </script>
-  <script type="text/template" id="trip-template">
-    <section class="row"><section id='info-tripid' class="panel small-10 small-centered columns">
+  <script type="text/template" id="trip-info-template">
+    <section class="row"><section id= class="panel small-10 small-centered columns">
       <p>
-        ID:
+        ID: <%- id %>
       </p>
       <p>
-        CONTINENT:
+        CONTINENT: <%- continent %>
       </p>
       <p>
-        COST:
+        COST: <%- cost %>
       </p>
       <p>
-        CATEGORY:
+        CATEGORY: <%- category %>
       </p>
       <p>
-        WEEKS:
+        WEEKS: <%- weeks %>
       </p>
       <p>
-        ABOUT:
+        ABOUT: <%- about %>
       </p>
-      <form action="https:https://ada-backtrek-api.herokuapp.com/trips/id/reservations" method="post" id="form-tripid">
+      <!-- <form action="https:https://ada-backtrek-api.herokuapp.com/trips/id/reservations" method="post" id="form-tripid">
         <section>
           <label>Name</label>
           <input type="text" id="name" placeholder="identification required"/>
@@ -82,7 +82,7 @@
         <section>
           <button type="submit" class="button round">Reserve a Spot for ${trip.name}</button>
         </section>
-      </form>
+      </form> -->
     </section>
 
     </section>
