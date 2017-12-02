@@ -68,15 +68,21 @@ const readFormData = function readFormData() {
 // };
 
 const handleValidationFailures = (errors) => {
-  $('#display-errors').empty();
+  console.log('got validation failures');
+  console.log(errors);
 
-  let errorObject = {};
-  for (let key in errors) {
-    errorObject[key] = errors[key];
-  }
+  $('#display-errors ul').empty();
 
-  let generatedHtml = errorsTemplate(errorObject);
-  $('#display-errors ul').append(generatedHtml);
+  // let errorObject = {};
+  // for (let key in errors) {
+  //   errorObject[key] = errors[key];
+  // }
+
+  let generatedHtml = errorsTemplate(errors);
+  console.log(generatedHtml);
+  let errorsElem = $('#display-errors ul');
+  console.log(errorsElem);
+  errorsElem.append(generatedHtml);
 };
 //
 // const handleValidationFailures = function handleValidationFailures(errors) {
@@ -90,11 +96,11 @@ const handleValidationFailures = (errors) => {
 // };
 
 // Add a new status message
+// TODO: success handling!
 const reportStatus = function reportStatus(status, message) {
   console.log(`Reporting ${ status } status: ${ message }`);
 
   // const statusHTML = reportStatusTemplate(trip.attributes);
-
   const statusHTML = `<li class="${ status }">${ message }</li>`;
 
   $('#status-messages ul').append(statusHTML);
@@ -222,7 +228,7 @@ const render = function render(tripList) {
 ///////////////////document.ready////////////////
 
 $(document).ready( () => {
-  // compile templates for all trips and individual trips
+  // compile templates
   tripTemplate = _.template($('#trip-template').html());
 
   individualTripTemplate = _.template($('#individual-trip-template').html());
