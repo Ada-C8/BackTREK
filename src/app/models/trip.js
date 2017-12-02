@@ -28,9 +28,7 @@ const Trip = Backbone.Model.extend({
         errors['continent'] = [];
       }
       errors['continent'].push('Trip must have a continent.Continent must be one of the following: Africa, Antartica, Asia, Australasia, Europe, North America, or South America');
-    }
-
-    if (!continents.includes(attributes.continent.toLowerCase())) {
+    } else if (!continents.includes(attributes.continent.toLowerCase())) {
       if (!errors['continent']) {
         errors['continent'] = [];
       }

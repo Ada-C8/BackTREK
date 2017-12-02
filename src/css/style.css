@@ -14,3 +14,11 @@ th.sort {
   background-color: darkgrey;
   color: white;
 }
+
+header h2, #main-btns {
+  display: inline-block;
+}
+
+.float-right {
+  float: right;
+}

@@ -33,6 +33,7 @@ console.log('it loaded!');
 
 
 const tripList = new TripList();
+let filteredMatches;
 // let tripTemplate;
 
 // const allTrips= () => {
@@ -76,6 +77,8 @@ const events = {
     //     </tbody>
     //   </table>`;
     // $('#all-trips').append(tripsTable);
+    // console.log($('#filter-form'));
+    $('#filter-form')[0].reset();
     render(tripList);
     $('#all-trips').toggle();
     console.log('showing all trips');
@@ -120,7 +123,6 @@ const events = {
 
   },
   reservationForm(event) {
-    console.log(this);
     const tripID = this.getAttribute("data-trip-id");
     console.log(`You've clicked the make reservation button!`);
     console.log(`you are reserving this trip with id ${tripID}`);
@@ -203,7 +205,7 @@ const events = {
     } else {
       console.log('there was a client error for this trip');
       const errorTypes = Object.keys(trip.validationError);
-
+      $('#messages').append(`<h3>Error:</h3>`);
       $('#messages ul').empty();
 
       errorTypes.forEach((type) => {
@@ -223,6 +225,7 @@ const events = {
     $('#messages ul').empty();
     $('#messages ul').append(`<li>${trip.get('name')} succesfully added!</li>`);
     $('#messages').show();
+    setInterval($('#messages').hide(), 3000);
   },
   failedSave(trip, response) {
     console.log('fail :( we are in the failedSave method');
@@ -236,24 +239,38 @@ const events = {
       })
     }
     $('#messages').show();
+    setInterval($('#messages').hide(), 3000);
     trip.destroy();
   },
   filtering() {
     const filterCategory = $('#filter-category :selected').val().toLowerCase();
     const filterInput = $('#filter-query').val().toLowerCase();
-    console.log(filterCategory);
-    console.log(filterInput);
+    const numeric = ['weeks','cost', 'id'];
+    const text = ['name', 'category', 'continent'];
+    // console.log(filterCategory);
+    // console.log(filterInput);
     // const filteredTrips = tripList.filter( trip => { (trip.get(filterCategory)).includes(filterInput);
     // });
-    const matches = []
-    const filteredTrips = tripList.forEach( (trip) => {
-      const lowercased = trip.get(filterCategory).toLowerCase();
-      if (lowercased.includes(filterInput)) {
-        matches.push(trip);
-      }
-    });
+    let matches = [];
+    if (numeric.includes(filterCategory)) {
+      tripList.forEach( (trip) => {
+        const tripValue = parseInt(trip.get(filterCategory));
+        const userValue = parseInt(filterInput);
+        if (tripValue <= userValue) {
+          matches.push(trip);
+        }
+      });
+    } else {
+      tripList.forEach( (trip) => {
+        const lowercased = trip.get(filterCategory).toLowerCase();
+        if (lowercased.includes(filterInput)) {
+          matches.push(trip);
+        }
+      });
+    }
 
-    const filteredMatches = new TripList(matches);
+    filteredMatches = new TripList(matches);
+    console.log(filteredMatches);
     showFiltered(filteredMatches);
 
     // console.log(filteredTrips);
@@ -285,9 +302,11 @@ $(document).ready( () => {
   $('#trip-details').on('click', '#reserve-btn', events.reservationForm);
   $('#trip-details').on('submit', '#reservation-form', events.finalizeReservation);
   $('body').on('click', '#add-trip-btn', events.newTripForm);
+  $('#add-trip-btn').on('click',)
   $('#trip-details').on('submit', '#new-trip-form', events.addTrip);
   $('#all-trips').on('click', '.sort', events.sortTrips);
   tripList.on('sort', render, tripList);
-  $('#filter-category').on('change', events.filtering);
+  // $('#filter-category').on('change', events.filtering);
   $('#filter-query').on('keyup', events.filtering);
+  // $('#filter-btn').on('click', $('#filter-form')[0].reset());
 });

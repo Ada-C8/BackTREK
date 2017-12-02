@@ -9,7 +9,7 @@
 <body>
   <header class = "columns small-12">
     <h2>backTREK</h2>
-    <section id= "main-buttons">
+    <section class = "float-right" id= "main-btns">
       <button id = "all-trips-btn" class = "button">
         See All Trips
       </button>
@@ -48,6 +48,7 @@
           </option>
         </select>
         <input type="text" id="filter-query" name="filter-query"></input>
+        <button class = "button" id= "filter-btn"> Clear Filter</button>
       </form>
       <table>
           <thead>
@@ -63,7 +64,6 @@
         </table>
     </section>
     <section class= "columns small-12 large-5" id = "trip-details">
-
     </section>
   </main>
   <footer>
@@ -101,10 +101,13 @@
         ID: <%- id %>
       </li>
       <li>
+        Category: <%- category %>
+      </li>
+      <li>
         Continent: <%- continent %>
       </li>
       <li>
-        Category: <%- category %>
+        Weeks: <%- weeks %>
       </li>
       <li>
         Cost: $<%- cost.toFixed(2) %>
