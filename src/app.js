@@ -86,6 +86,8 @@ const renderTrips = function renderTrips(list) {
       error: (model, response) => {
         console.log('failed to save trip');
         console.log(response);
+        // removes from list if fails validations
+        tripList.remove(model);
       }
     });
   };
@@ -96,18 +98,6 @@ const renderTrips = function renderTrips(list) {
     tripTemplate = _.template($('#trip-template').html());
 
     tripList.fetch();
-
-
-    // tripList.fetch({
-    //   success: function(list, resp) {
-    //     // console.log('worked');
-    //     // console.log(list);
-    //
-    //   },
-    //   error: function() {
-    //     console.log('error');
-    //   }
-    // });
 
     $('#trips').on('click', (event) => {
       renderTrips(tripList);
