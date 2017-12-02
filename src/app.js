@@ -58,7 +58,7 @@ const getTripDetails = function getTripDetails(attrID) {
 
   console.log(trip)
 
-  $('#reservation-form').hide();
+  // $('#reservation-form').hide();
 };
 
 const events = {
@@ -73,24 +73,6 @@ const events = {
   failRenderTrip() {
     console.log('FAILED TO RENDER SINGLE TRIP INFO');
     $('#single-trip-table').append('ERROR: Trip details were not successfully loaded.');
-  },
-  succesReservation(reservation, response) {
-    console.log('RESERVATION SUCCESSFULLY SUBMITTED')
-    console.log(reservation);
-
-    $('#reservation-form .user-input').val('');
-    $('#ReservationStatusModal ul').empty();
-    $('#ReservationStatusModal p').empty();
-    $('#ReservationStatusModal p').append('Your trip is now reserved!');
-    $('#ReservationStatusModal').foundation('open');
-  },
-  failReservation() {
-    console.log('RESERVATION SUBMISSION FAILURE')
-    console.log(reservation);
-    $('#ReservationStatusModal ul').empty();
-    $('#ReservationStatusModal p').empty();
-    $('#ReservationStatusModal p').append('Sorry, your request could not be completed.');
-    $('#ReservationStatusModal').foundation('open');
   },
 };
 
@@ -135,6 +117,44 @@ const makeTripReservation = function makeTripReservation(id) {
   });
 };
 
+// addNewTrip FUNCTION
+const addNewTrip = function addNewTrip(details) {
+  console.log('ADD TRIP BUTTON CLICKED')
+
+  const fields = ['name', 'continent','category', 'weeks', 'cost'];
+
+  const tripData = {};
+
+  fields.forEach( (field) => {
+    const val = $(`#new-trip-form input[name=${field}]`).val();
+    if (val != '') {
+    tripData[field] = val;
+    }
+  });
+
+  const trip = new Trip(tripData);
+  console.log('THIS IS A NEW TRIP');
+  console.log(trip);
+
+  trip.on("invalid", function(model, errors) {
+    console.log('INSIDE TRIP VALIDATION');
+    $('#ReservationStatusModal p').empty();
+    $('#newTripModalStatus p').append('Sorry, your request could not be completed. Please resolve the following:');
+    $('#ReservationStatusModal ul').empty();
+    for (let key in errors) {
+      $('#ReservationStatusModal ul').append(`<li>${key.charAt(0).toUpperCase() + key.slice(1)}: ${errors[key]}</li>`);
+      $('#ReservationStatusModal').foundation('open');
+    };
+  });
+  console.log('IS THIS TRIP INVALID?');
+  trip.isValid();
+  // trip.save({}, {
+  //   success: events.successTripSave,
+  //   error: events.failTripSave,
+  // });
+
+};
+
 $(document).ready( () => {
   $(document).foundation();
   $('#all-trips-table').hide();
@@ -157,10 +177,10 @@ $(document).ready( () => {
     getTripDetails(tripID);
   });
 
-  // To Show Trip Reservation Form
-  $('#single-trip-template').on('click', '#reserve-trip-button', function() {
-    $('#reservation-form').show();
-  });
+  // // To Show Trip Reservation Form
+  // $('#single-trip-template').on('click', '#reserve-trip-button', function() {
+  //   $('#reservation-form').show();
+  // });
 
   // To Show New Trip Form Modal
   $('#single-trip-details').on('submit', '#reservation', function(e) {
@@ -168,5 +188,13 @@ $(document).ready( () => {
     const tripID = $(this).attr('data-id');
     makeTripReservation(tripID);
   });
+
+  // To Add a New TRIP
+  $('#new-trip-form').on('submit', function(e) {
+    e.preventDefault();
+    addNewTrip();
+  });
+
+
 
 });
