@@ -39,6 +39,29 @@ button.start:hover {
   background-color: rgba(255, 255, 255, .3)
 }
 
+header {
+  background: linear-gradient(
+       rgba(0, 0, 0, 0.4),
+       rgba(0, 0, 0, 0.4)
+     ), url('./mts-cow.jpg');
+  background-size: cover;
+  background-position: center;
+  /*text-align: center;*/
+  color: white;
+}
+
+header h1 {
+  padding-left: 1rem;
+}
+
+/* ==== FONTS ==== */
+h1 {
+  font-family: "Roboto", sans-serif;
+}
+
+h2, h3, h4, p, a, a[href], table td, table th, button {
+  font-family: "Kanit", sans-serif;
+}
 
 .all-trips table {
   /*overflow: auto;*/

@@ -242,11 +242,11 @@ const filterTrips = function filterTrips() {
 };
 
 const init = () => {
-  // $('body').removeClass('init');
+  $('body').removeClass('init');
   $('div.init').hide();
-  $('header').addClass('grid-x');
+  $('header').addClass('grid-x align-justify');
   $('header').show();
-  $('main').addClass('grid-x grid-margin-x')
+  $('main').addClass('grid-x grid-padding-x')
   $('main').show();
 
   allTrips.fetch();
