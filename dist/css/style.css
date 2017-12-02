@@ -1,5 +1,14 @@
 
 /* Your styles go here! */
+#add-trip {
+  font-size: 1.25rem;
+  padding: 1rem 0 0 0;
+}
+
+header div.row {
+  justify-content: left;
+}
+
 #trip-table {
   /* Hide by default */
   display: none;
@@ -36,4 +45,25 @@
   padding: 20px;
   border: 1px solid #888;
   width: 80%; /* Could be more or less, depending on screen size */
+}
+
+.current-sort-field {
+  background-color: darkgrey;
+  color: white;
+}
+
+.row {
+  max-width: 80rem;
+}
+
+header {
+  padding: 2rem 0;
+  margin: 0 0 1rem 0;
+  background-color: grey;
+}
+
+@media screen and (min-width: 40em) {
+  #add-trip {
+    font-size: 2.5rem;
+  }
 }

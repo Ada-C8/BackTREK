@@ -4,16 +4,17 @@
   <meta charset="utf-8">
   <title>My JavaScript App</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/foundation.css" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
   <header>
-
-  </header>
-  <main>
     <div class="row">
       <h1 class="small-12 medium-8 columns site-title">BackTREK</h1>
-      <h2 class="small-12 medium-4 columns add-trip-button" id="add-trip">Add a Trip</h2>
+      <button class="small-12 medium-4 columns add-trip-button" id="add-trip">Add a Trip</button>
     </div>
+  </header>
+  <main>
     <div class="row" id="status-message">
       <h3></h3>
     </div>
@@ -47,26 +48,26 @@
         </form>
       </div>
     </div>
-    <div class="row small-up-1 medium-up-2">
-      <div class="left column">
+    <div class="row">
+      <div class="small-12 large-8 columns">
         <h2 id="explore-trips">Explore Trips</h2>
         <section id="list-not-found">
           <h3>Oh no! We're not able to find trips right now. Please try again later!</h3>
         </section>
         <table id="trip-table">
           <thead>
-            <th>Name</th>
-            <th>Continent</th>
-            <th>Category</th>
-            <th>Cost</th>
-            <th>Weeks</th>
+            <th class="sort name">Name</th>
+            <th class="sort continet">Continent</th>
+            <th class="sort category">Category</th>
+            <th class="sort cost">Cost</th>
+            <th class="sort weeks">Weeks</th>
           </thead>
           <tbody id="trip-list">
 
           </tbody>
         </table>
       </div>
-      <div class="right column">
+      <div class="small-12 large-4 columns">
         <section id="trip-not-found">
           <h3>Oh no! We're not able to find details about this trip right now. Please try again later!</h3>
         </section>

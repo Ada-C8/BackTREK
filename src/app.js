@@ -3,8 +3,8 @@ import $ from 'jquery';
 import _ from 'underscore';
 
 // CSS
-import './css/foundation.css';
-import './css/style.css';
+//import './css/foundation.css';
+//import './css/style.css';
 
 // Models and Collections
 import Trip from './app/models/trip';
@@ -37,11 +37,11 @@ const getTripList = function getTripList() {
   tripList.fetch({success: events.successfulGetTripList, error: events.failedGetTripList});
 };
 
-const addTrip = function addTrip() {
+const showModal = function showModal() {
   $('#add-form-modal').show();
 };
 
-const leaveForm = function leaveForm() {
+const hideModal = function hideModal() {
   $('#add-form-modal').hide();
   $('#add-trip-form').trigger('reset');
   $('#add-form-status-message').hide();
@@ -62,6 +62,18 @@ const events = {
   },
   failedGetTripList() {
     $('#list-not-found').show();
+  },
+  sortTrips(event) {
+    const sortingBy = $(this).attr('class').split(' ');
+    $('.sort').removeClass('current-sort-field');
+    $(this).addClass('current-sort-field');
+    if (sortingBy[1] === tripList.comparator) {
+      tripList.models.reverse();
+      tripList.trigger('sort', tripList);
+    } else {
+      tripList.comparator = sortingBy[1];
+      tripList.sort();
+    }
   },
   addTrip(event) {
     event.preventDefault();
@@ -85,6 +97,23 @@ const events = {
       }
       $('#add-form-status-message').show();
     }
+  },
+  successfulTripSave(trip) {
+    $('#status-message h3').empty();
+    $('#status-message h3').append(`${trip.get('name')} added!`);
+    $('#status-message').show();
+    tripList.add(trip);
+    $('#add-form-modal').hide();
+    $('#add-trip-form').trigger('reset');
+  },
+  failedTripSave(trip, response) {
+    $('#add-form-status-message ul').empty();
+    for(let key in response.responseJSON.errors) {
+      response.responseJSON.errors[key].forEach((error) => {
+        $('#add-form-status-message ul').append(`<li>${key}: ${error}</li>`);
+      })
+    }
+    $('#add-form-status-message').show();
   },
   reserveTrip(event) {
     event.preventDefault();
@@ -110,23 +139,6 @@ const events = {
       $('#reserve-form-status-message').show();
     }
   },
-  successfulTripSave(trip) {
-    $('#status-message h3').empty();
-    $('#status-message h3').append(`${trip.get('name')} added!`);
-    $('#status-message').show();
-    tripList.add(trip);
-    $('#add-form-modal').hide();
-    $('#add-trip-form').trigger('reset');
-  },
-  failedTripSave(trip, response) {
-    $('#add-form-status-message ul').empty();
-    for(let key in response.responseJSON.errors) {
-      response.responseJSON.errors[key].forEach((error) => {
-        $('#add-form-status-message ul').append(`<li>${key}: ${error}</li>`);
-      })
-    }
-    $('#add-form-status-message').show();
-  },
   successfulResSave(reservation) {
     $('#status-message h3').empty();
     $('#status-message h3').append(`Pack your bags! Successfully reserved a spot for ${reservation.get('name')} on the ${tripList.get(reservation.get('trip_id')).get('name')} trip!`);
@@ -148,15 +160,21 @@ const events = {
 $(document).ready( () => {
   tripRowTemplate = _.template($('#trip-row-template').html());
   tripDetailsTemplate = _.template($('#trip-details-template').html());
+
+  // Listeners for fetching, sorting and rendering data
+  tripList.on('update', render, tripList)
+  tripList.on('sort', render, tripList)
+  $('#explore-trips').on('click', getTripList);
+  $('.sort').click(events.sortTrips)
+  $('#trip-list').on('click', 'tr', getTrip);
+
+  // Listeners for modal add trip form
+  $('#add-trip').on('click', showModal);
+  $('#add-form-modal').on('click', hideModal);
+  $(':button').on('click', hideModal);
+  $('#add-modal-content').click(function(e){ e.stopPropagation();});
+
+  // Listeners for posting data
   $('#add-trip-form').submit(events.addTrip);
   $('#trip-info').on('submit', '#reserve-trip-form', events.reserveTrip);
-  $('#explore-trips').on('click', getTripList);
-
-  tripList.on('update', render, tripList)
-
-  $('#trip-list').on('click', 'tr', getTrip);
-  $('#add-trip').on('click', addTrip);
-  $('#add-form-modal').on('click', leaveForm);
-  $(':button').on('click', leaveForm);
-  $('#add-modal-content').click(function(e){ e.stopPropagation();});
 });
