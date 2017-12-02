@@ -97,7 +97,7 @@ const renderTrips = function renderTrips(list) {
     // compile underscore templates
     listTemplate = _.template($('#list-template').html());
     tripTemplate = _.template($('#trip-template').html());
-    reserveTemplate = _.template($'#reserve-template').html());
+    reserveTemplate = _.template($('#reserve-template').html());
 
     tripList.fetch();
 
