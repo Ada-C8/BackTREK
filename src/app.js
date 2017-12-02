@@ -21,30 +21,32 @@ const render = function(tripList) {
   tripList.forEach((trip) => {
     $('#trip-list').append(tripTemplate(trip.toJSON()));
   });
+
   $('tr').click(function() {
     console.log('inside click');
     const selectedId = parseInt($(this)[0].id);
     console.log(selectedId);
-    const url = `http://ada-backtrek-api.herokuapp.com/trips/`;
+    const url = `http://ada-backtrek-api.herokuapp.com/trips/${selectedId}`;
     // const selectedTrip = new Trip({id: selectedId});
     const selectedTrip = tripList.findWhere({id: selectedId});
+    console.log(url);
     // debugger;
-    selectedTrip.fetch(
-      {
-        success: function(selectedTrip){
-          console.log('hey it logged success lol');
-          $('header').html(tripInfoTemplate(selectedTrip));
-        },
-        error: function() {
-          console.log('doesnt work sorry lol');
-        }
+    // selectedTrip.fetch(
+    //   {
+    //     success: function(selectedTrip){
+    //       console.log('hey it logged success lol');
+    //       $('header').html(tripInfoTemplate(selectedTrip));
+    //     },
+    //     error: function() {
+    //       console.log('doesnt work sorry lol');
+    //     }
       // })
-    }); // truly the end of fetch
-    // $.get(url, function(response) {
-    //   console.log('trying to get trip');
-    //   $('#trip-details').html(tripInfoTemplate(response));
-    // });
+    $.get(url, function(response) {
+      console.log('trying to get trip');
+      $('h1').html(tripInfoTemplate(response));
+    });
   });
+
   console.log(tripList.models.length);
 }
 
@@ -63,6 +65,8 @@ $(document).ready( () => {
     $(this).blur();
 
   });
+
+
 
 
 }); // end of document ready
