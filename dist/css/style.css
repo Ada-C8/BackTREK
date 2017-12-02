@@ -1,12 +1,11 @@
 
 /* Your styles go here! */
-#add-trip {
-  font-size: 1.25rem;
-  padding: 1rem 0 0 0;
-}
 
-header div.row {
-  justify-content: left;
+body {
+  background-image: url('cara-fuller.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #262626;
 }
 
 #trip-table {
@@ -48,7 +47,7 @@ header div.row {
 }
 
 .current-sort-field {
-  background-color: darkgrey;
+  background-color: #262626;
   color: white;
 }
 
@@ -59,11 +58,10 @@ header div.row {
 header {
   padding: 2rem 0;
   margin: 0 0 1rem 0;
-  background-color: grey;
+  background-color: #262626;
 }
 
-@media screen and (min-width: 40em) {
-  #add-trip {
-    font-size: 2.5rem;
-  }
+.trip-info-container {
+  background-color: white;
+  padding: 1rem;
 }
