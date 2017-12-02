@@ -9,17 +9,19 @@ import './css/style.css';
 import Trip from './app/models/trip';
 import TripList from './app/collections/trip_list';
 
-
-// import Reservation from './app/models/reservation';
+import Reservation from './app/models/reservation';
 // import ReservationList from './app/collections/reservation_list';
 
 console.log('it loaded!');
 
 const tripList = new TripList();
-let tripTemplate;
-let detailTemplate;
+// const reservationList = new ReservationList();
 
 const fields = ['name', 'continent', 'about', 'category', 'weeks', 'cost'];
+const reservationFields = ['name', 'email'];
+
+let tripTemplate;
+let detailTemplate;
 
 console.log(tripList);
 
@@ -28,12 +30,11 @@ const render = function render(tripList) {
   tripListElement.empty();
 
   tripList.forEach((trip) => {
-    console.log(`Rendering trip ${trip.get('name')}`);
+    // console.log(`Rendering trip ${trip.get('name')}`);
     let tripHTML = tripTemplate(trip.attributes);
     tripListElement.append($(tripHTML));
   });
 };
-
 
 // =================================================================
 
@@ -45,9 +46,21 @@ const getIndividualTrip = function getIndividualTrip() {
   // const tripDetails = $('#trip-list');
   const id = $(this).attr('id');
   let trip = tripList.get(id);
-  trip.fetch();
+  trip.fetch( {
+    success: function(response) {
+      console.log("I'm in success of the fetch");
+      console.log(response);
+      console.log("this is this");
+      console.log(trip);
+      $('#trip-details').empty();
+      $('#trip-details').append(detailTemplate(details));
+    },
+    // success: ?,
+    // error: ?
+  });
 
   console.log('*****************');
+  console.log("this is the trip");
   console.log(trip);
   console.log('*****************');
 
@@ -63,21 +76,54 @@ const getIndividualTrip = function getIndividualTrip() {
   // }));
 
   let details = trip.attributes;
-  // WHHHHAAAAAAATTT
+  // trip.fetch( {
+  //   // success: ?,
+  //   // error: ?
+  // });
+
+  console.log("****************************");
+  console.log("these are the details");
+  console.log(details);
+  console.log("****************************");
+
+  // ???????
   // details.about = 'fake about';
   // console.log(details.name);
   // console.log(details.continent);
   // console.log(details.about);
 
-  $('#trip-details').empty()
-  $('#trip-details').append(detailTemplate(details));
+  // $('#trip-details').empty();
+  // $('#trip-details').append(detailTemplate(details));
 };
 
 // =================================================================
 
-
-
 const events = {
+
+  addReservation(event){
+    event.preventDefault();
+    const reserveData = {};
+
+    reservationFields.forEach((field) =>{
+      reserveData[field] = $(`input[name=${field}]`).val();
+    });
+
+    console.log('RESERVATION ADDED');
+    console.log(reserveData);
+
+    const reservation = new Reservation(reserveData);
+
+    reservationList.add(reservation);
+    reservation.save({
+      success: events.successfulSave,
+      error: events.failedSave
+    })
+    this.reset();
+  },
+
+// =================================================================
+
+
   addTrip(event) {
     event.preventDefault();
     const tripData = {};
@@ -97,7 +143,6 @@ const events = {
     this.reset();
   },
 
-
   successfulSave(trip, response) {
     console.log('success!');
     console.log(trip);
@@ -113,7 +158,7 @@ const events = {
 
     $('#status-messages ul').empty();
 
-    console.log(response.responseJSON.errors);
+    // console.log(response.responseJSON.errors);
 
     for(let key in response.responseJSON.errors) {
       response.responseJSON.errors[key].forEach((error) => {
@@ -170,5 +215,4 @@ $(document).ready( () => {
   $('.trip-info').click(events.showAllTrips);
   $('.sort').click(events.sortTrips);
   tripList.on('sort', render, tripList);
-
 });

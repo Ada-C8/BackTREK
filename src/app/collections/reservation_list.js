@@ -1,15 +1,16 @@
 import Backbone from 'backbone';
-import Trip from '../models/reservation';
+import Reservation from '../models/reservation';
 
-
-const Reservationlist = Backbone.Collection.extend({
+const ReservationList = Backbone.Collection.extend({
   model: Reservation,
-  url: `https://ada-backtrek-api.herokuapp.com/trips/${id}/reservations`,
+
+  url: function() {
+    // return `https://ada-backtrek-api.herokuapp.com/trips/${this.id}/reservations`
+  },
 
   parse(response) {
     return response
   },
 });
 
-
-export default Reservationlist;
+export default ReservationList;
