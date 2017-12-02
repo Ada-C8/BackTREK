@@ -20,8 +20,13 @@ const TABLE_HEADERS = [ 'name', 'continent', 'category', 'weeks','cost']
 const RESERVATION_FIELDS = [ 'tripID', 'name', 'age', 'email']
 
 //************************** Render ***************
+//I should not have done all the fetching in one step.  If I were to
+// go back and fix this, I would only render the "about" details if
+// a click event happened on that row.  I would get the id for the
+// fetch either by hanging it off the html somewhere (the less-good choice)
+// or figure out what Dan was talking about when he described making a closure
+// within the tripList.forEach loop that would make an event handler for each row.
 const render = function render(tripList) {
-  //clear table before adding new lines
   $('#trip-list').html('')
   console.log(tripList);
   tripList.forEach((trip) => {
@@ -41,12 +46,26 @@ const render = function render(tripList) {
   });
 };
 
+//*************METHODS TO MAKE FORMS POP UP AND LEAVE AND UPDATE***************
 // toggles trip about information
 const tripDetailHandler = function (event){
   console.log(event.target.parentElement.id);
   let id = event.target.parentElement.id;
   $(`.details-${id}`).toggleClass('hide');
   $(`.button-${id}`).toggleClass('hide');
+}
+
+const modalOpener= function modalOpener() {
+  // console.log(event)
+  console.log('opening modal')
+  $('.modal').removeClass('hide');
+  $('#close').on('click', modalCloser)
+}
+
+const modalCloser= function modalCloser() {
+  // console.log(event)
+  console.log('closing modal')
+  $('.modal').addClass('hide');
 }
 
 // shows the reservation form and updates trip name
@@ -59,13 +78,12 @@ const reserveFormUpdate = function (event){
     const formTemplate =  _.template($('#form-template').html());
     console.log(formTemplate);
     const formHTML = formTemplate(currentTrip.attributes);
-    // $('.form-container').removeClass('hide');
     $('#form-container').html(formHTML);
     $('#reserve-form').on('click','.submit-reservation', addReservationHandler);
   });
 }
 
-//**************************ADDING THINGS ***************
+//**************************ADDING TRIPS AND RESERVATIONS ***************
 const addTripHandler = function(event){
   event.preventDefault();
   $('.trip-status-messages').html('<p> </p>')
@@ -203,26 +221,15 @@ const readReservationFormData = function readReservationFormData() {
   return reservationData;
 };
 
-//***********************start of Filter  ***************
-
+//***********************start of Filter Function  ***************
+//the next step is to connect this to a filter function in the tripList
+//collection.  Also, to modify render so that it updates the filter parameters
+// before rendering the tripList.  Make it so the default is no paramaters
 const filterHandler = function filterHandler(event) {
   console.log(document.getElementById('exampleList').value);
   console.log(document.getElementById('textbox').value);
 }
 
-//***********************modal open and close ***************
-const modalOpener= function modalOpener() {
-  // console.log(event)
-  console.log('opening modal')
-  $('.modal').removeClass('hide');
-  $('#close').on('click', modalCloser)
-}
-
-const modalCloser= function modalCloser() {
-  // console.log(event)
-  console.log('closing modal')
-  $('.modal').addClass('hide');
-}
 
 //**************************DOC.READY ***************
 
