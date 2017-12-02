@@ -1,17 +1,17 @@
 // Vendor Modules
 import $ from 'jquery';
 import _ from 'underscore';
-
 // CSS
 import './css/foundation.css';
 import './css/style.css';
-
 // OUR COMPONENTS
 import TripList from './collections/trip_list';
 import Trip from './models/trip';
+import Reservation from './models/reservation'
 
 // TRIP FIELDS
 const TRIP_FIELDS = ['id', 'name', 'about', 'continent', 'category', 'weeks', 'cost'];
+const RESERVATION_FIELDS = ['name', 'age', 'email'];
 
 // Trip COLLECTION
 const tripList = new TripList();
@@ -32,12 +32,13 @@ const loadTrips = function loadTrips(tripList) {
     const generatedHTML = $(tripsTemplate(trip.attributes));
     tripsTableElement.append(generatedHTML);
   });
+
+  // ADD COLOR TO HEADERS
   $('th.sort').removeClass('current-sort-field');
   $(`th.sort.${ tripList.comparator }`).addClass('current-sort-field');
 };
 
 const createNewTripHandler = function(event) {
-  // keep it from doing normal form things
   event.preventDefault();
 
   const tripData = {};
@@ -63,6 +64,8 @@ const createNewTripHandler = function(event) {
   });
 };
 
+//////////////////////////
+///// DOCUMENT READY /////
 $(document).ready(() => {
   // TEMPLATES
   tripsTemplate = _.template($('#trips-template').html());
@@ -129,37 +132,47 @@ $(document).ready(() => {
   });
 })
 
-let reserveTrip = function reserveTrip(id){
-  $.get(`https://ada-backtrek-api.herokuapp.com/trips/${id}`,
-    (response) => {
-      $('#reservation-form').attr('action', 'https://ada-backtrek-api.herokuapp.com/trips/' + response.id + '/reservations/');
-      console.log(response.id);
-    })
-  };
 
-$('#trip-about').on('submit', '#reservation-form', function(e) {
-  e.preventDefault();
 
-  const url = $(this).attr('action');
-  const formData = $(this).serialize();
-  console.log('clicked and submitted reservation form');
 
-  $.post(url, formData, (response) => {
-  $('#confirmation-msg').html('<p>Made Reservation: ' + $('#trip-name').html() + '!</p>');
 
-  /// console.log(); ///
-  console.log(url);
-  console.log(formData);
-  console.log('reservation: success!');
-  })
-  .fail(function(response){
-    $('#fail').html('<p>Something went wrong!</p>')
 
-    /// console.log(); ///
-    console.log(response);
-    console.log('reservation: error!');
+
+
+
+const newReservationHandler = function(event) {
+  event.preventDefault();
+
+  const reservationData = {};
+  RESERVATION_FIELDS.forEach((field) => {
+    const inputElement = $(`#reservation-form input[name="${ field }"]`);
+    const value = inputElement.val();
+    reservationData[field] = value;
+
+    // clears form after submitted
+    inputElement.val('');
   });
-})
+
+  const reservation = new Reservation(reservationData);
+  reservation.save({}, {
+    success: (model, response) => {
+      console.log('Create new reservation: success');
+    },
+    error: (model, response) => {
+      console.log('Create new reservation: failure');
+      console.log('Server response:');
+      console.log(response);
+    },
+  });
+};
+$('#trip-about').on('submit', '#reservation-form', newReservationHandler);
+
+
+
+
+
+
+
 
 // SUBMIT NEW TRIP FROM FORM
 $('#trip-create-new').on('submit', createNewTripHandler);
