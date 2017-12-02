@@ -249,7 +249,6 @@ $(document).ready( () => {
   $('#add-trip-form').on('submit', addTripHandler);
 
   $('#modalBtn').on('click', modalOpener);
-  // $('#close').on('click', modalCloser)
   $('#textbox').keyup(filterHandler);
 
 
