@@ -1,7 +1,7 @@
 import Backbone from 'backbone';
 
 const Trip = Backbone.Model.extend({
-  //later will put custom code
+  urlRoot: 'https://ada-backtrek-api.herokuapp.com/trips',
 });
 
 export default Trip

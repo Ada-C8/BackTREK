@@ -14,51 +14,49 @@ console.log('it loaded!');
 const tripList = new TripList();
 
 let tripTemplate;
-
-// const allTrips = function allTrips(tripList) {
-//   const tripListElement = $('#trip-list');
-//   tripListElement.empty();
-//
-//   tripList.forEach((trip) => {
-//     console.log(`Rendering trip ${trip.get('name')}`);
-//     let tripHTML = tripTemplate(trip.attributes);
-//     tripListElement.append($(tripHTML));
-//   });
-// };
-
-// const loadTrip = function loadTrip(id) {
-//   $.get(`https://ada-backtrek-api.herokuapp.com/trips/${id}`,
-//     (response) => {
-//       const tripInfo =
-//         `<div>
-//           <p> Trip name: ${response.name}</p>
-//           <p> Category: ${response.category}</p>
-//           <p> Continent: ${response.continent}</p>
-//           <p> Description: ${response.about}</p>
-//           <p> Duration: ${response.weeks} weeks</p>
-//           <p> Cost: ${response.cost}</p>
-//         </div>`;
-//       }
-//     )
-// };
+let showTemplate;
 
 const events = {
-
   allTrips(event) {
     const tripListElement = $('#trip-list');
     tripListElement.empty();
     $('h2').text('Trip Options');
     $('#load_trips').show();
     tripList.forEach((trip) => {
-      console.log(`Rendering trip ${trip.get('name')}`);
       let tripHTML = tripTemplate(trip.attributes);
       tripListElement.append($(tripHTML));
     });
-  }
+  },
+
+  loadTrip(id) {
+    const singleTripElement = $('#single-trip');
+    const trip = new Trip({id: id});
+    console.log('THIS IS THE TRIP ID');
+    console.log(trip);
+
+    $('h3').text('Trip Info');
+
+    console.log("ATTRIBUTES");
+    console.log(trip.attributes);
+    console.log('THIS IS THE TRIP');
+    console.log(trip.attributes.name);
+    trip.fetch().done(() => {
+      let showHTML = showTemplate(trip.attributes);
+      console.log(showHTML);
+      singleTripElement.append($(showHTML));
+    });
+  },
 };
 
 $(document).ready( () => {
   tripTemplate = _.template($('#trip-template').html());
+  showTemplate = _.template($('#show-template').html());
   tripList.fetch();
+
   $('#trips_button').click(events.allTrips);
+
+  $('#trip-list').on('click', 'tr', function() {
+    const tripID = $(this).attr('trip-id');
+    events.loadTrip(tripID);
+  });
 });

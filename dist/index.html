@@ -8,14 +8,15 @@
 </head>
 <body>
   <header>
+    <button id="trips_button" class="button"> Get trips! </button>
     <h1>BackTrek</h1>
   </header>
   <main>
-    <button id="trips_button" class="button"> Get trips! </button>
+
     <section id="load_trips" class="columns large-8 small-12">
       <h2></h2>
 
-      <table>
+      <table id="trips-all">
         <thead>
           <th class="sort name">Trip Name</th>
           <th class="sort continent">Destination</th>
@@ -29,8 +30,8 @@
       </table>
     </section>
 
-    <aside class="columns large-4 small-12">
-      
+    <aside id="single-trip" class="columns large-4 small-12">
+      <h3></h3>
     </aside>
 
   </main>
@@ -41,7 +42,7 @@
   </footer>
 
     <script id="trip-template" type="text/template">
-      <tr class="trip">
+      <tr class="trip" trip-id=<%- id %> >
         <td>
           <%- name %>
         </td>
@@ -52,11 +53,27 @@
           <%- category %>
         </td>
         <td>
-          <%- weeks %> weeks
+          <%- weeks %> week(s)
         </td>
         <td>
           $<%- cost %>
         </td>
+    </script>
+
+    <script id="show-template" type="text/template">
+      <h2> Details for <%- name %> </h2>
+      <p>
+        Continent: <%- continent %>
+      </p>
+      <p>
+        Description: <%- about %>
+      </p>
+      <p>
+        Duration: <%- weeks %> week(s)
+      </p>
+      <p>
+        Cost: $<%- cost %>
+      </p>
     </script>
   </body>
 </html>
