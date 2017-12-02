@@ -8,23 +8,22 @@
 <body>
   <header>
     <h2>TREK</h2>
+    <button id="show-trips" class="button secondary hollow"><h3>Show Trips</h3></button>
   </header>
   <main>
-<!-- MESSAGE -->
+<!-- MESSAGES -->
+  <span id="status-msg"></span>
   <span id="confirmation-msg"></span>
-<!-- MESSAGE -->
 
 <!-- ADD TRIP #trip-create-new -->
     <button id="trip-create-new-btn" class="button secondary hollow">Create New Trip</button>
     <aside id="trip-create-new" class="columns large-4 small-12">
       <!-- create new trip form -->
     </aside>
-<!-- /ADD TRIP -->
 
 <!-- SINGLE TRIP #trip-about -->
     <article id="trip-about" class="columns large-8 small-12">
     </article>
-<!-- /SINGLE TRIP -->
 
 <!-- TRIP LIST #trip-list -->
     <section class="columns large-8 small-12">
@@ -40,12 +39,18 @@
         </tbody>
       </table>
     </section>
-<!-- /TRIP LIST -->
   </main>
 
   <footer>
     &copy; 2017 Sara Frandsen
   </footer>
+
+<!-------------------------->
+
+<!-- STATUS MESSAGE -->
+  <script type="text/template" id="status-msg-template">
+
+  </script>
 
 <!-- SINGLE TRIP TEMPLATE -->
   <script type="text/template" id="trip-template">
@@ -55,7 +60,6 @@
     <section id="new-reservation"><!-- reservation form --></section>
 
   </script>
-<!-- /SINGLE TRIP TEMPLATE -->
 
 <!-- TRIPS TEMPLATE -->
   <script type="text/template" id="trips-template">
@@ -77,7 +81,6 @@
       </td>
     </tr>
   </script>
-<!-- /TRIPS TEMPLATE -->
 
 <!-- CREATE NEW TRIP TEMPLATE -->
   <script type="text/template" id="create-new-trip-template">
@@ -99,7 +102,6 @@
       <input type="submit" value="Create New Trip" class="button"></input>
     </form>
   </script>
-<!-- /CREATE NEW TRIP TEMPLATE -->
 
 <!-- NEW RESERVATION TEMPLATE -->
   <script type="text/template" id="new-reservation-template">
@@ -115,7 +117,6 @@
       <input type="submit" value="Make Reservation" class="button"></input>
     </form>
   </script>
-<!-- /NEW RESERVATION TEMPLATE -->
 
   <script src="app.bundle.js" type="text/javascript"></script>
 </body>

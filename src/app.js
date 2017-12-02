@@ -46,7 +46,6 @@ const createNewTripHandler = function(event) {
     const inputElement = $(`#trip-create-new input[name="${ field }"]`);
     const value = inputElement.val();
     tripData[field] = value;
-
     // clears form after submitted
     inputElement.val('');
   });
@@ -55,9 +54,40 @@ const createNewTripHandler = function(event) {
   trip.save({}, {
     success: (model, response) => {
       console.log('Create new trip: success');
+      console.log('Server response:');
+      console.log(response);
     },
     error: (model, response) => {
       console.log('Create new trip: failure');
+      console.log('Server response:');
+      console.log(response);
+    },
+  });
+};
+
+///// RESERVATION FORM /////
+const newReservationHandler = function(event) {
+  event.preventDefault();
+
+  const reservationData = {};
+  RESERVATION_FIELDS.forEach((field) => {
+    const inputElement = $(`#reservation-form input[name="${ field }"]`);
+    const value = inputElement.val();
+    reservationData[field] = value;
+    // clears form after submitted
+    inputElement.val('');
+  });
+
+  // take reservation trip_id from #trip-about data id
+  reservationData.trip_id = $('#trip-about').data('id')
+  const reservation = new Reservation(reservationData);
+  reservation.save({}, {
+    success: (model, response) => {
+      console.log(reservation.url());
+      console.log('Create new reservation: success');
+    },
+    error: (model, response) => {
+      console.log('Create new reservation: failure');
       console.log('Server response:');
       console.log(response);
     },
@@ -73,16 +103,17 @@ $(document).ready(() => {
   createNewTripTemplate = _.template($('#create-new-trip-template').html());
   newReservationTemplate = _.template($('#new-reservation-template').html());
 
-  ///// need clarification on this /////
-  tripList.on('update', loadTrips);
-  tripList.on('sort', loadTrips);
-  tripList.fetch();
+  $('#show-trips').on('click', function() {
+    /// need clarification on this /////
+    tripList.on('update', loadTrips);
+    tripList.on('sort', loadTrips);
+    tripList.fetch();
+  });
 
   // RENDER SINGLE TRIP DETAILS TO DOM
   $('#trip-list').on('click', 'tr', function() {
     const aboutElement = $('#trip-about');
     aboutElement.html('');
-
     console.log('clicked');
     // uses 'data' from html data-id
     let tripID = $(this).data('id');
@@ -93,11 +124,6 @@ $(document).ready(() => {
     let singleTrip = new Trip({id: tripID});
     console.log(singleTrip.url());
 
-
-    // let reservationID = new Reservation({trip_id: tripID});
-
-
-    // apparently 'model' is cheating???
     // model refers to singleTrip?
     // model.fetch(): takes urlRoot and adds id?
     //https://stackoverflow.com/questions/16544984/how-backbone-js-model-fetch-method-works
@@ -106,9 +132,7 @@ $(document).ready(() => {
         const generatedHTML = $(aboutTemplate(model.attributes));
         aboutElement.html(generatedHTML);
 
-        ///////////////////////////////////
         // RENDER 'RESERVATION' FORM TO DOM
-        ///////////////////////////////////
         $('#new-reservation-btn').on('click', function() {
           const newReservationElement = $('#new-reservation');
           newReservationElement.html('');
@@ -138,38 +162,9 @@ $(document).ready(() => {
   });
 })
 
-///// RESERVATION FORM /////
-const newReservationHandler = function(event) {
-  event.preventDefault();
-
-  const reservationData = {};
-  RESERVATION_FIELDS.forEach((field) => {
-    const inputElement = $(`#reservation-form input[name="${ field }"]`);
-    const value = inputElement.val();
-    reservationData[field] = value;
-
-    // clears form after submitted
-    inputElement.val('');
-  });
-
-  // take reservation trip_id from #trip-about data id
-  reservationData.trip_id = $('#trip-about').data('id')
-  const reservation = new Reservation(reservationData);
-  reservation.save({}, {
-    success: (model, response) => {
-      console.log(reservation.url());
-      console.log('Create new reservation: success');
-    },
-    error: (model, response) => {
-      console.log('Create new reservation: failure');
-      console.log('Server response:');
-      console.log(response);
-    },
-  });
-};
+// submit new reservation
 $('#trip-about').on('submit', '#reservation-form', newReservationHandler);
-
-// SUBMIT NEW TRIP FROM FORM
+// submit new trip
 $('#trip-create-new').on('submit', createNewTripHandler);
 
 // SORT BY CLICKED FIELD
