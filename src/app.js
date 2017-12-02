@@ -8,13 +8,13 @@ import './css/style.css';
 
 import Trip from './app/models/trip';
 import TripList from './app/collections/trip_list';
+import Reservation from './app/models/reservation';
 
 //console.log('it loaded!');
 
 //TRIPS TABLE:
 const tripList = new TripList();
 let tripsTemplate;
-
 
 const renderTrips = function renderTrips(tripList) {
   console.log('it loaded!');
@@ -48,6 +48,8 @@ const renderSingleTrip = function renderSingleTrip(tripID) {
   console.log(trip);
 }
 
+
+
 //EVENT LISTENER
 //1. Create listener:
 // const bogusListener = function bogusListener(event)  {
@@ -60,14 +62,15 @@ const renderSingleTrip = function renderSingleTrip(tripID) {
 // // // 3.  Trigger the event
 // tripList.trigger('bogus', 'Argument!');
 
-const fields = ["name", "category", "continent", "cost", "weeks", "about"];
+const tripFields = ["name", "category", "continent", "cost", "weeks", "about"];
+const reservationFields = ["name", "age", "email"];
 
 const events = {
   addTrip(event) {
     event.preventDefault();
     console.log('in addTrip method! Trip Data:')
     const tripData = {};
-    fields.forEach( (field) => {
+    tripFields.forEach( (field) => {
       tripData[field] = $(`input[name=${field}]`).val();
     });
     console.log(tripData);
@@ -75,19 +78,19 @@ const events = {
 
     if (trip.isValid()) {
       trip.save({}, {
-        success: events.successfullSave,
-        error: events.failedSave,
+        success: events.successfullTripSave,
+        error: events.failedTripSave,
       });
     } else {
       console.log('NOT VALID')
-      events.failedSave(trip, {errors: trip.validate() });
+      events.failedTripSave(trip, {errors: trip.validate() });
     }
 
     console.log('finished')
 
   },
-  successfullSave(trip, response) {
-    console.log('successfulSave');
+  successfullTripSave(trip, response) {
+    console.log('successfulTripSave');
     tripList.add(trip);
     console.log('Trip Added');
     console.log(trip);
@@ -96,18 +99,41 @@ const events = {
     $('#status-messages ul').append(`<li>${trip.get('name')} added!</li>`)
     $('#status-messages').show();
   },
-  failedSave(trip, response) {
+  failedTripSave(trip, response) {
     console.log('failedSave');
-    console.log(trip);
-    console.log(response);
+    //console.log(trip);
+    //console.log(response);
     console.log(response.responseText);
-    console.log(JSON.stringify(response));
-    // tripList.remove(trip);
+    //let JSONresponse = JSON.parse(response);
+    //console.log(JSONresponse);
+    //console.log(JSON.stringify(response));
+    //const responseJSON = JSON.stringify(response);
+    $('#status-messages ul').append(`<li>${trip.get('name')} WAS NOT added!</li>`);
     $('#status-messages ul').empty();
-    $('#status-messages ul').append(`<li>${trip.get('name')} WAS NOT added!</li>`)
-    //$('#status-messages ul').append('<li><h1>MESSAGE</h1></li>');
-    $('#status-messages ul').append(`<li>${response.responseText}</li>`);
+    //responseJSON.forEach(function(data) {
+    //  $('#status-messages ul').append(`<li>${data}</li>`);
+    //});
     $('#status-messages').show();
+  },
+  addReservation(event) {
+    event.preventDefault();
+    console.log('in addReservation method! Reservation Data:')
+    const reservationData = {};
+    reservationFields.forEach( (field) => {
+      reservationData[field] = $(`input[name=${field}]`).val();
+    });
+    console.log(reservationData);
+    const reservation = new Reservation(reservationData);
+
+    if (reservation.isValid()) {
+      reservation.save({}, {
+        success: events.successfullReservationSave,
+        error: events.failedReservationSave,
+      });
+    } else {
+      console.log('NOT VALID RESERVATION DATA')
+      events.failedReservationSave(reservation, {errors: reservation.validate() });
+    }
   },
 };
 
@@ -121,8 +147,6 @@ $(document).ready( () => {
     console.log('clicked load');
     $('#trips-table-container').show();
     tripList.fetch();
-    // tripList.trigger();
-    // createFilters();
   });
 
   $('#trips-table-container').on('click', 'tr', function () {
@@ -138,15 +162,18 @@ $(document).ready( () => {
 
   //submit form to Add a Trip
   //creates a new instance of the Trip model
+  $('#add-a-trip-form-container').on('submit','#add-trip-form', events.addTrip);
   //tripsTemplate = _.template($('#trips-template').html());
-    // $('#add-trip-form').on('click', function () {
-    //   $('#add-trip-form').submit(events.addTrip);
-    // });
-    $('#add-a-trip-form-container').on('submit','#add-trip-form', events.addTrip);
+    //THIS WAY DOESN"T WORK- it just performs the submit, rather than waits to hear if a submit event is happening
+    //$('#add-trip-form').submit(events.addTrip);
 
+  //submit form to add a reservation:
+  $('#reservation-form-container').on('submit','#add-reservation-form', events.addReservation);
 
   //update table
   tripList.on('update', renderTrips, tripList);
+
+
 
 
   // $('.sort').click(events.sortTrips);
