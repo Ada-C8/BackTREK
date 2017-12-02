@@ -1,9 +1,69 @@
+body {
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  background: #FDD02C;
+}
+h1 {
+  text-align: center;
+}
 table {
   display: none;
 }
 .active {
   display: block;
+
 }
+table.active {
+  height: 90%;
+  position: static;
+  overflow: scroll;
+}
+
 button {
-  font-size: 3em;
+  /*font-size: 3em;*/
+  /*padding: 20px;*/
+}
+.row {
+  /*height: 800px;*/
+
+}
+.trips-table {
+
+  background: #B0C13E;
+  /*padding: 20px;*/
+  /*padding-top: 30px;*/
+  height: 800px;
+  text-align: center;
+}
+table {
+
+  /*height: 100%;*/
+  /*overflow: scroll;*/
+  /*position:fixed;*/
+
+  /*margin-bottom: 0;*/
+}
+#summary {
+  background: #4EAD6E;
+
+  overflow: scroll;
+  height: 800px;
+  align-items: center;
+  /*display: block;*/
+  /*position:absolute;*/
+  /*max-width: 50%;*/
+  /*padding: 20px;*/
+  /*padding-top: 50px;*/
+  /*overflow: scroll;*/
+}
+
+.info {
+  /*padding: 5px;*/
+  /*height: 100%;*/
+  /*overflow: scroll;*/
+  background: #FD4B5C;
+}
+.info p {
+  /*padding: 10px;*/
 }

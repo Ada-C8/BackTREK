@@ -7,28 +7,69 @@
 </head>
 <body>
   <header>
-
+    <h1>BackTrek</h1>
   </header>
+
   <main class='row'>
 
-  <section id="summary" class='columns medium-4'>Summary Here</section>
+    <section id="summary" class='columns medium-5 small-12'>
+      <section id="status-messages">
+        <button class="clear float-right">
+          <img src="http://www.pvhc.net/img223/xeiwtpbbgpmyhtcnjvwt.png" alt="Clear">
+        </button>
 
-  <section class='columns medium-8'>  
-  <button class='all-trips'>View All Trips</button>
+    <ul></ul>
+    </section>
+      <aside class='add-trip'>
+        <h2>Add a Trip</h2>
+        <form id="add-trip-form">
+          <label for="name">name</label>
+          <input type="text" name="name"></input>
 
-    <table>
-      <thead>
-        <th class="sort name">name</th>
-        <th class="sort id">id</th>
-        <th class="sort continent">continent</th>
-        <th class="sort category">category</th>
-        <th class="sort weeks">weeks</th>
-      </thead>
-      <tbody id="trip-list">
-      </tbody>
-    </table>
-  </section>
+          <label for="continent">continent</label>
+          <input type="text" name="continent"></input>
+
+          <label for="about">about</label>
+          <input type="text" name="about"></input>
+
+          <label for="category">category</label>
+          <input type="text" name="category"></input>
+
+          <label for="weeks">weeks</label>
+          <input type="number" name="weeks"></input>
+
+          <label for="cost">cost</label>
+          <input type="number" name="cost"></input>
+
+          <input type="submit" value="Add It!" class="button"></input>
+        </form>
+      </aside>
+
+      <section class='info'>
+        <p>Summary goes here</p>
+      </section>
+    </section>
+
+    <section class='trips-table columns medium-7 small-12'>
+      <button class='all-trips'>View All Trips</button>
+
+      <table>
+        <thead>
+          <th class="sort name">name</th>
+          <th class="sort id">id</th>
+          <th class="sort continent">continent</th>
+          <th class="sort category">category</th>
+          <th class="sort weeks">weeks</th>
+        </thead>
+        <tbody id="trip-list">
+        </tbody>
+      </table>
+      <!-- <button id='top'>Return to Top</button> -->
+    </section>
+
+
   </main>
+
   <script type="text/template" id="trip-template">
     <tr class="trip" data-id="<%- id %>">
       <td><%- name %></td>
@@ -44,7 +85,7 @@
   </script>
 
   <script type="text/template" id="info-template">
-    <section class="info">
+    <section class="info" name="info">
       <p><%- name %></p>
       <p>
         <%- continent %>
@@ -64,6 +105,25 @@
       <p>
         <%- id %>
       </p>
+    </section>
+    <section id='message'></section>
+      <form action='https://trektravel.herokuapp.com/trips/${id}/reservations' method='post'>
+      <section>
+        <label>Name</label>
+        <input type="text" id="name" name="name"></input>
+      </section>
+      <section>
+        <label>Age</label>
+        <input type="text" id="age" name="age"></input>
+      </section>
+      <section>
+        <label>Email</label>
+        <input type="text" id="email" name="email"></input>
+      </section>
+      <section class='button'>
+        <button class='reserve' type='submit'>Reserve Now</button>
+      </section>
+      </form>
     </section>
   </script>
 
