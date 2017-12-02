@@ -36,9 +36,7 @@ const events = {
   },
   filterTrips(event) {
     // TODO: handle no trip results gracefully
-    console.log($('#trip-query').val());
     const query = $('#trip-query').val().toLowerCase();
-    console.log($('#trip-fields').find(":selected").val());
     const attr = $('#trip-fields').find(":selected").val();
     // name, category, continent needs .includes
     // weeks, cost needs less than
@@ -46,9 +44,13 @@ const events = {
 
     let $tripList = $('#trip-list');
     $tripList.empty();
-    filteredTrips.forEach((trip) => {
-      $tripList.append(allTripsTemplate(trip.attributes));
-    });
+    if (filteredTrips.length > 0) {
+      filteredTrips.forEach((trip) => {
+        $tripList.append(allTripsTemplate(trip.attributes));
+      });
+    } else {
+      $tripList.append('<h1>No Trips Fit Criteria =(</h1>');
+    }
   },
   fetchTrip() {
     const trip = tripList.get($(this).data('id'));
