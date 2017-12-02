@@ -102,6 +102,8 @@ const makeTripReservation = function makeTripReservation(id) {
 
   reservation.on("invalid", function(model, errors) {
     console.log('INSIDE .ONinvalidevent');
+    $('#ReservationStatusModal h2').empty();
+    $('#ReservationStatusModal h2').append('Reservation Status');
     $('#ReservationStatusModal p').empty();
     $('#ReservationStatusModal p').append('Sorry, your request could not be completed. Please resolve the following:');
     $('#ReservationStatusModal ul').empty();
@@ -117,7 +119,7 @@ const makeTripReservation = function makeTripReservation(id) {
   });
 };
 
-// addNewTrip FUNCTION
+//addNewTrip FUNCTION
 const addNewTrip = function addNewTrip(details) {
   console.log('ADD TRIP BUTTON CLICKED')
 
@@ -138,6 +140,8 @@ const addNewTrip = function addNewTrip(details) {
 
   trip.on("invalid", function(model, errors) {
     console.log('INSIDE TRIP VALIDATION');
+    $('#ReservationStatusModal h2').empty();
+    $('#ReservationStatusModal h2').append('New Trip Submission Status');
     $('#ReservationStatusModal p').empty();
     $('#newTripModalStatus p').append('Sorry, your request could not be completed. Please resolve the following:');
     $('#ReservationStatusModal ul').empty();
