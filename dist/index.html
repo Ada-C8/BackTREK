@@ -23,7 +23,6 @@
 
   <main>
     <section id="status-messages">
-      <button id="close" class="button" type="button">&#10006;</button>
       <ul></ul>
     </section>
 
@@ -113,7 +112,12 @@
         </div>
         <div class="input-form">
           <label for="continent"><strong>Continent: </strong></label>
-          <input type="text" name="continent"></input>
+          <!-- <input type="text" name="continent"></input> -->
+          <select name="category">
+            <% for (let continent of continents) { %>
+              <option value=<%- continent %>><%- continent %></option>
+            <% } %>
+          </select>
         </div>
         <div class="input-form">
           <label for="about"><strong>About: </strong></label>

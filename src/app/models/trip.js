@@ -25,16 +25,16 @@ const Trip = Backbone.Model.extend({
     if (!attributes.cost) {
       errors.cost = ['can\'t be blank'];
     }
-    // else if (isNAN(attributes.cost)) {
-    //   errors.cost = ['is not a number'];
-    // }
+    else if (typeof attributes.cost != 'number') {
+      errors.cost = ['is not a number'];
+    }
 
     if (!attributes.weeks) {
       errors.weeks = ['can\'t be blank'];
-    } 
-    // else if (isNAN(attributes.weeks)) {
-    //   errors.weeks = ['is not a number'];
-    // }
+    }
+    else if (typeof attributes.weeks != 'number') {
+      errors.weeks = ['is not a number'];
+    }
 
     if (Object.keys(errors).length < 1) {
       return false;

@@ -13,9 +13,10 @@ import Reservation from 'app/models/reservation';
 
 console.log('it loaded!');
 
-// array of fields
+// variables
 const TRIP_FIELDS = ['name', 'continent', 'about', 'category', 'weeks', 'cost'];
 const RESERVATION_FIELDS = ['name', 'age', 'email'];
+const CONTINENTS = ['Africa', 'Antartica', 'Asia', 'Australasia', 'Europe', 'North America', 'South America'];
 // create variable for using in document.ready
 const tripList = new TripList();
 
@@ -209,7 +210,7 @@ $(document).ready( () => {
 
   // add new trip
   $('nav').on('click', '#new-trip', function() {
-    $('#add-trip').append(addTripTemplate);
+    $('#add-trip').append(addTripTemplate({continents: CONTINENTS}));
     $('.wrapper').show();
     $('#add-trip-form').on('submit', addTrip);
   })
