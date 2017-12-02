@@ -45,7 +45,7 @@ const updateStatusMessageFrom = (messageHash) => {
 
 const updateStatusMessageWith = (message) => {
   $('#status-messages ul').empty();
-  $('#status-messages ul').append(`${message}</li>`);
+  $('#status-messages ul').append(`<li>${message}</li>`);
   $('#status-messages').show();
 };
 
@@ -103,6 +103,13 @@ const renderSingleTrip = function renderSingleTrip(trip) {
     console.log("checking this");
 }
 
+let successfullSave = function(model, response) {
+  updateStatusMessageWith(`${model.get('name')} added!`)
+};
+let failedSave = function(model, response) {
+  updateStatusMessageFrom(response.responseJSON.errors);
+  model.destroy();
+};
 
 //ADDING A TRIP
 const addTripHandler = function(event) {
@@ -123,13 +130,13 @@ const addTripHandler = function(event) {
 
   const trip = new Trip(tripData);
 
-  let successfullSave = function(trip, response) {
-    updateStatusMessageWith(`${trip.get('name')} added!`)
-  };
-  let failedSave = function(trip, response) {
-    updateStatusMessageFrom(response.responseJSON.errors);
-    trip.destroy();
-  };
+  // let successfullSave = function(trip, response) {
+  //   updateStatusMessageWith(`${trip.get('name')} added!`)
+  // };
+  // let failedSave = function(trip, response) {
+  //   updateStatusMessageFrom(response.responseJSON.errors);
+  //   trip.destroy();
+  // };
 
   if (trip.isValid()) {
       tripList.add(trip);
@@ -137,14 +144,12 @@ const addTripHandler = function(event) {
         success: successfullSave,
         error: failedSave,
       });
-    } else {
+  } else {
       // getting here means there were client-side validation errors reported
-      // console.log("What's on book in an invalid book?");
-      // console.log(book);
       updateStatusMessageFrom(trip.validationError);
-    }
+  }
 
-
+  setTimeout(function(){ $('#status-messages').hide(); }, 10000);
 
 
 
@@ -187,19 +192,30 @@ const addReservationHandler = function(event) {
 
   console.log(reservation.url);
 
-  reservation.save({}, {
-    success: (model, response) => {
-      console.log('Successfully saved reservation!');
-      $('#alert-messages').html('Successfully saved reservation!');
-    },
-    error: (model, response) => {
-      console.log('Failed to save reservation! Server response:');
-      console.log(response);
-      $('#alert-messages').html('Failed to save reservation!');
+  // reservation.save({}, {
+  if (reservation.save) {
+    $('#status-messages ul').empty();
+    $('#status-messages ul').append($(`<li>${reservation.get('name')} successfully reserved for this trip!</li>`)).html();
+  } else {
+    $('#status-messages ul').empty();
+    $('#status-messages ul').append($(`<li>Unable to complete reservation for ${reservation.get('name')}. Please try again.</li>`)).html();
+  }
+
+    // success: (model, response) => {
+    //   console.log('Successfully saved reservation!');
+    //   // $('#status-messages').html('Successfully saved reservation!');
+    //   // updateStatusMessageWith(`${model.get('name')} has been reserved for this trip.`);
+    //   successfullSave;
+    // },
+    // error: (model, response) => {
+    //   console.log('Failed to save reservation! Server response:');
+    //   console.log(response);
+    //   // $('#status-messages').html('Failed to save reservation!');
+    //   failedSave;
       // FIGURE OUT HOW TO ADD EACH ERROR
       //SET TIMEOUT ON THIS ONE AND THE SUCCESS - check TREK Project
-    },
-  });
+
+
 };
 
 
