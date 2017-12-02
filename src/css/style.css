@@ -47,14 +47,16 @@ h1 {
   table-layout: fixed;
 }
 
-#trip-form-button {
+#trip-table-button {
   display: none;
+  float: right;
+  margin-bottom: 3%;
+  width: 2rem;
 }
 
 #trip-table tr {
   word-wrap: break-word;
 }
-
 
 /*Styling for add trip form*/
 
@@ -65,15 +67,10 @@ h1 {
 }
 
 #trip-form-button {
+  display: none;
   float: right;
   margin-bottom: 3%;
   width: 2rem;
-}
-
-#add-trip-form {
-  /*display: none;*/
-  max-width: 500px;
-  margin: auto;
 }
 
 label {

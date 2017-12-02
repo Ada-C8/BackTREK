@@ -22,6 +22,7 @@ const TRIP_FIELDS = ['name', 'about', 'continent', 'category', 'weeks', 'cost'];
 
 const RESERVATION_FIELDS = ['name', 'email', 'tripId'];
 
+//////////////////////reading forms/////////////////////////
 const readReservationFormData = function readReservationFormData() {
   const reservationData = {};
   RESERVATION_FIELDS.forEach((field) => {
@@ -54,6 +55,7 @@ const readFormData = function readFormData() {
   return tripData;
 };
 
+//////////////////////status messages///////////////////////
 const handleStatusMessages = (messages) => {
   console.log('In handleStatusMessages()');
   console.log(messages);
@@ -68,17 +70,21 @@ const handleStatusMessages = (messages) => {
   $('#status-messages').show();
 };
 
-//clearStatus messages
 const clearStatus = function clearStatus() {
-  $('#status-messages ul').html('');
+  $('#status-messages p').html('');
   $('#status-messages').hide();
 };
 
-//clearAddTripForm
 const clearAddTripForm = function clearAddTripForm() {
   $('#trip-form-message').hide();
+  $('#trip-form-button').hide();
 }
 
+const clearAllTripsTable = function clearAllTripsTable() {
+  $('#trip-table').hide();
+  $('#trip-table-button').hide();
+  $('#filter-triplist').hide();
+}
 ////////////////eventHandlers////////////////////
 
 const showIndividualTripHandler = function showIndividualTripHandler(event) {
@@ -181,6 +187,7 @@ const render = function render(tripList) {
   })
 
   $('#trip-table').show();
+  $('#trip-table-button').show();
   $('#filter-triplist').show();
   // $('#trip-form-button').show();
 
@@ -219,14 +226,20 @@ $(document).ready( () => {
   $('#add-trip').on('click', function() {
     console.log('#add-trip clicked');
     $('#trip-form-message').show();
+    $('#trip-form-button').show();
   });
 
   // Listen for when user submits trip form
   $('#add-trip-form').on('submit', addTripHandler);
 
+  // Listen for clearing status messages
   $('#status-messages button.clear').on('click', clearStatus);
 
+  // Listen for clearing add trip form
   $('#trip-form-button').on('click', clearAddTripForm);
+
+  // Listen for clearing all trips table
+  $('#trip-table-button').on('click', clearAllTripsTable);
 
   // Build event handlers for each of the table headers
   CONDENSED_TRIP_FIELDS.forEach((field) => {
