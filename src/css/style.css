@@ -17,9 +17,6 @@ h1 {
 table, th, td {
     border: 1px solid black;
 }
-/*#tripTable {
-  border: 1px;
-}*/
 
 #status-messages ul {
   color: red;
@@ -35,13 +32,13 @@ table, th, td {
   color: white;
 }
 
+#tripTable {
+  overflow: auto;
+}
+
 #searchBar {
 }
 
 #filterSelector {
   background-position: right -0.5rem center;
-}
-
-#filterForm {
-
 }

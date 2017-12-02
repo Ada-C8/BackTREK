@@ -33,7 +33,6 @@ const render = function render(tripList) {
 };
 
 const renderFiltered = function(filteredList) {
-  console.log('INSIDE renderFiltered');
   const $tripList = $('#trip-list');
   $tripList.empty();
 
@@ -46,6 +45,7 @@ const updateStatusMessageFrom = (messageHash) => {
   $('#status-messages ul').empty();
   for(let messageType in messageHash) {
     messageHash[messageType].forEach((message) => {
+      console.log(message);
       $('#status-messages ul').append($(`<li>${messageType}:  ${message}</li>`));
     })
   }
@@ -75,14 +75,14 @@ const events = {
     $showTrip.show();
     const trip = new Trip({id: id});
     const resForm = `<h2>Reserve Your Spot</h2>
-    <form id="reserve-trip-form" action="https://trektravel.herokuapp.com/trips/${id}/reservations" method="post">
-    <label for="name" required="required">Name</label>
+    <form id="reserve-trip-form" " action="https://trektravel.herokuapp.com/trips/${id}/reservations" method="post">
+    <label for="name">Name</label>
     <input type="text" name="name"></input>
 
     <label for="age">Age</label>
     <input type="number" name="age"></input>
 
-    <label for="email" required="required">Email</label>
+    <label for="email">Email</label>
     <input type="text" name="email"></input>
 
     <input id="submitResButton" type="submit" value="Reserve it!" class="button"></input>
@@ -152,7 +152,6 @@ const events = {
           tripList.trigger('sort', tripList);
         } else {
           tripList.comparator = className;
-          console.log(tripList.comparator);
           tripList.sort();
         }
       }
@@ -161,10 +160,8 @@ const events = {
     $(this).addClass('current-sort-field');
   },
   filterTrips(event) {
-    console.log("IN FILTER TRIP FUNCTION")
     const e = document.getElementById('filterSelector');
     const searchCategory = e.options[e.selectedIndex].text;
-    console.log(searchCategory);
     const searchTerm = document.getElementById('searchBar').value;
     let filteredTrips = tripList;
     const wordSearches = ['name', 'category', 'continent'];
@@ -172,15 +169,10 @@ const events = {
     if (wordSearches.includes(searchCategory.toLowerCase())) {
       filteredTrips = tripList.filter(trip => trip.get(searchCategory.toLowerCase()).includes(searchTerm)
     )
-    console.log(filteredTrips);
-    // return const filteredList = new TripList(filteredTrips);
   } else if (numericSearches.includes(searchCategory.toLowerCase())) {
     filteredTrips = tripList.filter(trip => trip.get(searchCategory.toLowerCase()) <= (searchTerm));
-    console.log(filteredTrips);
   }
-  // console.log(filteredTrips);
   const filteredList = new TripList(filteredTrips);
-
   renderFiltered(filteredList);
 },
 };
