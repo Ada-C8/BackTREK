@@ -19,7 +19,7 @@ let reserveTemplate;
 let modal;
 
 //////////////////////////
-// Status reporting
+// Status reporting /////
 //////////////////////////
 const clearStatus = function clearStatus() {
   $('#status-messages ul').html();
@@ -31,14 +31,25 @@ const reportStatus = function reportStatus(status, message) {
   $('#status-messages ul').append(statusHTML);
   $('#status-messages').show();
 };
+//////////////////////////
+// Trip Details /////////
+//////////////////////////
+const showTripDetails = function showTripDetails(trip){
+  const individualTripListElement = $('#individual-trip-detail');
+  individualTripListElement.html('');
+
+  const generatedHTMLTripDetails = individualTripTemplate(trip.attributes);
+
+  individualTripListElement.append(generatedHTMLTripDetails);
+  $('#individual-trip-detail').show();
 
 //////////////////////////
 // Reservation Details ///
 //////////////////////////
 const reserveTrip = (event) => {
   event.preventDefault();
-  // console.log('in reserveTrip');
-  const RES_FIELDS = ['name', 'age', 'email', 'trip_id'];
+  console.log('in reserveTrip');
+  const RES_FIELDS = ['trip_id', 'name', 'age', 'email'];
   let reservationData = {}
   RES_FIELDS.forEach((field) => {
     const input = $(`#add-reservation input[name="${ field }"]`);
@@ -67,41 +78,30 @@ const reserveTrip = (event) => {
     },
   });
 };
-
-//////////////////////////
-// Trip Details
-//////////////////////////
-const showTripDetails = function showTripDetails(trip){
-  const individualTripListElement = $('#individual-trip-detail');
-  individualTripListElement.html('');
-
-  const generatedHTMLTripDetails = individualTripTemplate(trip.attributes);
-
-  individualTripListElement.append(generatedHTMLTripDetails);
-  $('#individual-trip-detail').show();
-
   //////////////////////////
-  // reservation handler
+  // reservation handler ///
   //////////////////////////
-  const reserveTemplateShow = function reserveTemplateShow(reservation){ // not able to pass data in
-    // clearStatus();
+  const reserveTemplateShow = function reserveTemplateShow(trip){ // not able to pass data in
+    // clearStatus(); ?
     const reservationElement = $('#reservation-form');
     reservationElement.html('');
-    const generatedHTMLreserve = reserveTemplate(reservation.attributes);
+    const generatedHTMLreserve = reserveTemplate(trip.attributes);
+    console.log(trip.attributes);
     reservationElement.append(generatedHTMLreserve);
     $('#reservation-form').show();
   };
 
   $('#reserve').show();
   $('#reserve').on('click', function(event) {
-    console.log('in reserve event');
-    reserveTemplateShow();
+    event.preventDefault();
+    reserveTemplateShow(trip);
     // $('#add-reservation').show();
     // clearStatus();
-    // $('#reserve').hide();
+    $('#reserve').hide();
   });
-
+// trying to submit the data When submit is pressed, it reloads the page! and no data is saved...
   $('#add-reservation').on('submit', (event) => {
+    console.log('on submit');
     event.preventDefault();
     reserveTrip(event);
   });
@@ -119,7 +119,9 @@ const fetchTripDetails = function fetchTripDetails(event) {
   });
 };
 
-
+//////////////////////////
+// sorting ///////////////
+//////////////////////////
 const render = function render(tripList) {
   const tripListElement = $('#trip-list');
   tripListElement.empty();
@@ -134,6 +136,10 @@ const render = function render(tripList) {
 
   $('.trip').on('click', fetchTripDetails);
 };
+
+//////////////////////////
+// Add a Trip  ///////////
+//////////////////////////
 
 const readFormData = function readFormData() {
   const tripData = { id: null };
@@ -180,7 +186,9 @@ const addTripHandler = function(event) {
     },
   });
 };
-
+//////////////////////////
+// DOC.READY /////////////
+//////////////////////////
 
 $(document).ready( () => {
   modal = $('#myModal')
@@ -188,7 +196,6 @@ $(document).ready( () => {
   individualTripTemplate = _.template($('#individual-trip-template').html());
   tripTemplate = _.template($('#trip-template').html());
   reserveTemplate = _.template($('#reserve-trip-template').html());
-  // 11/30/17 not using this template
 
   tripList.on('update', render);
   tripList.on('sort', render);
@@ -208,25 +215,20 @@ $(document).ready( () => {
   $('#reserve').hide();
   $('#add-reservation').hide();
 
-  // ///////// MODAL ///////// in doc ready? ///////
+  //////////////////////////
+  // MODAL! ///////////////
+  //////////////////////////
   const showAddForm = function showAddForm() {
     modal.css("display", "block")
     $('#close').on('click', function(){
       modal.hide();
     });
 
-    // When the user clicks anywhere outside of the modal, close it
     $('body').on('click', '.modal-close', function(event){
       if($(event.target).hasClass('modal-close')) {
         modal.hide();
-        // clearFormMessages();
       }
     });
-    // window.onclick = function(event) {
-    //   if (event.target == modal) {
-    //     modal.style.display = "none";
-    //   }
-    // };
   };
   $('#add-trip-button').on('click', showAddForm);
 
