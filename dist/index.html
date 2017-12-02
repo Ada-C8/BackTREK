@@ -16,7 +16,9 @@
     <button id="newTripBtn" class="button">Add a new trip!</button>
   </header>
   <main class="row">
-    <section>
+
+
+    <section id="new-trip-modal">
       <form id="add-trip-form">
         <h2>Add a New Trip</h2>
         <label for="title">Name</label>
@@ -40,6 +42,8 @@
         <input type="submit" value="Submit Trip!" class="button">Click Me!</input>
       </form>
     </section>
+
+
     <section class="column small-12 large-6">
       <form id="filter-form">
         <select id="trip-query" name="field">
@@ -64,9 +68,14 @@
         </tbody>
       </table>
     </section>
+
+
     <section class="column small-10 large-5">
       <article id="trip-description">
       </article>
+    </section>
+
+    <section id="res-modal">
       <form class="form" id="reservation-form">
         <label>Name</label>
         <input type="text" name="res-name" id="res-name" />
@@ -80,10 +89,14 @@
         <input id="submit-res" type="submit" value="Make Reservation!" class="button" />
       </form>
     </section>
+
+
+
   </main>
   <footer>
 
   </footer>
+
   <script type = "text/template" id="trip-template">
     <tr class="trip" data-id="<%- id %>">
       <td><%- name %></td>
@@ -93,6 +106,7 @@
       <td><%- cost %></td>
     </tr>
   </script>
+
   <script type = "text/template" id="trip-details-template">
     <h3><%- name %></h3>
     <p><%- category %></p>
@@ -102,6 +116,8 @@
     <p><%- about %></p>
     <button id="res-form-btn" data-id="<%- id %>">Reserve a spot on this trip!</button>
   </script>
+
+
   <script src="app.bundle.js" type="text/javascript"></script>
 </body>
 </html>

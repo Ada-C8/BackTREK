@@ -10,13 +10,9 @@ const Trip = Backbone.Model.extend({
     // console.log(attributes);
   },
   validate: function(attributes) {
-    console.log(attributes);
     const errors = {};
-
     const continents = ['Africa', 'Antartica', 'Asia', 'Australasia', 'Europe', 'North America', 'South America']
 
-
-    //TODO: should add to keys array, not replace?
     if (!attributes.name) {
       errors['name'] = 'Name cannot be blank';
     }
@@ -43,8 +39,6 @@ const Trip = Backbone.Model.extend({
       errors['cost'] = 'cost must be a number'
     }
 
-    console.log('errors!');
-    console.log(errors);
     if (Object.keys(errors).length > 0) {
       return errors;
     } else {
