@@ -113,6 +113,28 @@ const events = {
     };
     $('#status-messages').show();
   },
+  sortBooks(event) {
+    // remove current-sort-field from the class
+    // list of any element that has it.
+    $('.current-sort-field').removeClass('current-sort-field');
+    // Add the class to the current selected element
+    $(this).addClass('current-sort-field');
+    // Get the class list of the selected element
+    const classes = $(this).attr('class').split(/\s+/);
+
+    classes.forEach((className) => {
+      if (tripFields.includes(className)) {
+        if (className === tripList.comparator) {
+          tripList.models.reverse();
+          tripList.trigger('sort', tripList);
+        }
+        else {
+          tripList.comparator = className;
+          tripList.sort();
+        }
+      }
+    });
+  },
   addReservation(event) {
     event.preventDefault();
     console.log('in addReservation method! Reservation Data:');
@@ -138,7 +160,7 @@ const events = {
         error: events.failedReservationSave,
       });
     } else {
-      console.log('NOT VALID RESERVATION DATA')
+      console.log('NOT VALID RESERVATION DATA');
       events.failedReservationSave(reservation, {errors: reservation.validate() });
     }
   },
@@ -203,11 +225,14 @@ $(document).ready( () => {
   //submit form to add a reservation:
   $('#reservation-form-container').on('submit','#add-reservation-form', events.addReservation);
 
+  //sort table:
+  $('.sort').click(events.sortBooks);
+  tripList.on('sort',renderTrips,tripList);
+
   //update table
   tripList.on('update', renderTrips, tripList);
 
-  // $('.sort').click(events.sortTrips);
-  // tripList.on('sort',renderTrips,tripList);
+
 
 
 });
