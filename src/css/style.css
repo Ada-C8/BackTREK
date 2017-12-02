@@ -1,4 +1,3 @@
-/* #cdfcfa #434349*/
 
 * {
   box-sizing: border-box;
@@ -49,17 +48,6 @@ h2, h3, h4 {
   /*font-family: 'Walter Turncoat';*/
 }
 
-/*.page-wrap {
-  min-height: 100%;
-  margin-bottom: -50px;
-}
-.page-wrap:after {
-  content: "";
-  display: block;
-}
-.site-footer, .page-wrap:after {
-  height: 50px;
-}*/
 
 .page-wrap .show-trips{
   text-align: center;
@@ -100,10 +88,9 @@ footer p {
 /* Modal Content/Box */
 .modal-content {
   background-color: #fefefe;
-  margin: 5% auto; /* 15% from the top and centered */
+  margin: 5% auto;
   padding: 20px;
-  /*border: 1px solid #888;*/
-  width: 50%; /* Could be more or less, depending on screen size */
+  width: 50%;
   border-radius: 10px;
 }
 
@@ -216,8 +203,6 @@ th.sort {
 }
 
 .current-sort-field {
-  /*background-color: #cdfcfa;
-  color: #434349;*/
   background-color: #3120f6;
   color: white;
 }
