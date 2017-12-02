@@ -65,6 +65,34 @@
     </section>
     <section class= "columns small-12 large-5" id = "trip-details">
     </section>
+    <section id="myModal" class="modal">
+
+  <!-- Modal content -->
+    <section class="modal-content">
+      <span class="close">&times;</span>
+      <h2> Add New Trip </h2>
+      <form id= "new-trip-form" action="https://trektravel.herokuapp.com/trips" method="post">
+      <section>
+        <label>Name:</label>
+        <input type="text" id="name" name="name"></input>
+        <label>Category:</label>
+        <input type="text" id="category" name="category"></input>
+        <label>Continent:</label>
+        <input type="text" id="continent" name="continent"></input>
+        <label>Cost:</label>
+        <input type="integer" id="cost" name="cost"></input>
+        <label>Weeks:</label>
+        <input type="integer" id="weeks" name="weeks"></input>
+        <label>About:</label>
+        <input type="text" id="about" name="about"></input>
+      </section>
+
+      <section class="button">
+        <button type="submit-new-trip">Add New Trip</button>
+      </section>
+      </form>
+    </section>
+  </div>
   </main>
   <footer>
 

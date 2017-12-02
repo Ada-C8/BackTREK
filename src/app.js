@@ -146,7 +146,7 @@ const events = {
     const formData = $(this).serialize();
     const url = $(this).attr('action');
     $.post(url, formData, (response) => {
-      $('#messages').html(`<h3 id= "status-message"> Successfully reserved this trip for ${response.name}</h3>`);
+      $('#messages ul').html(`<li> Successfully reserved this trip for ${response.name}</li>`);
       console.log(`Success! You're on the list.`);
       $('#trip-info').toggle();
       $('#trip-details form:last-child').empty();
@@ -225,7 +225,7 @@ const events = {
     $('#messages ul').empty();
     $('#messages ul').append(`<li>${trip.get('name')} succesfully added!</li>`);
     $('#messages').show();
-    setInterval($('#messages').hide(), 3000);
+    // setTimeout($('#messages').hide(), 2000);
   },
   failedSave(trip, response) {
     console.log('fail :( we are in the failedSave method');
@@ -238,8 +238,8 @@ const events = {
         $('#messages ul').append(`<li>${key}: ${error}</li>`);
       })
     }
-    $('#messages').show();
-    setInterval($('#messages').hide(), 3000);
+    target.show();
+    // setInterval($('#messages').hide(), 3000);
     trip.destroy();
   },
   filtering() {
@@ -301,12 +301,38 @@ $(document).ready( () => {
   $('#all-trips').on('click', '.trip', events.tripInfo);
   $('#trip-details').on('click', '#reserve-btn', events.reservationForm);
   $('#trip-details').on('submit', '#reservation-form', events.finalizeReservation);
-  $('body').on('click', '#add-trip-btn', events.newTripForm);
-  $('#add-trip-btn').on('click',)
-  $('#trip-details').on('submit', '#new-trip-form', events.addTrip);
+  // $('body').on('click', '#add-trip-btn', events.newTripForm);
+  // $('#trip-details').on('submit', '#new-trip-form', events.addTrip);
+  $('#myModal').on('submit', '#new-trip-form', events.addTrip);
   $('#all-trips').on('click', '.sort', events.sortTrips);
   tripList.on('sort', render, tripList);
   // $('#filter-category').on('change', events.filtering);
   $('#filter-query').on('keyup', events.filtering);
   // $('#filter-btn').on('click', $('#filter-form')[0].reset());
+
+  // modal stuff
+    var modal = document.getElementById('myModal');
+
+  // Get the button that opens the modal
+  var btn = document.getElementById("add-trip-btn");
+
+  // Get the <span> element that closes the modal
+  var span = document.getElementsByClassName("close")[0];
+
+  // When the user clicks on the button, open the modal
+  btn.onclick = function() {
+      modal.style.display = "block";
+  }
+
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function() {
+      modal.style.display = "none";
+  }
+
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function(event) {
+      if (event.target == modal) {
+          modal.style.display = "none";
+      }
+  }
 });
