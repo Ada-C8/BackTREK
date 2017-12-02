@@ -17,14 +17,6 @@
 
     </button>
 
-    <!-- <button id="add-trip" class="button">
-      Add Trip
-    </button> -->
-
-    <form id="login-form" class="modal">
-      stuff
-    </form>
-
     <a href="#add-trip-form" rel="modal:open" class="button">Add Trip</a>
 
   </header>
@@ -65,9 +57,12 @@
         <h3>Make Your Reservation</h3>
         <form id="add-res" id="">
           <label for="name"> Name </label>
-          <input type="text" name="name"></input>
+          <input type="text" name="name">
 
-          <input type="submit" value="Reserve Trip" class=""></input>
+          <label for="email">Email</label>
+          <input type="text" name="email" value="">
+
+          <input type="submit" value="Reserve Trip" class="">
         </form>
       </div>
     </section>
@@ -118,7 +113,7 @@
   </footer>
 
   <script type="text/template" id="trip-template">
-    <a ><tr class="trip" >
+    <tr class="trip" >
       <td>
         <%- name %>
       </td>
@@ -138,7 +133,7 @@
       <td>
         <%- cost %>
       </td>
-    </tr></a>
+    </tr>
   </script>
 
   <script type="text/template" id="trip-detail-template">

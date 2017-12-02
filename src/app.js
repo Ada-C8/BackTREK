@@ -15,6 +15,7 @@ const tripList = new TripList()
 const trip = new Trip()
 
 const TRIP_FIELDS = ['name', 'category', 'continent', 'weeks', 'cost', 'about'];
+const RES_FIELDS = ['name', 'email'];
 
 
 let tripsTemplate;
@@ -79,7 +80,7 @@ const loadTrips = function loadTrips() {
   });
 };
 
-const readFormData = function readFormData() {
+const readTripFormData = function readTripFormData() {
   const tripData = {};
   TRIP_FIELDS.forEach((field) => {
     // select the input corresponding to the field we want
@@ -101,6 +102,22 @@ const readFormData = function readFormData() {
   return tripData;
 };
 
+const readResFormData = function readResFormData() {
+  const resData = {};
+  RES_FIELDS.forEach((field) => {
+    const $inputResElement = $(`add-res input[name="${ field }"]`);
+    const value = $inputResElement.val();
+
+    if (value != '') {
+      resData[field] = value;
+    }
+
+    $inputResElement.val('');
+  });
+console.log("Read res data");
+console.log(resData);
+};
+
 const handleValidationFailures = function handleValidationFailures(errors) {
   // Since these errors come from a Rails server, the strucutre of our
   // error handling looks very similar to what we did in Rails.
@@ -116,7 +133,7 @@ const addTripHandler = function(event) {
   event.preventDefault();
   console.log('addTripHandler test click');
 
-  const trip = new Trip(readFormData());
+  const trip = new Trip(readTripFormData());
 
   if (!trip.isValid()) {
     handleValidationFailures(trip.validationError);
