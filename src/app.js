@@ -36,13 +36,19 @@ const reportStatus = function reportStatus(status, message) {
 
 /////////////////RENDER ALL TRIPS //////////////////
 const renderTrips = function renderTrips(list) {
+
+  $('#trips-table').show();
   const tripTableElement = $('#trips-list');
   tripTableElement.html('');
 
   list.forEach((trip) => {
     const generatedHTML = tripsTemplate(trip.attributes);
     tripTableElement.append(generatedHTML);
-  })
+  });
+
+  $('.see-trips-button').hide();
+
+
 };
 
 //////////// RENDER INDIVIDUAL TRIPS /////////////////
@@ -160,6 +166,9 @@ const addReservationHandler = function(event) {
 //// DOCUMENT READY ////////
 
 $(document).ready(() => {
+
+  $('#trips-table').hide();
+  $('#add-trip-form').hide();
   //underscore
   tripsTemplate = _.template($('#trips-list-template').html());
   tripTemplate = _.template($('#trip-template').html());
@@ -188,13 +197,22 @@ $(document).ready(() => {
       headerElement.on('click', (event) => {
         tripsList.comparator = field;
         tripsList.sort();
+        $('th.sort').removeClass('.current-sort-field');
+        $(`th.sort.${tripsList.compator}`).addClass('.current-sort-field');
+
       });
     });
 
   });
 
+
   // add trip
   $('#add-trip-form').on('submit', addTripHandler);
+
+  $('#add-trip-button-show').click(function(){
+    $('#add-trip-form').toggle();
+  })
+
 
   $('#status-messages button.clear').on('click', (event) => {
     $('#status-messages ul').html('');
@@ -208,7 +226,7 @@ $(document).ready(() => {
 // filtering --- the challenging piece of the project
 // 1. figure out the modal situation
 // work on continent error handling issues
-// check to see if when I add a trip, it is sorted 
+// check to see if when I add a trip, it is sorted
 
 
 // done

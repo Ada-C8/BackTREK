@@ -22,6 +22,36 @@
 
 <!-- <button class="button" id="add-trip-button">Add Trip!</button> -->
 
+
+<button class="see-trips-button">See trips</button>
+
+<section class="left table large-6 columns ">
+
+      <section class="columns large-10 small-12" id="trips-table" style="display: none">
+        <h2>Trips!</h2>
+
+        <table>
+          <thead>
+            <th class="sort name">Name</th>
+            <th class="sort continent">Continent</th>
+            <th class="sort weeks">Weeks</th>
+            <th class="sort category">Category</th>
+            <th class="sort cost">Costs</th>
+          </thead>
+          <tbody id="trips-list">
+          </tbody>
+        </table>
+      </section>
+</section>
+
+<section class="large-6 columns" id="trip-detail">
+
+</section>
+
+<section id="add-trip-section">
+
+<button class="button" id="add-trip-button-show"> Add a trip! </button>
+
 <form method="post" id="add-trip-form">
   <div class="large-5 columns">
   <label for="name">Name</label>
@@ -61,30 +91,6 @@
 
   <input type="submit" value="Add Trip!" class="button radius small-6 text-center columns"></input>
 </form>
-
-<button class="see-trips-button">See trips</button>
-
-<section class="left table large-6 columns ">
-
-      <section class="columns large-10 small-12">
-        <h2>Trips!</h2>
-
-        <table>
-          <thead>
-            <th class="sort name">Name</th>
-            <th class="sort continent">Continent</th>
-            <th class="sort weeks">Weeks</th>
-            <th class="sort category">Category</th>
-            <th class="sort cost">Cost</th>
-          </thead>
-          <tbody id="trips-list">
-          </tbody>
-        </table>
-      </section>
-</section>
-
-<section class="large-6 columns" id="trip-detail">
-
 </section>
 
 </main>

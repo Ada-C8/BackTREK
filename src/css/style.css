@@ -4,3 +4,8 @@
 tr:hover {
   color: blue;
 }
+
+.current-sort-field {
+  background-color: darkgrey;
+  color: white;
+}
