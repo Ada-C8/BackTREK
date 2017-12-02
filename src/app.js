@@ -15,24 +15,39 @@ console.log('it loaded!');
 let tripsTemplate;
 let tripDescriptionTemplate;
 let reserveFormTemplate;
+let tripFormTemplate;
 
 const tripList = new TripList();
+
+// function myFunction() {
+//   $(".myDropdown").toggle("show");
+// }
+//
+// // Close the dropdown if the user clicks outside of it
+// const dropDown = function dropDown(){
+//   // let dropdowns = document.getElementsByClassName("dropdown-content");
+//   let dropdowns = $(".dropdown-content");
+//   let i;
+//   for (i = 0; i < dropdowns.length; i++) {
+//     let openDropdown = dropdowns[i];
+//     if (openDropdown.classList.contains('show')) {
+//       openDropdown.classList.remove('show');
+//     }
+//   }
+// }
+//
+//
+//   }
+// }
 
 const saveReservation = function saveReservation(event){
   event.preventDefault();
   let tripNumberID = $('.list-upper-alpha').attr('id');
   let reservationObject = readFormData(reservationForm);
-  // reservationObject['id'] = reservationID
 
-  console.log(reservationObject);
- let newReservation = new Reservation(reservationObject);
-  console.log('bologna');
-  console.log(newReservation);
-  console.log(`this is ${this}`);
-// debugger
+  let newReservation = new Reservation(reservationObject);
   newReservation.save({trip_id: tripNumberID}), {
     success: (model, response) => {
-      // debugger
       console.log('Successfully added reservation!');
       // reportStatus('success', 'Successfully added reservation!');
     },
@@ -44,6 +59,30 @@ const saveReservation = function saveReservation(event){
   };
 }
 
+
+const saveTrip = function saveTrip(event){
+  event.preventDefault();
+
+  let newTripObject = readFormData(addTripForm);
+  // reservationObject['id'] = reservationID
+
+  console.log(newTripObject);
+  let newTrip = new Trip(newTripObject);
+  console.log('bologna');
+  console.log(newTrip);
+  console.log(`this is ${this}`);
+  newTrip.save({}), {
+    success: (model, response) => {
+      console.log('Successfully added Trip!');
+      // reportStatus('success', 'Successfully added reservation!');
+    },
+    error: (model, response) => {
+      console.log('Failed to save trip! Server response:');
+      console.log(response);
+      // handleValidationFailures(response.responseJSON["errors"]);
+    },
+  };
+}
 const reservationForm = {
   fields: ['name', 'age', 'email'],
   formId: 'add-reservation-form',
@@ -51,7 +90,7 @@ const reservationForm = {
 
 // add some more stuff to this form data
 const addTripForm = {
-  fields: ['name', 'continent', 'weeks'],
+  fields: ['name', 'continent', 'weeks', 'category', 'about', 'cost'],
   formId: 'add-trip-form',
 };
 
@@ -63,7 +102,6 @@ const readFormData = function readFormData(formType) {
     const inputElement = $(jQueryString);
     const value = inputElement.val();
     console.log(`value is ${value}`);
-      // debugger
 
 
     // Don't take empty strings, so that Backbone can
@@ -75,29 +113,37 @@ const readFormData = function readFormData(formType) {
     inputElement.val('');
   });
 
-  console.log("Read book data");
   console.log(formData);
 
   return formData;
 };
+const formDivElement = $('#hidden-form');
+
+const renderTripForm = function rendertripForm() {
+
+  formDivElement.html('');
+
+  console.log(' about to fetch form')
 
 
-
+  const tripFormHTML = $(tripFormTemplate());
+  console.log(`this is tripformhtml ${tripFormHTML}`)
+  $("#reserve-button").remove();
+  formDivElement.append(tripFormHTML);
+  $('#add-trip-form').on('submit', saveTrip);
+};
 
 const renderReserveForm = function renderReserveForm() {
 
-  const reserveFormDivElement = $('#hidden-form');
+  formDivElement.html('');
 
-  console.log(reserveFormDivElement);
-  reserveFormDivElement.html('');
-  console.log(this)
-  console.log(' about to fetch')
+  console.log(' about to fetch form')
 
 
   const reserveFormHTML = $(reserveFormTemplate());
   console.log(`this is reserveformhtml ${reserveFormHTML}`)
   $("#reserve-button").remove();
-  reserveFormDivElement.append(reserveFormHTML);
+  formDivElement.append(reserveFormHTML);
   $('#add-reservation-form').on('submit', saveReservation);
 
 };
@@ -124,6 +170,7 @@ const renderTrips = function renderTrips(tripList) {
 const renderTripDetails = function renderTripDetails(trip) {
 
   const tripDivElement = $('#trip-details');
+  formDivElement.html('');
   tripDivElement.html('');
   trip.fetch({
     success: (model) => {
@@ -151,16 +198,31 @@ const singleTrip = function singleTrip(tripId){
   console.log(singleTripVar);
 };
 
-
+// const renderAllTrips = function
 $(document).ready( () => {
   tripsTemplate = _.template($('#trips-template').html());
   tripDescriptionTemplate = _.template($('#trips-description-template').html());
   reserveFormTemplate = _.template($('#reserve-trip-form-template').html());
-  tripList.fetch();
+  tripFormTemplate = _.template($('#add-trip-form-template').html());
 
+  // tripList.fetch();
   $('.sort').on('click', sortTrips);
   console.log(renderReserveForm);
   // $('#reserve-button').on('click', renderReserveForm);
   tripList.on('update', renderTrips);
   tripList.on('sort', renderTrips);
+
+  $('.dropbtn').on('click', function(){
+
+    $( "#myDropdown" ).slideToggle( "slow", function() {
+      // Animation complete.
+    });
+  });// end  function
+
+  $('#add-trip').on('click', renderTripForm);
+  $('#view-all-trips').on('click', function(){
+    tripList.fetch({
+      success: function(collection, response){}
+    });
+  });
 });

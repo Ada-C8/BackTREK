@@ -7,37 +7,35 @@ const Reservation = Backbone.Model.extend({
   url: function() {
     let reservationUrl = this.urlPrefix;
     reservationUrl += '/' + this.attributes.trip_id + this.urlSuffix
-
-    debugger
     return reservationUrl;
   },
   // sync: function(method, model, options) {
   //   let reservationUrl = this.urlPrefix;
   //   reservationUrl += '/' + model.attributes.trip_id + this.urlSuffix
-  //
-  //   debugger
   //   return reservationUrl;
   // },
-  // validate(attributes) {
-  //
-  //   const errors = {};
-  //   if (!attributes.name) {
-  //     errors.title = ['cannot be blank'];
-  //   }
-  //
-  //   if (!attributes.email) {
-  //     errors.author = ['cannot be blank'];
-  //   }
-  //
-  //   if (!attributes.age) {
-  //     errors.publication_year = ['cannot be blank'];
-  //   }
-  //
-  //   if (Object.keys(errors).length < 1) {
-  //     return false;
-  //   }
-  //   return errors;
-  // },
+  // Note to teacher:  What's the difference between the sync function and urlRoot
+
+  validate(attributes) {
+
+    const errors = {};
+    if (!attributes.name) {
+      errors.name = ['cannot be blank'];
+    }
+
+    if (!attributes.email) {
+      errors.email = ['cannot be blank'];
+    }
+
+    if (!attributes.age) {
+      errors.age = ['cannot be blank'];
+    }
+
+    if (Object.keys(errors).length < 1) {
+      return false;
+    }
+    return errors;
+  },
   //
   //
   //
