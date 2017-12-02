@@ -133,6 +133,18 @@ const events = {
 
 $(document).ready( () => {
 
+  $(document).on('click', function() {
+    const modal = document.getElementById('res-modal');
+    const modal2 = document.getElementById('new-trip-modal');
+
+
+    if (event.target == modal || event.target == modal2) {
+      console.log('YESS!!!! Im in!');
+      // event.stopPropatation();
+      (event.target).style.display = 'none';
+    }
+  })
+
   tripTemplate = _.template($('#trip-template').html());
 
 
@@ -150,11 +162,12 @@ $(document).ready( () => {
   $tripDescription.on('click', 'button', function showResForm() {
     const tripID = $(this).attr('data-id');
     $resForm.append(`<input type="hidden" name="res-tripID" value="${tripID}">`);
-    $resForm.show();
+    $('#res-modal').css('display', 'block');
   });
 
   $newTripBtn.on('click', function showNewTripForm() {
-    $addTripForm.toggle();
+    console.log("I've been clicked!")
+    $('#new-trip-modal').css('display', 'block');
   });
 
   $addTripForm.submit(events.addTrip);

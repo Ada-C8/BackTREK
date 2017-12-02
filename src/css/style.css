@@ -6,10 +6,25 @@
   display: none;
 }
 
-#reservation-form {
+#res-modal, #new-trip-modal {
   display: none;
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  background: rgba(0,0,0,0.5);
 }
 
-#add-trip-form {
-  display: none;
+#reservation-form, #add-trip-form {
+  background: white;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 30px;
+  width: 400px;
+  border-radius: 20px;
 }
