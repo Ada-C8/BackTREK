@@ -70,10 +70,9 @@ const reserveTrip = (event) => {
       reportStatus('success', 'Trip reserved!')
     },
     error: (model, response) => {
-      console.log('Failure:');
       console.log(response);
       console.log(response.responseJSON["errors"]);
-      // reportStatus?
+      reportStatus('error', 'Not reserved!')
       handleValidationErrors(response.responseJSON["errors"], 'form');
     },
   });
