@@ -139,19 +139,28 @@ const events = {
 
     const $queryValue = $('#query-value');
     const queryValue = $queryValue.val();
+    let filteredTrips = tripList;
 
-    const filteredTrips = tripList.filter(function(trip) {
-      const attr_value = trip.attributes[query].toLowerCase();
-      const search_term = queryValue.toLowerCase();
+    if (query == 'weeks' || query == 'cost') {
+      filteredTrips = tripList.filter(trip => trip.get(query) <= queryValue);
+    } else {
+      filteredTrips = tripList.filter(function(trip) {
+        const attr_value = trip.attributes[query].toLowerCase();
+        const search_term = queryValue.toLowerCase();
 
-      if (attr_value.includes(search_term)) {
-        console.log('found a match!');
-        return true;
-      }
-    })
+        if (attr_value.includes(search_term)) {
+          console.log('found a match!');
+          return true;
+        }
+      });
+    }
 
     console.log(filteredTrips);
     render(filteredTrips);
+  },
+  placeHolderText(event) {
+    event.preventDefault();
+    
   }
 }
 
@@ -224,6 +233,7 @@ $(document).ready( () => {
 
   // $('#trip-query').on('change', events.filterTrips);
   $('#query-value').on('keyup', events.filterTrips);
+  $('#trip-query').on('change', events.placeHolderText);
 
   // Backbone Events
   tripList.on('update', render, tripList);
