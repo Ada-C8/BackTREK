@@ -15,6 +15,11 @@ h1 {
   font-family: courier;
   color: white;
   text-align: center;
+  margin-top: 5%;
+}
+
+#top-buttons {
+  text-align: center;
 }
 
 /*Styling for filter form*/
@@ -37,22 +42,11 @@ h1 {
 
 /*Styling for all trip*/
 
-#all-trips {
-  margin-left: 4%;
-}
-
 #trip-table {
   display: none;
   max-width: 100%;
   table-layout: fixed;
 }
-
-/*#trip-table-button {
-  display: none;
-  float: right;
-  margin-bottom: 3%;
-  width: 2rem;
-}*/
 
 #trip-table tr {
   word-wrap: break-word;
@@ -62,10 +56,12 @@ h1 {
   position: relative;
   display: inline-block;
 }
+
 #trip-table-close:before {
   content: '✕';
   color: white;
 }
+
 #trip-table-close {
   display: none;
   position: absolute;
@@ -118,6 +114,7 @@ label {
   content: '✕';
   color: white;
 }
+
 #individual-trip-details-close {
   display: none;
   position: absolute;
@@ -125,7 +122,6 @@ label {
   right: 0;
   cursor: pointer;
 }
-
 
 /* Styles for sorting */
 
