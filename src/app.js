@@ -41,8 +41,12 @@ const renderTrip = function renderTrip(trip) {
 };
 
 const cancelSubmit = function cancelSubmit() {
-  $(this).parent().trigger('reset');
-  $(this).parent().find('p').remove();
+  const $form = $(this).parent();
+  $form.trigger('reset');
+  $form.find('p').remove();
+  $form.find('input').removeClass('error');
+  // $(this).parent().trigger('reset');
+  // $(this).parent().find('p').remove();
   // $('.error-messages').empty();
 };
 
@@ -237,10 +241,23 @@ const filterTrips = function filterTrips() {
   renderTripList(filteredTrips);
 };
 
+const init = () => {
+  // $('body').removeClass('init');
+  $('div.init').hide();
+  $('header').addClass('grid-x');
+  $('header').show();
+  $('main').addClass('grid-x grid-margin-x')
+  $('main').show();
+
+  allTrips.fetch();
+};
+
 $(document).ready( () => {
   // load templates
   tripListTemplate = _.template($('#trip-list-template').html());
   tripTemplate = _.template($('#trip-template').html());
+
+  $('.start').on('click', init);
 
   allTrips.on('update', renderTripList, allTrips);
   allTrips.on('sort', renderTripList, allTrips);
@@ -256,5 +273,5 @@ $(document).ready( () => {
   $('#filter').on('change keyup', 'input, select', filterTrips);
   // $('#filter').on('change', 'select', filterTrips);
 
-  allTrips.fetch();
+  // allTrips.fetch();
 });

@@ -1,5 +1,45 @@
 
 /* Your styles go here! */
+
+
+/* ==== HOME PAGE ==== */
+body.init {
+  background: linear-gradient(
+       rgba(0, 0, 0, 0.4),
+       rgba(0, 0, 0, 0.4)
+     ), url('./mts-cow.jpg');
+  /*background-image: url('./mts-cow.jpg');*/
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  height: 100vh;
+}
+
+body > div.init {
+  margin: 0 auto;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+button.start {
+  margin: 0;
+  text-align: center;
+  padding: 1.5rem 3.5rem;
+  font-size: 3rem;
+  font-weight: bold;
+  color: white;
+  background-color: transparent;
+  border: 2px solid white;
+  border-radius: 5px;
+  font-family: "Roboto", sans-serif;
+}
+
+button.start:hover {
+  background-color: rgba(255, 255, 255, .3)
+}
+
+
 .all-trips table {
   /*overflow: auto;*/
 }
