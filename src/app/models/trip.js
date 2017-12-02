@@ -8,7 +8,6 @@ const Trip = Backbone.Model.extend({
   // }
 
   validate(attributes) {
-    // const continents = []
     const errors = {};
     if (!attributes.name) {
       errors.name = ['can\'t be blank'];
@@ -42,11 +41,6 @@ const Trip = Backbone.Model.extend({
     return errors;
   }//end of validations
 });
-
-// continent
-// :
-// ["is not included in the list"]
-
 
 
 export default Trip;

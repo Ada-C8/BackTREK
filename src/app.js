@@ -133,10 +133,26 @@ const makeReservation = function(event) {
   event.preventDefault();
 
   const reservation = new Reservation(readFormData(RESERVATION_FIELDS, '#reservation-form'));
+
+  if (!reservation.isValid()) {
+    clearStatus();
+    handleValidationFailures(reservation.validationError);
+    return;
+  }
+
    reservation.set('tripID', $(this).data('id'));
 
-  reservation.save({});
-  console.log('reservation was made');
+  reservation.save({}, {
+    success: (model, response) => {
+      console.log('reservation was made');
+      clearStatus();
+      reportStatus('success', 'Successfully made new reservation!');
+    },
+    error: (model, response) => {
+      clearStatus();
+      handleValidationFailures(response.responseJSON['errors']);
+    }
+  });
 };//and of make reservation
 
 //add new trip
@@ -158,6 +174,7 @@ const addTrip = function(event) {
   tripList.add(trip);
   trip.save({}, {
     success: (model, response) => {
+      console.log('new trip added');
       clearStatus();
       reportStatus('success', 'Successfully saved new trip!');
     },
@@ -167,7 +184,6 @@ const addTrip = function(event) {
       handleValidationFailures(response.responseJSON['errors']);
     }
   });
-  console.log('new trip added');
 };//end of add trip
 
 $(document).ready( () => {
