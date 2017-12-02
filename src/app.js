@@ -28,6 +28,7 @@ const renderTrips = function renderTrips(tripList) {
     tripListTable.append(tripsTemplate(trip.attributes));
     //console.log(trip);
   });
+  console.log('finished loading trips')
 };
 
 //TRIP DETAILS (ONE TRIP)
@@ -49,47 +50,64 @@ const renderSingleTrip = function renderSingleTrip(tripID) {
 
 //EVENT LISTENER
 //1. Create listener:
-const bogusListener = function bogusListener(event)  {
-  console.log('Event Occurred!');
-  console.log(event);
-  console.log(this);
-};
-// // 2.  Register the Event Handler with the Component
-tripList.on('bogus', bogusListener);
-// // 3.  Trigger the event
-tripList.trigger('bogus', 'Argument!');
+// const bogusListener = function bogusListener(event)  {
+//   console.log('Event Occurred!');
+//   console.log(event);
+//   console.log(this);
+// };
+// // // 2.  Register the Event Handler with the Component
+// tripList.on('bogus', bogusListener);
+// // // 3.  Trigger the event
+// tripList.trigger('bogus', 'Argument!');
 
 const fields = ["name", "category", "continent", "cost", "weeks", "about"];
 
 const events = {
   addTrip(event) {
     event.preventDefault();
+    console.log('in addTrip method! Trip Data:')
     const tripData = {};
     fields.forEach( (field) => {
       tripData[field] = $(`input[name=${field}]`).val();
     });
-    console.log('Trip Added');
     console.log(tripData);
     const trip = new Trip(tripData);
 
-    trip.save({}, {
-      success: events.successfullSave,
-      error: events.failedSave,
-    });
+    if (trip.isValid()) {
+      trip.save({}, {
+        success: events.successfullSave,
+        error: events.failedSave,
+      });
+    } else {
+      console.log('NOT VALID')
+      events.failedSave(trip, {errors: trip.validate() });
+    }
+
+    console.log('finished')
+
   },
   successfullSave(trip, response) {
+    console.log('successfulSave');
     tripList.add(trip);
-    console.log('Success!');
+    console.log('Trip Added');
     console.log(trip);
     console.log(response);
     $('#status-messages ul').empty();
-    $('#status-messages ul').append(`<li>${trip.get('name')} added!</li>`);
+    $('#status-messages ul').append(`<li>${trip.get('name')} added!</li>`)
     $('#status-messages').show();
   },
   failedSave(trip, response) {
-    console.log('ERROR!');
+    console.log('failedSave');
     console.log(trip);
     console.log(response);
+    console.log(response.responseText);
+    console.log(JSON.stringify(response));
+    // tripList.remove(trip);
+    $('#status-messages ul').empty();
+    $('#status-messages ul').append(`<li>${trip.get('name')} WAS NOT added!</li>`)
+    //$('#status-messages ul').append('<li><h1>MESSAGE</h1></li>');
+    $('#status-messages ul').append(`<li>${response.responseText}</li>`);
+    $('#status-messages').show();
   },
 };
 
@@ -100,8 +118,10 @@ $(document).ready( () => {
   $('#add-new-trip').hide();
 
   $('#load-trips').on('click', function(){
+    console.log('clicked load');
     $('#trips-table-container').show();
     tripList.fetch();
+    // tripList.trigger();
     // createFilters();
   });
 
@@ -119,7 +139,11 @@ $(document).ready( () => {
   //submit form to Add a Trip
   //creates a new instance of the Trip model
   //tripsTemplate = _.template($('#trips-template').html());
-  $('#add-trip-form').submit(events.addTrip);
+    // $('#add-trip-form').on('click', function () {
+    //   $('#add-trip-form').submit(events.addTrip);
+    // });
+    $('#add-a-trip-form-container').on('submit','#add-trip-form', events.addTrip);
+
 
   //update table
   tripList.on('update', renderTrips, tripList);

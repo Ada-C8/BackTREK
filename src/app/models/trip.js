@@ -5,9 +5,9 @@ const Trip = Backbone.Model.extend({
   parse: function(response) {
     return response;
   },
-  defaults: {
-    cost: "TBD",
-  },
+  // defaults: {
+  //   cost: 5000,
+  // },
   initialize: function(attributes) {
     console.log(`In initialize for the trip ${this.get('name')}`);
   },
@@ -37,7 +37,7 @@ const Trip = Backbone.Model.extend({
     if (CONTINENTS.includes(attributes.continent)) {
       console.log('valid continent');
     } else {
-      errors['continent'] = ["Continent must be: Africa, Antartica, Asia, Australasia, Europe, North America or South America"];
+      // errors['continent'] = ["Continent must be: Africa, Antartica, Asia, Australasia, Europe, North America or South America"];
     }
 
     console.log(errors);
