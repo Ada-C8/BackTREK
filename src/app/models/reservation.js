@@ -2,7 +2,11 @@ import Backbone from 'backbone';
 import Trip from '../models/trip';
 import TripList from '../models/reservation';
 
-const Reservation = Backbone.Collection.extend({
+const Reservation = Backbone.Model.extend({
+  urlRoot: function() {
+    const tripId = this.get('trip_id');
+    return `https://ada-backtrek-api.herokuapp.com/trips/${ tripId }/reservations`;
+  },
   validate(attributes) {
     const resErrors = {};
 
@@ -22,9 +26,7 @@ const Reservation = Backbone.Collection.extend({
       return false;
     }
     return resErrors;
-  },
-  urlRoot: function() {
-    return `http://localhost:3000/trips/ ${this.get('tripId')}/reservations`;
   }
+
 });
 export default Reservation;

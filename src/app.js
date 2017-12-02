@@ -59,25 +59,26 @@ const showTripDetails = function showTripDetails(trip){
       }
       input.val('');
     })
-
+    // HERE IS THERE ERROR
+    
     const reservation = new Reservation(reservationData);
-      // HERE IS THERE ERROR
+    console.log(reservationData);
+    console.log(reservation);
     if (!reservation.isValid()) {
-
-      handleValidationErrors(reservation.validationError);
-      // , 'form'
+      handleValidationFailures(reservation.validationError);
       return;
     }
     reservation.save({}, {
       success: (model, response) => {
         console.log('success');
-        reportStatus('success', 'Trip reserved!')
+        reportStatus('success', 'Trip reserved!');
+        $('#add-reservation').hide();
       },
       error: (model, response) => {
         console.log(response);
         console.log(response.responseJSON["errors"]);
         reportStatus('error', 'Not reserved!')
-        handleValidationErrors(response.responseJSON["errors"], 'form');
+        handleValidationFailures(response.responseJSON["errors"]);
       },
     });
   };
@@ -174,6 +175,7 @@ const handleValidationFailures = function handleValidationFailures(errors) {
 const addTripHandler = function(event) {
   event.preventDefault();
   const trip = new Trip(readFormData());
+  // debugger
   clearStatus();
   if (!trip.isValid()) {
     handleValidationFailures(trip.validationError);
