@@ -4,12 +4,14 @@
   <meta charset="utf-8">
   <title>BackTrek</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css?family=Julius+Sans+One" rel="stylesheet">
 </head>
 <body>
   <header>
     <!-- Trigger/Open The Modal -->
-    <h1>BackTREK</h1>
+    <h1>Want to take a trip?</h1>
     <section id="messages"></section>
+      <button id="add-trip-button" class="button float-right">Add a trip</button>
   </header>
 
   <main class="clearfix">
@@ -20,7 +22,7 @@
       <ul>
       </ul>
     </section>
-    <button id="add-trip-button" class="button float-right">Add a trip</button>
+
     <div id="myModal" class="modal">
       <!-- Modal content -->
       <div class="modal-content">
@@ -51,13 +53,11 @@
           <input type="submit" value="Add this trip!" class="button"></input>
         </form>
       </aside>
-
-      <!-- <p>Some text in the Modal..</p> -->
     </div>
   </div>
   <!--  end of modal -->
 
-  <section class="columns large-5 small-12">
+  <section class="columns large-4 small-12">
     <h2>Trips</h2>
     <table>
       <thead>
@@ -73,7 +73,7 @@
   </section>
 
   <!-- individual trip display -->
-  <section class="columns large-4 small-12">
+  <section class="columns large-3 small-12">
     <ul id="individual-trip-detail"></ul>
 
     <h2 id="reserve" class="button" >Reserve</h2>

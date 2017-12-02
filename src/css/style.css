@@ -1,12 +1,43 @@
 body {
     background-image: url("https://images.unsplash.com/photo-1509744767855-688cc64f3f18?auto=format&fit=crop&w=2689&q=80&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D");
 }
+h1 {
+  text-align: center;
+  font-family: 'Julius Sans One', sans-serif;
+}
+h2, button, h3 {
+  font-family: 'Julius Sans One', sans-serif;
+}
+#add-trip-button {
+  margin-right: 20px;
+}
 #individual-trip-detail {
-  margin-top: 16%;
+  margin-top: 28%;
   background-color: white;
+  width: 300px;
+  padding-right: 40px;
+  margin-right: 40px;
+  /*display: inline-block;*/
+  /*margin-right: 20px;*/
+  /*margin-left: 100%;*/
 }
 #reserve {
-  margin-left: 43%;
+  margin-left: 50%;
+  /*float: right;*/
+}
+#add-reservation {
+  padding-right: 20px;
+  padding-left: 20px;
+  margin-left: 10%;
+  background-color: white;
+  width: 300px;
+  height: 300px;
+}
+#add-reservation label {
+  text-align: center;
+}
+#reservationSubmit {
+  margin-left: 20%;
 }
 #trip-list {
   list-style: none;

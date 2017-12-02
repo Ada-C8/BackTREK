@@ -76,6 +76,7 @@ const showTripDetails = function showTripDetails(trip){
   $('#reserve').on('click', function(event) {
     $('#add-reservation').show();
     clearStatus();
+    $('#reserve').hide();
   });
   $('#add-reservation').on('submit', function(event) {
     event.preventDefault();
