@@ -131,6 +131,7 @@ const events = {
     });
   },
   filterTrips(event) {
+    console.log('entering!');
     event.preventDefault();
 
     const $tripQuery = $('#trip-query option:selected');
@@ -142,7 +143,9 @@ const events = {
 
     console.log(tripList);
 
-    const filteredTrips = tripList.filter(trip => trip.get(query) === queryValue);
+    // const filteredTrips = tripList.filter(trip => trip.get(query) === queryValue);
+
+    const filteredTrips = tripList.filter(trip => trip.get(query).includes(queryValue));
 
     console.log(filteredTrips);
     render(filteredTrips);
@@ -150,21 +153,17 @@ const events = {
 }
 
 $(document).ready( () => {
+  tripTemplate = _.template($('#trip-template').html());
 
+  // Clears modal(s) when user clicks outside the box
   $(document).on('click', function() {
     const modal = document.getElementById('res-modal');
     const modal2 = document.getElementById('new-trip-modal');
 
-
     if (event.target == modal || event.target == modal2) {
-      console.log('YESS!!!! Im in!');
-      // event.stopPropatation();
       (event.target).style.display = 'none';
     }
-  })
-
-  tripTemplate = _.template($('#trip-template').html());
-
+  });
 
   // User Events
   $('.sort').click(events.sortTrips);
@@ -220,11 +219,13 @@ $(document).ready( () => {
     }
   });
 
-  $('#trip-query').on('change', events.filterTrips);
+  // $('#trip-query').on('change', events.filterTrips);
+  $('#query-value').on('keyup', events.filterTrips);
 
   // Backbone Events
   tripList.on('update', render, tripList);
   tripList.on('sort', render, tripList);
+
 
   // Implement when page loads
   tripList.fetch()
