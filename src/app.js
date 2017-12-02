@@ -50,7 +50,7 @@ const events = {
     event.preventDefault();
     const tripData = {};
     fields.forEach((field) => {
-      tripData[field.toLowerCase()] = $(`input[name=${field}]`).val();
+      tripData[field.toLowerCase()] = $(`.add-trip-form input[name=${field}]`).val();
       console.log(field);
       console.log(tripData[field]);
     });
@@ -121,6 +121,7 @@ $(document).ready( () => {
 
     $(`#${id}`).css('background','pink');
 
+    // ----------- Trip Details -------------
     $.get(url, function(response) {
       $(`#trip-details`).html(tripDetails(response));
     });
