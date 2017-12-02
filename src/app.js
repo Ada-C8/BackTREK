@@ -11,50 +11,17 @@ import TripList from './app/collections/trip_list';
 
 const tripList = new TripList();
 let filteredMatches;
-// let tripTemplate;
 
-// const allTrips= () => {
-//   const tripsTable = `<h2>All Trips</h2>
-//     <table>
-//       <thead>
-//         <th class="sort id">ID</th>
-//         <th class="sort name">name</th>
-//         <th class="sort continent">Continent</th>
-//         <th class="sort category">Category</th>
-//         <th class="sort weeks">Weeks</th>
-//         <th class="sort cost">Cost</th>
-//       </thead>
-//       <tbody id="trip-list">
-//       </tbody>
-//     </table>`;
-//   $('#all-trips').append(tripsTable);
-//   render(tripList);
-// };
+// modal stuff
+const modal = $('#myModal');
 
-// const tripInfo= () => {
-//   console.log('called TripInfo');
-//   console.log(this);
-// };
+// Get the <span> element that closes the modal
+const closeBtn = $('.close')[0];
+
 const formFields = ['name', 'continent', 'category', 'cost', 'about', 'weeks', 'id'];
 
 const events = {
   allTrips(event) {
-    // $('#all-trips').empty();
-    // const tripsTable = `<h2>All Trips</h2>
-    //   <table>
-    //     <thead>
-    //       <th class="sort id">ID</th>
-    //       <th class="sort name">name</th>
-    //       <th class="sort continent">Continent</th>
-    //       <th class="sort category">Category</th>
-    //       <th class="sort weeks">Weeks</th>
-    //       <th class="sort cost">Cost</th>
-    //     </thead>
-    //     <tbody id="trip-list">
-    //     </tbody>
-    //   </table>`;
-    // $('#all-trips').append(tripsTable);
-    // console.log($('#filter-form'));
     $('#trip-details').empty();
     $('#filter-form')[0].reset();
     render(tripList);
@@ -319,22 +286,20 @@ $(document).ready( () => {
   // $('#filter-btn').on('click', $('#filter-form')[0].reset());
 
   // modal stuff
-  const modal = document.getElementById('myModal');
-
-  // Get the button that opens the modal
-  const btn = document.getElementById("add-trip-btn");
-
-  // Get the <span> element that closes the modal
-  const span = document.getElementsByClassName("close")[0];
 
   // When the user clicks on the button, open the modal
-  btn.onclick = function() {
-      modal.style.display = "block";
-  }
+
+  $('#add-trip-btn').on('click', function() {
+    modal.css({'display': 'block'});
+    // modal.style.display = "block";
+  })
+  // btn.onclick = function() {
+  //     modal.style.display = "block";
+  // }
 
   // When the user clicks on <span> (x), close the modal
-  span.onclick = function() {
-      modal.style.display = "none";
+  closeBtn.onclick = function() {
+    modal.css({'display': 'none'});
       $('#new-trip-form')[0].reset();
       clearErrorMessages();
   }
@@ -342,9 +307,9 @@ $(document).ready( () => {
   // When the user clicks anywhere outside of the modal, close it
   window.onclick = function(event) {
       if (event.target == modal) {
-          modal.style.display = "none";
-          $('#new-trip-form')[0].reset();
-          clearErrorMessages();
+        modal.css({'display': 'none'});
+        $('#new-trip-form')[0].reset();
+        clearErrorMessages();
       }
   }
 });

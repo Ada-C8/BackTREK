@@ -65,3 +65,14 @@ header h2, #main-btns {
 .highlight {
   background-color: yellow;
 }
+
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: white;
+}
+
+main {
+  padding-top: 50px;
+}
