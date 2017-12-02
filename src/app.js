@@ -6,6 +6,7 @@ import _ from 'underscore';
 import './css/foundation.css';
 import './css/style.css';
 
+//MODELS & COLLECTIONS IMPORT
 import TripsList from './app/collections/trips_list.js';
 import Trip from './app/models/trip.js';
 import Reservation from './app/models/reservation.js';
@@ -57,7 +58,6 @@ const renderTrip = function renderTrip(trip) {
 const addTripHandler = function(event) {
   event.preventDefault();
 
-  // console.log('in the add trip handler');
   const tripData = {};
   TRIP_FIELDS.forEach((field) => {
     // select the input corresponding to the field we want
@@ -94,13 +94,9 @@ const addTripHandler = function(event) {
   trip.save({}, {
     success: (model, response) => {
       tripsList.add(model);
-      // console.log("Success!")
       reportStatus('success', 'Successfully add a trip!');
     },
     error: (model, response) => {
-      // console.log('Failed to save a trip! Server response:');
-      // console.log(response);
-
       const errors = response.responseJSON["errors"];
       for (let field in errors) {
         for (let problem of errors[field]) {
@@ -148,13 +144,9 @@ const addReservationHandler = function(event) {
 
   reservation.save({}, {
     success: (model, response) => {
-      // console.log('Successfully added a reservation')
       reportStatus('success', 'Successfully made a reservation!');
     },
     error: (model, response) => {
-      // console.log('Failed to save a trip! Server response:');
-      // console.log(response);
-
       const errors = response.responseJSON["errors"];
       for (let field in errors) {
         for (let problem of errors[field]) {
@@ -164,6 +156,8 @@ const addReservationHandler = function(event) {
     },
   })
 };
+
+//// DOCUMENT READY ////////
 
 $(document).ready(() => {
   //underscore
@@ -185,30 +179,36 @@ $(document).ready(() => {
   $('.see-trips-button').on('click', function() {
     tripsList.on('update', renderTrips);
     tripsList.fetch();
+
+    tripsList.on('sort', renderTrips); // register an event handler
+
+// sorting handling
+    TRIP_FIELDS.forEach((field) => {
+      const headerElement = $(`th.sort.${field}`);
+      headerElement.on('click', (event) => {
+        tripsList.comparator = field;
+        tripsList.sort();
+      });
+    });
+
   });
 
   // add trip
   $('#add-trip-form').on('submit', addTripHandler);
 
   $('#status-messages button.clear').on('click', (event) => {
-  $('#status-messages ul').html('');
-  $('#status-messages').hide();
-})
+    $('#status-messages ul').html('');
+    $('#status-messages').hide();
+  })
 });
 
 // GAME PLAN
-// 7. check out client side validation work on the code
-// sorting by...
-// Name
-// Category
-// Continent
-// Weeks
-// Cost
 // user needs to be given some sort of visual feedback that the data has been sorted
 /// WAVE 3 ///////// optional
 // filtering --- the challenging piece of the project
 // 1. figure out the modal situation
 // work on continent error handling issues
+// check to see if when I add a trip, it is sorted 
 
 
 // done
@@ -222,4 +222,11 @@ $(document).ready(() => {
 //Thursday
 // 4. work on error handling
 
-// Friday 
+// Friday
+// 7. check out client side validation work on the code
+// sorting by...
+// Name
+// Continent
+// Weeks
+// Category
+// Cost
