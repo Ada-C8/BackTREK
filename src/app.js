@@ -52,9 +52,6 @@ const renderTrips = function renderTrips(list) {
     const generatedHTML = tripTemplate(trip.attributes);
     tripElement.append(generatedHTML);
 
-    // $.get(url, function(response) {
-    //     $(`#trip-template`).html(tripTemplate(response));
-    //   })
   }
 
   const readFormData = function readFormData() {
