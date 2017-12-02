@@ -9,29 +9,6 @@ import './css/style.css';
 import Trip from './app/models/trip';
 import TripList from './app/collections/trip_list';
 
-console.log('it loaded!');
-
-// var modal = new tingle.modal({
-//     footer: true,
-//     stickyFooter: false,
-//     closeMethods: ['overlay', 'button', 'escape'],
-//     closeLabel: "Close",
-//     cssClass: ['custom-class-1', 'custom-class-2'],
-//     onOpen: function() {
-//         console.log('modal open');
-//     },
-//     onClose: function() {
-//         console.log('modal closed');
-//     },
-//     beforeClose: function() {
-//         // here's goes some logic
-//         // e.g. save content before closing the modal
-//         return true; // close the modal
-//     	return false; // nothing happens
-//     }
-// });
-
-
 const tripList = new TripList();
 let filteredMatches;
 // let tripTemplate;
@@ -78,10 +55,10 @@ const events = {
     //   </table>`;
     // $('#all-trips').append(tripsTable);
     // console.log($('#filter-form'));
+    $('#trip-details').empty();
     $('#filter-form')[0].reset();
     render(tripList);
     $('#all-trips').toggle();
-    console.log('showing all trips');
   },
   sortTrips(event) {
     $('.current-sort-field').removeClass('current-sort-field');
@@ -101,8 +78,6 @@ const events = {
 
   },
   tripInfo(event) {
-    console.log('called TripInfo');
-    console.log(this.id);
     const trip = new Trip({id: this.id});
 
     trip.fetch({
@@ -146,12 +121,12 @@ const events = {
     const formData = $(this).serialize();
     const url = $(this).attr('action');
     $.post(url, formData, (response) => {
-      $('#messages ul').html(`<li> Successfully reserved this trip for ${response.name}</li>`);
+      $('#status-messages ul').html(`<li> Successfully reserved this trip for ${response.name}</li>`);
       console.log(`Success! You're on the list.`);
       $('#trip-info').toggle();
       $('#trip-details form:last-child').empty();
     }).fail(() => {
-      $('#messages').html('<h3 id= "status-message"> Sorry, there are no spots left for this trip.</h3>');
+      $('#status-messages').html('<h3 id= "status-message"> Sorry, there are no spots left for this trip.</h3>');
       console.log(`Sorry, no spots left.`);
     });
   },
@@ -216,6 +191,7 @@ const events = {
         });
       });
       $('#add-trip-error-msgs').show();
+      // setTimeout(clearErrorMessages,10000);
     }
   },
   successfulSave(trip, response) {
@@ -223,17 +199,20 @@ const events = {
     console.log('success! the successfulsave method worked');
     // console.log(trip);
     // console.log(response);
-    $('#messages ul').empty();
-    $('#messages ul').append(`<li>${trip.get('name')} succesfully added!</li>`);
+    $('#status-messages ul').empty();
+    $('#status-messages ul').append(`<li>${trip.get('name')} succesfully added!</li>`);
     modal.style.display = "none";
-    $('#messages').show();
+    $('#status-messages').show();
     $('#new-trip-form')[0].reset();
+    console.log($('#status-messages'));
+    setTimeout(clearErrorMessages,8000);
     // setTimeout($('#messages').hide(), 2000);
   },
   failedSave(trip, response) {
     console.log('fail :( we are in the failedSave method');
     console.log(trip);
     console.log(response);
+    $('#add-trip-error-msgs h3').html(`<h3>Error:</h3>`);
     $('#add-trip-error-msgs ul').empty();
     const errs = response.responseJSON.errors;
     for (let key in errs) {
@@ -241,8 +220,11 @@ const events = {
         $('#add-trip-error-msgs ul').append(`<li>${key}: ${error}</li>`);
       })
     }
-    $('#add-trip-error-msgs').show();
-    // setInterval($('#messages').hide(), 3000);
+    // $('#add-trip-error-msgs').show();
+    $('.messages').show();
+    console.log('did the messages show');
+    // setTimeout(clearErrorMessages,5000);
+    // setTimeout($('#messages').hide(), 3000);
     trip.destroy();
   },
   filtering() {
@@ -278,6 +260,13 @@ const events = {
 
     // console.log(filteredTrips);
   },
+  highlightSelection(event) {
+    console.log('the event is:');
+    console.log(event);
+    console.log('THIS is: ');
+    console.log(this);
+    // selection.css({'background-color': 'red'});
+  },
 };
 const render= function render(tripList) {
   $('#trip-list').empty();
@@ -291,6 +280,21 @@ const showFiltered= function showFiltered(filteredMatches) {
   filteredMatches.forEach((trip) => {
     $('#trip-list').append(tripTemplate(trip.attributes));
   });
+};
+const clearErrorMessages= function clearErrorMessages() {
+  // const messageSections = $('.messages').toArray();
+  // console.log(messageSections);
+  // messageSections.forEach((section) => {
+  //   console.log(section);
+  //   section.hide();
+  //   section.empty();
+  //   console.log('hid the messages teehee');
+  // });
+  const messageSections = $('.messages');
+  messageSections.hide();
+  $('.messages ul').empty();
+  console.log('hid the messages teehee');
+  console.log(messageSections);
 };
 let tripTemplate;
 let showTemplate;
@@ -309,18 +313,19 @@ $(document).ready( () => {
   $('#myModal').on('submit', '#new-trip-form', events.addTrip);
   $('#all-trips').on('click', '.sort', events.sortTrips);
   tripList.on('sort', render, tripList);
+  $('#all-trips').on('click', 'tr', events.highlightSelection);
   // $('#filter-category').on('change', events.filtering);
   $('#filter-query').on('keyup', events.filtering);
   // $('#filter-btn').on('click', $('#filter-form')[0].reset());
 
   // modal stuff
-    const modal = document.getElementById('myModal');
+  const modal = document.getElementById('myModal');
 
   // Get the button that opens the modal
-  var btn = document.getElementById("add-trip-btn");
+  const btn = document.getElementById("add-trip-btn");
 
   // Get the <span> element that closes the modal
-  var span = document.getElementsByClassName("close")[0];
+  const span = document.getElementsByClassName("close")[0];
 
   // When the user clicks on the button, open the modal
   btn.onclick = function() {
@@ -330,12 +335,16 @@ $(document).ready( () => {
   // When the user clicks on <span> (x), close the modal
   span.onclick = function() {
       modal.style.display = "none";
+      $('#new-trip-form')[0].reset();
+      clearErrorMessages();
   }
 
   // When the user clicks anywhere outside of the modal, close it
   window.onclick = function(event) {
       if (event.target == modal) {
           modal.style.display = "none";
+          $('#new-trip-form')[0].reset();
+          clearErrorMessages();
       }
   }
 });

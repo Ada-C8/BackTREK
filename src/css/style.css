@@ -61,3 +61,7 @@ header h2, #main-btns {
     text-decoration: none;
     cursor: pointer;
 }
+
+.highlight {
+  background-color: yellow;
+}
