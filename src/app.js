@@ -29,7 +29,6 @@ const clearStatus = function clearStatus() {
 };
 
 // Add a new status message
-
 const fields = ['name', 'category', 'continent', 'weeks', 'cost'];
 
 const updateStatusMessageFrom = (messageHash) => {
@@ -48,29 +47,6 @@ const updateStatusMessageWith = (message) => {
   $('#status-messages ul').append(`<li>${message}</li>`);
   $('#status-messages').show();
 };
-
-//OTHER ATTEMPT
-// const reportStatus = function reportStatus(status, message) {
-//   console.log(`Reporting ${ status } status: ${ message }`);
-//
-//   // Should probably use an Underscore template here.
-//   const statusHTML = statusMessagesTemplate
-//   // const status HTML = $('#status-messages-template')//NEED TO FIX THIS - this is not correct
-//
-//   // note the symetry with clearStatus()
-//   $('#status-messages ul').append(statusHTML);
-//   $('#status-messages').show();
-// };
-//
-// const addTripHandleValidationFailures = function handleValidationFailures(errors) {
-//   // Since these errors come from a Rails server, the strucutre of our
-//   // error handling looks very similar to what we did in Rails.
-//   for (let field in errors) {
-//     for (let problem of errors[field]) {
-//       reportStatus('error', `${field}: ${problem}`);
-//     }
-//   }
-// };
 
 const renderTrips = function renderTrips(tripList) {
 //   iterate through the tripList, generate HTML
@@ -130,14 +106,6 @@ const addTripHandler = function(event) {
 
   const trip = new Trip(tripData);
 
-  // let successfullSave = function(trip, response) {
-  //   updateStatusMessageWith(`${trip.get('name')} added!`)
-  // };
-  // let failedSave = function(trip, response) {
-  //   updateStatusMessageFrom(response.responseJSON.errors);
-  //   trip.destroy();
-  // };
-
   if (trip.isValid()) {
       tripList.add(trip);
       trip.save({}, {
@@ -151,24 +119,6 @@ const addTripHandler = function(event) {
 
   setTimeout(function(){ $('#status-messages').hide(); }, 10000);
 
-
-
-//OLDER CODE:
-
-  // if (!trip.isValid()) {
-  //   addTripHandleValidationFailures(trip.validationError);
-  //   return;
-  // }
-  // trip.save({}, {
-  //   success: (model, response) => {
-  //     console.log('Successfully saved trip!');
-  //     tripList.add(model);
-  //   },
-  //   error: (model, response) => {
-  //     console.log('Failed to save trip! Server response:');
-  //     console.log(response);
-  //   },
-  // });
 };
 
 //ADDING A Reservation
@@ -222,6 +172,8 @@ const addReservationHandler = function(event) {
 $(document).ready(() => {
 
   // $('#reservation-form').hide()
+  $('#all-trips').hide();
+  $('#add-trip').hide();
 
   // ERROR AND SUCCESS MESSAGES
   statusMessagesTemplate = _.template($('#status-messages-template').html());
@@ -256,10 +208,22 @@ $(document).ready(() => {
     });
   });
 
+  $('#load-trips-button').on('click', function(event) {
+    $('#all-trips').show();
+    $('#add-trip').hide();
+    $('#trip-detail').hide();
+  });
+
+  $('#add-trip-button').on('click', function(event) {
+    $('#add-trip').show();
+    $('#trip-detail').hide();
+  });
 
   // Listen for when the user adds a trip
-    $('#add-trip-form').on('submit', addTripHandler);
-
+  $('#add-trip-form').on('submit', addTripHandler);
+  $('#add-trip-form').on('submit', function(event) {
+    $('#add-trip').hide();
+  });
 
   // SINGLE TRIP TEMPLATE
   singleTripTemplate = _.template($('#single-trip-template').html());
@@ -269,16 +233,27 @@ $(document).ready(() => {
     const trip = new Trip( {id: $(this).data("id") } );
     trip.on('change', renderSingleTrip);
     trip.fetch();
+    $('#all-trips').hide();
+    $('#add-trip').hide();
+    // $('#trip-detail').hide('#reservation-form');
+    $('#trip-detail').show();
 
+  });
+
+  $('#trip-detail').on('click', '#reservation-button', function(event) {
+    $('#reservation-form').show();
+    // $(document).scrollTo($('#reservation-form'), 1000);  ///THIS DID NOT WORK
+    $('html, body').animate({
+        scrollTop: $("#reservation-form").offset().top
+    }, 2000);
+  });
+
+
+  $('#trip-detail').on('submit', '#reservation-form', function(event) {
+    $('#reservation-form').hide();
   });
 
   $('#trip-detail').on('submit', '#reservation-form', addReservationHandler);
-
-  $('#reservation-button').on('click', function(event) {
-    // $('#reservation-form').show();
-    // console.log('attempting to show the reservation form');
-    alert("Clicked button");
-  });
 
   $('#trip-filter-form').on('submit', function(event) {
     event.preventDefault();
