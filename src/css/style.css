@@ -25,5 +25,11 @@ header, main, footer {width: 100%; max-width: 100%;  }
 
 div.add-wrapper { text-align: right; }
 
+
+/*---------- form ----------*/
+input#search-query { margin: 0; }
+select#search-select { width: 100%; }
+
+
 /*---------- footer ----------*/
 p.copyright { text-align: center; }
