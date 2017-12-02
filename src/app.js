@@ -86,10 +86,16 @@ $(document).ready(() => {
     console.log('clicked');
     // uses 'data' from html data-id
     let tripID = $(this).data('id');
+    // set the id onto #trip-about to be used on reservation form
+    $('#trip-about').data('id', tripID);
     console.log(tripID);
     // uses tripID to find api address for single trip
     let singleTrip = new Trip({id: tripID});
     console.log(singleTrip.url());
+
+
+    // let reservationID = new Reservation({trip_id: tripID});
+
 
     // apparently 'model' is cheating???
     // model refers to singleTrip?
@@ -153,9 +159,12 @@ const newReservationHandler = function(event) {
     inputElement.val('');
   });
 
+  // take reservation trip_id from #trip-about data id
+  reservationData.trip_id = $('#trip-about').data('id')
   const reservation = new Reservation(reservationData);
   reservation.save({}, {
     success: (model, response) => {
+      console.log(reservation.url());
       console.log('Create new reservation: success');
     },
     error: (model, response) => {
