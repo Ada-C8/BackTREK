@@ -25,7 +25,6 @@ const clearStatus = function clearStatus() {
   $('#status-messages ul').html();
   $('#status-messages').hide();
 };
-// to make this work we need an underscore template
 const reportStatus = function reportStatus(status, message) {
   const statusHTML = `<li class="status${ status }">${ message }</li>`;
   $('#status-messages ul').append(statusHTML);
@@ -59,8 +58,6 @@ const showTripDetails = function showTripDetails(trip){
       }
       input.val('');
     })
-    // HERE IS THERE ERROR
-    
     const reservation = new Reservation(reservationData);
     console.log(reservationData);
     console.log(reservation);
@@ -85,38 +82,26 @@ const showTripDetails = function showTripDetails(trip){
   //////////////////////////
   // reservation handler ///
   //////////////////////////
-  const reserveTemplateShow = function reserveTemplateShow(trip){ // not able to pass data in
-    // clearStatus(); ?
+  const reserveTemplateShow = function reserveTemplateShow(trip){
     const reservationElement = $('#reservation-form');
     reservationElement.html('');
     const generatedHTMLreserve = reserveTemplate(trip.attributes);
     console.log(trip.attributes);
     reservationElement.append(generatedHTMLreserve);
-    // $('#reservation-form').show();
   };
 
   $('#reserve').show();
   $('#reserve').on('click', function(event) {
-    // event.preventDefault();
     reserveTemplateShow(trip);
-    // $('#add-reservation').show();
-    // clearStatus();
     $('#reserve').hide();
-
-    // trying to submit the data When submit is pressed, it reloads the page! and no data is saved...
-    // $('#add-reservation').load(function(event){
     $('#add-reservation').on('submit', function(event) {
       event.preventDefault();
-      // debugger
-
       console.log('on submit');
-
       reserveTrip(event);
     });
-    // });
+
   });
 };
-
 
 // pulled out fetchTripDetails function above
 const fetchTripDetails = function fetchTripDetails(event) {
@@ -144,7 +129,6 @@ const render = function render(tripList) {
   });
   $('th.sort').removeClass('current-sort-field');
   $(`th.sort.${ tripList.comparator }`).addClass('current-sort-field');
-
   $('.trip').on('click', fetchTripDetails);
 };
 
@@ -175,7 +159,6 @@ const handleValidationFailures = function handleValidationFailures(errors) {
 const addTripHandler = function(event) {
   event.preventDefault();
   const trip = new Trip(readFormData());
-  // debugger
   clearStatus();
   if (!trip.isValid()) {
     handleValidationFailures(trip.validationError);

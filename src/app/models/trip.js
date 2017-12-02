@@ -21,13 +21,6 @@ const Trip = Backbone.Model.extend({
       return false;
     }
     return errors;
-  },
-  toString() {
-    // const currentYear = (new Date()).getFullYear();
-    // return currentYear - this.get('publication_year');
-    // or
-    // return (new Date()).getFullYear() - this.get('publication_year');
-    return `<This trip is named ${ this.get('name') }>`;
   }
 });
 
