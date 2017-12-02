@@ -57,15 +57,15 @@ const events = {
 
     const trip = new Trip(tripData);
 
-    // if (trip.isValid()) {
+    if (trip.isValid()) {
 
       trip.save({}, {
         success: events.successfullSave,
         error: events.failedSave,
       });
-    // } else {
-    //   updateStatusMessageFrom(trip.validationError);
-    // }
+    } else {
+      updateStatusMessageFrom(trip.validationError);
+    }
 
   },
   successfullSave(trip, response) {
@@ -114,6 +114,7 @@ $(document).ready( () => {
     $('#trip-list').toggle();
   });
 
+// ----------- Trip Details -------------
   $('#trip-list').on('click', 'tr', function() {
     $('tr').css('background', '');
     const id = $(this).attr('id');
@@ -121,7 +122,6 @@ $(document).ready( () => {
 
     $(`#${id}`).css('background','pink');
 
-    // ----------- Trip Details -------------
     $.get(url, function(response) {
       $(`#trip-details`).html(tripDetails(response));
     });
