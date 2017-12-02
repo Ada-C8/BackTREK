@@ -1,7 +1,6 @@
 import Backbone from 'backbone';
 import _ from 'underscore';
 import Reservation from './reservation';
-// import TripList from '../collections/trip_list';
 
 // 1. Define Model and give it a name
 const Trip = Backbone.Model.extend({
@@ -17,14 +16,12 @@ const Trip = Backbone.Model.extend({
     const continents = ['Africa', 'Antartica', 'Asia', 'Australasia', 'Europe', 'North America', 'South America'];
 
     const errors = {};
-    // const tripList = new TripList;
-    
+
     if (!attributes.name) {
       errors['name'] = 'cannot be blank';
+    } else if (attributes.name === this.get('name')) {
+      errors['name'] = 'already exists. Please choose another trip name.';
     }
-    // } else if (attributes.name === tripList.findWhere(attributes.name) ) {
-    //   errors['name'] = 'already exists. Please choose another trip name.';
-    // }
 
     if (!attributes.continent) {
       errors['continent'] = 'cannot be blank';

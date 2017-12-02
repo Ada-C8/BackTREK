@@ -79,18 +79,64 @@ const events = {
     console.log(reservation);
 
     $('#reservation-form .user-input').val('');
-    $('#ReservationStatusModal ul').empty();
-    $('#ReservationStatusModal p').empty();
-    $('#ReservationStatusModal p').append('Your trip is now reserved!');
-    $('#ReservationStatusModal').foundation('open');
+
+    $('#statusMessageModal h2').empty();
+    $('#statusMessageModal h2').append('Reservation Status');
+    $('#statusMessageModal ul').empty();
+    $('#statusMessageModal p').empty();
+    $('#statusMessageModal p').append('Your trip is now reserved!');
+    $('#statusMessageModal').foundation('open');
   },
   failReservation() {
     console.log('RESERVATION SUBMISSION FAILURE')
     console.log(reservation);
-    $('#ReservationStatusModal ul').empty();
-    $('#ReservationStatusModal p').empty();
-    $('#ReservationStatusModal p').append('Sorry, your request could not be completed.');
-    $('#ReservationStatusModal').foundation('open');
+
+    $('#statusMessageModal h2').empty();
+    $('#statusMessageModal h2').append('Reservation Status');
+    $('#statusMessageModal ul').empty();
+    $('#statusMessageModal p').empty();
+    $('#statusMessageModal p').append('Sorry, your request could not be completed.');
+    $('#statusMessageModal').foundation('open');
+  },
+  succesTripAdd(trip, response) {
+    console.log('TRIP SUCCESSFULLY SUBMITTED')
+    console.log(trip);
+    console.log('TRIP SUBMISSION RESPONSE')
+    console.log(response);
+
+    $('#new-trip-form .user-input').val('');
+
+    $('#statusMessageModal h2').empty();
+    $('#statusMessageModal h2').append('New Trip Submission Status');
+    $('#statusMessageModal ul').empty();
+    $('#statusMessageModal p').empty();
+    $('#statusMessageModal p').append('Your trip is now added!');
+    $('#statusMessageModal').foundation('open');
+  },
+  failTripAdd(trip, response) {
+    console.log('TRIP SUBMISSION FAILURE')
+    console.log(trip);
+    console.log();
+    console.log('TRIP SUBMISSION FAILURE RESPONSE')
+    console.log(response);
+    console.log();
+
+    $('#statusMessageModal h2').empty();
+    $('#statusMessageModal h2').append('New Trip Submission Status');
+
+    $('#statusMessageModal p').empty();
+    $('#statusMessageModal p').append('Sorry, your request could not be completed.');
+
+    $('#statusMessageModal ul').empty();
+    console.log("Response JSON:");
+    console.log(response.responseJSON);
+    for (let key in response.responseJSON.errors) {
+
+      response.responseJSON.errors[key].forEach((error) => {
+        $('#status-messages ul').append(`<li>${key}:${error}</li>`);
+      })
+    }
+    $('#statusMessageModal').foundation('open');
   },
 };
 
@@ -113,21 +159,21 @@ const makeTripReservation = function makeTripReservation(id) {
   //const reservation = trip.reserve({age: "21", email:"jedrzo@ada.com"});
   // Validations Test with simple error message:
   // reservation.on("invalid", function(model, error) {
-  //   $('#ReservationStatusModal ul').append('<li>Something went wrong!</li>');
-  //   $('#ReservationStatusModal').foundation('open');
+  //   $('#statusMessageModal ul').append('<li>Something went wrong!</li>');
+  //   $('#statusMessageModal').foundation('open');
   // });
   //reservation.save();
 
   reservation.on("invalid", function(model, errors) {
     console.log('INSIDE .ONinvalidevent');
-    $('#ReservationStatusModal h2').empty();
-    $('#ReservationStatusModal h2').append('Reservation Status');
-    $('#ReservationStatusModal p').empty();
-    $('#ReservationStatusModal p').append('Sorry, your request could not be completed. Please resolve the following:');
-    $('#ReservationStatusModal ul').empty();
+    $('#statusMessageModal h2').empty();
+    $('#statusMessageModal h2').append('Reservation Status');
+    $('#statusMessageModal p').empty();
+    $('#statusMessageModal p').append('Sorry, your request could not be completed. Please resolve the following:');
+    $('#statusMessageModal ul').empty();
     for (let key in errors) {
-      $('#ReservationStatusModal ul').append(`<li>${key.charAt(0).toUpperCase() + key.slice(1)}: ${errors[key]}</li>`);
-      $('#ReservationStatusModal').foundation('open');
+      $('#statusMessageModal ul').append(`<li>${key.charAt(0).toUpperCase() + key.slice(1)}: ${errors[key]}</li>`);
+      $('#statusMessageModal').foundation('open');
     };
   });
 
@@ -158,23 +204,23 @@ const addNewTrip = function addNewTrip(details) {
 
   trip.on("invalid", function(model, errors) {
     console.log('INSIDE TRIP VALIDATION');
-    $('#ReservationStatusModal h2').empty();
-    $('#ReservationStatusModal h2').append('New Trip Submission Status');
-    $('#ReservationStatusModal p').empty();
-    $('#newTripModalStatus p').append('Sorry, your request could not be completed. Please resolve the following:');
-    $('#ReservationStatusModal ul').empty();
+    $('#statusMessageModal h2').empty();
+    $('#statusMessageModal h2').append('New Trip Submission Status');
+    $('#statusMessageModal p').empty();
+    $('#statusMessageModal p').append('Sorry, your request could not be completed. Please resolve the following:');
+    $('#statusMessageModal ul').empty();
+
     for (let key in errors) {
-      $('#ReservationStatusModal ul').append(`<li>${key.charAt(0).toUpperCase() + key.slice(1)}: ${errors[key]}</li>`);
-      $('#ReservationStatusModal').foundation('open');
+      $('#statusMessageModal ul').append(`<li>${key.charAt(0).toUpperCase() + key.slice(1)}: ${errors[key]}</li>`);
+      $('#statusMessageModal').foundation('open');
     };
   });
   console.log('IS THIS TRIP INVALID?');
-  trip.isValid();
-  // trip.save({}, {
-  //   success: events.successTripSave,
-  //   error: events.failTripSave,
-  // });
 
+  trip.save({}, {
+    success: events.succesTripAdd,
+    error: events.failTripAdd,
+  });
 };
 
 $(document).ready( () => {
