@@ -3,9 +3,6 @@ import Trip from '../models/trip';
 import TripList from '../models/reservation';
 
 const Reservation = Backbone.Collection.extend({
-  urlRoot: function() {
-    return `http://localhost:3000/trips/ ${this.get('tripId')}/reservations`;
-  },
   validate(attributes) {
     const resErrors = {};
 
@@ -25,6 +22,9 @@ const Reservation = Backbone.Collection.extend({
       return false;
     }
     return resErrors;
+  },
+  urlRoot: function() {
+    return `http://localhost:3000/trips/ ${this.get('tripId')}/reservations`;
   }
 });
 export default Reservation;

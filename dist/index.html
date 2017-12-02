@@ -142,7 +142,7 @@
 <!--  reservation template 11/30/17 no currently using-->
 <script id="reserve-trip-template" type="text/template">
   <form id="add-reservation">
-    <input type="hidden" id="trip_id" name="trip_id" value="<%- id %>">
+    <input type="hidden" name="trip_id" value="<%- id %>">
 
     <label for="name">Name</label>
     <input type="text" name="name"></input>
@@ -153,7 +153,7 @@
     <label for="email">Email</label>
     <input type="text" name="email"></input>
 
-    <input type="submit" value="Book trip!" class="button"></input>
+    <input type="submit" value="Book trip!" class="button" id="submitReservation"></input>
   </form>
 </script>
 

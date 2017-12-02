@@ -43,40 +43,44 @@ const showTripDetails = function showTripDetails(trip){
   individualTripListElement.append(generatedHTMLTripDetails);
   $('#individual-trip-detail').show();
 
-//////////////////////////
-// Reservation Details ///
-//////////////////////////
-const reserveTrip = (event) => {
-  event.preventDefault();
-  console.log('in reserveTrip');
-  const RES_FIELDS = ['trip_id', 'name', 'age', 'email'];
-  let reservationData = {}
-  RES_FIELDS.forEach((field) => {
-    const input = $(`#add-reservation input[name="${ field }"]`);
-    const val = input.val();
-    if (val != '') {
-      reservationData[field] = val;
+  //////////////////////////
+  // Reservation Details ///
+  //////////////////////////
+  const reserveTrip = (event) => {
+    event.preventDefault();
+    console.log('in reserveTrip');
+    const RES_FIELDS = ['trip_id', 'name', 'age', 'email'];
+    let reservationData = {}
+    RES_FIELDS.forEach((field) => {
+      const input = $(`#add-reservation input[name="${ field }"]`);
+      const val = input.val();
+      if (val != '') {
+        reservationData[field] = val;
+      }
+      input.val('');
+    })
+
+    const reservation = new Reservation(reservationData);
+      // HERE IS THERE ERROR
+    if (!reservation.isValid()) {
+
+      handleValidationErrors(reservation.validationError);
+      // , 'form'
+      return;
     }
-    input.val('');
-  })
-  const reservation = new Reservation(reservationData);
-  if (!reservation.isValid()) {
-    handleValidationErrors(reservation.validationError, 'form');
-    return;
-  }
-  reservation.save({}, {
-    success: (model, response) => {
-      console.log('success');
-      reportStatus('success', 'Trip reserved!')
-    },
-    error: (model, response) => {
-      console.log(response);
-      console.log(response.responseJSON["errors"]);
-      reportStatus('error', 'Not reserved!')
-      handleValidationErrors(response.responseJSON["errors"], 'form');
-    },
-  });
-};
+    reservation.save({}, {
+      success: (model, response) => {
+        console.log('success');
+        reportStatus('success', 'Trip reserved!')
+      },
+      error: (model, response) => {
+        console.log(response);
+        console.log(response.responseJSON["errors"]);
+        reportStatus('error', 'Not reserved!')
+        handleValidationErrors(response.responseJSON["errors"], 'form');
+      },
+    });
+  };
   //////////////////////////
   // reservation handler ///
   //////////////////////////
@@ -87,24 +91,31 @@ const reserveTrip = (event) => {
     const generatedHTMLreserve = reserveTemplate(trip.attributes);
     console.log(trip.attributes);
     reservationElement.append(generatedHTMLreserve);
-    $('#reservation-form').show();
+    // $('#reservation-form').show();
   };
 
   $('#reserve').show();
   $('#reserve').on('click', function(event) {
-    event.preventDefault();
+    // event.preventDefault();
     reserveTemplateShow(trip);
     // $('#add-reservation').show();
     // clearStatus();
     $('#reserve').hide();
-  });
-// trying to submit the data When submit is pressed, it reloads the page! and no data is saved...
-  $('#add-reservation').on('submit', (event) => {
-    console.log('on submit');
-    event.preventDefault();
-    reserveTrip(event);
+
+    // trying to submit the data When submit is pressed, it reloads the page! and no data is saved...
+    // $('#add-reservation').load(function(event){
+    $('#add-reservation').on('submit', function(event) {
+      event.preventDefault();
+      // debugger
+
+      console.log('on submit');
+
+      reserveTrip(event);
+    });
+    // });
   });
 };
+
 
 // pulled out fetchTripDetails function above
 const fetchTripDetails = function fetchTripDetails(event) {
