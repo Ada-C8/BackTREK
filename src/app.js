@@ -222,6 +222,7 @@ $(document).ready(() => {
 
 // GAME PLAN
 // user needs to be given some sort of visual feedback that the data has been sorted
+  /// tried to add it but having some issues displaying -- need to work on it 
 /// WAVE 3 ///////// optional
 // filtering --- the challenging piece of the project
 // 1. figure out the modal situation
