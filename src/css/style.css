@@ -114,6 +114,19 @@ label {
   width: 2rem;
 }
 
+#individual-trip-details-close:before {
+  content: '✕';
+  color: white;
+}
+#individual-trip-details-close {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+}
+
+
 /* Styles for sorting */
 
 th.sort {
