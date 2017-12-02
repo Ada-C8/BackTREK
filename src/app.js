@@ -12,7 +12,7 @@ import Reservation from './app/models/reservation'
 
 let tripTemplate;
 let individualTripTemplate;
-let errorsTemplate;
+let statusMessagesTemplate;
 
 const tripList = new TripList();
 
@@ -67,25 +67,26 @@ const readFormData = function readFormData() {
 //   $('#display-errors').append(generatedHtml);
 // };
 
-const handleValidationFailures = (errors) => {
-  console.log('got validation failures');
-  console.log(errors);
+const handleStatusMessages = (messages) => {
+  console.log('In handleStatusMessages()');
+  console.log(messages);
 
-  $('#display-errors ul').empty();
+  $('#status-messages div').empty();
 
   // let errorObject = {};
   // for (let key in errors) {
   //   errorObject[key] = errors[key];
   // }
 
-  let generatedHtml = errorsTemplate(errors);
+  let generatedHtml = statusMessagesTemplate(messages);
   console.log(generatedHtml);
-  let errorsElem = $('#display-errors ul');
-  console.log(errorsElem);
-  errorsElem.append(generatedHtml);
+  let messagesElem = $('#status-messages div');
+  console.log(messagesElem);
+  messagesElem.append(generatedHtml);
+  $('#status-messages').show();
 };
 //
-// const handleValidationFailures = function handleValidationFailures(errors) {
+// const handleStatusMessages = function handleValidationFailures(errors) {
 //   console.log('In handleValidationFailures()');
 //
 //   for (let field in errors) {
@@ -96,16 +97,16 @@ const handleValidationFailures = (errors) => {
 // };
 
 // Add a new status message
-// TODO: success handling!
-const reportStatus = function reportStatus(status, message) {
-  console.log(`Reporting ${ status } status: ${ message }`);
-
-  // const statusHTML = reportStatusTemplate(trip.attributes);
-  const statusHTML = `<li class="${ status }">${ message }</li>`;
-
-  $('#status-messages ul').append(statusHTML);
-  $('#status-messages').show();
-};
+// // TODO: success handling!
+// const reportStatus = function reportStatus(status, message) {
+//   console.log(`Reporting ${ status } status: ${ message }`);
+//
+//   // const statusHTML = reportStatusTemplate(trip.attributes);
+//   const statusHTML = `<li class="${ status }">${ message }</li>`;
+//
+//   $('#status-messages ul').append(statusHTML);
+//   $('#status-messages').show();
+// };
 
 //clearStatus messages
 const clearStatus = function clearStatus() {
@@ -149,7 +150,7 @@ const addTripHandler = function(event) {
 
   if (!trip.isValid()) {
     console.log('Client side error handling');
-    handleValidationFailures(trip.validationError);
+    handleStatusMessages(trip.validationError);
     return;
   }
 
@@ -158,12 +159,15 @@ const addTripHandler = function(event) {
       console.log('Successfully saved trip!');
       tripList.add(trip);
       $('#trip-form-message').hide();
-      reportStatus('success', 'Successfully saved trip!');
+      const successObject = {
+        success: 'Successfully saved trip!',
+      }
+      handleStatusMessages(successObject);
     },
     error: (model, response) => {
       console.log('Failed to save trip! Server response:');
       console.log(response);
-      handleValidationFailures(response.responseJSON["errors"]);
+      handleStatusMessages(response.responseJSON["errors"]);
     },
   });
 };
@@ -175,7 +179,7 @@ const addReservationHandler = function(event) {
 
   if (!reservation.isValid()) {
     console.log('Client side error handling');
-    handleValidationFailures(reservation.validationError);
+    handleStatusMessages(reservation.validationError);
     return;
   }
 
@@ -189,7 +193,7 @@ const addReservationHandler = function(event) {
       console.log('Failed to make reservation! Server response:');
       console.log(response);
 
-      handleValidationFailures(response.responseJSON["errors"]);
+      handleStatusMessages(response.responseJSON["errors"]);
     },
   });
 };
@@ -233,7 +237,7 @@ $(document).ready( () => {
 
   individualTripTemplate = _.template($('#individual-trip-template').html());
 
-  errorsTemplate = _.template($('#errors-template').html());
+  statusMessagesTemplate = _.template($('#status-messages-template').html());
 
   // Register update listener first, to avoid the race condition
   tripList.on('update', render);

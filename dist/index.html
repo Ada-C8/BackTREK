@@ -26,20 +26,20 @@
     <p id="all-trips" class="button">List Trips</p>
     <p id="add-trip" class="button">Add Trip</p>
 
+    <!-- <section id="status-messages">
+      <button class="clear float-right">
+        <img src="http://www.pvhc.net/img223/xeiwtpbbgpmyhtcnjvwt.png" alt="Clear">
+      </button>
+      <ul>
+      </ul>
+    </section> -->
+
     <section id="status-messages">
       <button class="clear float-right">
         <img src="http://www.pvhc.net/img223/xeiwtpbbgpmyhtcnjvwt.png" alt="Clear">
       </button>
-      <ul>
-      </ul>
-    </section>
-
-    <section id="display-errors">
-      <button class="clear float-right">
-        <img src="http://www.pvhc.net/img223/xeiwtpbbgpmyhtcnjvwt.png" alt="Clear">
-      </button>
-      <ul>
-      </ul>
+      <div>
+      </div>
     </section>
 
     <section id="trip-form-message">
@@ -154,28 +154,22 @@
     </form>
   </script>
 
-  <script type="text/template" id="errors-template">
-    <li>
+  <script type="text/template" id="status-messages-template">
+    <p>
+      <% if (obj.success) { %><%- success %><% } %>
+    </p>
+    <p>
       <% if (obj.name) { %> Name: <%- name %><% } %>
-    </li>
-    <li>
+    </p>
+    <p>
       <% if (obj.continent) { %> Continent: <%- continent %><% } %>
-    </li>
-    <li>
-      <% if (obj.about) { %> About: <%- about %><% } %>
-    </li>
-    <li>
-      <% if (obj.category) { %> Category: <%- category %><% } %>
-    </li>
-    <li>
-      <% if (obj.category) { %> Category: <%- category %><% } %>
-    </li>
-    <li>
+    </p>
+    <p>
       <% if (obj.weeks) { %> Weeks: <%- weeks %><% } %>
-    </li>
-    <li>
+    </p>
+    <p>
       <% if (obj.cost) { %> Cost: <%- cost %><% } %>
-    </li>
+    </p>
   </script>
   <!-- <script type="text/template" id="report-status-template">
     <li class="<%- status %>"></li>
