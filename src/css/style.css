@@ -39,7 +39,7 @@ tr {
 }
 
 td, th {
-  overflow-x: scroll;
+  overflow-x: hidden;
 }
 
 .scrollable {
