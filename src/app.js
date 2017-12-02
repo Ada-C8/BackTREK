@@ -74,9 +74,16 @@ const loadTrips = function loadTrips(tripList, filters) {
     tripTableElement.append(generatedHTML);
   });
 
-  if(tripTableElement.html === '') {
-    console.log(LOSER);
-    tripTableElement.append('LSE')
+  if(listOfTrips.length === 0) {
+    let report = ''
+    for(let key in filters) {
+      report+=`${key}: `
+      console.log('REPORT');
+      console.log(report);
+      report += `${filters[key]} `
+    }
+    const generatedHTML2 = `There are no trips that match ${report}`
+    $('.reporting').html(generatedHTML2)
   }
 
   $('th.sort').removeClass('current-sort-field');
@@ -302,7 +309,9 @@ $(document).ready(() => {
   tripList.fetch();
 
   $('#add-trip-form').on('submit', addTripHandler)
-
+  $('#filter-input').on('click', function() {
+    $('#filter-input').val('')
+  })
 
   TRIP_FIELDS.forEach((field) => {
     const headerElement = $(`th.sort.${ field }`);
