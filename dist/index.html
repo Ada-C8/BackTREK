@@ -7,9 +7,41 @@
 </head>
 <body>
   <header>
-
+    <!-- <button class="button" id="createTrip"> Create trip! </button> -->
   </header>
   <main>
+    <section id="status-messages">
+        <!-- <button class="clear float-right">
+          <img src="http://www.pvhc.net/img223/xeiwtpbbgpmyhtcnjvwt.png" alt="Clear">
+        </button> -->
+
+        <ul>
+        </ul>
+      </section>
+    <aside class="columns large-4 small-12">
+  <h2>Add a Trip</h2>
+  <form id="add-trip-form">
+    <label for="name">Name</label>
+    <input type="text" name="name"></input>
+
+    <label for="continent">Continent</label>
+    <input type="text" name="continent"></input>
+
+    <label for="about">About</label>
+    <input type="text" name="about"></input>
+
+    <label for="category">Category</label>
+    <input type="text" name="category"></input>
+
+    <label for="weeks">Weeks</label>
+    <input type="number" name="weeks"></input>
+
+    <label for="cost">Cost</label>
+    <input type="number" name="cost"></input>
+
+    <input type="submit" value="Add it!" class="button"></input>
+  </form>
+</aside>
 <section id="oneTrip">
 </section>
     <section class="columns large-8 small-12">
@@ -49,14 +81,42 @@
 </script>
 
 
-<script type="text/template" id="details-template">
+<script type="text/template" id="details-template" class="columns large-4 small-8">
+
 <h2>
   <%- name %>
 </h2>
+
+<!-- <p class = 'tripId' id= `${<% id %>}`> -->
 <p>
   <%- about %>
 </p>
+<button class="button" id="goReservationForm">
+  Reserve this trip!
+</button>
+
+<div id="spaceReservationForm">
+</div>
+
 </script>
+
+
+
+<script type="text/template" id="reservationFormTemplate" class="columns large-4 small-8">
+<form id="reservation-form">
+<label for="name">Name:</label>
+<input type="text" name="name" required></input>
+<input type="hidden" name="trip_id" value = "<%- tripId %>"  >
+</input>
+<label for="email">Email:</label>
+<input type="email" name="email" required></input>
+<input id="submitForm" type="submit" class="button" value="Reserve Trip"></input>
+
+
+</script>
+
+
+
 
   </main>
   <footer>
