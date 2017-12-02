@@ -103,28 +103,35 @@ const events = {
     console.log('failedSave');
     //console.log(trip);
     //console.log(response);
-    console.log(response.responseText);
-    //let JSONresponse = JSON.parse(response);
-    //console.log(JSONresponse);
-    //console.log(JSON.stringify(response));
-    //const responseJSON = JSON.stringify(response);
-    $('#status-messages ul').append(`<li>${trip.get('name')} WAS NOT added!</li>`);
     $('#status-messages ul').empty();
-    //responseJSON.forEach(function(data) {
-    //  $('#status-messages ul').append(`<li>${data}</li>`);
-    //});
+    $('#status-messages ul').append(`<li>${trip.get('name')} WAS NOT added!</li>`);
+    console.log(response.responseJSON);
+    const displayErrors = response.responseJSON.errors
+    for (var key in displayErrors){
+      console.log(key);
+      $('#status-messages ul').append(`<li>${key}: ${displayErrors[key]}</li>`);
+    };
     $('#status-messages').show();
   },
   addReservation(event) {
     event.preventDefault();
-    console.log('in addReservation method! Reservation Data:')
+    console.log('in addReservation method! Reservation Data:');
     const reservationData = {};
     reservationFields.forEach( (field) => {
-      reservationData[field] = $(`input[name=${field}]`).val();
+      reservationData[field] = $(`#add-reservation-form input[name=${field}]`).val();
     });
     console.log(reservationData);
-    const reservation = new Reservation(reservationData);
+    const tripNumber= $('#add-reservation-form').attr('trip-id');
 
+    console.log(`tripNumber: ${tripNumber}`);
+
+    // reservation.set({"tripID": `${tripNumber}` });
+    const postURL = `https://ada-backtrek-api.herokuapp.com/trips/${tripNumber}/reservations/`;
+    const reservation = new Reservation(reservationData);
+    //const reservation = new Reservation(reservationData, {url:postURL});
+    reservation.set({"url": `${postURL}` });
+    console.log(reservation.get('url'));
+    console.log(reservation);
     if (reservation.isValid()) {
       reservation.save({}, {
         success: events.successfullReservationSave,
@@ -135,6 +142,31 @@ const events = {
       events.failedReservationSave(reservation, {errors: reservation.validate() });
     }
   },
+  successfullReservationSave(reservation, response) {
+    console.log('successfulReservationSave');
+    console.log(reservation);
+    console.log(response);
+    $('#status-messages ul').empty();
+    $('#status-messages ul').append(`<li>${reservation.get('name')} added!</li>`)
+    $('#status-messages').show();
+  },
+  failedReservationSave(reservation, response) {
+    console.log('failedReservationSave');
+    console.log(reservation);
+    console.log(response);
+    console.log(response.responseText);
+    //let JSONresponse = JSON.parse(response);
+    //console.log(JSONresponse);
+    //console.log(JSON.stringify(response));
+    //const responseJSON = JSON.stringify(response);
+    $('#status-messages ul').append(`<li>${reservation.get('name')} WAS NOT added!</li>`);
+    $('#status-messages ul').empty();
+    //responseJSON.forEach(function(data) {
+    //  $('#status-messages ul').append(`<li>${data}</li>`);
+    //});
+    $('#status-messages').show();
+  },
+
 };
 
 $(document).ready( () => {
@@ -152,6 +184,7 @@ $(document).ready( () => {
   $('#trips-table-container').on('click', 'tr', function () {
     const tripID = $(this).attr('data-id');
     renderSingleTrip(tripID);
+    $('#add-reservation-form').attr('trip-id',`${tripID}`);
     $('#reservation-form-container').show();
   });
 
@@ -172,9 +205,6 @@ $(document).ready( () => {
 
   //update table
   tripList.on('update', renderTrips, tripList);
-
-
-
 
   // $('.sort').click(events.sortTrips);
   // tripList.on('sort',renderTrips,tripList);
