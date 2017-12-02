@@ -1,8 +1,6 @@
 import Backbone from 'backbone';
 
 const Reservation = Backbone.Model.extend({
-  // model: Trip,
-  //set trip id as an attribute in reservation
   urlRoot () {
     return`https://trektravel.herokuapp.com/trips/${this.get('tripID')}/reservations`
   },
@@ -10,7 +8,7 @@ const Reservation = Backbone.Model.extend({
   toString() {
     return `<Reservation ${this.get('name')}>`;
   },
-  
+
   validate(attributes) {
     const errors = {};
     if (!attributes.name) {

@@ -187,6 +187,8 @@ const reportNewReservationStatus = function reportNewReservationStatus(status, m
 
 
 //**************************READ FORMS ***************
+//seems like these could be just one, more cleverly written,
+// function.
 const readTripFormData = function readTripFormData() {
   const tripData = {};
   TRIP_FIELDS.forEach((field) => {
