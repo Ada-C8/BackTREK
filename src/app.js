@@ -35,26 +35,39 @@ const reportStatus = function reportStatus(status, message) {
 //////////////////////////
 // Reservation Details ///
 //////////////////////////
-const addReservation = function addReservation(trip, formElement){
-  let form = formElement;
-  let formData = formElement.serialize(); // dont use serialize
-  // read form otherwise and use data and create instance of reservation. and pass in tripID and call .save on that
-  const success = function success(){
-    $('#add-reservation').hide();
-    reportStatus('success', 'Reservation Made!');
-    console.log('success');
-    form.find("input[type=text], input[type=number]").val('');
-  };
-
-  let url = `https://ada-backtrek-api.herokuapp.com/trips/${ trip.id }/reservations`;
-  // const reservation = new Reservation( {tripId: trip.id});
-
-  $.post(url, formData, success)
-  .fail(function(){
-    console.log('failure');
-    reportStatus('error', 'Reservation failed!');
+const reserveTrip = (event) => {
+  event.preventDefault();
+  // console.log('in reserveTrip');
+  const RES_FIELDS = ['name', 'age', 'email', 'trip_id'];
+  let reservationData = {}
+  RES_FIELDS.forEach((field) => {
+    const input = $(`#add-reservation input[name="${ field }"]`);
+    const val = input.val();
+    if (val != '') {
+      reservationData[field] = val;
+    }
+    input.val('');
+  })
+  const reservation = new Reservation(reservationData);
+  if (!reservation.isValid()) {
+    handleValidationErrors(reservation.validationError, 'form');
+    return;
+  }
+  reservation.save({}, {
+    success: (model, response) => {
+      console.log('success');
+      reportStatus('success', 'Trip reserved!')
+    },
+    error: (model, response) => {
+      console.log('Failure:');
+      console.log(response);
+      console.log(response.responseJSON["errors"]);
+      // reportStatus?
+      handleValidationErrors(response.responseJSON["errors"], 'form');
+    },
   });
 };
+
 //////////////////////////
 // Trip Details
 //////////////////////////
@@ -70,17 +83,30 @@ const showTripDetails = function showTripDetails(trip){
   //////////////////////////
   // reservation handler
   //////////////////////////
-  $('#reserve').show(); //button display
+  const reserveTemplateShow = function reserveTemplateShow(reservation){ // not able to pass data in
+    // clearStatus();
+    const reservationElement = $('#reservation-form');
+    reservationElement.html('');
+    const generatedHTMLreserve = reserveTemplate(reservation.attributes);
+    reservationElement.append(generatedHTMLreserve);
+    $('#reservation-form').show();
+  };
+
+  $('#reserve').show();
   $('#reserve').on('click', function(event) {
-    $('#add-reservation').show();
-    clearStatus();
-    $('#reserve').hide();
+    console.log('in reserve event');
+    reserveTemplateShow();
+    // $('#add-reservation').show();
+    // clearStatus();
+    // $('#reserve').hide();
   });
-  $('#add-reservation').on('submit', function(event) {
+
+  $('#add-reservation').on('submit', (event) => {
     event.preventDefault();
-    addReservation(trip, $(this));
+    reserveTrip(event);
   });
 };
+
 // pulled out fetchTripDetails function above
 const fetchTripDetails = function fetchTripDetails(event) {
   $('#add-reservation').hide();
@@ -161,7 +187,7 @@ $(document).ready( () => {
 
   individualTripTemplate = _.template($('#individual-trip-template').html());
   tripTemplate = _.template($('#trip-template').html());
-  // reserveTemplate = _.template($('#reserve-trip-template').html());
+  reserveTemplate = _.template($('#reserve-trip-template').html());
   // 11/30/17 not using this template
 
   tripList.on('update', render);
@@ -191,11 +217,11 @@ $(document).ready( () => {
 
     // When the user clicks anywhere outside of the modal, close it
     $('body').on('click', '.modal-close', function(event){
-    if($(event.target).hasClass('modal-close')) {
-      modal.hide();
-      // clearFormMessages();
-    }
-  });
+      if($(event.target).hasClass('modal-close')) {
+        modal.hide();
+        // clearFormMessages();
+      }
+    });
     // window.onclick = function(event) {
     //   if (event.target == modal) {
     //     modal.style.display = "none";

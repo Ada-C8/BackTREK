@@ -1,8 +1,8 @@
 import Backbone from 'backbone';
 const Trip = Backbone.Model.extend({
-  defaults: {
-    name: 'Unknown'
-  },
+  // defaults: {
+  //  name: 'Unknown'
+  // },
   validate(attributes) {
     // not calling this.get
     // format of errors, same as rails!
