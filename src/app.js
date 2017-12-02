@@ -43,7 +43,9 @@ const render = function(tripList) {
       // })
     $.get(url, function(response) {
       console.log('trying to get trip');
-      $('h1').html(tripInfoTemplate(response));
+      $('#trip-list').removeClass("small-11");
+      $('#trip-list').addClass("small-6");
+      $('#trip-details').html(tripInfoTemplate(response));
     });
   });
 
