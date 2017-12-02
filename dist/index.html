@@ -22,19 +22,29 @@
     </main>
     <button id="load-trips" class="dropdown button small-12">Load Trips</button>
     <section class="row">
-      <section id="trip-list" class="small-12 columns">
-
-      </section>
+      <table id="trip-list" class="small-11 small-centered columns">
+      </table>
     </section>
 
 
   <footer>
 
   </footer>
-  <script type="text/template" id="trip-button-template">
-    <article id='trip-<%- id %>'>
-      <button class="dropdown button small-12"><%- name %></button>
-    </article>
+  <script type="text/template" id="trip-list-template">
+      <tr id='trip-<%-id %>'>
+        <td>
+          <%- id %>
+        </td>
+        <td>
+          <%- continent %>
+        </td>
+        <td>
+          <%- cost %>
+        </td>
+        <td>
+          <%- category %>
+        </td>
+      </tr>
   </script>
   <script type="text/template" id="trip-template">
     <section class="row"><section id='info-tripid' class="panel small-10 small-centered columns">

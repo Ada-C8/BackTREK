@@ -10,38 +10,38 @@ import './css/style.css';
 import Trip from './models/trip';
 import TripList from './collections/trip_list';
 
-// console.log('it loaded!');
 
 const tripList = new TripList();
-// console.log(tripList);
 
 let tripTemplate;
-
+let tripInfoTemplate;
 const render = function(tripList) {
-  // const $tripList = $('#trip-list');
   console.log('in render');
-  // console.log(tripList.models);
-  // $tripList.empty();
-  tripTemplate = _.template($('#trip-button-template').html());
+  tripTemplate = _.template($('#trip-list-template').html());
+  tripInfoTemplate = _.template($('#trip-info-template').html());
+  $('#trip-list').append('<tr><th>ID</th><th>CONTINENT</th><th>COST</th><th>CATEGORY</th></tr>');
   tripList.forEach((trip) => {
-    // console.log(trip);
-    // console.log('in trip forEach');
-    $('#trip-list').append(tripTemplate(trip.toJSON()));
+    $('#trip-list').append(tripTemplate(trip.toJSON())).attr('id', `${trip.id}`);
   });
-  // for(let i =0; i< tripList.models.length; i++) {
-  //   console.log(tripList.models[i]);
-  // };
+
   console.log(tripList.models.length);
 }
 
 $(document).ready( () => {
-  // $('main').html('<h1>Hello World!</h1>');
+  tripList.on('update', render, tripList);
+  tripList.fetch();
   $('#load-trips').focus(function(event) {
     console.log(`in focus`);
     $('#trip-list').toggle();
-    tripList.on('update', render, tripList);
-    tripList.fetch();
     $(this).blur();
+  });
+  $('#trip-list').on('click', 'tr', function() {
+    // const id = $(this).attr('id');
+    const url = 'http://ada-backtrek-api.herokuapp.com/trips';
+    $.get(url, function(response) {
+      $('#trip-details').html(tripInfoTemplate(response));
+    });
+
   });
 
   // console.log(tripList);
