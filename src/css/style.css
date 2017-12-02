@@ -47,15 +47,31 @@ h1 {
   table-layout: fixed;
 }
 
-#trip-table-button {
+/*#trip-table-button {
   display: none;
   float: right;
   margin-bottom: 3%;
   width: 2rem;
-}
+}*/
 
 #trip-table tr {
   word-wrap: break-word;
+}
+
+.wrapper {
+  position: relative;
+  display: inline-block;
+}
+#trip-table-close:before {
+  content: '✕';
+  color: white;
+}
+#trip-table-close {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
 }
 
 /*Styling for add trip form*/
@@ -89,6 +105,13 @@ label {
   text-align: center;
   color: white;
   font-family: courier;
+}
+
+#individual-trip-details-button {
+  display: none;
+  float: right;
+  margin-bottom: 3%;
+  width: 2rem;
 }
 
 /* Styles for sorting */

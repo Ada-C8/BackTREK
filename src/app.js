@@ -82,8 +82,13 @@ const clearAddTripForm = function clearAddTripForm() {
 
 const clearAllTripsTable = function clearAllTripsTable() {
   $('#trip-table').hide();
-  $('#trip-table-button').hide();
+  $('#trip-table-close').hide();
   $('#filter-triplist').hide();
+}
+
+const clearIndividualTripDetails = function clearIndividualTripDetails() {
+  $('#individual-trip-details').hide();
+  $('#individual-trip-details-button').hide();
 }
 ////////////////eventHandlers////////////////////
 
@@ -103,6 +108,7 @@ const showIndividualTripHandler = function showIndividualTripHandler(event) {
         individualtripListElement.append(generatedHTMLTripDetails);
 
         $('#individual-trip-details').show();
+        $('#individual-trip-details-button').show();
 
         // Listen for submit event on #reserve-trip
         $('#reserve-trip').on('submit', addReservationHandler);
@@ -187,7 +193,7 @@ const render = function render(tripList) {
   })
 
   $('#trip-table').show();
-  $('#trip-table-button').show();
+  $('#trip-table-close').show();
   $('#filter-triplist').show();
   // $('#trip-form-button').show();
 
@@ -239,7 +245,10 @@ $(document).ready( () => {
   $('#trip-form-button').on('click', clearAddTripForm);
 
   // Listen for clearing all trips table
-  $('#trip-table-button').on('click', clearAllTripsTable);
+  $('#trip-table-close').on('click', clearAllTripsTable);
+
+  // Listen for clearing individual trip details
+  $('#individual-trip-details-button').on('click', clearIndividualTripDetails);
 
   // Build event handlers for each of the table headers
   CONDENSED_TRIP_FIELDS.forEach((field) => {
