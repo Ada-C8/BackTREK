@@ -12,25 +12,41 @@ console.log('it loaded!');
 import Trip from './app/models/trip';
 import TripList from './app/collections/trip_list';
 
-const TRIP_FIELDS = ['name', 'continent', 'category', 'weeks', 'cost'];
+const TRIP_FIELDS = ['name', 'continent', 'category', 'weeks', 'price'];
 
 let tripTemplate;
 
 //Methods
 
-const render = function render(tripList) {
+const renderAll = function render(tripList) {
   const tripListElement = $('#trip-list');
   //make trip-list a jquery object so you can use jquery methods on it
-
   tripListElement.empty();
   //empties list
+
+  // Apply styling to the current sort field
+  $('th.sort').removeClass('current-sort-field');
+  // remove class from all headings
+  $(`th.sort.${ tripList.comparator }` ).addClass('current-sort-field');
+  // add class when triggered
+
+ // redraw the table
+ // tripList.on('update', render);
+
+ // redraw table by sort field
+ tripList.on('sort', renderAll);
 
   tripList.forEach((trip) => {
     console.log(`Rendering trip ${ trip.get('name') }`);
     let tripHTML = tripTemplate(trip.attributes);
     tripListElement.append($(tripHTML));
   }); // for each
-}; // render function
+}; // renderAll function
+
+const renderDetails = function render(trip){
+  const trip = $()
+
+}
 
 // sort function
 
@@ -50,7 +66,8 @@ $(document).ready( () => {
   // $('#load').on('click', )
   tripList.fetch();
 
-  tripList.on('update', render);
+  tripList.on('update', renderAll);
+  tripList.on('sort', renderAll);
   //so the fetch will trigged update and then render will render the data into the template.
   $('.name').on('click', 'td', () => {
     console.log("you clicked something");
@@ -58,6 +75,8 @@ $(document).ready( () => {
   // const tripList = new TripList();
   // render(tripList);
   // The render function takes the place of the final part of the function for a single item. i.e. the part that goes through each item and turns it into html
+  //Event handlers for buttons
+
 
   //Event handlers for table headers
   TRIP_FIELDS.forEach((field) => {
@@ -67,6 +86,7 @@ $(document).ready( () => {
       console.log(`Sorting by ${ field }`);
       tripList.comparator = field;
       tripList.sort();
+
     }); // click event handler
   }); // fields for each
 

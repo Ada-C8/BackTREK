@@ -1,2 +1,5 @@
 
 /* Your styles go here! */
+.current-sort-field {
+  color: blue;
+}
