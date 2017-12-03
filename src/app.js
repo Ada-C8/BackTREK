@@ -241,6 +241,7 @@ $(document).ready( () => {
   $('#trip-details').on('submit', '#reservation-form', events.finalizeReservation);
   $('body').on('click', '#close-trip-details-btn', function () {
     $('#trip-details').empty();
+    $('.highlight').removeClass('highlight');
   });
   $('#myModal').on('submit', '#new-trip-form', events.addTrip);
   $('#all-trips').on('click', '.sort', events.sortTrips);
