@@ -30,8 +30,16 @@ const render = function render(tripList) {
   tripListElement.empty();
 
   tripList.forEach((trip) => {
+    console.log(trip);
     // console.log(`Rendering trip ${trip.get('name')}`);
-    let tripHTML = tripTemplate(trip.attributes);
+
+    // STILL A PROBLEM. SHOULD THIS BE HERE.
+    // if (!trip.attributes.id) {
+    //   const stringId = trip.cid;
+    //   trip.attributes.id = parseInt(stringId);
+    // }
+
+    const tripHTML = tripTemplate(trip.attributes);
     tripListElement.append($(tripHTML));
   });
 };
@@ -52,74 +60,77 @@ const getIndividualTrip = function getIndividualTrip() {
       console.log(response);
       console.log("this is this");
       console.log(trip);
+
+      let reservationForm = `<li><form id="form" action="https://ada-backtrek-api.herokuapp.com/trips/${id}/reservations" method="post">
+              
+        <label for="name">Name</label>
+        <input type="text" name="name"></input>
+
+        <label for="email">Email</label>
+        <input type="text" name="email"></input>
+
+        <input type="submit" value="Complete Reservation" class="button reserve"></input>
+      </form></li>`;
+
       $('#trip-details').empty();
       $('#trip-details').append(detailTemplate(details));
+      $('#trip-details').append(reservationForm);
     },
     // success: ?,
     // error: ?
   });
 
-  console.log('*****************');
-  console.log("this is the trip");
-  console.log(trip);
-  console.log('*****************');
-
-  // console.log(trip.attributes);
-  // console.log(detailTemplate(trip.attributes));
-  // $('#trip-details').append(detailTemplate({
-  //   'name': 'n',
-  //   'category': 'c',
-  //   'continent': 'co',
-  //   'weeks': 'w',
-  //   'cost': 'c',
-  //   'about': 'a'
-  // }));
+  // console.log('*****************');
+  // console.log("this is the trip");
+  // console.log(trip);
+  // console.log('*****************');
 
   let details = trip.attributes;
-  // trip.fetch( {
-  //   // success: ?,
-  //   // error: ?
-  // });
 
-  console.log("****************************");
-  console.log("these are the details");
-  console.log(details);
-  console.log("****************************");
+  // console.log("****************************");
+  // console.log("these are the details");
+  // console.log(details);
+  // console.log("****************************");
 
-  // ???????
-  // details.about = 'fake about';
-  // console.log(details.name);
-  // console.log(details.continent);
-  // console.log(details.about);
-
-  // $('#trip-details').empty();
-  // $('#trip-details').append(detailTemplate(details));
 };
 
 // =================================================================
 
 const events = {
 
-  addReservation(event){
+  addReservation(event) {
     event.preventDefault();
-    const reserveData = {};
 
-    reservationFields.forEach((field) =>{
-      reserveData[field] = $(`input[name=${field}]`).val();
+    const url = $(this).attr('action');
+    const formData = $(this).serialize();
+
+    $.post(url, formData, () => {
+      $('#form').html('<p> Reservation added! </p>');
+    }).fail(() => {
+      $('#form').html('<p> Adding Reservation failed! </p>');
     });
-
-    console.log('RESERVATION ADDED');
-    console.log(reserveData);
-
-    const reservation = new Reservation(reserveData);
-
-    reservationList.add(reservation);
-    reservation.save({
-      success: events.successfulSave,
-      error: events.failedSave
-    })
-    this.reset();
   },
+
+  // addReservation(event){
+  //   event.preventDefault();
+  //   const reserveData = {};
+  //
+  //   reservationFields.forEach((field) =>{
+  //     reserveData[field] = $(`input[name=${field}]`).val();
+  //   });
+  //
+  //   console.log('RESERVATION ADDED');
+  //   console.log(reserveData);
+  //
+  //   const reservation = new Reservation(reserveData);
+  //
+  //   reservationList.add(reservation);
+  //   reservation.save({
+  //     success: events.successfulSave,
+  //     error: events.failedSave
+  //   })
+  //   this.reset();
+  // },
 
 // =================================================================
 
@@ -215,4 +226,7 @@ $(document).ready( () => {
   $('.trip-info').click(events.showAllTrips);
   $('.sort').click(events.sortTrips);
   tripList.on('sort', render, tripList);
+
+  $('.reserve').click(events.addReservation);
+
 });
