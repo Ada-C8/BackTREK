@@ -6,24 +6,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-  <header>
-    <h2>TREK</h2>
-    <button id="show-trips" class="button secondary hollow"><h3>Show Trips</h3></button>
+
+  <header class="hero">
+    <div class="hero-section-text">
+      <h1>TREK</h1>
+      <span><h5>
+        <button id="show-trips" class="button secondary hollow">Show Trips</button>
+        <button id="trip-create-new-btn" class="button secondary hollow">Create New Trip</button>
+      </h5></span>
+    </div>
   </header>
+
   <main>
 <!-- MESSAGES -->
-  <span id="status-msg"></span>
-  <span id="confirmation-msg"></span>
+    <span id="status-msg"></span>
+    <span id="confirmation-msg"></span>
 
 <!-- ADD TRIP #trip-create-new -->
-    <button id="trip-create-new-btn" class="button secondary hollow">Create New Trip</button>
-    <aside id="trip-create-new" class="columns large-4 small-12">
+    <article id="trip-create-new" class="columns large-8 small-12 modal">
       <!-- create new trip form -->
-    </aside>
+    </article>
 
 <!-- SINGLE TRIP #trip-about -->
-    <article id="trip-about" class="columns large-8 small-12">
-    </article>
+    <aside id="trip-about" class="columns large-4 small-12">
+    </aside>
 
 <!-- TRIP LIST #trip-list -->
     <section class="columns large-8 small-12">
@@ -45,6 +51,7 @@
     &copy; 2017 Sara Frandsen
   </footer>
 
+<!-------------------------->
 <!-------------------------->
 
 <!-- STATUS MESSAGE -->
@@ -84,23 +91,25 @@
 
 <!-- CREATE NEW TRIP TEMPLATE -->
   <script type="text/template" id="create-new-trip-template">
-    <h2>Add a Trip</h2>
-    <form id="add-trip-form">
-      <label for="name">Name</label>
-      <input type="text" name="name"></input>
-      <label for="continent">Continent</label>
-      <input type="text" name="continent"></input>
-      <label for="about">About</label>
-      <input type="text" name="about"></input>
-      <label for="category">Category</label>
-      <input type="text" name="category"></input>
-      <label for="weeks">Weeks</label>
-      <input type="number" name="weeks"></input>
-      <label for="cost">Cost</label>
-      <input type="number" name="cost"></input>
+    <div class="modal-content">
+      <h2>Add a Trip</h2>
+      <form id="add-trip-form">
+        <label for="name">Name</label>
+        <input type="text" name="name"></input>
+        <label for="continent">Continent</label>
+        <input type="text" name="continent"></input>
+        <label for="about">About</label>
+        <input type="text" name="about"></input>
+        <label for="category">Category</label>
+        <input type="text" name="category"></input>
+        <label for="weeks">Weeks</label>
+        <input type="number" name="weeks"></input>
+        <label for="cost">Cost</label>
+        <input type="number" name="cost"></input>
 
-      <input type="submit" value="Create New Trip" class="button"></input>
-    </form>
+        <input type="submit" value="Create New Trip" id="add-trip-btn" class="button"></input>
+      </form>
+    </div>
   </script>
 
 <!-- NEW RESERVATION TEMPLATE -->

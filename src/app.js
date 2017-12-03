@@ -94,6 +94,17 @@ const newReservationHandler = function(event) {
   });
 };
 
+
+
+
+
+
+
+
+
+
+
+
 //////////////////////////
 ///// DOCUMENT READY /////
 $(document).ready(() => {
@@ -104,6 +115,7 @@ $(document).ready(() => {
   newReservationTemplate = _.template($('#new-reservation-template').html());
 
   $('#show-trips').on('click', function() {
+    console.log('show trips: clicked');
     /// need clarification on this /////
     tripList.on('update', loadTrips);
     tripList.on('sort', loadTrips);
@@ -114,7 +126,7 @@ $(document).ready(() => {
   $('#trip-list').on('click', 'tr', function() {
     const aboutElement = $('#trip-about');
     aboutElement.html('');
-    console.log('clicked');
+    console.log('about: clicked');
     // uses 'data' from html data-id
     let tripID = $(this).data('id');
     // set the id onto #trip-about to be used on reservation form
@@ -139,8 +151,7 @@ $(document).ready(() => {
           const generatedHTML = $(newReservationTemplate());
           newReservationElement.html(generatedHTML);
 
-          console.log('clicked');
-          console.log('load new reservation form: success');
+          console.log('load new reservation form: clicked');
         });
       },
       error: (model) => {
@@ -157,8 +168,7 @@ $(document).ready(() => {
     const generatedHTML = $(createNewTripTemplate());
     newTripElement.html(generatedHTML);
 
-    console.log('clicked');
-    console.log('load add new form: success');
+    console.log('load add new form: clicked');
   });
 })
 
