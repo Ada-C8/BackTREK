@@ -30,10 +30,8 @@ const renderAll = function renderAll(tripList) {
   tripList.on('sort', renderAll);
 
   tripList.forEach((trip) => {
-    // console.log(`Rendering trip ${ trip.get('name') }`);
     let tripsHTML = allTripsTemplate(trip.attributes);
     tripListElement.append( $(tripsHTML) );
-    // append that HTML formatted data to the table body
   }); // for each
 }; // renderAll function
 
@@ -43,31 +41,49 @@ const sampleHandler = (event) => {
 }
 
 
-// const renderDetails = function renderDetails(id) {
-//   const tripDetails = $('#trip-details');
-//   tripDetails.empty();
-//   let oneTrip = new Trip({id: id});
-//
-//   console.log("rendering one trip");
-//   let tripHTML = oneTripTemplate(oneTrip.attributes);
-//   tripDetails.append( $(tripHTML));
-// }; // renderDetails
+const renderDetails = function renderDetails(id) {
+  console.log("in the render and the id is");
+  console.log(id);
+  const tripDetails = $('#trip-details');
+  tripDetails.empty();
+  console.log("rendering one trip");
+  const oneTrip = new Trip({id: id});
+  console.log(oneTrip);
+  oneTrip.fetch({}).done(() => {
+    tripDetails.append(showDetailsTemplate(oneTrip.attributes));
+  });
+  console.log(oneTrip);
+  // oneTrip.on('change', renderDetails);
+
+  // let tripHTML = showDetailsTemplate(oneTrip.attributes);
+  // tripDetails.append( $(tripHTML));
+}; // renderDetails
+
 
 
 $(document).ready( () => {
 
-  allTripsTemplate = _.template($('#all-trips-template').html() ); //same for collections and models
+  allTripsTemplate = _.template($('#all-trips-template').html() );
   showDetailsTemplate = _.template($('#show-details-template').html() );
-  // Builds a collection
+
   const tripList = new TripList();
   // let oneTrip = new Trip();
 
   tripList.on('sort', renderAll);
 
+
+//
+// model.on('change', this.render, this) or model.on({change: this.render}, this)
   //Event handlers for buttons
-  $('#trips-list').on('click', '.trips', () => {
+  $('#trips-list').on('click', '.trips', (event) => {
     console.log("you did it ");
-  })
+    console.log(event.target);
+    const tripID = $(event.target).attr('data-id');
+    console.log(tripID);
+    console.log("about to render details");
+    renderDetails(tripID);
+  });
+
 
   const allTrips = $('#load-trips');
   allTrips.on('click', () => {
@@ -77,17 +93,6 @@ $(document).ready( () => {
   })
 
   $('#testing').on('click', sampleHandler);
-
-
-
-
-
-  // $('#trips-list').on('click', 'tr', function() {
-  //   $('.current-select-row').removeClass('current-select-row');
-  //   const tripID = $(this).attr('data-id');
-  //   $(this).addClass('current-select-row');
-  //   events.showTrip(tripID);
-  // });
 
 
 
