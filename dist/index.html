@@ -17,7 +17,7 @@
   <main>
 
 <section class="row">
-  <div id="all-trips" class="small-12 medium-6 large-8">
+  <div id="all-trips" class="small-12 medium-6 large-7">
     <table>
       <thead>
         <th class="sort name">Name</th>
@@ -25,6 +25,7 @@
         <th class="sort category">Category</th>
         <th class="sort weeks">Weeks</th>
         <th class="sort price">Price</th>
+        <th class="button">See Details</th>
       </thead>
 
       <!-- Where the template stuff goes! -->
@@ -70,6 +71,9 @@
       </td>
       <td>
         <%- cost %>
+      </td>
+      <td>
+        <%- id %>
       </td>
     </tr>
 
