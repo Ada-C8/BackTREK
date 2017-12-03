@@ -234,7 +234,7 @@ $(document).ready( () => {
   tripTemplate = _.template($('#trip-template').html());
   tripList.fetch();
   showTemplate = _.template($('#show-template').html());
-  $('#all-trips-btn').click(events.allTrips);
+  $('.view-all-trips').click(events.allTrips);
   $('#all-trips').on('update', render);
   $('#all-trips').on('click', '.trip', events.tripInfo);
   $('#trip-details').on('click', '#reserve-btn', events.reservationForm);
@@ -273,5 +273,6 @@ $(document).ready( () => {
         $('#new-trip-form')[0].reset();
         clearErrorMessages();
       }
+      $('#welcome').hide();
   }
 });

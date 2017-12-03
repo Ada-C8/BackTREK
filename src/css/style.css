@@ -38,6 +38,12 @@ header h2, #main-btns {
     width: 80%; /* Could be more or less, depending on screen size */
 }
 
+#modal-content h2 {
+  background-color: #02380a;
+  color: snow;
+  width: 100%;
+}
+
 /* The Close Button */
 .close {
     color: #aaa;
@@ -62,7 +68,12 @@ header {
   position: fixed;
   top: 0;
   width: 100%;
-  background-color: white;
+  color: snow;
+  /*background-color: #f96825; orange*/
+  /*background-color: #11a327; green*/
+  /*background-color: #fff35e; highlight yellow*/
+  /*dark green*/
+  background-color: #02380a;
 }
 
 main {
@@ -86,6 +97,7 @@ body {
   background-image: url(https://mir-s3-cdn-cf.behance.net/project_modules/fs/afb86259379827.5a1fe245e8f0b.jpg);
   background-repeat: no-repeat;
   background-size: cover;
+  width: 100%;
 }
 
 .modal-content {
@@ -97,11 +109,25 @@ body {
 }
 
 .button {
-  background-color: #134aa3;
+  background-color: #1d51a5;
   border-radius: 8px;
   margin-top: 8px;
 }
 
 #filter-category, input[type= text], input[type= integer] {
   border-radius: 8px;
+}
+
+#welcome .button {
+  background-color: transparent;
+  border: #1d51a5 solid 1px;
+  color: #1d51a5;
+}
+
+#welcome {
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 14%;
+  max-width: 60%;
+  /*margin-left: 200px;*/
 }
