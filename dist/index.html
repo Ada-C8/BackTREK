@@ -18,12 +18,26 @@
 
     <section class="row">
       <div id="individual-trip" class="small-12 medium-6 large 3">
-
         <!-- Where the template stuff goes! -->
         <p id="trip-details">
         </p>
       </div>
     </section>
+
+    <section id="reserve-trip">
+      <aside class="columns large-4 small-12">
+        <h2>Take a Trip</h2>
+        <form id="reservation-form" data-id="12">
+          <label for="name">Name</label>
+          <input type="text" name="name"></input>
+          <label for="email">Email</label>
+          <input type="text" name="Email"></input>
+          <input type="submit" value="Book Trip" class="button"></input>
+        </form>
+      </aside>
+    </section>
+
+
 
     <section class="row">
       <section id="all-trips" class="small-12 medium-6 large-7">
@@ -42,29 +56,6 @@
         </table>
       </section>
     </section>
-
-    <section id="reserve-trip">
-      <aside class="columns large-4 small-12">
-        <h2>Take a Trip</h2>
-        <form id="reservation-form" data-id="12">
-          <label for="name">Name</label>
-          <input type="text" name="name"></input>
-
-          <label for="email">Email</label>
-          <input type="text" name="Email"></input>
-
-          <input type="submit" value="Book Trip" class="button"></input>
-        </form>
-
-      </aside>
-    </section>
-
-
-
-
-
-
-
 
 
 
@@ -94,8 +85,6 @@
       </td>
     </tr>
   </script>
-
-
 
   <script id="show-details-template" type="text/template" >
     <h2> <%- name %> </h2>

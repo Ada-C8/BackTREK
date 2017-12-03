@@ -4,7 +4,9 @@
   color: blue;
 }
 
-
+#reservation-form {
+  border: 10px solid purple;
+}
 
 h1 h2 {
   text-align: center;

@@ -32,7 +32,9 @@ const renderAll = function renderAll(tripList) {
 
   tripList.forEach((trip) => {
     let tripsHTML = allTripsTemplate(trip.attributes);
+    if (trip.id < 34) {
     tripListElement.append( $(tripsHTML) );
+    }
   }); // for each
 }; // renderAll function
 
@@ -104,10 +106,11 @@ $(document).ready( () => {
   // book trip
 $('#trip-details').on('click', 'h4', function() {
   console.log("You clicked to see the res form");
-  console.log("this");
+  console.log(this);
   const bookTripID = $(this).attr('data-id');
   $('#reservation-form').attr("data-id", bookTripID);
-  $('#reservation-form').show();
+  $('#reserve-trip').show();
+  console.log("i'm after show form");
 })
 
   //  show trip details
