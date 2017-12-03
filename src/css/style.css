@@ -115,6 +115,8 @@ nav {
   border-collapse: separate;
   border-spacing: 0 .4rem;
   max-width: 100%;
+  table-layout: fixed;
+  word-wrap: normal;
 }
 
 .trips th {
@@ -143,7 +145,7 @@ nav {
 /*TRIP SECTION*/
 .trip {
   display: none;
-  max-height: 700px;
+  /*max-height: 700px;*/
 }
 
 .trip ul, .trip article {
