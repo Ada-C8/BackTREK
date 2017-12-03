@@ -16,11 +16,14 @@ const TRIP_FIELDS = ['name', 'continent', 'category', 'weeks', 'cost'];
 
 let tripTemplate;
 
-
+//Methods
 
 const render = function render(tripList) {
   const tripListElement = $('#trip-list');
+  //make trip-list a jquery object so you can use jquery methods on it
+
   tripListElement.empty();
+  //empties list
 
   tripList.forEach((trip) => {
     console.log(`Rendering trip ${ trip.get('name') }`);
@@ -29,16 +32,22 @@ const render = function render(tripList) {
   }); // for each
 }; // render function
 
+// sort function
+
+
+
 
 $(document).ready( () => {
-  // $('main').html('<h1>Hello World!</h1>');
+
   console.log('in document ready');
+
   tripTemplate = _.template($('#trip-template').html() ); //same for collections and models
 
   // Builds a collection
   const tripList = new TripList();
 
   // gets date from APi and triggers an Update Event
+  // $('#load').on('click', )
   tripList.fetch();
 
   tripList.on('update', render);
@@ -49,9 +58,34 @@ $(document).ready( () => {
   // const tripList = new TripList();
   // render(tripList);
   // The render function takes the place of the final part of the function for a single item. i.e. the part that goes through each item and turns it into html
+
+  //Event handlers for table headers
+  TRIP_FIELDS.forEach((field) => {
+    const headerElement = $(`.sort.${ field }`);
+
+    headerElement.on('click', () => {
+      console.log(`Sorting by ${ field }`);
+      tripList.comparator = field;
+      tripList.sort();
+    }); // click event handler
+  }); // fields for each
+
+
+
+
+
+
+
 }); // end document ready
 
-
+// tripList.forEach((trip) => {
+//   const genhtml = $()
+//   genhtml.on('click', (event) => {
+//     renderDetails(trip);
+//   })
+// });
+//
+// tripTable.append(genHTML);
 
   //
   //
