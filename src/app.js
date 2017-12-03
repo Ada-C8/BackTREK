@@ -37,7 +37,6 @@ const render = function render(tripList) {
 };
 
 
-// Trip details - user can click to see trip deets.
 
 // User can create a new trip.
 
@@ -50,18 +49,13 @@ const render = function render(tripList) {
 
 $(document).ready( () => {
 
+// Get those trip deets.
   $tripsList.on('click', 'tr', function getTrip() {
     const trip = new Trip({ id: $(this).attr('data-id') })
     $tripDescription.empty();
 
     trip.fetch().done(() => {
-      const element = $tripDescription;
-      const appendFunction = element.append.bind(element);
-      const attrs = trip.attributes;
-      const templateResult = tripDetailsTemplate(attrs);
-      const appendResult = appendFunction(templateResult);
-
-      // $tripDescription.append(tripDetailsTemplate(trip.attributes));
+      $tripDescription.append(tripDetailsTemplate(trip.attributes));
     });
   });
 
@@ -80,7 +74,22 @@ $(document).ready( () => {
 
 
 
-// Notey notes from books, perhaps use for this project?
+// Notey notes from books and tutoring.
+
+// Tutoring notes, breakdown of detail fetching.
+// $tripsList.on('click', 'tr', function getTrip() {
+//   const trip = new Trip({ id: $(this).attr('data-id') })
+//   $tripDescription.empty();
+//
+//   trip.fetch().done(() => {
+    // const element = $tripDescription;
+    // const appendFunction = element.append.bind(element);
+    // const attrs = trip.attributes;
+    // const templateResult = tripDetailsTemplate(attrs);
+    // const appendResult = appendFunction(templateResult);
+
+    // $tripDescription.append(tripDetailsTemplate(trip.attributes));
+  // });
 
 
 // successfullSave(trip, response) {
