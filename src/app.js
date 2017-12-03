@@ -50,10 +50,13 @@ const renderDetails = function renderDetails(id) {
 }; // renderDetails
 
 const makeReservation = function makeReservation(bookTripID, reservationFormData) {
-  let reserveURL = 'https://ada-backtrek-api.herokuapp.com/trips/' + bookTripID + '/reservations';
-  console.log(reserveURL)
+  let reserveURL = 'https://trektravel.herokuapp.com/trips/' + bookTripID + '/reservations';
+  console.log(reserveURL);
+  $.post(reserveURL, reservationFormData);
+  console.log("Posted!");
 }
 
+// https://ada-backtrek-api.herokuapp.com/trips/1/reservations
 // let reserveTrip = function reserveTrip(id, formData) {
 //   reserveURL = (baseURL+'/'+ id + '/reservations');
 //   console.log(reserveURL);
@@ -112,6 +115,7 @@ $(document).ready( () => {
     const bookTripID = $(event.target).attr('data-id');
     let reservationFormData =
      $('#reservation-form').serialize();
+     console.log(reservationFormData);
     makeReservation(bookTripID, reservationFormData);
   }) //end book trip
 
