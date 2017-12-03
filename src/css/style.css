@@ -87,3 +87,8 @@ section {
 #status-messages .success {
   color: green;
 }
+
+.current-sort-field {
+  background-color: darkgrey;
+  color: white;
+}

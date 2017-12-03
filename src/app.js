@@ -30,6 +30,10 @@ const render = function render(event) {
       tableElement.append(generatedHTML);
     }
   });
+
+  $('th.sort').removeClass('current-sort-field');
+  $(`th.sort.${ tripList.comparator }`).addClass('current-sort-field');
+
 };
 
 const showTrips = function showTrips(event) {
@@ -170,6 +174,7 @@ $(document).ready( () => {
   $('#load').on('click', showTrips);
 
   tripList.on('update', render)
+  tripList.on('sort', render);
 
   tripList.fetch();
 
@@ -184,4 +189,13 @@ $(document).ready( () => {
   $('#add-trip-button').on('click', loadModal);
 
   $('#status-messages button.clear').on('click', clearStatus);
+
+  tripFields.forEach((field) => {
+    const headerElement = $(`th.sort.${ field }`);
+    headerElement.on('click', (event) => {
+      console.log(`Sorting table by ${ field }`);
+      tripList.comparator = field;
+      tripList.sort();
+    });
+  });
 });
