@@ -112,9 +112,9 @@ const showIndividualTripHandler = function showIndividualTripHandler(event) {
 
         // Listen for submit event on #reserve-trip
         $('#reserve-trip').on('submit', addReservationHandler);
-      }//success function
-    });//fetch
-  };//showIndividualTripHandler function
+      }
+    });
+  };
 
 const addTripHandler = function(event) {
   event.preventDefault();
@@ -159,6 +159,7 @@ const addReservationHandler = function(event) {
     success: (model, response) => {
       console.log('Successfully saved trip!');
       $('#individual-trip-details').hide();
+      $('#individual-trip-details-close').hide();
       const successObject = {
         success: 'Successfully made reservation!',
       }
