@@ -10,7 +10,7 @@ console.log('it loaded!');
 
 // models and collections
 import Trip from './app/models/trip';
-import Reservation from './app/models/reservation';
+// import Reservation from './app/models/reservation';
 import TripList from './app/collections/trip_list';
 
 
@@ -50,12 +50,27 @@ const renderDetails = function renderDetails(id) {
 }; // renderDetails
 
 const makeReservation = function makeReservation(bookTripID, reservationFormData) {
-  const newReservation = new Reservation();
-  newReservation.save => {
-    console.log("Your trip was saved");
-  }
-
+  let reserveURL = 'https://ada-backtrek-api.herokuapp.com/trips/' + bookTripID + '/reservations';
+  console.log(reserveURL)
 }
+
+// let reserveTrip = function reserveTrip(id, formData) {
+//   reserveURL = (baseURL+'/'+ id + '/reservations');
+//   console.log(reserveURL);
+//   $.post(reserveURL, formData, (response) => {
+//     $('#makeReservation').html('<p> Reservation added! </p>');
+//     console.log(response);
+//     alert("Your Trip is Reserved!");
+//     $('#book-trip-form').hide();
+//     $('.trip-details').children().hide();
+//   })
+//   .fail(function(response){
+//     $('#fail').html('<p>Request was unsuccessful</p>')
+//   })
+//   .always(function(){
+//     console.log('always even if we have success or failure');
+//   });
+// };
 
 // const makeReservation = function makeReservation() {
 //   const resData = {};
@@ -115,6 +130,7 @@ $(document).ready( () => {
     const tripID = $(event.target).attr('data-id');
     $('#individual-trip').show();
     renderDetails(tripID);
+    window.scrollTo(0, 0);
   });
 
   // show all the trips
