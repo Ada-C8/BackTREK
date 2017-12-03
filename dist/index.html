@@ -27,9 +27,9 @@
     <section class="columns large-7 small-12" id = "all-trips">
       <h2>All Trips</h2>
       <form id= "filter-form">
-        <select name="filter-category" id= "filter-category">
-          <option>
-
+        <select name="filter-category" id= "filter-category" placeholder= "Filter by:">
+          <option disabled selected hidden>
+            Filter by:
           </option>
           <option value = "name">
             Name
@@ -47,7 +47,7 @@
             Cost
           </option>
         </select>
-        <input type="text" id="filter-query" name="filter-query"></input>
+        <input type="text" id="filter-query" name="filter-query" placeholder= "Search"></input>
         <button class = "button" id= "filter-btn"> Clear Filter</button>
       </form>
       <table>

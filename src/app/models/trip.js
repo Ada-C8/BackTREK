@@ -9,17 +9,10 @@ const Trip = Backbone.Model.extend({
     const continents = ['africa', 'antartica', 'asia', 'australasia', 'europe', 'north america', 'south america'];
     const numericFields = ['weeks', 'cost'];
 
-    // const initializeArrays = (field, inputHash) => {
-    //   if (!inputHash[field]) {
-    //     inputHash[field] =[];
-    //   }
-    // };
-
     if (!attributes.name) {
       if (!errors['name']) {
         errors['name'] = [];
       }
-      // initializeArrays('name', errors);
       errors['name'].push('Trip must have a name');
     }
 
@@ -88,27 +81,6 @@ const Trip = Backbone.Model.extend({
       }
       errors['cost'].push('Cost must be greater than 0');
     }
-
-    // numericFields.forEach((numField) => {
-    //   if (!attributes[numField]) {
-    //     if (!errors[numField]) {
-    //       errors[numField] = [];
-    //     }
-    //     errors[numField].push(`${numField} must be included`);
-    //   }
-    //
-    //   if (isNaN(attributes[numField])) {
-    //     if (!errors[numField]) {
-    //       errors[numField] = [];
-    //     }
-    //     errors[numField].push(`${numField} must be a valid number`);
-    //   } else if (parseInt(attributes[numField]) <= 0) {
-    //     if (!errors[numField]) {
-    //       errors[numField] = [];
-    //     }
-    //     errors[numField].push('Cost must be greater than 0');
-    //   }
-    // })
 
     if (Object.keys(errors).length > 0) {
       console.log(errors);

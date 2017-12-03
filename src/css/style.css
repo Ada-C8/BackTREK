@@ -78,3 +78,5 @@ th.sort {
   background-color: darkgrey;
   color: white;
 }
+
+/*TODO: Add styling so that if screen is smaller than medium, the details for one trip show up on top of the table*/

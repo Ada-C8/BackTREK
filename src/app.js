@@ -14,8 +14,6 @@ let filteredMatches;
 
 // modal stuff
 const modal = $('#myModal');
-
-// Get the <span> element that closes the modal
 const closeBtn = $('.close')[0];
 
 const formFields = ['name', 'continent', 'category', 'cost', 'about', 'weeks', 'id'];
@@ -54,15 +52,6 @@ const events = {
         $('#trip-details').append(showTemplate(trip.attributes));
       },
     })
-
-    // trip.fetch({
-    //   success: function(){
-    //     $('#content').html(new usersView({
-    //       collection: users
-    //     }).render().el);
-    //   },
-    // });
-
   },
   reservationForm(event) {
     const tripID = this.getAttribute("data-trip-id");
@@ -139,7 +128,7 @@ const events = {
     console.log('testing: this is the new trip');
     console.log(trip);
     if (trip.isValid()) {
-      console.log('this trip is valid')
+      console.log('this trip is client side valid')
       trip.save({}, {
         success: events.successfulSave,
         error: events.failedSave,
@@ -158,27 +147,18 @@ const events = {
         });
       });
       $('#add-trip-error-msgs').show();
-      // setTimeout(clearErrorMessages,10000);
     }
   },
   successfulSave(trip, response) {
     const modal = document.getElementById('myModal');
-    console.log('success! the successfulsave method worked');
-    // console.log(trip);
-    // console.log(response);
     $('#status-messages ul').empty();
     $('#status-messages ul').append(`<li>${trip.get('name')} succesfully added!</li>`);
     modal.style.display = "none";
     $('#status-messages').show();
     $('#new-trip-form')[0].reset();
-    console.log($('#status-messages'));
     setTimeout(clearErrorMessages,8000);
-    // setTimeout($('#messages').hide(), 2000);
   },
   failedSave(trip, response) {
-    console.log('fail :( we are in the failedSave method');
-    console.log(trip);
-    console.log(response);
     $('#add-trip-error-msgs h3').html(`<h3>Error:</h3>`);
     $('#add-trip-error-msgs ul').empty();
     const errs = response.responseJSON.errors;
@@ -187,11 +167,7 @@ const events = {
         $('#add-trip-error-msgs ul').append(`<li>${key}: ${error}</li>`);
       })
     }
-    // $('#add-trip-error-msgs').show();
     $('.messages').show();
-    console.log('did the messages show');
-    // setTimeout(clearErrorMessages,5000);
-    // setTimeout($('#messages').hide(), 3000);
     trip.destroy();
   },
   filtering() {
@@ -228,11 +204,8 @@ const events = {
     // console.log(filteredTrips);
   },
   highlightSelection(event) {
-    console.log('the event is:');
-    console.log(event);
-    console.log('THIS is: ');
-    console.log(this);
-    // selection.css({'background-color': 'red'});
+    $('.highlight').removeClass('highlight');
+    $(this).addClass('highlight');
   },
 };
 const render= function render(tripList) {
@@ -249,19 +222,10 @@ const showFiltered= function showFiltered(filteredMatches) {
   });
 };
 const clearErrorMessages= function clearErrorMessages() {
-  // const messageSections = $('.messages').toArray();
-  // console.log(messageSections);
-  // messageSections.forEach((section) => {
-  //   console.log(section);
-  //   section.hide();
-  //   section.empty();
-  //   console.log('hid the messages teehee');
-  // });
   const messageSections = $('.messages');
   messageSections.hide();
   $('.messages ul').empty();
   console.log('hid the messages teehee');
-  console.log(messageSections);
 };
 let tripTemplate;
 let showTemplate;
@@ -275,27 +239,24 @@ $(document).ready( () => {
   $('#all-trips').on('click', '.trip', events.tripInfo);
   $('#trip-details').on('click', '#reserve-btn', events.reservationForm);
   $('#trip-details').on('submit', '#reservation-form', events.finalizeReservation);
-  // $('body').on('click', '#add-trip-btn', events.newTripForm);
-  // $('#trip-details').on('submit', '#new-trip-form', events.addTrip);
+  $('body').on('click', '#close-trip-details-btn', function () {
+    $('#trip-details').empty();
+  });
   $('#myModal').on('submit', '#new-trip-form', events.addTrip);
   $('#all-trips').on('click', '.sort', events.sortTrips);
   tripList.on('sort', render, tripList);
-  $('#all-trips').on('click', 'tr', events.highlightSelection);
-  // $('#filter-category').on('change', events.filtering);
+  $('#all-trips tbody').on('click', 'tr', events.highlightSelection);
   $('#filter-query').on('keyup', events.filtering);
-  // $('#filter-btn').on('click', $('#filter-form')[0].reset());
-
+  // $('#filter-form').on('click', '#filter-btn', function() {
+  //   $('#filter-form')[0].reset();
+  // });
   // modal stuff
 
   // When the user clicks on the button, open the modal
 
   $('#add-trip-btn').on('click', function() {
     modal.css({'display': 'block'});
-    // modal.style.display = "block";
   })
-  // btn.onclick = function() {
-  //     modal.style.display = "block";
-  // }
 
   // When the user clicks on <span> (x), close the modal
   closeBtn.onclick = function() {
