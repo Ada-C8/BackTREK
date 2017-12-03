@@ -9,6 +9,8 @@ import './css/style.css';
 import Trip from './app/models/trip';
 import TripList from './app/collections/trip_list';
 
+const TRIP_FIELDS = ['name', 'continent', 'category', 'weeks', 'cost'];
+
 let tripList;
 let tripTemplate;
 let tripDetailsTemplate;
@@ -23,6 +25,9 @@ const render = function render(tripList) {
   tripList.forEach((trip) => {
     tripListElement.append(tripTemplate(trip.attributes));
   });
+
+  $('th.sort').removeClass('current-sort-field');
+  $(`th.sort.${ tripList.comparator }`).addClass('current-sort-field');
 };
 
 const reportStatus = function reportStatus(status, message) {
@@ -56,6 +61,9 @@ $(document).ready( () => {
 
   tripList = new TripList();
 
+  tripList.on('update', render, tripList);
+  tripList.on('sort', render, tripList);
+
   $('button#search').on('click', loadTrips);
   $('#trip-list').on('click', 'tr', function() {
     const trip = tripList.get($(this).attr('data-id'));
@@ -63,6 +71,14 @@ $(document).ready( () => {
     trip.fetch({}, {
     success: loadTrip(trip),
     error: reportStatus,
+    });
+  });
+
+  TRIP_FIELDS.forEach((field) => {
+    const headerElement = $(`.sort.${ field }`);
+    headerElement.on('click', () => {
+      tripList.comparator = field;
+      tripList.sort();
     });
   });
 });

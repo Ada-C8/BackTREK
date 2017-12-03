@@ -1,2 +1,10 @@
 
 /* Your styles go here! */
+th.sort {
+  cursor: pointer;
+}
+
+.current-sort-field {
+  background-color: darkgrey;
+  color: white;
+}
