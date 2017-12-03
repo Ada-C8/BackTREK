@@ -137,7 +137,7 @@ const events = {
     } else {
       console.log('there was a client error for this trip');
       const errorTypes = Object.keys(trip.validationError);
-      $('#add-trip-error-msgs h3').html(`<h3>Error:</h3>`);
+      $('#add-trip-error-msgs h3').html(`<h4>Error:</h4>`);
       $('#add-trip-error-msgs ul').empty();
 
       errorTypes.forEach((type) => {
@@ -154,6 +154,7 @@ const events = {
     $('#status-messages ul').empty();
     $('#status-messages ul').append(`<li>${trip.get('name')} succesfully added!</li>`);
     modal.style.display = "none";
+    // tripList.trigger('update');
     $('#status-messages').show();
     $('#new-trip-form')[0].reset();
     setTimeout(clearErrorMessages,8000);
@@ -230,12 +231,13 @@ const clearErrorMessages= function clearErrorMessages() {
 let tripTemplate;
 let showTemplate;
 $('#all-trips').hide();
+$('.messages').hide();
 $(document).ready( () => {
   tripTemplate = _.template($('#trip-template').html());
   tripList.fetch();
   showTemplate = _.template($('#show-template').html());
   $('.view-all-trips').click(events.allTrips);
-  $('#all-trips').on('update', render);
+  tripList.on('update', render, tripList);
   $('#all-trips').on('click', '.trip', events.tripInfo);
   $('#trip-details').on('click', '#reserve-btn', events.reservationForm);
   $('#trip-details').on('submit', '#reservation-form', events.finalizeReservation);
