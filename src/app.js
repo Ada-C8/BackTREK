@@ -39,9 +39,9 @@ const renderList = function renderList() {
       // let singleTrip = tripList.findWhere({id: tripID});
     });
   });
+  $('th.sort').removeClass('current-sort-field');
+  $(`th.sort.${ tripList.comparator }`).addClass('current-sort-field');
 };
-
-// Render on sort
 
 
 ////////////////////////////////////////////////////////////////
@@ -73,8 +73,6 @@ const showTrip = function showTrip(trip) {
     event.preventDefault();
     reserveTripHandler();
   });
-
-  // console.log('THE CALL BACK FUNCTION WORKS!!');
 };
 
 //////////////////////////////////////////////////////////////
@@ -118,11 +116,11 @@ const reserveTripHandler = () => {
 
     reservation[field] = value;
 
-    // Clears the form
     inputElement.val('');
   });
 
   let newReservation = new Reservation(reservation);
+
   // If it is valid it will return false
   if (!newReservation.isValid()) {
 
@@ -183,10 +181,12 @@ const sortingHandler = () => {
       tripList.comparator = field;
       // If you don't change the comparator it will resort based on the sort not the comparator
       tripList.sort();
-      console.log('HITS SORT FUNCTION');
+      // console.log('HITS SORT FUNCTION');
     });
   });
 };
+
+
 
 /////////////////////////////////////////////////////////////////
 //////////////////////////// FILTER /////////////////////////////
@@ -225,32 +225,31 @@ const filterResults = () => {
 
 
 $(document).ready(() => {
-  $('#create-trip-form').hide();
 
+  $('#create-trip-form').hide();
   tripList.fetch();
 
   // Listen and register. Once an update has been heard, render all the collection into the template
   tripList.on('update', renderList);
 
-  // Render form when the button is clicked
+  // RENDER CREATE TRIP FORM
   $('#create-trip').on('click', (event) => {
     $('#trip-info').html('');
     $('#create-trip-form').show();
   });
 
-  // On click new trip form
+  // RENDER NEW TRIP FORM
   $('#new-trip-form').on('submit', (event) => {
     event.preventDefault();
     newTripHandler();
   });
 
+  // RUNS SORTING METHOD
   sortingHandler();
 
-  // On sort of the TripList
+  // ON SORT, RENDER ORGANIZED TRIP LIST
   tripList.on('sort', renderList);
 
   $('#search-bar').on('keyup', filterResults);
-
-  // On Error
 
 }); // DOCUMENT READY

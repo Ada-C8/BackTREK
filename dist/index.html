@@ -26,8 +26,8 @@
       <section class="small-12 large-6 columns">
 
         <!-- DEFAULT LOGO -->
-        <section class="default-logo">
-          <h1>CHOOSE YOUR TREK</h1>
+        <section id="default-logo">
+          <h1 class="align-center">CHOOSE YOUR TREK</h1>
         </section>
 
         <!-- TRIP-INFO -->
@@ -67,6 +67,8 @@
       <section id="table-select-wrapper" class="small-12 large-6 columns">
         <p class="color-white align-center">
           Filter by choosing from the dropdown menu
+          <br>
+          Click the table column name below to sort the list
         </p>
         <div class="set-width">
           <select id="filter">
@@ -134,8 +136,8 @@
 
   <!-- TRIP TEMPLATE -->
 
-  <script id="trip-info-template" class="align-center" type="text/template">
-    <section class="padding">
+  <script id="trip-info-template" type="text/template">
+    <section class="padding align-center">
       <header>
         <h1>
           <%- name %>
@@ -154,7 +156,7 @@
 
     <div id="reserve-wrapper">
       <header>
-        <h4 class="header-styling cardo-font">Please enter your information below</h4>
+        <h4 class="header-styling cardo-font align-center">Please enter your information below</h4>
       </header>
 
       <form id="reserve-form" class="small-11 small-centered columns cardo-font padding">

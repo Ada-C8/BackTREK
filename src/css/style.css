@@ -36,6 +36,7 @@ h1, h2, h3, h4 {
 
 .align-center {
   text-align: center;
+  padding: 10px;
 }
 
 
@@ -44,6 +45,7 @@ h1, h2, h3, h4 {
 .main-header {
   text-align: center;
   height: 150px;
+  padding: 30px;
 }
 
 @media screen and (min-width: 64em) {
@@ -57,8 +59,7 @@ h1.logo {
   color: white;
   top: 50%;
   font-family: 'Arvo', serif;
-  font-size: 3em;
-  padding: 10px;
+  font-size: 4em;
 }
 
 .to-reserve {
@@ -69,6 +70,11 @@ h1.logo {
 }
 
 /******* MAIN *******/
+
+#default-logo {
+  color: white;
+  padding-top: 20%;
+}
 
 main {
   overflow: scroll;
@@ -95,6 +101,11 @@ table thead th {
   table {
     font-size: 1em;
   }
+}
+
+.current-sort-field {
+  background-color: darkgrey;
+  color: white;
 }
 
 /******* TRIP INFO *******/
