@@ -227,8 +227,17 @@ $(document).ready( () => {
   $('nav').on('click', '#new-trip', function() {
     $('#add-trip').append(addTripTemplate({continents: CONTINENTS}));
     $('.wrapper').show();
+    //go back from new trip form
+    $('#add-trip-form').on('click', '#cancel', function() {
+      console.log('closing new trip form');
+      $('.wrapper').hide();
+    })
+    //submit event
     $('#add-trip-form').on('submit', addTrip);
   })
+
+
+
 
 
 
