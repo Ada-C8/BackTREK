@@ -1,5 +1,22 @@
 
 /* Your styles go here! */
+header {
+  width: 95%;
+  margin-top: 50px;
+  margin-bottom: 75px;
+}
+
+.row {
+  max-width: 95%;
+}
+
+.newTripBtn {
+  height: 100%;
+}
+
+#trip-description {
+  padding-right: 40px;
+}
 
 #status-messages {
   background-color: #dfdfdf;
