@@ -18,11 +18,11 @@ let tripTemplate;
 
 //Methods
 
-const renderAll = function render(tripList) {
+const renderAll = function renderAll(tripList) {
   const tripListElement = $('#trip-list');
-  //make trip-list a jquery object so you can use jquery methods on it
+  // make the table-body with id trip-list a jquery object & assign it to a variable
   tripListElement.empty();
-  //empties list
+  // clear the table-body with id trip-list
 
   // Apply styling to the current sort field
   $('th.sort').removeClass('current-sort-field');
@@ -38,15 +38,26 @@ const renderAll = function render(tripList) {
 
   tripList.forEach((trip) => {
     console.log(`Rendering trip ${ trip.get('name') }`);
-    let tripHTML = tripTemplate(trip.attributes);
-    tripListElement.append($(tripHTML));
+
+    let tripsHTML = tripTemplate(trip.attributes);
+    //use template to create filled in template using retrieved data
+    tripListElement.append($(tripsHTML));
+    // append that HTML formatted data to the table body
   }); // for each
 }; // renderAll function
 
-const renderDetails = function render(trip){
-  const trip = $()
-
-}
+// const renderDetails = function renderDetails(trip){
+//   const tripDetails = $('trip-details');
+//   // make the paragraph with id trip-details a jquery object and assign it to a variable
+//   tripDetails.empty();
+//   // clear the space if something is in it
+//   let tripHTML = $()
+//     genhtml.on('click', (event) => {
+//       renderDetails(trip);
+//     }) //click event
+//
+//   tripDetails.append(tripHTML);
+// }; // renderDetails funciton
 
 // sort function
 
@@ -64,19 +75,22 @@ $(document).ready( () => {
 
   // gets date from APi and triggers an Update Event
   // $('#load').on('click', )
-  tripList.fetch();
+  // tripList.fetch();
 
-  tripList.on('update', renderAll);
+  // tripList.on('update', renderAll);
   tripList.on('sort', renderAll);
   //so the fetch will trigged update and then render will render the data into the template.
   $('.name').on('click', 'td', () => {
     console.log("you clicked something");
   })
-  // const tripList = new TripList();
-  // render(tripList);
-  // The render function takes the place of the final part of the function for a single item. i.e. the part that goes through each item and turns it into html
-  //Event handlers for buttons
 
+  //Event handlers for buttons
+  const allTrips = $('#load-trips');
+  allTrips.on('click', () => {
+    tripList.fetch();
+    console.log("I fetched it!");
+    // tripList.renderAll;
+  })
 
   //Event handlers for table headers
   TRIP_FIELDS.forEach((field) => {
@@ -98,14 +112,6 @@ $(document).ready( () => {
 
 }); // end document ready
 
-// tripList.forEach((trip) => {
-//   const genhtml = $()
-//   genhtml.on('click', (event) => {
-//     renderDetails(trip);
-//   })
-// });
-//
-// tripTable.append(genHTML);
 
   //
   //
