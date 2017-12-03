@@ -1,3 +1,7 @@
+#trip-list-table {
+  display: none;
+}
+
 th.sort {
   cursor: pointer;
 }
@@ -9,9 +13,10 @@ th.sort {
 
 .hero {
   background: url('https://i.imgur.com/cq3UAle.jpg') 50% no-repeat;
+  /* img of canyons with several hot air balloons */
   /* Photo by Egzon Bytyqi on Unsplash */
   background-size: cover;
-  height: 40vh;
+  height: 90vh;
   text-align: center;
   display: flex;
   align-items: center;

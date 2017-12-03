@@ -94,17 +94,6 @@ const newReservationHandler = function(event) {
   });
 };
 
-
-
-
-
-
-
-
-
-
-
-
 //////////////////////////
 ///// DOCUMENT READY /////
 $(document).ready(() => {
@@ -119,7 +108,13 @@ $(document).ready(() => {
     /// need clarification on this /////
     tripList.on('update', loadTrips);
     tripList.on('sort', loadTrips);
-    tripList.fetch();
+    tripList.fetch({
+      success: () => {
+        $('#trip-list-table').show();
+        console.log('show list table: success');
+      },
+    });
+    $('.hero').animate({height:'40vh'});
   });
 
   // RENDER SINGLE TRIP DETAILS TO DOM

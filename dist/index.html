@@ -23,17 +23,17 @@
     <span id="confirmation-msg"></span>
 
 <!-- ADD TRIP #trip-create-new -->
-    <article id="trip-create-new" class="columns large-8 small-12 modal">
+    <article id="trip-create-new" class="columns large-4 small-12">
       <!-- create new trip form -->
     </article>
 
 <!-- SINGLE TRIP #trip-about -->
-    <aside id="trip-about" class="columns large-4 small-12">
+    <aside id="trip-about" class="columns large-8 small-12">
     </aside>
 
 <!-- TRIP LIST #trip-list -->
     <section class="columns large-8 small-12">
-      <table>
+      <table id="trip-list-table">
         <thead>
           <th class="sort name" id="trip-name">Name</th>
           <th class="sort continent">Continent</th>
@@ -91,25 +91,23 @@
 
 <!-- CREATE NEW TRIP TEMPLATE -->
   <script type="text/template" id="create-new-trip-template">
-    <div class="modal-content">
-      <h2>Add a Trip</h2>
-      <form id="add-trip-form">
-        <label for="name">Name</label>
-        <input type="text" name="name"></input>
-        <label for="continent">Continent</label>
-        <input type="text" name="continent"></input>
-        <label for="about">About</label>
-        <input type="text" name="about"></input>
-        <label for="category">Category</label>
-        <input type="text" name="category"></input>
-        <label for="weeks">Weeks</label>
-        <input type="number" name="weeks"></input>
-        <label for="cost">Cost</label>
-        <input type="number" name="cost"></input>
+    <h2>Add a Trip</h2>
+    <form id="add-trip-form">
+      <label for="name">Name</label>
+      <input type="text" name="name"></input>
+      <label for="continent">Continent</label>
+      <input type="text" name="continent"></input>
+      <label for="about">About</label>
+      <input type="text" name="about"></input>
+      <label for="category">Category</label>
+      <input type="text" name="category"></input>
+      <label for="weeks">Weeks</label>
+      <input type="number" name="weeks"></input>
+      <label for="cost">Cost</label>
+      <input type="number" name="cost"></input>
 
-        <input type="submit" value="Create New Trip" id="add-trip-btn" class="button"></input>
-      </form>
-    </div>
+      <input type="submit" value="Create New Trip" class="button"></input>
+    </form>
   </script>
 
 <!-- NEW RESERVATION TEMPLATE -->
