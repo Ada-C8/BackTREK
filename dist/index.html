@@ -36,8 +36,8 @@
             <th class="sort name" id="trip-name">Name</th>
             <th class="sort continent">Continent</th>
             <th class="sort category">Category</th>
-            <th class="sort weeks">Weeks</th>
-            <th class="sort cost">Cost</th>
+            <th class="sort weeks">Trip Length</th>
+            <th class="sort cost">Cost (in USD)</th>
           </thead>
           <tbody id="trip-list">
           </tbody>
@@ -83,10 +83,10 @@
         <%- category %>
       </td>
       <td>
-        <%- weeks %>
+        <%- weeks %> week(s)
       </td>
       <td>
-        <%- cost %>
+        $<%- cost %>
       </td>
     </tr>
   </script>
