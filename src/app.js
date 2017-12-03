@@ -6,13 +6,15 @@ import _ from 'underscore';
 import './css/foundation.css';
 import './css/style.css';
 
-import TripList from './app/collections/trip_list'
+import TripList from './app/collections/trip_list';
 import Trip from './app/models/trip';
+import Reservation from './app/models/reservation';
 
 console.log('it loaded!');
 
 const tripList = new TripList()
-const trip = new Trip()
+// const trip = new Trip()
+// const res = new Reservation()
 
 const TRIP_FIELDS = ['name', 'category', 'continent', 'weeks', 'cost', 'about'];
 const RES_FIELDS = ['name', 'email'];
@@ -164,6 +166,31 @@ const addTripHandler = function(event) {
     },
   });
 };
+
+const addResHandler = function addResHandler(event) {
+  event.preventDefault();
+  console.log('click into addResHandler');
+
+  const res = new Reservation(readResFormData());
+
+  if (!res.isValid()) {
+    handleValidationFailures(res.validationError);
+    return;
+  }
+
+  res.save({}, {
+    success: (model, response) => {
+      console.log('Successfully saved res');
+      reportStatus('success', 'Successfully saved reservation!');
+    },
+    error: (model, response) => {a
+      console.log('Failed to save res. Server response: ');
+      console.log(response);
+
+      handleValidationFailures(response.responseJSON["errors"]);
+    }
+  })
+}
 
 // Jquery event handling
 $(document).ready( () => {
