@@ -21,70 +21,80 @@
         <h1 id="testing">Placeholder Text</h1>
         <p id="trip-details">
           Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-        </div>
+        </p>
+      </div>
+    </section>
+
+<section class="row">
 
 
+    <section id="all-trips" class="small-12 medium-6 large-7">
+      <table>
+        <thead>
+          <th class="sort name">Name</th>
+          <th class="sort continent">Continent</th>
+          <th class="sort category">Category</th>
+          <th class="sort weeks">Weeks</th>
+          <th class="sort price">Price</th>
+        </thead>
 
-        <div id="all-trips" class="small-12 medium-6 large-7">
-          <table>
-            <thead>
-              <th class="sort name">Name</th>
-              <th class="sort continent">Continent</th>
-              <th class="sort category">Category</th>
-              <th class="sort weeks">Weeks</th>
-              <th class="sort price">Price</th>
-              <th class="details">See Details</th>
-            </thead>
+        <!-- Where the template stuff goes! -->
+        <tbody id="trips-list">
+        </tbody>
+      </table>
+    </section>
+</section>
 
-            <!-- Where the template stuff goes! -->
-            <tbody id="trip-list">
-            </tbody>
+    <section id="reserve trip">
+    </section>
 
-          </table>
-        </div>
+  </main>
+  <footer>
+    data-id="<%- id %>"
 
-      </section>
+  </footer>
 
+  <script id="all-trips-template" type="text/template">
 
-      <section id="reserve trip">
-      </section>
+    <tr class="trips" data-id="<%- id %>">
+      <td  id="trip-selector" >
+        <%- name %>
+      </td>
+      <td>
+        <%- continent %>
+      </td>
+      <td>
+        <%- category %>
+      </td>
+      <td>
+        <%- weeks %>
+      </td>
+      <td>
+        <%- cost %>
+      </td>
+      <td>
+        Book Trip <%- id %>
+      </td>
+    </tr>
 
-    </main>
-    <footer>
-
-    </footer>
-
-    <script id="all-trips-template" type="text/template">
-      <tr class="trips" id="load-one-trip" data-id="<%- id %>" >
-        <td>
-          <%- name %>
-        </td>
-        <td>
-          <%- continent %>
-        </td>
-        <td>
-          <%- category %>
-        </td>
-        <td>
-          <%- weeks %>
-        </td>
-        <td>
-          <%- cost %>
-        </td>
-        <td>
-          Book Trip <%- id %>
-        </td>
-      </tr>
-
-    </script>
-    <script id="show-details-template" type="text/template" >
-      <p>
-        <%- about %>
-      </p>
-    </script>
+  </script>
 
 
 
 
-  </body>
-  </html>
+
+
+
+
+
+  <script id="show-details-template" type="text/template" >
+    <p>
+      <%- about %>
+    </p>
+  </script>
+
+
+
+
+</body>
+</html>
