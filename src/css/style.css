@@ -1,3 +1,10 @@
+/*
+header:
+font-family: 'Abril Fatface', cursive;
+body:
+font-family: 'Roboto', sans-serif;
+*/
+
 #trip-list-table {
   display: none;
 }
@@ -21,9 +28,11 @@ th.sort {
   display: flex;
   align-items: center;
   justify-content: center;
+}
 
-  .hero-section-text {
-    color: white;
-    text-shadow: 1px 1px 2px black;
-  }
+.hero-section-text h1 {
+  font-size: 5rem;
+  color: white;
+  text-shadow: 1px 1px 2px black;
+  font-family: 'Abril Fatface', cursive;
 }

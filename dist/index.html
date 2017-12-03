@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <title>Back Trekking</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css?family=Abril+Fatface|Roboto" rel="stylesheet">
 </head>
 <body>
 
@@ -27,29 +28,31 @@
       <!-- create new trip form -->
     </article>
 
-<!-- SINGLE TRIP #trip-about -->
-    <aside id="trip-about" class="columns large-8 small-12">
-    </aside>
-
 <!-- TRIP LIST #trip-list -->
-    <section class="columns large-8 small-12">
-      <table id="trip-list-table">
-        <thead>
-          <th class="sort name" id="trip-name">Name</th>
-          <th class="sort continent">Continent</th>
-          <th class="sort category">Category</th>
-          <th class="sort weeks">Weeks</th>
-          <th class="sort cost">Cost</th>
-        </thead>
-        <tbody id="trip-list">
-        </tbody>
-      </table>
-    </section>
-  </main>
+    <div id="list" class="columns large-12 small-12">
+      <section>
+        <table id="trip-list-table">
+          <thead>
+            <th class="sort name" id="trip-name">Name</th>
+            <th class="sort continent">Continent</th>
+            <th class="sort category">Category</th>
+            <th class="sort weeks">Weeks</th>
+            <th class="sort cost">Cost</th>
+          </thead>
+          <tbody id="trip-list">
+          </tbody>
+        </table>
+      </section>
+    </div>
 
+<!-- SINGLE TRIP #trip-about -->
+    <!-- <article id="trip-about" class="columns large-4 small-4">
+    </article> -->
+  </main>
+<!--
   <footer>
     &copy; 2017 Sara Frandsen
-  </footer>
+  </footer> -->
 
 <!-------------------------->
 <!-------------------------->
@@ -65,12 +68,11 @@
     <p><%- about %></p>
     <button id="new-reservation-btn" class="button secondary hollow">Reserve This Trip</button>
     <section id="new-reservation"><!-- reservation form --></section>
-
   </script>
 
 <!-- TRIPS TEMPLATE -->
   <script type="text/template" id="trips-template">
-    <tr data-id="<%- id %>" class="trips">
+    <tr data-id="<%- id %>" id="<%- id %>" class="trips">
       <td>
         <%- name %>
       </td>
