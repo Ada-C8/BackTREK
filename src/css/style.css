@@ -85,6 +85,21 @@ h1 {
   width: 2rem;
 }
 
+#add-trip-form-close:before {
+  content: '✕';
+  color: white;
+  float: right;
+  cursor: pointer;
+}
+
+#individual-trip-details-close {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+}
+
 label {
   color: white;
 }
@@ -101,13 +116,6 @@ label {
   text-align: center;
   color: white;
   font-family: courier;
-}
-
-#individual-trip-details-button {
-  display: none;
-  float: right;
-  margin-bottom: 3%;
-  width: 2rem;
 }
 
 #individual-trip-details-close:before {
@@ -134,7 +142,7 @@ th.sort {
   color: white;
 }
 
-/* Styles for error section at the top */
+/* Styles for status messages */
 
 #status-messages {
   background-color: #dfdfdf;
@@ -146,8 +154,11 @@ th.sort {
   margin: 1rem;
   height: 100%;
   padding: .8rem;
-  max-width: 575px;
-  margin-left: 4%;
+  max-width: 400px;
+  margin: auto;
+  margin-top: 2%;
+  margin-bottom: 2%;
+
 }
 
 #status-messages button.clear {

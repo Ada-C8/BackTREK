@@ -25,8 +25,8 @@ const RESERVATION_FIELDS = ['name', 'email', 'tripId'];
 //////////////////////reading forms/////////////////////////
 const readReservationFormData = function readReservationFormData() {
   const reservationData = {};
+
   RESERVATION_FIELDS.forEach((field) => {
-    // select the input corresponding to the field we want
     const inputElement = $(`#reserve-trip input[name="${ field }"]`);
     const value = inputElement.val();
 
@@ -39,10 +39,10 @@ const readReservationFormData = function readReservationFormData() {
   return reservationData;
 };
 
-const readFormData = function readFormData() {
+const readAddFormData = function readAddFormData() {
   const tripData = {};
+
   TRIP_FIELDS.forEach((field) => {
-    // select the input corresponding to the field we want
     const inputElement = $(`#add-trip-form input[name="${ field }"]`);
     const value = inputElement.val();
 
@@ -77,7 +77,8 @@ const clearStatus = function clearStatus() {
 
 const clearAddTripForm = function clearAddTripForm() {
   $('#trip-form-message').hide();
-  $('#trip-form-button').hide();
+  // $('#trip-form-button').hide();
+  $('#add-trip-form-close').hide();
 }
 
 const clearAllTripsTable = function clearAllTripsTable() {
@@ -91,7 +92,6 @@ const clearIndividualTripDetails = function clearIndividualTripDetails() {
   $('#individual-trip-details-close').hide();
 }
 ////////////////eventHandlers////////////////////
-
 const showIndividualTripHandler = function showIndividualTripHandler(event) {
   console.log('in the trip click');
   $('html,body').scrollTop(0);
@@ -118,7 +118,7 @@ const showIndividualTripHandler = function showIndividualTripHandler(event) {
 
 const addTripHandler = function(event) {
   event.preventDefault();
-  const trip = new Trip(readFormData());
+  const trip = new Trip(readAddFormData());
 
   if (!trip.isValid()) {
     console.log('Client side error handling');
@@ -232,7 +232,8 @@ $(document).ready( () => {
   $('#add-trip').on('click', function() {
     console.log('#add-trip clicked');
     $('#trip-form-message').show();
-    $('#trip-form-button').show();
+    // $('#trip-form-button').show();
+    $('#add-trip-form-close').show();
   });
 
   // Listen for when user submits trip form
@@ -242,7 +243,7 @@ $(document).ready( () => {
   $('#status-messages button.clear').on('click', clearStatus);
 
   // Listen for clearing add trip form
-  $('#trip-form-button').on('click', clearAddTripForm);
+  $('#add-trip-form-close').on('click', clearAddTripForm);
 
   // Listen for clearing all trips table
   $('#trip-table-close').on('click', clearAllTripsTable);
