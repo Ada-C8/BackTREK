@@ -19,17 +19,33 @@ console.log('it loaded!');
 const render = function render(tripList) {
   const tripListElement = $('#trip-list');
   tripListElement.empty();
-  console.log(tripList);
 
   tripList.forEach((trip) => {
     tripListElement.append(tripTemplate(trip.attributes));
   });
 };
 
+const reportStatus = function reportStatus(status, message) {
+  const generatedHTML = statusMessageTemplate({
+    status: status,
+    message: message,
+  });
+
+  $('#status-messages ul').append(generatedHTML);
+  $('#status-messages').show();
+};
+
 const loadTrips = function loadTrips() {
   tripList.fetch();
   tripList.on('update', render, tripList);
   $('#trips').show();
+};
+
+const loadTrip = function loadTrip(trip) {
+  $('#trips').hide();
+  $('#trip').empty();
+  console.log(trip);
+  $('#trip').append(tripDetailsTemplate(trip.attributes));
 };
 
 $(document).ready( () => {
@@ -42,7 +58,11 @@ $(document).ready( () => {
 
   $('button#search').on('click', loadTrips);
   $('#trip-list').on('click', 'tr', function() {
-    tripList.fetch($(this).attr('data-id'));
+    const trip = tripList.get($(this).attr('data-id'));
     console.log('clicked!');
+    trip.fetch({}, {
+    success: loadTrip(trip),
+    error: reportStatus,
+    });
   });
 });
