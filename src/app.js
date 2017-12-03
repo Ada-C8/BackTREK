@@ -55,8 +55,6 @@ const events = {
   },
   reservationForm(event) {
     const tripID = this.getAttribute("data-trip-id");
-    console.log(`You've clicked the make reservation button!`);
-    console.log(`you are reserving this trip with id ${tripID}`);
     const reservationForm = `<form id= "reservation-form" action="https://trektravel.herokuapp.com/trips/${tripID}/reservations" method="post">
     <section>
       <label>Name</label>
@@ -73,17 +71,14 @@ const events = {
   },
   finalizeReservation(event) {
     event.preventDefault();
-    console.log('you have submitted your form');
     const formData = $(this).serialize();
     const url = $(this).attr('action');
     $.post(url, formData, (response) => {
       $('#status-messages ul').html(`<li> Successfully reserved this trip for ${response.name}</li>`);
-      console.log(`Success! You're on the list.`);
       $('#trip-info').toggle();
       $('#trip-details form:last-child').empty();
     }).fail(() => {
       $('#status-messages').html('<h3 id= "status-message"> Sorry, there are no spots left for this trip.</h3>');
-      console.log(`Sorry, no spots left.`);
     });
   },
   newTripForm(event) {
@@ -110,7 +105,6 @@ const events = {
     </section>
     </form>`;
     $('#trip-details').empty();
-    console.log('adding new trip form to page');
     $('#trip-details').append(tripForm);
   },
   addTrip(event) {
@@ -125,17 +119,13 @@ const events = {
     });
 
     const trip = new Trip(tripData);
-    console.log('testing: this is the new trip');
-    console.log(trip);
     if (trip.isValid()) {
-      console.log('this trip is client side valid')
       trip.save({}, {
         success: events.successfulSave,
         error: events.failedSave,
       });
       // render(tripList);
     } else {
-      console.log('there was a client error for this trip');
       const errorTypes = Object.keys(trip.validationError);
       $('#add-trip-error-msgs h3').html(`<h4>Error:</h4>`);
       $('#add-trip-error-msgs ul').empty();
@@ -176,6 +166,7 @@ const events = {
     const filterInput = $('#filter-query').val().toLowerCase();
     const numeric = ['weeks','cost', 'id'];
     const text = ['name', 'category', 'continent'];
+    // TODO: refactor filtering, handle display when no matches found.
     // console.log(filterCategory);
     // console.log(filterInput);
     // const filteredTrips = tripList.filter( trip => { (trip.get(filterCategory)).includes(filterInput);
@@ -199,10 +190,7 @@ const events = {
     }
 
     filteredMatches = new TripList(matches);
-    console.log(filteredMatches);
     showFiltered(filteredMatches);
-
-    // console.log(filteredTrips);
   },
   highlightSelection(event) {
     $('.highlight').removeClass('highlight');
@@ -226,7 +214,6 @@ const clearErrorMessages= function clearErrorMessages() {
   const messageSections = $('.messages');
   messageSections.hide();
   $('.messages ul').empty();
-  console.log('hid the messages teehee');
 };
 let tripTemplate;
 let showTemplate;
