@@ -51,28 +51,53 @@ const events = {
     $.post(url, formData.serialize(), (data) => {
       $('#form-submit').children('section').addClass('success');
       $('#price').html(`${data.name} is booked!`);
+      response[0].reset();
     })
     .fail(() => {
       $('#message').addClass('failure').html('Uhh... Something happened. Please try again.');
     });
-    // TODO: Clear form and make it so it doesn't repetitively book.
-},
+  },
   // Add a New Trip
   addTrip(event) {
     event.preventDefault();
     const tripData = {};
     fields.forEach((field) => { //get values from form
-      const val = $(`input[name=${field}]`).val();
+      const val = $(`#new-trip-form input[name=${field}]`).val();
       if (val != '') {
         tripData[field] = val;
       }
     });
     const trip = new Trip(tripData);
-    trip.save({}, {
-      success: events.successfulSave,
-      error: events.failedSave,
-    });
+    if (trip.isValid()) {
+      trip.save({}, {
+        success: events.successfulSave,
+        error: events.failedSave,
+      });
+    } else {
+      events.renderValidationFailure($('#modal-message ul'), trip.validationError);
+    }
     tripList.fetch();
+  },
+  // Sort Trip table
+  sortTrips() {
+    const classes = $(this).attr('class').split(/\s+/);
+    if (!classes.includes('alpha-sort') && !classes.includes('omega-sort')) {
+      $('.alpha-sort').removeClass('alpha-sort');
+      $('.omega-sort').removeClass('omega-sort');
+    }
+    classes.forEach((className) => {
+      if (fields.includes(className)) {
+        if (className === tripList.comparator) {
+          tripList.models.reverse();
+          $(this).toggleClass('alpha-sort omega-sort');
+          tripList.trigger('sort', tripList);
+        } else {
+          tripList.comparator = className;
+          $(this).addClass('alpha-sort');
+          tripList.sort();
+        }
+      }
+    });
   },
   successfulSave(trip) {
     $('#modal-message ul').empty();
@@ -85,14 +110,17 @@ const events = {
     });
   },
   failedSave(trip, response) {
-    $('#modal-message ul').empty();
-    for (let key in response.responseJSON.errors) {
-      response.responseJSON.errors[key].forEach((error) => {
-        $('#modal-message ul').append(`<li>${key}: ${error}</li>`);
+    events.renderValidationFailure($('#modal-message ul'), response.responseJSON.errors);
+    trip.destroy();
+  },
+  renderValidationFailure(jqObject, errorsHash) {
+    jqObject.empty();
+    jqObject.addClass('failure').show();
+    for (let key in errorsHash) {
+      errorsHash[key].forEach((error) => {
+        jqObject.append(`<li>${key}: ${error}</li>`);
       });
     }
-    $('#modal-message').addClass('failure').show();
-    trip.destroy();
   }
 }
 
@@ -108,14 +136,19 @@ $(document).ready( () => {
     $('#list').removeClass('hide');
   });
 
-  $('#list').on('click', 'tr', events.displayDetails);
+  $('#trip-list').on('click', 'tr', events.displayDetails);
+
   tripList.on('update', render, tripList);
+  tripList.on('sort', render, tripList);
   tripList.fetch();
 
-  //NEW Trip
+  // Sort Table by fields
+  $('.sort').click(events.sortTrips);
+
+  // New Trip
   $('#new-trip-form').submit(events.addTrip);
 
-  // FORM
+  // New Reservation
   $('#reservation-form').children('form').submit(function fx(e) {
     e.preventDefault();
     events.postReservation($(this));

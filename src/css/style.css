@@ -60,6 +60,29 @@ li:nth-child(even) {
   text-align: center;
 }
 
+#trip-data {
+  border-collapse: collapse;
+  text-align: center;
+}
+
+#trip-data th {
+  text-align: center;
+}
+
+th.sort {
+  cursor: pointer;
+}
+
+.alpha-sort {
+  background-color: darkgrey;
+  color: white;
+}
+
+.omega-sort {
+  background-color: orange;
+  color: white;
+}
+
 footer h6 {
   font-family: 'Bungee', sans-serif;
   font-weight: 500;
@@ -94,7 +117,7 @@ footer.home {
 .scrollbox {
   height: 80vh;
   overflow: auto;
-  overflow-x: hidden;
+  overflow-x: auto;
   background-color: rgba(255, 255, 255, 0.3);
 }
 
@@ -127,6 +150,7 @@ footer.home {
 #list-wrapper {
   padding-bottom: 5vh;
 }
+
 .fields label {
   margin-bottom: 16px; /* To match Foundation input field */
   font-family: 'Bungee';
@@ -150,10 +174,12 @@ footer.home {
   background-color: red;
   color: white;
   font-size: 2rem;
+  text-align: center;
 }
 
 .success {
   background-color: green;
   color: white;
   font-size: 2rem;
+  text-align: center;
 }
