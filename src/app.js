@@ -112,9 +112,9 @@ $(document).ready(() => {
       success: () => {
         $('#trip-list-table').show();
         console.log('show list table: success');
+        $('.hero').animate({height:'40vh'});
       },
     });
-    $('.hero').animate({height:'40vh'});
   });
 
   // RENDER SINGLE TRIP DETAILS TO DOM
@@ -137,7 +137,12 @@ $(document).ready(() => {
     singleTrip.fetch({
       success: (model) => {
         const generatedHTML = $(aboutTemplate(model.attributes));
-        aboutElement.html(generatedHTML);
+        console.log(generatedHTML.prop('outerHTML'));
+        // aboutElement.html(generatedHTML);
+        const htmlString = $('<div>').append(generatedHTML).html()
+        $('#' + this.id).after('<tr><td colspan="5" id="trip-about">' + htmlString + '</td></tr>');
+        console.log(htmlString);
+        // $('#list').animate({width:'50%'});
 
         // RENDER 'RESERVATION' FORM TO DOM
         $('#new-reservation-btn').on('click', function() {
