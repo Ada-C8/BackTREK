@@ -11,7 +11,7 @@ body{
 
 /* header */
 .hero {
-  background: url('https://i.imgur.com/cq3UAle.jpg') 50% no-repeat;
+  background: url('https://i.imgur.com/cq3UAle.jpg') 30% no-repeat;
   /* img of canyons with several hot air balloons */
   /* Photo by Egzon Bytyqi on Unsplash */
   background-size: cover;
@@ -45,18 +45,18 @@ body{
 
 th.sort {
   cursor: pointer;
-  background-color: #f7f0e8;
+  background-color: #A7CCA7;
 }
 
 th.current-sort-field {
-  background-color: #b7dfc6;
+  background-color: #647A6C;
   color: white;
 }
 
 #trip-list-table tr:nth-child(even) {
-  background-color: white;
+  background-color: #EDE3E4;
 }
 
 #trip-list-table tr:nth-child(odd) {
-  background-color: white;
+  background-color: #F1EAEB;
 }
