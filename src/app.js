@@ -10,6 +10,7 @@ console.log('it loaded!');
 
 // models and collections
 import Trip from './app/models/trip';
+import Reservation from './app/models/reservation';
 import TripList from './app/collections/trip_list';
 
 
@@ -33,15 +34,10 @@ const renderAll = function renderAll(tripList) {
   tripList.forEach((trip) => {
     let tripsHTML = allTripsTemplate(trip.attributes);
     if (trip.id < 34) {
-    tripListElement.append( $(tripsHTML) );
+      tripListElement.append( $(tripsHTML) );
     }
   }); // for each
 }; // renderAll function
-
-const sampleHandler = (event) => {
-  console.log("this is just a test");
-  console.log(event);
-}
 
 
 const renderDetails = function renderDetails(id) {
@@ -53,17 +49,24 @@ const renderDetails = function renderDetails(id) {
   });
 }; // renderDetails
 
+const makeReservation = function makeReservation(bookTripID, reservationFormData) {
+  const newReservation = new Reservation();
+  newReservation.save => {
+    console.log("Your trip was saved");
+  }
 
-const makeReservation = function makeReservation() {
-const resData = {};
-RES_FIELDS.forEach((field) => {
-  const inputElement = $(`#reservation-form input[name="{ field }"]`);
-  resData[field] = inputElement.val();
-});
+}
 
-return resData;
-
-};
+// const makeReservation = function makeReservation() {
+//   const resData = {};
+//   RES_FIELDS.forEach((field) => {
+//     const inputElement = $(`#reservation-form input[name="{ field }"]`);
+//     resData[field] = inputElement.val();
+//   });
+//
+//   return resData;
+//
+// };
 
 const clearForm = function clearForm() {
   $('#reservation-form input[name]').val('');
@@ -77,8 +80,6 @@ $(document).ready( () => {
   allTripsTemplate = _.template($('#all-trips-template').html() );
   showDetailsTemplate = _.template($('#show-details-template').html() );
 
-
-
   $('#individual-trip').hide();
   $('#all-trips').hide();
   $('#reserve-trip').hide();
@@ -89,29 +90,25 @@ $(document).ready( () => {
 
   //Events
 
-  // // make reservations
-  // $('.trip-details').on('click', 'h4', function() {
-  //   let tripID = $(this).attr('data-id');
-  //   $('#book-trip-form').attr("data-id", tripID);
-  //   $('#book-trip-form').show();
-  // })
-  //
-  // $('#book-trip-form').on('submit', function(event) {
-  //   event.preventDefault();
-  //   let tripID = $(this).attr('data-id');
-  //   let formData = $('#book-trip-form').serialize();
-  //   reserveTrip(tripID, formData);
-  // }) //end book trip
+  // make reservations
 
-  // book trip
-$('#trip-details').on('click', 'h4', function() {
-  console.log("You clicked to see the res form");
-  console.log(this);
-  const bookTripID = $(this).attr('data-id');
-  $('#reservation-form').attr("data-id", bookTripID);
-  $('#reserve-trip').show();
-  console.log("i'm after show form");
-})
+  $('#reservation-form').on('submit', (event) => {
+    event.preventDefault();
+    const bookTripID = $(event.target).attr('data-id');
+    let reservationFormData =
+     $('#reservation-form').serialize();
+    makeReservation(bookTripID, reservationFormData);
+  }) //end book trip
+
+  // show trip reservation form
+  $('#trip-details').on('click', 'h4', function() {
+    console.log("You clicked to see the res form");
+    console.log(this);
+    const bookTripID = $(this).attr('data-id');
+    $('#reservation-form').attr("data-id", bookTripID);
+    // add the current trip id to the form
+    $('#reserve-trip').show();
+  })
 
   //  show trip details
   $('#trips-list').on('click', '.trips', (event) => {
@@ -127,10 +124,6 @@ $('#trip-details').on('click', 'h4', function() {
     tripList.fetch();
     $('#all-trips').show();
   })
-
-
-
-
 
   // Sort Fields
   TRIP_FIELDS.forEach((field) => {
@@ -151,3 +144,10 @@ $('#trip-details').on('click', 'h4', function() {
 
 
 }); // end document ready
+
+
+
+const sampleHandler = (event) => {
+  console.log("this is just a test");
+  console.log(event);
+}
