@@ -138,6 +138,30 @@ const events = {
     }
     $('#statusMessageModal').foundation('open');
   },
+  sortTrips(event) {
+    console.log(event);
+    console.log(this);
+    //get classes split by white space (regex /\s+/) or split.(' ')
+    const classes = $(this).attr('class').split(/\s+/);
+
+    const fields = ['name', 'continent', 'category', 'weeks', 'cost'];
+    //Styling: so clicked column shows what table is sorted by
+    $('.current-sort-field').removeClass('current-sort-field');
+    $(this).addClass('current-sort-field');
+
+    classes.forEach((className) => {
+      if (fields.includes(className)) {
+        if (className === tripList.comparator) {
+        tripList.models.reverse();
+        tripList.trigger('sort', tripList);
+        }
+        else {
+          tripList.comparator = classes[1];
+          tripList.sort();
+        }
+      }
+    });
+  },
 };
 
 // makeTripReservation FUNCTION
@@ -223,6 +247,7 @@ const addNewTrip = function addNewTrip(details) {
   });
 };
 
+
 $(document).ready( () => {
   $(document).foundation();
   $('#all-trips-table').hide();
@@ -262,6 +287,10 @@ $(document).ready( () => {
     e.preventDefault();
     addNewTrip();
   });
+
+  // To Sort Trip Table Columns
+  $('.sort').click(events.sortTrips);
+  tripList.on('sort', render, tripList);
 
 
 
