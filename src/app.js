@@ -55,7 +55,6 @@ const reportStatus = function(status, message) {
 
 //get all trips
 const getTrips = function(tripList) {
-  let back = backTemplate();
   let tableHead = headTemplate();
 
   const tripTableElement = $('#trip-list');
@@ -75,7 +74,6 @@ const getTrips = function(tripList) {
 
   //fill out .trips section
   $('.trips thead').html(tableHead);
-  $('.back').html(back);
   $('.trip').show();
 
   //fill out .trip section with first trip of collection
@@ -189,7 +187,6 @@ const addTrip = function(event) {
 $(document).ready( () => {
   //templates
   tripsTemplate = _.template($('#trips-template').html());
-  backTemplate = _.template($('#back-button').html());
   headTemplate = _.template($('#tripsHead').html());
   tripTemplate = _.template($('#trip-template').html());
   reserveTemplate = _.template($('#reserve-form-template').html());
@@ -203,11 +200,13 @@ $(document).ready( () => {
   })
 
   //go back from trips
-  $('body').on('click', '.back, #title', function() {
+  $('body').on('click', 'nav h2', function() {
     $('.trips thead').html('');
     $('.trips tbody').html('');
-    $('.back').html('');
     $('#trips').show();
+    $('.trip').hide();
+    $('nav').hide();
+    $('header h1').show();
   })
 
   //get trip info

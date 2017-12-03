@@ -38,10 +38,6 @@ h2 {
   font-size: 4rem;
 }
 
-#title {
-  color: #fff;
-}
-
 #trips, #new-trip {
   display: block;
   margin: 1.5rem auto;
