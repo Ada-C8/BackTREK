@@ -179,6 +179,7 @@ nav {
   height: 38rem;
   box-shadow: 0 0 2rem #075B69;
   background: #fff;
+  overflow: scroll;
 }
 
 #add-trip form {
@@ -214,4 +215,9 @@ nav {
   padding: .3rem;
   margin: 0;
   float: right;
+}
+
+/*STATUS MESSAGES*/
+#status-messages {
+  padding-left: 1rem;
 }

@@ -22,9 +22,9 @@
   </nav>
 
   <main>
-    <section id="status-messages">
+    <!-- <section id="status-messages">
       <ul></ul>
-    </section>
+    </section> -->
 
     <button id="trips" class="button large blue white-text" type="button" name="button">Find a Trip</button>
     <section class="trips large-6 columns">
@@ -43,7 +43,6 @@
       <section id="add-trip">
         <h3>Add a Trip</h3>
       </section>
-      <!-- <button id="close" class="button" type="button">&#10006;</button> -->
     </div>
 
   </main>
@@ -124,17 +123,23 @@
         </div>
         <div class="input-form">
           <label for="weeks"><strong>Duration in weeks: </strong></label>
-          <input type="text" name="weeks"></input>
+          <input type="number" name="weeks"></input>
         </div>
         <div class="input-form">
           <label for="cost"><strong>Cost: </strong></label>
-          <input type="text" name="cost"></input>
+          <input type="number" name="cost"></input>
         </div>
 
         <input id="submit" class="button blue white-text" type="submit" value="Add a Trip"></input>
 
         <button id="cancel" class="button blue white-text" type="button">Cancel</button>
       </form>
+  </script>
+
+  <script type="text/template" id="status-messages-template">
+    <section id="status-messages">
+      <ul></ul>
+    </section>
   </script>
 </body>
 </html>

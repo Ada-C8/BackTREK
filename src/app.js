@@ -27,6 +27,7 @@ let headTemplate;
 let tripTemplate;
 let reserveTemplate;
 let addTripTemplate;
+let statusMessage;
 
 //define global variable
 var showFirst = false;
@@ -117,6 +118,7 @@ const readFormData = function(formFields, form) {
   formFields.forEach((field) => {
     const inputElement = $(`${ form } input[name="${ field }"]`);
     const value = inputElement.val();
+    console.log(`${ field }: ${ value }, ${typeof value}`);
     formData[field] = value;
     //reset the form after submitting the input
     inputElement.val('');
@@ -191,6 +193,7 @@ $(document).ready( () => {
   tripTemplate = _.template($('#trip-template').html());
   reserveTemplate = _.template($('#reserve-form-template').html());
   addTripTemplate = _.template($('#trip-form-template').html());
+  statusMessage = _.template($('#status-messages-template').html());
 
   //get all trips on click
   $('main').on('click', '#trips', function() {
@@ -225,6 +228,7 @@ $(document).ready( () => {
 
   // add new trip
   $('nav').on('click', '#new-trip', function() {
+    $('#add-trip').append(statusMessage);
     $('#add-trip').append(addTripTemplate({continents: CONTINENTS}));
     $('.wrapper').show();
     //go back from new trip form

@@ -13,9 +13,9 @@ const Trip = Backbone.Model.extend({
       errors.name = ['can\'t be blank'];
     }
 
-    if (!attributes.continent) {
-      errors.continent = ['can\'t be blank'];
-    }
+    // if (!attributes.continent) {
+    //   errors.continent = ['can\'t be blank'];
+    // }
 
     if (!attributes.category) {
       errors.category = ['can\'t be blank'];
@@ -24,14 +24,14 @@ const Trip = Backbone.Model.extend({
     if (!attributes.cost) {
       errors.cost = ['can\'t be blank'];
     }
-    else if (typeof attributes.cost != 'number') {
+    else if (isNaN(attributes.cost)) {
       errors.cost = ['is not a number'];
     }
 
     if (!attributes.weeks) {
       errors.weeks = ['can\'t be blank'];
     }
-    else if (typeof attributes.weeks != 'number') {
+    else if (isNaN(attributes.weeks)) {
       errors.weeks = ['is not a number'];
     }
 
