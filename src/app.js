@@ -13,68 +13,54 @@ import Trip from './app/models/trip';
 import TripList from './app/collections/trip_list';
 
 
-
 const TRIP_FIELDS = ['name', 'continent', 'category', 'weeks', 'price'];
 
-let tripTemplate;
+let allTripsTemplate;
+let oneTripTemplate;
 
 // Render Methods
 
 const renderAll = function renderAll(tripList) {
   const tripListElement = $('#trip-list');
-  // make the table-body with id trip-list a jquery object & assign it to a variable
   tripListElement.empty();
-  // clear the table-body with id trip-list
-  // Apply styling to the current sort field
   $('th.sort').removeClass('current-sort-field');
-  // remove class from all headings
   $(`th.sort.${ tripList.comparator }` ).addClass('current-sort-field');
-  // add class when triggered
 
-  // redraw the table
   tripList.on('update', renderAll);
-
-  // redraw table by sort field
   tripList.on('sort', renderAll);
 
   tripList.forEach((trip) => {
-    console.log(`Rendering trip ${ trip.get('name') }`);
+    // console.log(`Rendering trip ${ trip.get('name') }`);
 
-    let tripsHTML = tripTemplate(trip.attributes);
-    //use template to create filled in template using retrieved data
-    tripListElement.append($(tripsHTML));
+    let tripsHTML = allTripsTemplate(trip.attributes);
+    tripListElement.append( $(tripsHTML) );
     // append that HTML formatted data to the table body
   }); // for each
 }; // renderAll function
 
-// const renderDetails = function renderDetails(trip){
-//   const tripDetails = $('trip-details');
-//   // make the paragraph with id trip-details a jquery object and assign it to a variable
-//   tripDetails.empty();
-//   // clear the space if something is in it
-//   let tripHTML = $()
-//     genhtml.on('click', (event) => {
-//       renderDetails(trip);
-//     }) //click event
-//
-//   tripDetails.append(tripHTML);
-// }; // renderDetails funciton
-
-// sort function
 
 
+const renderDetails = function renderDetails(id) {
+  const tripDetails = $('#trip-details');
+  // make the paragraph with id trip-details a jquery object and assign it to a variable
+  tripDetails.empty();
+  let oneTrip = new Trip({id: id});
+  // clear the space if something is in it
+  console.log("rendering one trip");
+  let tripHTML = oneTripTemplate(oneTrip.attributes);
+  tripDetails.append( $(tripHTML));
+}; // renderDetails
 
 
 $(document).ready( () => {
 
-  tripTemplate = _.template($('#trip-template').html() ); //same for collections and models
-
+  allTripsTemplate = _.template($('#all-trips-template').html() ); //same for collections and models
+  oneTripTemplate = _.template($('#show-details-template').html() );
   // Builds a collection
   const tripList = new TripList();
+  // let oneTrip = new Trip();
 
-  // tripList.on('update', renderAll);
   tripList.on('sort', renderAll);
-  //so the fetch will trigged update and then render will render the data into the template.
 
   //Event handlers for buttons
   const allTrips = $('#load-trips');
@@ -84,11 +70,28 @@ $(document).ready( () => {
     // tripList.renderAll;
   })
 
+  $('#testing').on('click', () => {
+    console.log("test worked ");
+  });
 
-  // const oneTrip = $('#');
-  // oneTrip.on('click', () => {
-  //
-  // })
+  $('.trips').on('click', () => {
+    console.log("you did it ");
+  });
+
+  // $('#load-one-trip').on('click', 'tr', function() {
+  //   console.log("you clicked something");
+    // let oneTrip = new Trip({id: current_trip_id})
+    // oneTrip.fetch();
+    // console.log("Got it!")
+  // });
+  // $('#trip-list').on('click', 'tr', function() {
+  //   $('.current-select-row').removeClass('current-select-row');
+  //   const tripID = $(this).attr('data-id');
+  //   $(this).addClass('current-select-row');
+  //   events.showTrip(tripID);
+  // });
+
+
 
   //Event handlers for table headers
   TRIP_FIELDS.forEach((field) => {

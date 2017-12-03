@@ -9,6 +9,7 @@ const Trip = Backbone.Model.extend({
   //  `https://ada-backtrek-api.herokuapp.com/trips/${this.get("trip_id")}`;
   //
   //   }
+  // urlRoot: `https://ada-backtrek-api.herokuapp.com/trips`
 
 
 }); //end const Trip

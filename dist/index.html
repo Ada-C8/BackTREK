@@ -16,71 +16,75 @@
   </header>
   <main>
 
-<section class="row">
-  <div id="all-trips" class="small-12 medium-6 large-7">
-    <table>
-      <thead>
-        <th class="sort name">Name</th>
-        <th class="sort continent">Continent</th>
-        <th class="sort category">Category</th>
-        <th class="sort weeks">Weeks</th>
-        <th class="sort price">Price</th>
-        <th class="button">See Details</th>
-      </thead>
-
-      <!-- Where the template stuff goes! -->
-      <tbody id="trip-list">
-      </tbody>
-
-    </table>
-  </div>
-  <div id="individual-trip" class="small-12 medium-6 large 3">
-    <h1>Placeholder Text</h1>
-    <p id="trip-details">
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    </p>
-  </div>
-</section>
+    <section class="row">
+      <div id="individual-trip" class="small-12 medium-6 large 3">
+        <h1 id="testing">Placeholder Text</h1>
+        <p id="trip-details">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+        </div>
 
 
 
+        <div id="all-trips" class="small-12 medium-6 large-7">
+          <table>
+            <thead>
+              <th class="sort name">Name</th>
+              <th class="sort continent">Continent</th>
+              <th class="sort category">Category</th>
+              <th class="sort weeks">Weeks</th>
+              <th class="sort price">Price</th>
+              <th class="details">See Details</th>
+            </thead>
+
+            <!-- Where the template stuff goes! -->
+            <tbody id="trip-list">
+            </tbody>
+
+          </table>
+        </div>
+
+      </section>
+
+
+      <section id="reserve trip">
+      </section>
+
+    </main>
+    <footer>
+
+    </footer>
+
+    <script id="all-trips-template" type="text/template">
+      <tr class="trips" id="load-one-trip" data-id="<%- id %>" >
+        <td>
+          <%- name %>
+        </td>
+        <td>
+          <%- continent %>
+        </td>
+        <td>
+          <%- category %>
+        </td>
+        <td>
+          <%- weeks %>
+        </td>
+        <td>
+          <%- cost %>
+        </td>
+        <td>
+          Book Trip <%- id %>
+        </td>
+      </tr>
+
+    </script>
+    <script id="show-details-template" type="text/template" >
+      <p>
+        <%- about %>
+      </p>
+    </script>
 
 
 
-<section id="reserve trip">
-</section>
 
-  </main>
-  <footer>
-
-  </footer>
-
-  <script id="trip-template" type="text/template">
-    <tr class="trip">
-      <td id="#trip-name">
-        <%- name %>
-      </td>
-      <td>
-        <%- continent %>
-      </td>
-      <td>
-        <%- category %>
-      </td>
-      <td>
-        <%- weeks %>
-      </td>
-      <td>
-        <%- cost %>
-      </td>
-      <td>
-        <%- id %>
-      </td>
-    </tr>
-
-  </script>
-
-
-
-
-</body>
-</html>
+  </body>
+  </html>
