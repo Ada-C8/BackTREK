@@ -13,9 +13,9 @@ const Trip = Backbone.Model.extend({
       errors.name = ['can\'t be blank'];
     }
 
-    // if (!attributes.continent) {
-    //   errors.continent = ['can\'t be blank'];
-    // }
+    if (!attributes.continent) {
+      errors.continent = ['can\'t be blank'];
+    }
 
     if (!attributes.category) {
       errors.category = ['can\'t be blank'];

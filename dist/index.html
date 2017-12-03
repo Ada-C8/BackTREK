@@ -22,10 +22,6 @@
   </nav>
 
   <main>
-    <!-- <section id="status-messages">
-      <ul></ul>
-    </section> -->
-
     <button id="trips" class="button large blue white-text" type="button" name="button">Find a Trip</button>
     <section class="trips large-6 columns">
       <table>
@@ -104,27 +100,32 @@
           <label for="name"><strong>Name: </strong></label>
           <input type="text" name="name"></input>
         </div>
+
         <div class="input-form">
           <label for="continent"><strong>Continent: </strong></label>
-          <!-- <input type="text" name="continent"></input> -->
-          <select name="category">
+          <input type="text" name="continent"></input>
+          <!-- <select name="continent">
             <% for (let continent of continents) { %>
               <option value=<%- continent %>><%- continent %></option>
             <% } %>
-          </select>
+          </select> -->
         </div>
+
         <div class="input-form">
           <label for="about"><strong>About: </strong></label>
           <input type="text" name="about"></input>
         </div>
+
         <div class="input-form">
           <label for="category"><strong>Category: </strong></label>
           <input type="text" name="category"></input>
         </div>
+
         <div class="input-form">
           <label for="weeks"><strong>Duration in weeks: </strong></label>
           <input type="number" name="weeks"></input>
         </div>
+
         <div class="input-form">
           <label for="cost"><strong>Cost: </strong></label>
           <input type="number" name="cost"></input>

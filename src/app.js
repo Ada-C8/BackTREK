@@ -107,7 +107,8 @@ const getTrip = function(trip) {
   console.log(trip);
   let generatedHTML = tripTemplate(trip.attributes);
   $('#trip').html(generatedHTML);
-  $('#reservation').html(reserveTemplate(trip));
+  $('#reservation').append(statusMessage());
+  $('#reservation').append(reserveTemplate(trip));
   //make new reservation
   $('#reservation-form').on('submit', makeReservation);
 }; // end of getTrip
@@ -228,7 +229,7 @@ $(document).ready( () => {
 
   // add new trip
   $('nav').on('click', '#new-trip', function() {
-    $('#add-trip').append(statusMessage);
+    $('#add-trip').append(statusMessage());
     $('#add-trip').append(addTripTemplate({continents: CONTINENTS}));
     $('.wrapper').show();
     //go back from new trip form

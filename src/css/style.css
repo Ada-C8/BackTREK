@@ -144,7 +144,7 @@ nav {
   /*max-height: 700px;*/
 }
 
-.trip ul, .trip article {
+#trip, .trip article {
 
   overflow: scroll;
   background: rgba(255, 255, 255, 0.7);
@@ -153,7 +153,7 @@ nav {
   margin-bottom: 1rem;
 }
 
-.trip ul {
+#trip {
   height: 369px;
 }
 
@@ -161,7 +161,7 @@ nav {
   height: 315px;
 }
 
-.trip li {
+#trip li {
   text-align: justify;
   list-style-type: none;
   margin: .5rem 0;
