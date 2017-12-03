@@ -5,19 +5,11 @@ body:
 font-family: 'Roboto', sans-serif;
 */
 
-#trip-list-table {
-  display: none;
+body{
+  font-family: 'Roboto', sans-serif;
 }
 
-th.sort {
-  cursor: pointer;
-}
-
-.current-sort-field {
-  background-color: darkgrey;
-  color: white;
-}
-
+/* header */
 .hero {
   background: url('https://i.imgur.com/cq3UAle.jpg') 50% no-repeat;
   /* img of canyons with several hot air balloons */
@@ -32,7 +24,39 @@ th.sort {
 
 .hero-section-text h1 {
   font-size: 5rem;
-  color: white;
-  text-shadow: 1px 1px 2px black;
+  color: #20333e;
+  text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
   font-family: 'Abril Fatface', cursive;
+}
+
+#show-trips, #trip-create-new-btn {
+  color: white;
+  border-color: white;
+}
+
+#show-trips:hover, #trip-create-new-btn:hover {
+  color: #20333e;
+}
+
+/* table */
+#trip-list-table {
+  display: none;
+}
+
+th.sort {
+  cursor: pointer;
+  background-color: #f7f0e8;
+}
+
+th.current-sort-field {
+  background-color: #b7dfc6;
+  color: white;
+}
+
+#trip-list-table tr:nth-child(even) {
+  background-color: white;
+}
+
+#trip-list-table tr:nth-child(odd) {
+  background-color: white;
 }
