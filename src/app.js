@@ -18,6 +18,7 @@ const $newTripBtn = $('#newTripBtn');
 const $addTripForm = $('#add-trip-form');
 const $resFormBtn = $('#res-form-btn');
 const $resForm = $('#reservation-form');
+const $queryValue = $('#query-value');
 
 //templates
 let tripTemplate;
@@ -63,11 +64,6 @@ const events = {
         error: events.failedSave,
       });
     } else {
-      console.log('uh oh! Invalid trip :(')
-      console.log(trip.validationError);
-
-      // TODO: FORMAT ERROR MESSGES!
-      // multiple messages per key
       Object.keys(trip.validationError).forEach((error) => {
         $('#status-messages ul').append(`<li>${error}: ${trip.validationError[error]}</li>`)
       });
@@ -83,10 +79,6 @@ const events = {
     $('#status-messages').show();
   },
   failedSave(trip, response) {
-    console.log('errrrror!');
-    console.log(trip);
-    console.log(response);
-    console.log(response.responseJSON.errors);
 
     for (let key in response.responseJSON.errors) {
       response.responseJSON.errors[key].forEach((error) => {
@@ -227,13 +219,11 @@ $(document).ready( () => {
     }
   });
 
-  // $('#trip-query').on('change', events.filterTrips);
-  $('#query-value').on('keyup', events.filterTrips);
+  $queryValue.on('keyup', events.filterTrips);
 
   // Backbone Events
   tripList.on('update', render, tripList);
   tripList.on('sort', render, tripList);
-
 
   // Implement when page loads
   tripList.fetch()
