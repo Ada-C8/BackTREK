@@ -44,6 +44,7 @@ const renderSingleTrip = function renderSingleTrip(tripID) {
   trip = new Trip({id: tripID});
   trip.fetch().done(() => {
     $('#trip-details-container').append(singleTripTemplate(trip.attributes));
+    $('#trip-details-container').attr('tripID', tripID);
   });
   console.log(trip);
 }
@@ -191,6 +192,37 @@ const events = {
 
 };
 
+//POST RESERVATION INFO (RECEIVE INFO FROM FORM)
+const submitReservation = function submitReservation() {
+  $('#add-reservation-form').submit( function(e) {
+    e.preventDefault();
+    let form = document.createElement("form");
+    let tripID = $('#add-reservation-form').attr('trip-id');
+    console.log(`tripID from trip ul: ${tripID}`);
+    //$('#trip-details-container').attr('reservation-trip-id');
+    const url = 'https://ada-backtrek-api.herokuapp.com/trips/' + tripID + '/reservations/';
+    console.log(`URL: ${url}`);
+    const personName = $(this).serializeArray()[0].value;
+    const formData = $(this).serialize();
+    console.log(`formData: ${formData}`)
+
+    $.post(url, formData, (response) => {
+      console.log('Received POST response:');
+      console.log(response);
+      alert(`Reservation confirmed for ${personName}` );
+      console.log(`successfully posted reservation for ${personName}`)
+      console.log(response);
+    })
+    .fail(function(response){
+      console.log(response);
+      $('#status-messages ul').append('<li>Post was unsuccessful</li>')
+    })
+    .always(function(){
+      console.log('always even if we have success or failure');
+    });
+  });
+};
+
 $(document).ready( () => {
   $('#reservation-form-container').hide();
   $('#add-a-trip-form-container').hide();
@@ -210,6 +242,13 @@ $(document).ready( () => {
     $('#reservation-form-container').show();
   });
 
+  //submit reservation button USING AJAX
+  $('#add-reservation-form').on('click','#submit-reservation', function(){
+    console.log('pressed reservation form button');
+    submitReservation();
+    $('#reservation-form-container').hide();
+  });
+
   //show form to Add a Trip
   $('#add-new-trip').on('click', function() {
     $('#add-a-trip-form-container').show();
@@ -222,8 +261,10 @@ $(document).ready( () => {
     //THIS WAY DOESN"T WORK- it just performs the submit, rather than waits to hear if a submit event is happening
     //$('#add-trip-form').submit(events.addTrip);
 
-  //submit form to add a reservation:
-  $('#reservation-form-container').on('submit','#add-reservation-form', events.addReservation);
+  //submit form to add a reservation USING RESERVATION MODEL (DOESN'T WORK):
+  //$('#reservation-form-container').on('submit','#add-reservation-form', events.addReservation);
+
+
 
   //sort table:
   $('.sort').click(events.sortBooks);
