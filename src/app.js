@@ -46,7 +46,6 @@ const render = function render(tripList) {
 const renderErrors = (errors) => {
   $statusMessages.empty();
   Object.keys(errors).forEach((error) => {
-    console.log(errors);
     $statusMessages.append(`<p>${errors[error]}</p>`);
   })
   $statusMessages.css('display', 'block');
@@ -85,29 +84,18 @@ const events = {
   },
   failedSave(trip, response) {
     renderErrors(response.responseJSON.errors);
-
-    // for (let key in response.responseJSON.errors) {
-    //   response.responseJSON.errors[key].forEach((error) => {
-    //     $('#status-messages').append(`<p>${key}: ${error}</p>`)
-    //   });
-    // }
-    // $statusMessages.css('display', 'block');
-    // $('#status-messages').show();
     trip.destroy();
   },
-  successReservation(reservation, response) {
+  successReservation(reservation) {
     $statusMessages.empty();
     $statusMessages.append(`<p>${reservation.get('name')} added!</p>`);
     $statusMessages.css('display', 'block');
-    // $('#status-messages').show();
   },
   failedReservation(reservation, response) {
     renderErrors(response.responseJSON.errors)
     reservation.destroy();
   },
   sortTrips(event) {
-    console.log(event);
-    console.log('begin sorting!');
     $('.current-sort-field').removeClass('current-sort-field');
 
     // get the class list of the selected element
@@ -182,7 +170,6 @@ const events = {
     event.preventDefault();
 
     const formfields = ['name', 'age', 'email', 'tripID']
-    event.preventDefault();
 
     formfields.forEach( (field) => {
       const val = $(`form input[name=res-${field}]`).val();
@@ -193,17 +180,13 @@ const events = {
 
     const reservation = new Reservation(resData)
 
-
     if (reservation.isValid()) {
       reservation.save({}, {
         success: events.successReservation,
         error: events.failedReservation,
       });
     } else {
-      Object.keys(reservation.validationError).forEach((error) => {
-        $('#status-messages').append(`<p>${error}: ${reservation.validationError[error]}<p>}`)
-      });
-      $('#status-messages').css('display', 'block');
+      renderErrors(reservation.validationError);
     }
   }
 }
@@ -222,39 +205,7 @@ $(document).ready( () => {
   $addTripForm.submit(events.addTrip);
   $resForm.submit(events.addReservation);
 
-
-
-
-  // $resForm.submit( function submit(event) {
-  //   const resData = {};
-  //   event.preventDefault();
-  //
-  //   const formfields = ['name', 'age', 'email', 'tripID']
-  //   event.preventDefault();
-  //
-  //   formfields.forEach( (field) => {
-  //     const val = $(`form input[name=res-${field}]`).val();
-  //     if (val !== '') {
-  //       resData[field] = val;
-  //     }
-  //   });
-  //
-  //   const reservation = new Reservation(resData)
-  //
-  //
-  //   if (reservation.isValid()) {
-  //     reservation.save({}, {
-  //       success: events.successReservation,
-  //       error: events.failedReservation,
-  //     });
-  //   } else {
-  //     Object.keys(reservation.validationError).forEach((error) => {
-  //       $('#status-messages').append(`<p>${error}: ${reservation.validationError[error]}<p>}`)
-  //     });
-  //     $('#status-messages').css('display', 'block');
-  //   }
-  // });
-
+  // keyed events
   $queryValue.on('keyup', events.filterTrips);
 
   // Backbone Events
