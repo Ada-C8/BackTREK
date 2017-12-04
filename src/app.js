@@ -37,3 +37,57 @@ const renderDetails = function renderDetails(trip){
     });
   }
 };
+
+const reportStatus = function reportStatus(status, field, problem) {
+  console.log('in reportStatus function');
+  console.log(`Reporting ${ status } status: ${ field } problem: ${problem}`);
+  const errorSpanElement = $(`#form-${field}`)
+  errorSpanElement.html('');
+  const generatedHTML = $(statusTemplate({'problem': problem }));
+  errorSpanElement.append(generatedHTML);
+};
+
+const clearFormMessages = function clearFormMessages() {
+  $('#add-trip-form span').html('')
+};
+
+const handleValidationFailures = function handleValidationFailures(errors) {
+  console.log('in handleValidationFailures function');
+  for (let field in errors) {
+    for (let problem of errors[field]) {
+      reportStatus('error', field,  problem);
+    }
+  }
+};
+
+const addTripHandler = function(event) {
+  console.log('addTripHandler entered');
+  event.preventDefault();
+
+  const trip = new Trip(readResFormData());
+  if (!trip.isValid()) {
+    console.log(`Invalid Trip`);
+    handleValidationFailures(trip.validationError);
+    return;
+  }
+
+  tripList.add(trip);
+
+  trip.save({}, {
+    success: (model, response) => {
+      console.log('Successfully saved Trip!');
+      $('#myModal').hide();
+      $(`#add-trip-form input`).val('');
+      // TODO: get line of code above working
+      reportStatus('success', 'Successfully saved trip!');
+    },
+    error: (model, response) => {
+      console.log('Failed to save bookTrip! Server response:');
+      console.log(response);
+
+      tripList.remove(model);
+      console.log(response.responseJSON["errors"]);
+      handleValidationFailures(response.responseJSON["errors"]);
+    },
+  });
+};
