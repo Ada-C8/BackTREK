@@ -6,8 +6,34 @@ import _ from 'underscore';
 import './css/foundation.css';
 import './css/style.css';
 
-console.log('it loaded!');
+// Our components
+import TripList from './app/collections/trip_list';
+import Trip from './app/models/trip';
 
-$(document).ready( () => {
-  $('main').html('<h1>Hello World!</h1>');
-});
+const tripList = new TripList();
+
+const TRIP_FIELDS = ["id", "about", "name", "continent", "category", "weeks", "cost"];
+
+let tripTemplate;
+let detailsTemplate;
+let statusTemplate;
+
+const renderDetails = function renderDetails(trip){
+  const detailsElement = $('#trip-details');
+  detailsElement.html('');
+
+  if (trip.get('about')) {
+    const generatedHTML = $(detailsTemplate(trip.attributes));
+    detailsElement.append(generatedHTML);
+    console.log(`Trip already has information available`);
+  } else {
+    trip.fetch({
+      success: (model) => {
+        const generatedHTML = $(detailsTemplate(trip.attributes));
+        detailsElement.append(generatedHTML);
+        console.log(trip);
+        console.log(trip.attributes);
+      }
+    });
+  }
+};
