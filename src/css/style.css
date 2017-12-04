@@ -1,6 +1,6 @@
 
 /* Your styles go here! */
-.button {
+.button, .status-messages {
   border-radius: 5px;
 }
 
@@ -56,4 +56,12 @@ th.sort {
 .current-sort-field {
   background-color: darkgrey;
   color: white;
+}
+
+.success{
+  background-color: green;
+}
+
+.errors{
+  background-color: pink;
 }

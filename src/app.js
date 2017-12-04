@@ -100,7 +100,7 @@ const events = {
     } else { // save is invalid
       console.log('Trip Validation Error');
       console.log(trip.validationError);
-      events.addStatusMessagesFromHash("Errors", trip.validationError);
+      events.addStatusMessagesFromHash('#modal-status-messages', 'errors', trip.validationError);
     }
   },
   successfulSaveTrip(trip, response){
@@ -108,24 +108,36 @@ const events = {
     $('#create-trip-form .input').val("");
     events.hideModal();
     tripList.add(trip);
+    events.addStatusMessagesFromHash('#page-status-messages', 'success', {message: 'Trip has been successfully added'});
   },
   failSaveTrip(trip, response){
     console.log('Response Validation Errors');
     console.log(response);
-    events.addStatusMessagesFromHash("Errors", response.responseJSON.errors);
+    events.addStatusMessagesFromHash('#modal-status-messages', 'errors', response.responseJSON.errors);
     trip.destroy();
   },
-  addStatusMessagesFromHash(statusTitle, collection){
-    $('#status-title').empty();
-    $('#status-messages ul').empty();
-    $('#status-title').text(`${statusTitle}`);
-    for (let key in collection) {
-      if (collection[key].length > 0) {
-        $('#status-messages ul').append(`<li>${key}: ${collection[key]}</li>`);
-      }
-    }
-    $('#status-messages').css('background-color', 'pink');
-    $('#status-messages').show();
+  addStatusMessagesFromHash(jquerySelector, statusTitle, collection){
+    // $tripList.append(allTripsTemplate(trip.attributes));
+    let tripAttributes = collection;
+    tripAttributes['status'] = statusTitle;
+    console.log('Trip Attributes');
+    console.log(tripAttributes);
+    $('.status-title').empty();
+    $(jquerySelector).empty();
+    console.log('inside addStatusMessagesFromHash method');
+    $(jquerySelector).append(statusMessageTemplate({trip: tripAttributes}));
+    $(jquerySelector).show();
+
+    // $('#status-title').empty();
+    // $('#status-messages ul').empty();
+    // $('#status-title').text(`${statusTitle}`);
+    // for (let key in collection) {
+    //   if (collection[key].length > 0) {
+    //     $('#status-messages ul').append(`<li>${key}: ${collection[key]}</li>`);
+    //   }
+    // }
+    // $('#status-messages').css('background-color', 'pink');
+    // $('#status-messages').show();
   },
   addReservation(event){
     event.preventDefault();
@@ -162,6 +174,9 @@ const events = {
     console.log(response.responseJSON.errors);
     reservation.destroy();
   },
+  emptyModalMessages(){
+    $('#modal-status-messages').empty();
+  }
 }
 
 
@@ -169,6 +184,7 @@ const events = {
 const tripList = new TripList();
 let allTripsTemplate;
 let tripDetailsTemplate;
+let statusMessageTemplate;
 
 const render = function render(tripList) {
   let $tripList = $('#trip-list');
@@ -183,6 +199,7 @@ $(document).ready( () => {
   // TEMPLATES
   allTripsTemplate = _.template($('#all-trips-template').html());
   tripDetailsTemplate = _.template($('#trip-details-template').html());
+  statusMessageTemplate = _.template($('#status-message-template').html());
 
   // render template for all trips
   tripList.on('update', render, tripList);
@@ -206,4 +223,7 @@ $(document).ready( () => {
   // filter trips
   $("#trip-query").keyup(events.filterTrips);
   $('#trip-fields').change(events.filterTrips);
+
+  // empty modal messages
+  $('#create-trip-modal').click(events.emptyModalMessages);
 });

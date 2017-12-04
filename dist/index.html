@@ -16,11 +16,8 @@
     <!-- Modal HTML embedded directly into document -->
     <div id="create-trip-modal" class="modal">
       <!-- ERROR MESSAGES -->
-      <section id="modal-status-messages"></section>
-      <section id="status-messages" class="large-8 large-centered small-12 columns">
-        <h2 id="status-title"></h2>
-        <ul></ul>
-      </section>
+      <section id="modal-status-messages" class="status-messages"></section>
+
       <form id="create-trip-form">
         <label for="name">Name:</label>
         <input type="text" class="input" name="name" placeholder="Name">
@@ -44,7 +41,7 @@
       <!-- ALL TRIPS SECTION -->
       <section class="large-6 small-12 columns">
         <!-- ERROR MESSAGES WITHOUT MODAL -->
-        <section id="page-status-messages"></section>
+        <section id="page-status-messages" class="status-messages"></section>
 
         <!-- SORTING AND FILTERING SECTION -->
         <section>
@@ -117,6 +114,8 @@
     </section>
 
     <section class="large-12 columns">
+      <section id="reservation-status-messages" class="status-messages"></section>
+
       <h2>Make a Reservation:</h2>
       <form id="create-reservation-form" data-id="<%- id %>">
         <label for="name">Name:</label>
@@ -128,6 +127,19 @@
         <input type="submit" value="Make A Reservation" class="button"></input>
       </form>
     </section>
+  </script>
+
+  <script type="text/template" id="status-message-template">
+      <section class="large-10 large-centered small-12 columns <%- trip.status %>">
+        <h2 class="status-title"><%- trip.status.toUpperCase() %></h2>
+        <ul>
+          <% Object.keys(trip).forEach((attribute) => { %>
+            <% if (attribute != 'status' && trip[attribute].length > 0) { %>
+            <li><%- attribute %> : <%- trip[attribute] %></li>
+            <% } %>
+          <% }); %>
+        </ul>
+      </section>
   </script>
 </body>
 </html>
