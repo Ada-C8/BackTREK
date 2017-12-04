@@ -157,9 +157,6 @@ const events = {
     events.addStatusMessagesFromHash('#reservation-status-messages', 'errors', reservation.validationError);
     reservation.destroy();
   },
-  emptyModalMessages(){
-    $('#modal-status-messages').empty();
-  }
 }
 
 // TEMPLATE RENDERING
@@ -201,7 +198,4 @@ $(document).ready( () => {
   // filter trips
   $('#trip-query').keyup(events.filterTrips);
   $('#trip-fields').change(events.filterTrips);
-
-  // empty modal messages
-  $('#create-trip-modal').click(events.emptyModalMessages);
 });
