@@ -16,7 +16,7 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
   },
   plugins: [
-    new CleanWebpackPlugin(['dist'], { exclude: ['index.html'] }),
+    new CleanWebpackPlugin(['dist'], { exclude: ['index.html', 'favicon.ico'] }),
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin()
   ],

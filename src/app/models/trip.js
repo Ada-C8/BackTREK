@@ -1,11 +1,12 @@
 import Backbone from 'backbone';
+import _ from 'underscore';
+import Reservation from './reservation'
 
 const Trip = Backbone.Model.extend({
   model: Trip,
   urlRoot: 'https://ada-backtrek-api.herokuapp.com/trips/',
-  initialize: function() {
-      this.fetch();
-  },
+  
+
 
   validate(attributes) {
     const errors = {};
