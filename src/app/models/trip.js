@@ -21,7 +21,7 @@ const Trip = Backbone.Model.extend({
     }
 
     if (!attributes.about) {
-      errors['about'] = "Cost cannot be blank";
+      errors['about'] = "About cannot be blank";
     }
 
     if (!attributes.cost) {
@@ -35,6 +35,15 @@ const Trip = Backbone.Model.extend({
     if (parseInt(attributes.cost) < 0) {
       errors['publication_year'] = "Cost must be greater than 0"
     }
+
+    if (parseInt(attributes.weeks) < 0) {
+      errors['weeks'] = "Weeks must be greater than 0"
+    }
+
+    if (isNaN(parseInt(attributes.weeks))) {
+      errors['weeks'] = "Weeks must be a number"
+    }
+
 
     // console.log(errors);
     if (Object.keys(errors).length > 0) {
