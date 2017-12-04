@@ -38,9 +38,15 @@ body{
   color: #20333e;
 }
 
+#list {
+  height: 60vh;
+  overflow: scroll;
+}
+
 /* table */
 #trip-list-table {
   display: none;
+  /*float:left;*/
 }
 
 th.sort {

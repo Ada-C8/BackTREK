@@ -131,17 +131,18 @@ $(document).ready(() => {
     let singleTrip = new Trip({id: tripID});
     console.log(singleTrip.url());
 
-    // model refers to singleTrip?
+    // model refers to singleTrip
     // model.fetch(): takes urlRoot and adds id?
     //https://stackoverflow.com/questions/16544984/how-backbone-js-model-fetch-method-works
     singleTrip.fetch({
       success: (model) => {
         const generatedHTML = $(aboutTemplate(model.attributes));
-        console.log(generatedHTML.prop('outerHTML'));
-        // aboutElement.html(generatedHTML);
-        const htmlString = $('<div>').append(generatedHTML).html()
-        $('#' + this.id).after('<tr><td colspan="5" id="trip-about">' + htmlString + '</td></tr>');
-        console.log(htmlString);
+        console.log(generatedHTML);
+        // console.log(generatedHTML.prop('outerHTML'));
+        aboutElement.html(generatedHTML);
+        const htmlAsString = $('<div>').append(generatedHTML).html()
+        $('#' + this.id).after('<tr><td colspan="5" id="trip-about">' + htmlAsString + '</td></tr>');
+        // console.log(htmlAsString);
         // $('#list').animate({width:'50%'});
 
         // RENDER 'RESERVATION' FORM TO DOM
