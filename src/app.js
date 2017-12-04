@@ -76,10 +76,6 @@ const events = {
     $('.status-messages').hide();
     $.modal.close();
   },
-  showModal(){
-    console.log('show modal!');
-    $('#create-trip-modal').show();
-  },
   addTrip(event){
     event.preventDefault();
     const tripData = {};
@@ -205,7 +201,6 @@ $(document).ready( () => {
   $('#trip-list').on('click', '.trip', events.fetchTrip);
 
   // render modal for adding a trip
-  $('#create-trip-btn').click(events.showModal);
   $('.close').click(events.hideModal);
 
   // submit forms
