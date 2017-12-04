@@ -46,7 +46,7 @@ const events = {
         $tripList.append(allTripsTemplate(trip.attributes));
       });
     } else {
-      $tripList.append('<h1>No Trips Fit Criteria =(</h1>');
+      $tripList.append('<h1>No Trips Fit The Criteria =(</h1>');
     }
   },
   fetchTrip() {
@@ -61,7 +61,8 @@ const events = {
     $tripDetails.empty();
     $tripDetails.append(tripDetailsTemplate(trip.attributes));
   },
-  failedTripFetch() {
+  failedTripFetch(response) {
+    events.addStatusMessagesFromHash('#page-status-messages', 'error', response.responseJSON.errors);
   },
   hideModal(){
     $('.status-title').empty();
