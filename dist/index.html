@@ -14,7 +14,10 @@
       </header>
 
       <aside class="columns large-6 small-12">
+        <section id="trip-description"></section>
+
         <h3>Add a Trip!</h3>
+
         <form id="add-trip-form">
           <label for="name">Trip Name</label>
           <input type="text" name="name"></input>
@@ -38,6 +41,7 @@
         </form>
 
         <h3>Reserve a Trip!</h3>
+        
         <form id="reservation-trip-form">
           <label for="name">Full Name</label>
           <input type="text" name="name"></input>
@@ -47,6 +51,8 @@
 
           <input type="submit" value="Reserve Trip!" class="button"></input>
         </form>
+
+        <section id="trip-description"></section>
       </aside>
 
       <main class="row">
@@ -62,7 +68,6 @@
             <tbody id="trips-list"></tbody>
           </table>
         </section>
-        <section id="trip-description"></section>
 
       </main>
 
@@ -79,8 +84,6 @@
           <td><%- cost %></td>
         </tr>
       </script>
-
-    </script>
 
       <script type = "text/template" id="trip-details-template">
         <h2><%- name %></h2>

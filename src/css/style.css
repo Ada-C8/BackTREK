@@ -16,6 +16,14 @@ th.sort {
   color: white;
 }
 
+footer {
+  text-align: center;
+}
+
+#trip-details-template {
+
+}
+
 /* Styles for error section at the top */
 #status-messages {
   background-color: #dfdfdf;
