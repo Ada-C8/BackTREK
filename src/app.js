@@ -33,20 +33,27 @@ const events = {
     });
   },
   filterTrips(event) {
-    const query = $('#trip-query').val().toLowerCase();
+    let query = $('#trip-query').val().toLowerCase();
     const attr = $('#trip-fields').find(':selected').val();
-    // name, category, continent needs .includes
-    // weeks, cost needs less than
-    const filteredTrips = tripList.filter((trip) => trip.get(attr).toLowerCase().includes(query));
-
-    let $tripList = $('#trip-list');
-    $tripList.empty();
-    if (filteredTrips.length > 0) {
-      filteredTrips.forEach((trip) => {
-        $tripList.append(allTripsTemplate(trip.attributes));
-      });
-    } else {
-      $tripList.append('<h1>No Trips Fit The Criteria =(</h1>');
+    let filteredTrips;
+    if (query !== ''){
+      if(attr === 'name' || attr === 'category' || attr === 'continent') {
+        filteredTrips = tripList.filter((trip) => trip.get(attr).toLowerCase().includes(query));
+      } else {
+        if (isNaN(parseInt(query))) {
+          query = '0';
+        }
+        filteredTrips = tripList.filter((trip) => parseInt(trip.get(attr)) <= parseInt(query));
+      }
+      let $tripList = $('#trip-list');
+      $tripList.empty();
+      if (filteredTrips && filteredTrips.length > 0) {
+        filteredTrips.forEach((trip) => {
+          $tripList.append(allTripsTemplate(trip.attributes));
+        });
+      } else {
+        $tripList.append('<h1>No Trips Fit The Criteria =(</h1>');
+      }
     }
   },
   fetchTrip() {
