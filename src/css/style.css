@@ -1,2 +1,31 @@
-
 /* Your styles go here! */
+
+h1 {
+  text-align: center;
+  font-family: verdana;
+  color: black;
+}
+
+h3 {
+  text-align: center;
+}
+
+#right {
+  background-color: darkgrey;
+  text-align: center;
+}
+
+#left {
+  /*text-align: center;*/
+  background-color: grey;
+  overflow: auto;
+}
+
+#left .table {
+  max-width: 50vw;
+
+}
+
+.errorForm {
+  color: red;
+}
