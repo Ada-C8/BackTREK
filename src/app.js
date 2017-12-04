@@ -119,8 +119,6 @@ $(document).ready( () => {
   $('#new-trip').on('focus', function(){
     $('#newTripForm').modal();
     $('#newTripForm').submit(function(event) {
-
-
       events.addTrip(event)
       $.modal.close();
       tripList.fetch();
