@@ -148,3 +148,24 @@ $(document).ready( () => {
       clearFormMessages();
     }
   });
+
+  $(document).ready( () => {
+    tripTemplate = _.template($('#trip-template').html());
+    tripList.on('update', render);
+
+
+    tripList.on('sort', render);
+    tripList.fetch();
+    $('#add-trip-form').on('submit', addTripHandler);
+    TRIP_FIELDS.forEach((field) => {
+      const headerElement = $(`th.sort.${ field }`);
+      headerElement.on('click', (event) => {
+        console.log(`sorting table by ${ field }`);
+        tripList.comparator = field;
+        tripList.sort();
+      });
+    });
+    $('#status-messages button.clear').on('click', clearStatus);
+  });
+
+});
