@@ -38,7 +38,7 @@ body{
   color: #20333e;
 }
 
-#list {
+#list, #trip-about {
   height: 60vh;
   overflow: scroll;
 }
