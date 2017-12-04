@@ -14,6 +14,8 @@ const tripList = new TripList();
 let tripTemplate;
 let tripDetails;
 let registrationTemplate;
+let reportStatusTemplate;
+
 const tripFields = ['name', 'continent', 'category', 'cost', 'weeks', 'about'];
 const reservationFields = ['name', 'email', 'age']
 
@@ -60,6 +62,7 @@ const showTripDetails = function showTripDetails(event) {
 const loadRegistrationForm = function loadRegistrationForm(event) {
   const tripId = {tripId: $(this).attr('data-id')}
   const generatedHTML = registrationTemplate(tripId);
+  // i keep passing this id through into various html attributes - is this the best way of accessing it?
   $('.sign-up').hide();
   $('#trip-details').append(generatedHTML);
 };
@@ -68,10 +71,10 @@ const loadModal = function loadModal(event) {
   $('#add-trip').show();
 };
 
-const makeObject = function makeObject(fields) {
+const makeObject = function makeObject(fields, formId) {
   const objectData = {};
   fields.forEach((field) => {
-    const inputElement = $(`#add-trip-form input[name="${ field }"]`);
+    const inputElement = $(`${formId} input[name="${ field }"]`);
     const value = inputElement.val();
     objectData[field] = value;
 
@@ -83,14 +86,8 @@ const makeObject = function makeObject(fields) {
 const addReservationHandler = function addReservationHandler(event) {
   event.preventDefault();
 
-
-  const reservation = new Reservation(makeObject(reservationFields));
-
-  console.log('inReservationHanlder');
-  console.log(this);
+  const reservation = new Reservation(makeObject(reservationFields, '#res-form'));
   reservation.tripId =$(this).attr('data-id')
-
-  console.log(reservation);
 
   // if (!reservation.isValid()) {
   //   handleValidationFailures(reservation.validationError);
@@ -99,12 +96,9 @@ const addReservationHandler = function addReservationHandler(event) {
 
   reservation.save({}, {
     success: (model, response) => {
-      console.log(model);
       reportStatus('success', 'Successfully reserved spot on trip')
     },
     error: (model, response) => {
-      console.log(model);
-      console.log(response);
       handleValidationFailures(response.responseJSON['errors']);
     }
   });
@@ -113,7 +107,7 @@ const addReservationHandler = function addReservationHandler(event) {
 const addTripHandler = function addTripHandler(event) {
   event.preventDefault();
 
-  const trip = new Trip(makeObject(tripFields));
+  const trip = new Trip(makeObject(tripFields, '#add-trip-form'));
 
   if (!trip.isValid()) {
     handleValidationFailures(trip.validationError);
@@ -137,10 +131,8 @@ const addTripHandler = function addTripHandler(event) {
 };
 
 const reportStatus = function reportStatus(status, message) {
-  console.log(`Reporting ${ status } status: ${ message }`);
-
-  // Should probably use an Underscore template here.
-  const statusHTML = `<li class="${ status }">${ message }</li>`;
+  // console.log(`Reporting ${ status } status: ${ message }`);
+  const statusHTML = reportStatusTemplate({status: status, message: message});
 
   $('#status-messages ul').append(statusHTML);
   $('#status-messages').show();
@@ -169,6 +161,7 @@ $(document).ready( () => {
   tripDetails = _.template($('#trip-info').html());
   tripTemplate = _.template($('#trip-template').html());
   registrationTemplate = _.template($('#registration-form').html());
+  reportStatusTemplate = _.template($('#status-report').html());
 
 
   $('#load').on('click', showTrips);
