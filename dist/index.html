@@ -48,5 +48,51 @@
           </div>
         </div>
       </div>
+      <div id="myModal" class="modal modal-close">
+        <div class="modal-content">
+          <span id="close" class='modal-close'>&times;</span>
+          <h2 id='message'>Add your trip!</h2>
+          <form id="add-trip-form">
+            <div class="row">
+              <div class="large-12 columns">
+                <label for="name">Name:<span id='form-title'></span></label>
+                <input type="text" name="name" placeholder="trip name"></input>
+              </div>
+            </div>
+            <div class="row">
+              <div class="large-4 columns">
+                <label for="category">Category: <span id='form-category'></span></label>
+                <input type="text" name="category" placeholder="category"></input>
+              </div>
+              <div class="large-4 columns">
+                <label for="weeks">Weeks: <span  id='form-weeks'></span></label>
+                <input type="number" name="weeks" placeholder="1" min="1"></input>
+              </div>
+              <div class="large-4 columns">
+                <label for="cost" >Cost: <span id='form-cost'></span></label>
+                <input type="number" name="cost" placeholder="1+" />
+              </div>
+            </div>
+            <div class="row">
+              <div class="small-12 columns">
+                <label for="continent"> Continent: <span id='form-continent'></span></label>
+                <input type="text" name="continent" placeholder="Case Sensitive -  Asia, Africa, North America, South America, Antarctica, Europe, or Australia" />
+            </div>
+            <div class="row">
+              <div class="small-12 columns">
+                <label for="about">About: <span id='form-about'></span></label>
+                <input type="text" name="about" placeholder="trip description"></input>
+              </div>
+            </div>
+            <div class='row'>
+              <input id='myBtn' type="submit" class='button' value="Add Trip!"></input>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+    <footer>
+
+    </footer>
 
 </html>
