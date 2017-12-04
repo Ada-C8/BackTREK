@@ -34,17 +34,23 @@ const renderTrips = function renderTrips(list) {
           success: function(trip) {
             console.log('worked');
             renderTrip(trip);
-
           },
           error: function(message, b) {
             console.log(message, b);
           }
         }); // end of fetch
-
       })
       tripTableElement.append(generatedHTML);
     });
   };
+
+  const renderReserve = function renderReserve() {
+    const reserveForm = $('#reserve-form');
+    reserveForm.html('');
+    const generatedHTML = reserveTemplate();
+    console.log(generatedHTML);
+    reserveForm.append(generatedHTML);
+  }
 
   const renderTrip = function renderTrip(trip) {
     const tripElement = $('#trip');
@@ -53,6 +59,9 @@ const renderTrips = function renderTrips(list) {
     const generatedHTML = tripTemplate(trip.attributes);
     tripElement.append(generatedHTML);
 
+    $('#reserve').on('click', (event) => {
+      renderReserve();
+    });
   }
 
   $('th.sort').removeClass('current-sort-field');
@@ -109,11 +118,12 @@ const renderTrips = function renderTrips(list) {
       renderTrips(tripList);
     }); // end tripsList event handler
 
+
+
     $('#add-trip-form').on('submit', addTripHandler);
 
     TRIP_FIELDS.forEach((field) => {
       const headerElement = $(`th.sort.${field}`);
-      console.log(headerElement);
         headerElement.on('click', (event) => {
           console.log(`sorting table by ${field}`);
           tripList.comparator = field;
