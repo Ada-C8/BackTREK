@@ -71,10 +71,10 @@ const events = {
     // TODO: click out of the modal and close
     console.log('hid modal!');
     // clear error messages
-    $('#status-title').empty();
-    $('#status-messages ul').empty();
-    $('#status-messages').hide();
-    $('#create-trip-modal').hide();
+    $('.status-title').empty();
+    $('.status-messages section ul').empty();
+    $('.status-messages').hide();
+    $.modal.close();
   },
   showModal(){
     console.log('show modal!');
@@ -84,7 +84,7 @@ const events = {
     event.preventDefault();
     const tripData = {};
     tripFields.forEach( (field) => {
-      const val = $(`input[name=${field}]`).val();
+      const val = $(`#create-trip-form input[name=${field}]`).val();
       if (val != '') tripData[field] = val;
     });
     console.log('in addTrip in app.js');
@@ -96,7 +96,7 @@ const events = {
         success: events.successfulSaveTrip,
         error: events.failSaveTrip
       });
-      $.modal.close();
+      // $.modal.close();
     } else { // save is invalid
       console.log('Trip Validation Error');
       console.log(trip.validationError);
@@ -105,12 +105,14 @@ const events = {
   },
   successfulSaveTrip(trip, response){
     // TODO: add message on the
+    console.log('in successfulSaveTrip');
     $('#create-trip-form .input').val("");
     events.hideModal();
     tripList.add(trip);
     events.addStatusMessagesFromHash('#page-status-messages', 'success', {message: 'Trip has been successfully added'});
   },
   failSaveTrip(trip, response){
+    console.log('inside failSaveTrip');
     console.log('Response Validation Errors');
     console.log(response);
     events.addStatusMessagesFromHash('#modal-status-messages', 'errors', response.responseJSON.errors);
@@ -126,7 +128,11 @@ const events = {
     $(jquerySelector).empty();
     console.log('inside addStatusMessagesFromHash method');
     $(jquerySelector).append(statusMessageTemplate({trip: tripAttributes}));
-    $(jquerySelector).show();
+    if (statusTitle === 'success'){
+      $(jquerySelector).show().delay(3000).fadeOut();
+    } else {
+      $(jquerySelector).show();
+    }
 
     // $('#status-title').empty();
     // $('#status-messages ul').empty();

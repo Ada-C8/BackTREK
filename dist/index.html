@@ -135,7 +135,12 @@
         <ul>
           <% Object.keys(trip).forEach((attribute) => { %>
             <% if (attribute != 'status' && trip[attribute].length > 0) { %>
-            <li><%- attribute %> : <%- trip[attribute] %></li>
+            <li>
+              <% if (attribute != 'message') { %>
+              <%- attribute %> :
+              <% } %>
+               <%- trip[attribute] %>
+            </li>
             <% } %>
           <% }); %>
         </ul>

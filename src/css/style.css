@@ -22,7 +22,7 @@
 }
 
 header{
-  background: rgb(140, 234, 189);
+  background: steelblue;
 }
 
 .site-title{
@@ -59,7 +59,7 @@ th.sort {
 }
 
 .success{
-  background-color: green;
+  background-color: rgb(140, 234, 189);
 }
 
 .errors{
