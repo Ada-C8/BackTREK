@@ -119,6 +119,7 @@ $(document).ready(() => {
 
   // RENDER SINGLE TRIP DETAILS TO DOM
   $('#trip-list').on('click', 'tr', function() {
+    $('.hidden').show();
     const aboutElement = $('#trip-about');
     aboutElement.html('');
     console.log('about: clicked');
@@ -140,10 +141,6 @@ $(document).ready(() => {
         console.log(generatedHTML);
         // console.log(generatedHTML.prop('outerHTML'));
         aboutElement.html(generatedHTML);
-        // const htmlAsString = $('<div>').append(generatedHTML).html()
-        // $('#' + this.id).after('<tr><td colspan="5" id="trip-about">' + htmlAsString + '</td></tr>');
-        // console.log(htmlAsString);
-        // $('#list').animate({width:'50%'});
 
         // RENDER 'RESERVATION' FORM TO DOM
         $('#new-reservation-btn').on('click', function() {

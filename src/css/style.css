@@ -38,9 +38,19 @@ body{
   color: #20333e;
 }
 
-#list, #trip-about {
+#list {
   height: 60vh;
   overflow: scroll;
+}
+
+.hidden {
+  display: none;
+}
+
+#trip-about {
+  overflow: scroll;
+  position: relative;
+  height: 60vh;
 }
 
 /* table */
