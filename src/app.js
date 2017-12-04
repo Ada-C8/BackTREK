@@ -200,9 +200,6 @@ $(document).ready( () => {
   // render template for trip details (on click)
   $('#trip-list').on('click', '.trip', events.fetchTrip);
 
-  // render modal for adding a trip
-  $('.close').click(events.hideModal);
-
   // submit forms
   $('#create-trip-form').submit(events.addTrip);
   $(document).on('submit', '#create-reservation-form', events.addReservation);
