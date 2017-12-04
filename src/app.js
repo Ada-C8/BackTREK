@@ -90,55 +90,56 @@ const events = {
     $('#status-messages').show();
     trip.destroy();
   },
+
+
+  // Make a reservation
+  // const events = {
+  //   addReservation(event){
+  //   event.preventDefault();
+  //   const reserveData = {};
+  //
+  //   reservationFields.forEach((field) =>{
+  //     reserveData[field] = $(`input[name=${field}]`).val();
+  //   });
+  //
+  //   console.log('Your reservation has been added!');
+  //   console.log(reserveData);
+  //
+  //   const reservation = new Reservation(reserveData);
+  //
+  //   reservationList.add(reservation);
+  //   reservation.save({
+  //     success: events.successfulSave,
+  //     error: events.failedSave
+  //   })
+  //   this.reset();
+  // },
+
+  // Sort Trips
+  sortTrips(event) {
+  $('.sort-field').removeClass('sort-field');
+  $(this).addClass('sort-field');
+
+  // Get the class list of the selected element
+    const classes = $(this).attr('class').split(/\s+/);
+
+    classes.forEach((className) => {
+      if (fields.includes(className)) {
+        if (className === tripList.comparator) {
+          tripList.models.reverse();
+          tripList.trigger('sort', tripList);
+        }
+        else {
+          tripList.comparator = className;
+          tripList.sort();
+        }
+      }
+    });
+
+    $('.sort-field').removeClass('sort-field');
+    $(this).addClass('sort-field');
+  },
 };
-
-// Make a reservation
-
-// addReservation(event){
-//   event.preventDefault();
-//   const reserveData = {};
-//
-//   reservationFields.forEach((field) =>{
-//     reserveData[field] = $(`input[name=${field}]`).val();
-//   });
-//
-//   console.log('Your reservation has been added!');
-//   console.log(reserveData);
-//
-//   const reservation = new Reservation(reserveData);
-//
-//   reservationList.add(reservation);
-//   reservation.save({
-//     success: events.successfulSave,
-//     error: events.failedSave
-//   })
-//   this.reset();
-// },
-
-// Sort Trips
-// sortTrips(event) {
-// $('.current-sort-field').removeClass('current-sort-field');
-// $(this).addClass('current-sort-field');
-
-// Get the class list of the selected element
-//   const classes = $(this).attr('class').split(/\s+/);
-//
-//   classes.forEach((className) => {
-//     if (fields.includes(className)) {
-//       if (className === tripList.comparator) {
-//         tripList.models.reverse();
-//         tripList.trigger('sort', tripList);
-//       }
-//       else {
-//         tripList.comparator = className;
-//         tripList.sort();
-//       }
-//     }
-//   });
-//
-//   $('.sort-field').removeClass('sort-field');
-//   $(this).addClass('sort-field');
-// },
 
 $(document).ready( () => {
 
@@ -166,6 +167,6 @@ $(document).ready( () => {
 
   // $('.trip-info').click(events.showAllTrips);
 
-  // $('.sort').click(events.sortTrips);
-  // tripList.on('sort', render, tripList);
+  $('.sort').click(events.sortTrips);
+  tripList.on('sort', render, tripList);
 });
