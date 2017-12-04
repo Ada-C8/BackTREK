@@ -244,7 +244,7 @@ const filterTrips = function filterTrips() {
 const init = () => {
   $('body').removeClass('init');
   $('div.init').hide();
-  $('header').addClass('grid-x align-justify');
+  $('header').addClass('grid-x');
   $('header').show();
   $('main').addClass('grid-x grid-padding-x')
   $('main').show();

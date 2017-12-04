@@ -50,8 +50,12 @@ header {
   color: white;
 }
 
-header h1 {
-  padding-left: 1rem;
+/*div.wrapper-left {
+  margin-left: 15px;
+}*/
+
+#filter {
+  margin-right: 5px;
 }
 
 /* ==== FONTS ==== */
@@ -63,12 +67,24 @@ h2, h3, h4, p, a, a[href], table td, table th, button {
   font-family: "Kanit", sans-serif;
 }
 
+/* ==== TABLE ==== */
+/*th.weeks {
+  width: 100px;
+}*/
+/*th:nth-of-type(4), tr:nth-of-type(4) {
+  width: 100px
+}*/
+
+.all-trips {
+  overflow-x: scroll;
+}
 .all-trips table {
   /*overflow: auto;*/
 }
 
 table {
-  overflow: scroll;
+  overflow: auto;
+  overflow-y: scroll;
   width: 100%;
   table-layout: fixed;
 }
