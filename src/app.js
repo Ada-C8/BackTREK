@@ -14,6 +14,7 @@ import TripList from './app/collections/trip_list';
 // DOM Selectors.
 const $tripsList = $('#trips-list')
 const $tripDescription = $('#trip-description')
+const $reservationTripForm = $('#reservation-trip-form')
 
 // Templates for trip list and details.
 let tripTemplate;
@@ -36,6 +37,8 @@ const render = function render(tripList) {
 };
 
 const fields = ['name', 'category', 'continent', 'weeks', 'cost', 'about'];
+
+const reservationFields = ['name', 'email', 'tripID'];
 
 const events = {
   // Add a bloody trip
@@ -91,33 +94,36 @@ const events = {
     trip.destroy();
   },
 
-
   // Make a reservation
-  // const events = {
-  //   addReservation(event){
-  //   event.preventDefault();
-  //   const reserveData = {};
-  //
-  //   reservationFields.forEach((field) =>{
-  //     reserveData[field] = $(`input[name=${field}]`).val();
-  //   });
-  //
-  //   console.log('Your reservation has been added!');
-  //   console.log(reserveData);
-  //
-  //   const reservation = new Reservation(reserveData);
-  //
-  //   reservationList.add(reservation);
-  //   reservation.save({
-  //     success: events.successfulSave,
-  //     error: events.failedSave
-  //   })
-  //   this.reset();
-  // },
+
+  addReservation(event){
+    event.preventDefault();
+    const reserveData = {};
+
+    reservationFields.forEach((field) => {
+      reserveData[field] = $(`input[name=${field}`],$reservationTripForm).val();
+    });
+
+    // reservationFields.forEach((field) =>{
+    //   reserveData[field] = $(`input[name=${field}]`).val();
+    // });
+
+    console.log('Your reservation has been added!');
+    console.log(reserveData);
+
+    const reservation = new Reservation(reserveData);
+
+    reservationList.add(reservation);
+    reservation.save({
+      success: events.successfulSave,
+      error: events.failedSave
+    })
+    this.reset();
+  },
 
   // Sort Trips
   sortTrips(event) {
-    console.log(event); 
+    console.log(event);
     console.log(this);
   // Get the class list of the selected element
     const classes = $(this).attr('class').split(/\s+/);
@@ -160,11 +166,6 @@ $(document).ready( () => {
   tripDetailsTemplate = _.template($('#trip-details-template').html());
 
   $('#add-trip-form').submit(events.addTrip);
-  // trip.fetch().done(() => {
-  // $tripDescription.append(tripDetailsTemplate(trip.attributes));
-  // });
-
-  // $('.trip-info').click(events.showAllTrips);
 
   $('.sort').click(events.sortTrips);
   tripList.on('sort', render, tripList);
