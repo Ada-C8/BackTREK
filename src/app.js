@@ -58,14 +58,13 @@ const events = {
     const trip = new Trip(tripData);
 
     if (trip.isValid()) {
-      console.log('valid!')
       trip.save({}, {
         success: events.successfullSave,
         error: events.failedSave,
       });
     } else {
       Object.keys(trip.validationError).forEach((error) => {
-        $('#status-messages ul').append(`<li>${error}: ${trip.validationError[error]}</li>`)
+        $('#status-messages').append(`${error}: ${trip.validationError[error]}`)
       });
       $('#status-messages').show();
     }
@@ -74,29 +73,29 @@ const events = {
     console.log('Success!');
     console.log(trip);
     console.log(response);
-    $('#status-messages ul').empty();
-    $('#status-messages ul').append(`<li>${trip.get('name')} added!<li>`)
+    $('#status-messages').empty();
+    $('#status-messages').append(`${trip.get('name')} added!`)
     $('#status-messages').show();
   },
   failedSave(trip, response) {
 
     for (let key in response.responseJSON.errors) {
       response.responseJSON.errors[key].forEach((error) => {
-        $('#status-messages ul').append(`<li>${key}: ${error}</li>`)
+        $('#status-messages').append(`<p>${key}: ${error}</p>`)
       });
     }
     $('#status-messages').show();
     trip.destroy();
   },
   successReservation(reservation, response) {
-    $('#status-messages ul').empty();
-    $('#status-messages ul').append(`<li>${reservation.get('name')} added!<li>`)
+    $('#status-messages').empty();
+    $('#status-messages').append(`<p>${reservation.get('name')} added!</p>`)
     $('#status-messages').show();
   },
   failedReservation(reservation, response) {
     for (let key in response.responseJSON.errors) {
       response.responseJSON.errors[key].forEach((error) => {
-        $('#status-messages ul').append(`<li>${key}: ${error}</li>`)
+        $('#status-messages').append(`<p>${key}: ${error}</p>`);
       });
     }
     $('#status-messages').show();
@@ -141,7 +140,6 @@ const events = {
         const search_term = queryValue.toLowerCase();
 
         if (attr_value.includes(search_term)) {
-          console.log('found a match!');
           return true;
         }
       });
@@ -156,12 +154,15 @@ $(document).ready( () => {
   tripTemplate = _.template($('#trip-template').html());
 
   // Clears modal(s) when user clicks outside the box
+  // Not a great user experience -- should be changed so that it goes back to the filled in modal (or even better warns user as they are typing)
   $(document).on('click', function() {
     const modal = document.getElementById('res-modal');
     const modal2 = document.getElementById('new-trip-modal');
+    const modal3 = document.getElementById('status-messages-modal');
 
-    if (event.target == modal || event.target == modal2) {
+    if (event.target == modal || event.target == modal2 || event.target == modal3) {
       (event.target).style.display = 'none';
+      modal3.style.display = 'none';
     }
   });
 
@@ -183,7 +184,6 @@ $(document).ready( () => {
   });
 
   $newTripBtn.on('click', function showNewTripForm() {
-    console.log("I've been clicked!")
     $('#new-trip-modal').css('display', 'block');
   });
 
@@ -213,9 +213,9 @@ $(document).ready( () => {
       });
     } else {
       Object.keys(reservation.validationError).forEach((error) => {
-        $('#status-messages ul').append(`<li>${error}: ${reservation.validationError[error]}<li>}`)
+        $('#status-messages').append(`<p>${error}: ${reservation.validationError[error]}<p>}`)
       });
-      $('#status-messages').show();
+      $('#status-messages').css('display', 'block');
     }
   });
 

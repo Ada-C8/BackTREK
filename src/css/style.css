@@ -18,15 +18,15 @@ header {
   padding-right: 40px;
 }
 
-#status-messages {
+/*#status-messages {
   background-color: #dfdfdf;
   display: none;
-}
+}*/
 
-#res-modal, #new-trip-modal {
+#res-modal, #new-trip-modal, #status-messages {
   display: none;
   position: fixed;
-  z-index: 999;
+  z-index: 990;
   top: 0;
   left: 0;
   width: 100%;
@@ -35,7 +35,7 @@ header {
   background: rgba(0,0,0,0.5);
 }
 
-#reservation-form, #add-trip-form {
+#reservation-form, #add-trip-form, #status-messages {
   background: white;
   position: fixed;
   top: 50%;
@@ -44,4 +44,8 @@ header {
   padding: 30px;
   width: 400px;
   border-radius: 20px;
+}
+
+#status-messages {
+  z-index: 999;
 }
