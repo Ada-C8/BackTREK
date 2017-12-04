@@ -62,6 +62,7 @@ const renderTrips = function renderTrips(list) {
     });
   };
 
+  // BUG: renderReserve not firing on submit, console.logs not logging
   const renderReserve = function renderReserve() {
     const reserveForm = $('#reserve-form');
     reserveForm.html('');
@@ -102,7 +103,6 @@ const renderTrips = function renderTrips(list) {
     console.log(tripData);
     return tripData;
   };
-
 
   const outputValidationFailures = function outputValidationFailures(errors) {
     for (let field in errors) {
