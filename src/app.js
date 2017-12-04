@@ -72,11 +72,9 @@ const events = {
     $('#status-messages ul').empty();
     $('#status-messages ul').append(`<li>${trip.get('title')} added to ze listy list list!</li>`);
     $('#status-messages').show();
-    trip.fetch().done(() => {
-    $tripDescription.append(tripDetailsTemplate(trip.attributes));
-  });
+    tripList.fetch();
   },
-  
+
   failedSave(trip, response) {
     console.log('ERROR!');
     console.log(trip);
@@ -94,53 +92,53 @@ const events = {
   },
 };
 
-  // Make a reservation
+// Make a reservation
 
-  // addReservation(event){
-  //   event.preventDefault();
-  //   const reserveData = {};
-  //
-  //   reservationFields.forEach((field) =>{
-  //     reserveData[field] = $(`input[name=${field}]`).val();
-  //   });
-  //
-  //   console.log('Your reservation has been added!');
-  //   console.log(reserveData);
-  //
-  //   const reservation = new Reservation(reserveData);
-  //
-  //   reservationList.add(reservation);
-  //   reservation.save({
-  //     success: events.successfulSave,
-  //     error: events.failedSave
-  //   })
-  //   this.reset();
-  // },
+// addReservation(event){
+//   event.preventDefault();
+//   const reserveData = {};
+//
+//   reservationFields.forEach((field) =>{
+//     reserveData[field] = $(`input[name=${field}]`).val();
+//   });
+//
+//   console.log('Your reservation has been added!');
+//   console.log(reserveData);
+//
+//   const reservation = new Reservation(reserveData);
+//
+//   reservationList.add(reservation);
+//   reservation.save({
+//     success: events.successfulSave,
+//     error: events.failedSave
+//   })
+//   this.reset();
+// },
 
-  // Sort Trips
-  // sortTrips(event) {
-    // $('.current-sort-field').removeClass('current-sort-field');
-    // $(this).addClass('current-sort-field');
+// Sort Trips
+// sortTrips(event) {
+// $('.current-sort-field').removeClass('current-sort-field');
+// $(this).addClass('current-sort-field');
 
-    // Get the class list of the selected element
-  //   const classes = $(this).attr('class').split(/\s+/);
-  //
-  //   classes.forEach((className) => {
-  //     if (fields.includes(className)) {
-  //       if (className === tripList.comparator) {
-  //         tripList.models.reverse();
-  //         tripList.trigger('sort', tripList);
-  //       }
-  //       else {
-  //         tripList.comparator = className;
-  //         tripList.sort();
-  //       }
-  //     }
-  //   });
-  //
-  //   $('.sort-field').removeClass('sort-field');
-  //   $(this).addClass('sort-field');
-  // },
+// Get the class list of the selected element
+//   const classes = $(this).attr('class').split(/\s+/);
+//
+//   classes.forEach((className) => {
+//     if (fields.includes(className)) {
+//       if (className === tripList.comparator) {
+//         tripList.models.reverse();
+//         tripList.trigger('sort', tripList);
+//       }
+//       else {
+//         tripList.comparator = className;
+//         tripList.sort();
+//       }
+//     }
+//   });
+//
+//   $('.sort-field').removeClass('sort-field');
+//   $(this).addClass('sort-field');
+// },
 
 $(document).ready( () => {
 
@@ -150,24 +148,24 @@ $(document).ready( () => {
     $tripDescription.empty();
 
     trip.fetch().done(() => {
-    $tripDescription.append(tripDetailsTemplate(trip.attributes));
-  });
+      $tripDescription.append(tripDetailsTemplate(trip.attributes));
     });
+  });
 
 
-    tripTemplate = _.template($('#trip-template').html());
-    tripList.on('update', render, tripList);
-    tripList.fetch();
+  tripTemplate = _.template($('#trip-template').html());
+  tripList.on('update', render, tripList);
+  tripList.fetch();
 
-    tripDetailsTemplate = _.template($('#trip-details-template').html());
+  tripDetailsTemplate = _.template($('#trip-details-template').html());
 
-    $('#add-trip-form').submit(events.addTrip);
-    // trip.fetch().done(() => {
-    // $tripDescription.append(tripDetailsTemplate(trip.attributes));
+  $('#add-trip-form').submit(events.addTrip);
+  // trip.fetch().done(() => {
+  // $tripDescription.append(tripDetailsTemplate(trip.attributes));
   // });
 
-    // $('.trip-info').click(events.showAllTrips);
+  // $('.trip-info').click(events.showAllTrips);
 
-    // $('.sort').click(events.sortTrips);
-    // tripList.on('sort', render, tripList);
-  });
+  // $('.sort').click(events.sortTrips);
+  // tripList.on('sort', render, tripList);
+});
