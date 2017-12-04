@@ -12,30 +12,33 @@
 </head>
 
 <body id="foundation-override">
-  <header class="row">
-    <div class="column small-12 home">
-      <section id="get-list">
-        <h1>TREK ON!</h1>
-        <a href="#new-trip-form" rel="modal:open" id="add-trip">Choose Your Adventure!</a>
-      </section>
-
-      <section id="message">
-        <ul>
-          <!-- Error Messaging goes here -->
-        </ul>
-      </section>
-    </div>
+  <header class="row align-middle">
+    <section class="column small-12 hide" id="filters">
+      <div>filters a coming</div>
+    </section>
+    <section class="column small-12 home">
+      <h1 id="get-list">TREK ON!</h1>
+    </section>
+    <section class="column small-12">
+      <a href="#new-trip-form" rel="modal:open" id="add-trip" class="button">Choose Your Adventure!</a>
+    </section>
+    <section class="column small-12" id="message">
+      <ul>
+        <!-- Error Messaging goes here -->
+      </ul>
+    </section>
   </header>
   <main class="row">
     <div id="list-wrapper" class="small-12 column small-order-2 large-order-1">
       <section id="list" class="scrollbox hide">
-        <table id="trip-data" class="responsive">
+        <table id="trip-data" class="responsive" role="grid">
+          <!-- TODO: Change Table to Flex rows and columns for better responsiveness and fix 'header' -->
           <thead>
-            <th class="sort name">Name</th>
-            <th class="sort category">Category</th>
-            <th class="sort continent">Continent</th>
-            <th class="sort weeks">Weeks</th>
-            <th class="sort cost">Cost</th>
+            <th id="name" class="sort name" scope="column">Name</th>
+            <th id="category" class="sort category" scope="column">Category</th>
+            <th id="continent" class="sort continent" scope="column">Continent</th>
+            <th id="weeks" class="sort weeks" scope="column">Weeks</th>
+            <th id="cost" class="sort cost" scope="column">Cost</th>
           </thead>
           <tbody id="trip-list">
             <!--  template goes here -->
@@ -92,17 +95,17 @@
     </section>
     <section class="fields">
       <label>Name</label>
-      <input placeholder="Your Next Great Adventure" type="text" id="name" name="name" required />
+      <input placeholder="Your Next Great Adventure" type="text" Xid="name" name="name" required />
       <label>Category</label>
-      <input placeholder="Adventure" type="text" id="category" name="category" required />
+      <input placeholder="Adventure" type="text" Xid="category" name="category" required />
       <label>Continent</label>
-      <input placeholder="Antartica" type="text" id="continent" name="continent" required />
+      <input placeholder="Antartica" type="text" Xid="continent" name="continent" required />
       <label>Weeks</label>
-      <input placeholder="3" type="number" id="weeks" name="weeks" required />
+      <input placeholder="3" type="number" Xid="weeks" name="weeks" required />
       <label>Cost</label>
-      <input placeholder="850.00" type="number" id="cost" name="cost" required />
+      <input placeholder="850.00" type="number" Xid="cost" name="cost" required />
       <label>About</label>
-      <input placeholder="Enter a short description here." type="text" id="about" name="about" />
+      <input placeholder="Enter a short description here." type="text" Xid="about" name="about" />
     </section>
     <section>
       <button type="submit" >Choose Your Adventure!</button>
@@ -113,18 +116,18 @@
   <!-- _Underscore Templates -->
   <script type="text/template" id="trip-list-template">
     <tr id="<%- id %>" class="trip">
-      <td class="name">
+      <td headers="name trip-<%- id %>" class="name">
         <%- name %>
       </td>
-      <td class="category">
+      <td headers="category trip-<%- id %>" class="category">
       </td>
-      <td class="continent">
+      <td headers="continent trip-<%- id %>" class="continent">
         <%- continent %>
       </td>
-      <td class="weeks">
+      <td headers="weeks trip-<%- id %>" class="weeks">
         <%- weeks %>
       </td>
-      <td class="cost">
+      <td headers="cost trip-<%- id %>" class="cost">
       </td>
     </tr>
   </script>

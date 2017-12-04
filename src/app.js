@@ -2,9 +2,11 @@
 import $ from 'jquery';
 import _ from 'underscore';
 import 'jquery-modal';
+// import './responsive-tables'; TODO: Test again.
 
 // CSS
 import './css/foundation.css';
+// import './css/responsive-tables.css'
 import './css/style.css';
 
 // Backbone Models
@@ -132,7 +134,8 @@ $(document).ready( () => {
 
   // BASICS
   $('#get-list').click(() => {
-    $('.home').removeClass('home');
+    $('.home').removeClass('home')
+    $('header section').removeClass('hide').addClass('medium-4');
     $('#list').removeClass('hide');
   });
 
