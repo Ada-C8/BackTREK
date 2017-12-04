@@ -5,17 +5,6 @@ const Trip = Backbone.Model.extend({
   defaults: {
     category: 'everything',
   },
-  initialize(attributes){
-    const titleCase = function titleCase(string) {
-      let strArray = string.split(' ');
-      let capitalizedArray = [];
-      strArray.forEach((word) => {
-        capitalizedArray.push(word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());
-      });
-      return capitalizedArray.join(' ');
-    }
-    attributes.continent = titleCase(attributes.continent);
-  },
   urlRoot: 'https://ada-backtrek-api.herokuapp.com/trips/',
   validate: function(attributes){
     const errors = {
