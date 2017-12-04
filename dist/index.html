@@ -8,15 +8,21 @@
 <body>
   <header>
     <h1>backTrek</h1>
-    <h3>going the distance</h3>
+    <h3>~going the distance~</h3>
+
+    <div>
+      <button type="button" name="button" class="button" id="trips">see trips</button>
+      <button type="button" name="button" class="button" id="add-trip">add trip</button>
+    </div>
   </header>
+
   <section id="status-messages">
         <ul></ul>
   </section>
+
   <main>
-    <a href="#" id="trips">see trips</a>
-    <a href="#" id="add-trip">add trip</a>
-    <aside id="trip"></aside>
+
+    <aside class="float-center" id="trip"></aside>
     <aside id="reserve-form"></aside>
 
     <section class="add-trip-form columns large-4 small-12">
@@ -44,9 +50,8 @@
       </form>
     </section>
 
-
     <section>
-      <table>
+      <table class="columns large-4 small-12">
         <thead>
           <th class="name sort">name</th>
           <th class="continent sort">continent</th>
@@ -74,7 +79,8 @@
       <p><%- weeks %></p>
       <p><%- cost %></p>
       <p><%- about %></p>
-      <a href="#" id="reserve">reserve trip</a>
+
+      <button type="button" name="button" class="button" id="reserve">reserve trip</button>
 
     </div>
   </script>
