@@ -104,8 +104,7 @@ const highlightCurrentTrip = function highlightCurrentTrip(event) {
 };
 
 const showTrip = function showTrip(event) {
-  $('#show-trip').addClass('show-right');
-  $('#show-trip').siblings().removeClass('show-right');
+  $('#show-trip').addClass('show-right').siblings().removeClass('show-right');
   highlightCurrentTrip(event);
   clearContent();
   splitScreen();
