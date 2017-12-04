@@ -37,6 +37,7 @@ const events = {
         tripData[field] = value
       }
     });
+
     const trip = new Trip(tripData);
 
     if (trip.isValid()){
