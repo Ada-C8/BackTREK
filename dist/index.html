@@ -58,10 +58,8 @@
       </form>
     </article>
 
-    <section id="all-trips" class="columns large-6 small-12">
-      <h2>Trips!</h2>
-
-
+    <section id="all-trips" class="columns large-5 small-12 float-left">
+      <h2>Treks!</h2>
 
       <table class="large-12 small-12 float-left">
         <thead>
@@ -77,7 +75,7 @@
       </table>
     </section>
 
-    <section class="large-6 small-12 float-left">
+    <section class="large-5 small-12 float-right">
       <article id="trip-description">
 
       </article>
@@ -135,9 +133,7 @@
   <script type="text/template" id="description-template">
     <article class="description">
       <h2><%- name %></h2>
-      <p>
-        <%- continent %> | <%- category %> | <%- weeks %> | $<%- cost %>
-      </p>
+      <h5><%- continent %> | <%- category %> | <%- weeks %> | $<%- cost %></h5>
       <p>
         <%- about %>
       </p>

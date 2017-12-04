@@ -1,6 +1,32 @@
 
 /* Your styles go here! */
 
+nav {
+  margin-bottom: 2vw;
+}
+
+h1 {
+  text-align: center;
+}
+
+h5 {
+  text-align: center;
+}
+
 tr:hover {
   background-color: #4286f4;
+}
+
+h2 {
+  text-align: center;
+}
+
+#description {
+  margin: 2vw;
+  padding: 2vw;
+}
+
+table {
+  margin: 2vw;
+  padding: 2vw;
 }
