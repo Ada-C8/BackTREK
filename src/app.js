@@ -166,6 +166,7 @@ const events = {
   failSaveReservation(reservation, response){
     console.log('Response Validation Errors');
     console.log(response.responseJSON.errors);
+    events.addStatusMessagesFromHash('#reservation-status-messages', 'errors', reservation.validationError);
     reservation.destroy();
   },
   emptyModalMessages(){
