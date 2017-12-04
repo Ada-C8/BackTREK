@@ -109,8 +109,7 @@ const showTrip = function showTrip(event) {
   highlightCurrentTrip(event);
   clearContent();
   splitScreen();
-  const tripId = event.currentTarget.id;
-  const tripUrl = `${url}/${tripId}`;
+  const tripUrl = `${url}/${event.currentTarget.id}`;
   $.get(tripUrl, (response) => {
     response.plural = (response.weeks === 1) ? '' : 's';
     $('#show-trip').append(showTripTemplate(response));
