@@ -117,9 +117,8 @@ const events = {
 
   // Sort Trips
   sortTrips(event) {
-  $('.sort-field').removeClass('sort-field');
-  $(this).addClass('sort-field');
-
+    console.log(event); 
+    console.log(this);
   // Get the class list of the selected element
     const classes = $(this).attr('class').split(/\s+/);
 
