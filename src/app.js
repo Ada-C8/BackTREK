@@ -12,6 +12,24 @@ import Trip from 'app/models/trip';
 
 const TRIP_FIELDS = ['name', 'continent', 'category', 'weeks', 'cost'];
 
+// Clear status messages
+const clearStatus = function clearStatus() {
+  $('#status-messages ul').html('');
+  $('#status-messages').hide();
+};
+
+// Add a new status message
+const reportStatus = function reportStatus(status, message) {
+  console.log(`Reporting ${ status } status: ${ message }`);
+
+  // Should probably use an Underscore template here.
+  const statusHTML = `<li class="${ status }">${ message }</li>`;
+
+  // note the symetry with clearStatus()
+  $('#status-messages ul').append(statusHTML);
+  $('#status-messages').show();
+};
+
 const tripList = new TripList();
 // initalize templates
 let listTemplate;
@@ -85,6 +103,13 @@ const renderTrips = function renderTrips(list) {
     return tripData;
   };
 
+  const outputValidationFailures = function outputValidationFailures() {
+    for (let field in errors) {
+      for (let problem of errors[field]) {
+        reportStatus('error', `${field}: ${problem}`);
+      }
+    }
+  };
   const addTripHandler = function(event) {
     event.preventDefault();
 
@@ -95,13 +120,15 @@ const renderTrips = function renderTrips(list) {
     trip.save({}, {
       success: (model, response) => {
         console.log('successfully saved trip');
+        reportStatus('success', 'Successfully saved trip!');
       },
       error: (model, response) => {
         console.log('failed to save trip');
         console.log(response);
         // removes from list if fails validations
         tripList.remove(model);
-      }
+        outputValidationFailures(response.responseJSON["errors"]);
+      },
     });
   };
 
@@ -114,12 +141,6 @@ const renderTrips = function renderTrips(list) {
     tripList.on('sort', renderTrips);
     tripList.fetch();
 
-    $('#trips').on('click', (event) => {
-      renderTrips(tripList);
-    }); // end tripsList event handler
-
-
-
     $('#add-trip-form').on('submit', addTripHandler);
 
     TRIP_FIELDS.forEach((field) => {
@@ -130,5 +151,5 @@ const renderTrips = function renderTrips(list) {
           tripList.sort();
         });
     });
-
+    $('#status-messages button.clear').on('click', clearStatus);
   }); // end doc.ready
