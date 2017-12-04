@@ -37,7 +37,7 @@ const events = {
   filterTrips(event) {
     // TODO: handle no trip results gracefully
     const query = $('#trip-query').val().toLowerCase();
-    const attr = $('#trip-fields').find(":selected").val();
+    const attr = $('#trip-fields').find(':selected').val();
     // name, category, continent needs .includes
     // weeks, cost needs less than
     const filteredTrips = tripList.filter((trip) => trip.get(attr).toLowerCase().includes(query));
@@ -96,7 +96,6 @@ const events = {
         success: events.successfulSaveTrip,
         error: events.failSaveTrip
       });
-      // $.modal.close();
     } else { // save is invalid
       console.log('Trip Validation Error');
       console.log(trip.validationError);
@@ -104,9 +103,8 @@ const events = {
     }
   },
   successfulSaveTrip(trip, response){
-    // TODO: add message on the
     console.log('in successfulSaveTrip');
-    $('#create-trip-form .input').val("");
+    $('#create-trip-form .input').val('');
     events.hideModal();
     tripList.add(trip);
     events.addStatusMessagesFromHash('#page-status-messages', 'success', {message: 'Trip has been successfully added'});
@@ -133,17 +131,6 @@ const events = {
     } else {
       $(jquerySelector).show();
     }
-
-    // $('#status-title').empty();
-    // $('#status-messages ul').empty();
-    // $('#status-title').text(`${statusTitle}`);
-    // for (let key in collection) {
-    //   if (collection[key].length > 0) {
-    //     $('#status-messages ul').append(`<li>${key}: ${collection[key]}</li>`);
-    //   }
-    // }
-    // $('#status-messages').css('background-color', 'pink');
-    // $('#status-messages').show();
   },
   addReservation(event){
     event.preventDefault();
@@ -166,13 +153,14 @@ const events = {
     } else { // save is invalid
       console.log('Reservation Validation Error');
       console.log(reservation.validationError);
-      // events.addStatusMessagesFromHash("Errors", reservation.validationError);
-      console.log(reservation.validationError);
+      // events.addStatusMessagesFromHash('Errors', reservation.validationError);
+      events.addStatusMessagesFromHash('#reservation-status-messages', 'errors', reservation.validationError);
     }
   },
   successfulSaveReservation(reservation, response){
     // TODO: add confirmation message in trip-details somewhere
-    $('#create-reservation-form .input').val("");
+    $('#create-reservation-form .input').val('');
+    events.addStatusMessagesFromHash('#reservation-status-messages', 'success', {message: 'Reservation has been successfully added'});
     console.log('successfully saved a resrevation');
   },
   failSaveReservation(reservation, response){
@@ -227,7 +215,7 @@ $(document).ready( () => {
   $('.sort').click(events.sortTrips);
 
   // filter trips
-  $("#trip-query").keyup(events.filterTrips);
+  $('#trip-query').keyup(events.filterTrips);
   $('#trip-fields').change(events.filterTrips);
 
   // empty modal messages
