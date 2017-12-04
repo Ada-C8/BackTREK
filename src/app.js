@@ -160,14 +160,18 @@ const saveTrip = function saveTrip(event) {
       error: failedTripSave,
     })
   } else {
-    $('#add-trip-form input').removeClass('input-error');
-    $('#add-trip-form label span').empty();
-    for (let error in trip.validationError) {
-      trip.validationError[error].forEach((message) => {
-        $(`#add-trip-form label span#label-${error}`).append(`: ${message}`);
-      });
-      $(`#add-trip-form input#${error}`).addClass('input-error');
-    }
+    displayFormErrors('add-trip-form', trip.validationError)
+  }
+}
+
+const displayFormErrors = function displayFormErrors(formId, errors) {
+  $(`#${formId} input`).removeClass('input-error');
+  $(`#${formId} label span`).empty();
+  for (let error in errors) {
+    errors[error].forEach((message) => {
+      $(`#${formId} label span#label-${error}`).append(`: ${message}`);
+    });
+    $(`#${formId} input#${error}`).addClass('input-error');
   }
 }
 
@@ -185,14 +189,7 @@ const successfulTripSave = function successfulTripSave(trip) {
 
 const failedTripSave = function failedTripSave(model, response) {
   model.destroy
-  $('#status-messages ul').empty();
-  const errors = response.responseJSON.errors;
-  for (let key in errors) {
-    errors[key].forEach((issue) => {
-      $('#status-messages ul').append(`<li>${key}: ${issue}</li>`);
-    })
-  }
-  $('#status-messages').show();
+  displayFormErrors('add-trip-form', response.responseJSON.errors);
 }
 
 const reserveForm = function reserveForm(event) {
@@ -222,11 +219,7 @@ const saveReservation = function saveReservation(event) {
       error: failedReservationSave,
     })
   } else {
-    $('#status-messages ul').empty();
-      for (let error in reservation.validationError) {
-        reservation.validationError[error].forEach((message) => $('#status-messages ul').append(`<li>${message}</li>`));
-      }
-      $('#status-messages').show();
+    displayFormErrors('reserve-trip-form', reservation.validationError);
   }
 }
 
@@ -243,14 +236,7 @@ const successfulReservationSave = function successfulReservationSave(reservation
 
 const failedReservationSave = function failedReservationSave(model, response) {
   model.destroy
-  $('#status-messages ul').empty();
-  const errors = response.responseJSON.errors;
-  for (let key in errors) {
-    errors[key].forEach((issue) => {
-      $('#status-messages ul').append(`<li>${key}: ${issue}</li>`);
-    })
-  }
-  $('#status-messages').show();
+  displayFormErrors('reserve-trip-form', response.responseJSON.errors);
 }
 
 const sortTrips = function sortTrips() {
