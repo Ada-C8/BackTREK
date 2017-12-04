@@ -35,6 +35,17 @@
 
 
 /* Your styles go here! */
+
+.information {
+  height: 70%;
+  overflow-y: scroll;
+}
+
+#trip-list-container {
+  /*height: 400px;*/
+  /*overflow-y: hidden;*/
+
+}
 #lil-guy {
   width: 200px;
 }

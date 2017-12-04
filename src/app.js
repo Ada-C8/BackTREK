@@ -22,32 +22,33 @@ const render = function(tripList) {
     $('#trip-list').append(tripTemplate(trip.toJSON()));
   });
 
+const hideTripDetailsButton = function hideTripDetailsButton() {
+  $('#hide-trip-details').click(function(event) {
+    $('#trip-list').removeClass("small-6");
+    $('#trip-list').addClass("small-11");
+    event.preventDefault();
+    $('#trip-details').hide();
+  });
+  };
+
   $('tr').click(function() {
     console.log('inside click');
     const selectedId = parseInt($(this)[0].id);
     console.log(selectedId);
     const url = `http://ada-backtrek-api.herokuapp.com/trips/${selectedId}`;
-    // const selectedTrip = new Trip({id: selectedId});
     const selectedTrip = tripList.findWhere({id: selectedId});
     console.log(url);
-    // debugger;
-    // selectedTrip.fetch(
-    //   {
-    //     success: function(selectedTrip){
-    //       console.log('hey it logged success lol');
-    //       $('header').html(tripInfoTemplate(selectedTrip));
-    //     },
-    //     error: function() {
-    //       console.log('doesnt work sorry lol');
-    //     }
-      // })
+    $('#trip-details').show();
     $.get(url, function(response) {
       console.log('trying to get trip');
       $('#trip-list').removeClass("small-11");
       $('#trip-list').addClass("small-6");
       $('#trip-details').html(tripInfoTemplate(response));
+      hideTripDetailsButton();
     });
   });
+
+
 
   console.log(tripList.models.length);
 }
@@ -55,7 +56,7 @@ const render = function(tripList) {
 $(document).ready( () => {
   tripTemplate = _.template($('#trip-list-template').html());
   tripInfoTemplate = _.template($('#trip-info-template').html());
-  $('#trip-list').hide();
+  $('.information').hide();
   tripList.on('update', render, tripList);
   tripList.fetch();
 
@@ -63,10 +64,15 @@ $(document).ready( () => {
   $('#load-trips').click(function(event) {
     event.preventDefault();
     console.log(`in focus`);
-    $('#trip-list').toggle();
+    $('.information').toggle()
+    // $('#trip-list').toggle();
+    // $('#trip-details').hide();
+
     $(this).blur();
 
   });
+
+
 
 
 
