@@ -83,7 +83,7 @@
       <td><%- category %></td>
       <td><%- continent %></td>
       <td><%- weeks %></td>
-      <td><%- cost %></td>
+      <td><%- parseFloat(cost).toFixed(2) %></td>
     </tr>
   </script>
   <script type = "text/template" id="trip-details-template">
@@ -91,7 +91,7 @@
     <p>Cateogy: <%- category %></p>
     <p>Continent: <%- continent %></p>
     <p>Length: <%- weeks %> weeks</p>
-    <p>Cost: $<%- cost %></p>
+    <p>Cost: $<%- parseFloat(cost).toFixed(2) %></p>
     <p class="text-justify"><%- about %></p>
     <button class="button" id="res-form-btn" data-id="<%- id %>">Reserve a spot on this trip!</button>
   </script>

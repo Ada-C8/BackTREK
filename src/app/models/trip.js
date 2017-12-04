@@ -5,10 +5,10 @@ const Trip = Backbone.Model.extend({
   parse(response) {
     return response
   },
-  initialize: function(attributes) {
-    // console.log(`in initializer for the trip ${ this.get('title')}`);
-    // console.log(attributes);
-  },
+  // initialize: function(attributes) {
+  //   // console.log(`in initializer for the trip ${ this.get('title')}`);
+  //   // console.log(attributes);
+  // },
   validate: function(attributes) {
     const errors = {};
     const continents = ['Africa', 'Antartica', 'Asia', 'Australasia', 'Europe', 'North America', 'South America']

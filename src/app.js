@@ -95,7 +95,7 @@ const events = {
     renderErrors(response.responseJSON.errors)
     reservation.destroy();
   },
-  sortTrips(event) {
+  sortTrips() {
     $('.current-sort-field').removeClass('current-sort-field');
 
     // get the class list of the selected element
@@ -137,8 +137,6 @@ const events = {
         }
       });
     }
-
-    console.log(filteredTrips);
     render(filteredTrips);
   },
   clearModals() {
