@@ -167,6 +167,11 @@ const events = {
     trip.fetch().done(() => {
       $tripDescription.append(tripDetailsTemplate(trip.attributes));
     });
+  },
+  showResForm() {
+    const tripID = $(this).attr('data-id');
+    $resForm.append(`<input type="hidden" name="res-tripID" value="${tripID}">`);
+    $('#res-modal').css('display', 'block');
   }
 }
 
@@ -177,23 +182,16 @@ $(document).ready( () => {
 
   // User Events
   $sort.click(events.sortTrips);
-  $(document).on('click', events.clearModals)
+  $(document).on('click', events.clearModals);
 
-  $tripsList.on('click', 'tr', events.getTrip)
+  $tripsList.on('click', 'tr', events.getTrip);
+  $tripDescription.on('click', 'button', events.showResForm);
 
-  // $tripsList.on('click', 'tr', function getTrip() {
-  //   const trip = new Trip({ id: $(this).attr('data-id') })
-  //   $tripDescription.empty();
-  //   trip.fetch().done(() => {
-  //     $tripDescription.append(tripDetailsTemplate(trip.attributes));
-  //   });
+  // $tripDescription.on('click', 'button', function showResForm() {
+  //   const tripID = $(this).attr('data-id');
+  //   $resForm.append(`<input type="hidden" name="res-tripID" value="${tripID}">`);
+  //   $('#res-modal').css('display', 'block');
   // });
-
-  $tripDescription.on('click', 'button', function showResForm() {
-    const tripID = $(this).attr('data-id');
-    $resForm.append(`<input type="hidden" name="res-tripID" value="${tripID}">`);
-    $('#res-modal').css('display', 'block');
-  });
 
   $newTripBtn.on('click', function showNewTripForm() {
     $('#new-trip-modal').css('display', 'block');
