@@ -25,6 +25,11 @@ const render = function render(tripList) {
   });
 };
 
+const loadTrips = function loadTrips() {
+  tripList.fetch();
+  tripList.on('update', render, tripList);
+};
+
 const events = {
   loadTrip(id) {
     const singleTripElement = $('#single-trip');
@@ -52,7 +57,6 @@ const events = {
 
     const trip = new Trip(tripData);
     if (trip.isValid()) {
-      tripList.add(trip);
       trip.save({}, {
         success: events.successfulSave,
         error: events.failedSave,
@@ -94,11 +98,9 @@ $(document).ready( () => {
   tripTemplate = _.template($('#trip-template').html());
   showTemplate = _.template($('#show-template').html());
 
-  tripList.fetch();
-
   $('#trips_button').click(() => {
-    render(tripList);
     $('h2').text('Trip Options');
+    loadTrips();
   });
 
   $('#trip-list').on('click', 'tr', function() {
@@ -107,4 +109,5 @@ $(document).ready( () => {
   });
 
   $('#add-trip-form').submit(events.addTrip);
+
 });
