@@ -161,5 +161,5 @@ const renderTrips = function renderTrips(list) {
           tripList.sort();
         });
     });
-    $('#status-messages button.clear').on('click', clearStatus);
+    $('#status-messages').on('click', clearStatus);
   }); // end doc.ready
