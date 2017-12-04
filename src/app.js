@@ -52,7 +52,7 @@ const events = {
     const trip = new Trip(tripData);
 
     if (trip.isValid()) {
-      tripList.add(trip);
+      // tripList.add(trip);
       trip.save({}, {
         success: events.successfullSave,
         error: events.failedSave,
@@ -61,7 +61,7 @@ const events = {
       console.log('Trip is invalid, sad trombone.');
       console.log(trip.validationError);
 
-      updateStatusMessageFrom(trip.validationError);
+      // updateStatusMessageFrom(trip.validationError);
     }
   },
 
@@ -72,7 +72,11 @@ const events = {
     $('#status-messages ul').empty();
     $('#status-messages ul').append(`<li>${trip.get('title')} added to ze listy list list!</li>`);
     $('#status-messages').show();
+    trip.fetch().done(() => {
+    $tripDescription.append(tripDetailsTemplate(trip.attributes));
+  });
   },
+  
   failedSave(trip, response) {
     console.log('ERROR!');
     console.log(trip);
@@ -158,70 +162,12 @@ $(document).ready( () => {
     tripDetailsTemplate = _.template($('#trip-details-template').html());
 
     $('#add-trip-form').submit(events.addTrip);
+    // trip.fetch().done(() => {
+    // $tripDescription.append(tripDetailsTemplate(trip.attributes));
+  // });
 
-    $('.trip-info').click(events.showAllTrips);
+    // $('.trip-info').click(events.showAllTrips);
 
-    $('.sort').click(events.sortTrips);
-    tripList.on('sort', render, tripList);
+    // $('.sort').click(events.sortTrips);
+    // tripList.on('sort', render, tripList);
   });
-
-
-
-
-
-
-
-
-
-  // Notey notes from books and tutoring.
-
-  // Tutoring notes, breakdown of detail fetching.
-  // $tripsList.on('click', 'tr', function getTrip() {
-  //   const trip = new Trip({ id: $(this).attr('data-id') })
-  //   $tripDescription.empty();
-  //
-  //   trip.fetch().done(() => {
-  // const element = $tripDescription;
-  // const appendFunction = element.append.bind(element);
-  // const attrs = trip.attributes;
-  // const templateResult = tripDetailsTemplate(attrs);
-  // const appendResult = appendFunction(templateResult);
-
-  // $tripDescription.append(tripDetailsTemplate(trip.attributes));
-  // });
-
-
-  // successfullSave(trip, response) {
-  //   console.log('Success!');
-  //   console.log(trip);
-  //   console.log(response);
-  //   $('#status-messages ul').empty();
-  //   $('#status-messages ul').append(`<li>${trip.get('title')} added to ze listy list list!</li>`);
-  //   $('#status-messages').show();
-  // },
-  // failedSave(trip, response) {
-  //   console.log('ERROR!');
-  //   console.log(trip);
-  //   console.log(response);
-  //   $('#status-messages ul').empty();
-  //   console.log(response.responseJSON.errors);
-  //   for(let key in response.responseJSON.errors) {
-  //     response.responseJSON.errors[key].forEach((error) => {
-  //       $('#status-messages ul').append(`<li>${key}: ${error}</li>`);
-  //     })
-  //   }
-  //   $('#status-messages').show();
-  //   trip.destroy();
-  // },
-  // };
-
-
-  // $(document).ready(() => {
-  //   tripTemplate = _.template($('#trip-template').html());
-  //   $('#add-trip-form').submit(events.addTrip);
-  //   $('.sort').click(events.sortTrips);
-  //   tripList.on('update', render, tripList);
-  //   tripList.on('sort', render, tripList);
-  //
-  //   tripList.fetch();
-  // });
