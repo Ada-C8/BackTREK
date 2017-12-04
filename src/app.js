@@ -41,35 +41,40 @@ const events = {
     const trip = new Trip(tripData);
 
     if (trip.isValid()){
-      console.log("SUCCESSSSSSS")
-      console.log();
+      console.log("THIS TRIP IS BEING CHECKED FOR VALIDITY")
       trip.save({}, {
         success: events.successfulSave,
         error: events.failedSave,
       });
 
     } else {
-      console.log("What's on book is invalid on the client side")
-      console.log(trip)
+      console.log("What's on trip is invalid on the client side")
+      console.log(trip.validationError)
+
+      for (let key in trip.validationError) {
+        $('#status-messages ul').append(`<li>Error returned by client-side validations! ${key} ${trip.validationError[key]}</li>`);
+        $('#status-messages').show();
+      }
     }
   },
+
   successfulSave(trip, response) {
     console.log("Successful Save!")
-    // $('#status-messages ul').empty();
-    // $('#status-messages ul').append(`<li>${trip.get('title')} added!!!!!!!!!!!!!!!!</li>`)
-    // $('#status-messages').show();
-    //clear form after execution has happened
+    $('#status-messages ul').empty();
+    $('#status-messages ul').append(`<li>${trip.get('name')} added!!!!!!!!!!!!!!!!</li>`)
+    $('#status-messages').show();
+    // clear form after execution has happened
   },
 
   failedSave(trip, response){
     console.log("Failed Save");
     console.log(response);
-    // for (let key in response.responseJSON.errors) {
-    //   response.responseJSON.errors[key].forEach((error) => {
-    //     $('#status-messages ul').append(`<li>${key}: ${error}</li>`)
-    //   })
-    // }
-    // $('#status-messages').show()
+    for (let key in response.responseJSON.errors) {
+      response.responseJSON.errors[key].forEach((error) => {
+        $('#status-messages ul').append(`<li>${key}: ${error}</li>`)
+      })
+    }
+    $('#status-messages').show()
     trip.destroy();
   },
 }

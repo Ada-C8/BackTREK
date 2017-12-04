@@ -7,12 +7,11 @@ const Trip = Backbone.Model.extend({
   },
 
   initialize: function(attributes) {
-    console.log("initializing: attributes:")
-    console.log(attributes)
+
   },
 
   validate: function(attributes){
-    console.log("what are the attributes?? Here: \n" + attributes);
+    console.log("I'm in the validate function!");
 
     const errors = {}
 
@@ -47,6 +46,7 @@ const Trip = Backbone.Model.extend({
 
     // console.log(errors);
     if (Object.keys(errors).length > 0) {
+      console.log("there are errors")
       console.log(errors)
       return errors;
     } else {
