@@ -16,7 +16,6 @@ const $tripsList = $('#trips-list')
 const $tripDescription = $('#trip-description')
 const $newTripBtn = $('#newTripBtn');
 const $addTripForm = $('#add-trip-form');
-const $resFormBtn = $('#res-form-btn');
 const $resForm = $('#reservation-form');
 const $queryValue = $('#query-value');
 const $statusMessages = $('#status-messages')
@@ -209,4 +208,11 @@ $(document).ready( () => {
 
   // Implement when page loads
   tripList.fetch()
+
+  const trip = new Trip({ id: 3 });
+  trip.fetch().done(() => {
+    $tripDescription.append('<h2> FEATURED TRIP </h2>');
+    $tripDescription.append(tripDetailsTemplate(trip.attributes));
+  });
+
 });
