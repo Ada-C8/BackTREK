@@ -69,7 +69,7 @@ const getIndividualTrip = function getIndividualTrip() {
         <label for="email">Email</label>
         <input type="text" name="email"></input>
 
-        <input type="submit" value="Complete Reservation" class="button reserve"></input>
+        <input type="submit" value="Reserve Spot" class="button reserve"></input>
       </form></li>`;
 
       $('#trip-details').empty();
@@ -185,6 +185,11 @@ const events = {
     $('#trips-section').removeClass('hidden');
     $('#trips-section').addClass('show');
   },
+
+  showAddTripForm() {
+    $('#add-trip-form').removeClass('hidden');
+    $('#add-trip-form').addClass('show');
+  },
 };
 
 
@@ -201,6 +206,7 @@ $(document).ready( () => {
 
   $('#add-trip-form').submit(events.addTrip);
   $('.trip-info').click(events.showAllTrips);
+  $('.trip-form').click(events.showAddTripForm);
   $('.sort').click(events.sortTrips);
   tripList.on('sort', render, tripList);
 
