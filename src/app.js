@@ -140,8 +140,8 @@ $(document).ready(() => {
         console.log(generatedHTML);
         // console.log(generatedHTML.prop('outerHTML'));
         aboutElement.html(generatedHTML);
-        const htmlAsString = $('<div>').append(generatedHTML).html()
-        $('#' + this.id).after('<tr><td colspan="5" id="trip-about">' + htmlAsString + '</td></tr>');
+        // const htmlAsString = $('<div>').append(generatedHTML).html()
+        // $('#' + this.id).after('<tr><td colspan="5" id="trip-about">' + htmlAsString + '</td></tr>');
         // console.log(htmlAsString);
         // $('#list').animate({width:'50%'});
 
