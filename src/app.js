@@ -1,6 +1,6 @@
 // Vendor Modules
-import 'jquery-modal'
 import $ from 'jquery';
+import 'jquery-modal'
 import _ from 'underscore';
 
 // CSS
@@ -11,10 +11,8 @@ import Trip from './app/models/trip';
 import TripList from './app/collections/trip_list';
 import Reservation from './app/models/reservation';
 
-console.log('it loaded!');
 
 const tripList = new TripList();
-
 const render = function(tripList) {
   const tripTemplate = _.template($('#trip-template').html());
   const $tripList = $('#trip-list');
@@ -50,6 +48,20 @@ const events = {
         $('#status-messages ul').append(`<li>${key}:  ${trip.validationError[key]}</li>`);
         $('#status-messages').show();
       }
+    }
+  },
+
+  sortTrips(event) {
+    $('.sort').removeClass('current-sort-field');
+    const classes = $(this).attr('class').split(" ");
+    $(this).addClass('current-sort-field');
+    if (tripList.comparator === classes[1]) {
+      tripList.models.reverse();
+      console.log(tripList.models)
+      tripList.trigger(render(tripList));
+    } else {
+      tripList.comparator = classes[1];
+      tripList.sort();
     }
   },
 
@@ -107,8 +119,6 @@ $(document).ready( () => {
 
     $.post($bookingForm.attr('action'), formData, (response)=>{
       $('#trips').html(`Booked your trip!`)
-      console.log("BOOKED IT!")
-
     }).fail(() => {
       $('#trips').html('<p>Booking Trip Failed</p>')
     }).always(()=> {
@@ -123,10 +133,10 @@ $(document).ready( () => {
       $.modal.close();
       tripList.fetch();
     });
-
-    // $('#newTripForm').show();
   });
 
+  $('.sort').click(events.sortTrips);
+  tripList.on('sort', render, tripList);
 
 
 });
