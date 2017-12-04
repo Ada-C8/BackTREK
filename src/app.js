@@ -143,6 +143,16 @@ const renderTrips = function renderTrips(list) {
 
     $('#add-trip-form').on('submit', addTripHandler);
 
+    $('#trips').on('click', () => {
+      $('#trip-list').toggle();
+      renderTrips(tripList);
+    });
+
+    $('#add-trip').on('click', () => {
+      console.log('clicked add trip');
+      $('.add-trip-form').toggle();
+    });
+
     TRIP_FIELDS.forEach((field) => {
       const headerElement = $(`th.sort.${field}`);
         headerElement.on('click', (event) => {
