@@ -38,7 +38,7 @@ const render = function render(tripList) {
 
 const fields = ['name', 'id', 'category', 'continent', 'weeks', 'cost', 'about'];
 
-const reservationFields = ['name', 'email', 'id'];
+const reservationFields = ['name', 'email', 'age'];
 
 // const updateStatusMessageFrom = (messageHash) => {
 //   $('#status-messages ul').empty();

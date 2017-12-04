@@ -18,9 +18,9 @@ const Reservation = Backbone.Model.extend({
       error['email'] = 'E-Mail cannot be blank!';
     }
 
-    if (!attributes.id) {
+    if (!attributes.age) {
       error['age'] = 'Age cannot be blank!';
-    } else if (isNaN(attributes.id)) {
+    } else if (isNaN(attributes.age)) {
       error['id'] = 'Age must be a number!';
     }
 
