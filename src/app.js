@@ -27,7 +27,6 @@ const render = function render(tripList) {
   if (tripList.length > 0) {
     tripList.forEach((trip) => {
       const generatedHTML = $(tripTemplate(trip.attributes));
-      generatedHTML.on('click', show);
       tripListElement.append(generatedHTML);
     });
   } else {
@@ -37,25 +36,24 @@ const render = function render(tripList) {
 };
 
 const show = function show(e) {
-  if (!$(e.target).hasClass('button')){
-    const tripElement = $(e.target).closest('li');
-    if (tripElement.hasClass('show')) {
-      clearShow();
-    } else {
-      const id = parseInt(findElementTripID(e));
-      const trip = tripList.findWhere({id: id});
-      trip.fetch({
-        success: () => {
-          clearShow();
-          $('.trip-row').removeClass('show');
-          $('.trip-details').remove();
-          const generatedHTML = $(tripDetailTemplate(trip.attributes));
-          const reserveBtn = generatedHTML.find('.reserve-btn');
-          reserveBtn.on('click', reserveModal);
-          tripElement.append(generatedHTML).addClass('show');
-        }
-      });
-    }
+  // don't minimize trip details when the reserve button is clicked
+  if ($(e.target).is('#reserve-btn')) return;
+  const id = parseInt(findElementTripID(e));
+  const tripElement = $(`#${id}`);
+  if (tripElement.hasClass('show')) {
+    clearShow();
+  } else {
+    const trip = tripList.findWhere({id: id});
+    trip.fetch({
+      success: () => {
+        clearShow();
+        $('.trip-row').removeClass('show');
+        $('.trip-details').remove();
+        const generatedHTML = $(tripDetailTemplate(trip.attributes));
+        const reserveBtn = ('#reserve-btn');
+        tripElement.append(generatedHTML).addClass('show');
+      }
+    });
   }
 };
 
@@ -93,8 +91,8 @@ const addTripModal = function addTripModal() {
 const reserveModal = function reserveModal(e) {
   const id = findElementTripID(e);
   const generatedHTML = $(reserveModalTemplate({'id': id}));
-  const form = generatedHTML.find('#reservation-form');
-  form.on('submit', submitReservation);
+  const form = $('#reservation-form');
+  // form.on('submit', submitReservation);
   $('body').append(generatedHTML);
 };
 
@@ -111,7 +109,6 @@ const submitTrip = function submitTrip(e) {
   clearErrors();
   const form = $(e.target);
   const formData = getFormData(form, ['name', 'continent', 'category', 'weeks', 'cost', 'about']);
-  console.log(formData);
   const newTrip = new Trip(formData);
   saveIfValid(newTrip, form, 'trip');
 };
@@ -121,9 +118,8 @@ const submitReservation = function submitReservation(e) {
   clearErrors();
   $('.form-messages').html('');
   const form = $('#reservation-form');
-  const id = form[0].classList[0];
-  // can this ID be transmitted with the form instead?
-  const formData = getFormData($(e.target), ['name', 'email']);
+  const id = form.data('id');
+  const formData = getFormData(form, ['name', 'email']);
   formData['tripID'] = id;
   const newReservation = new Reservation(formData);
   saveIfValid(newReservation, form, 'reservation');
@@ -150,14 +146,12 @@ const saveIfValid = function saveIfValid(object, form, type) {
       },
     });
   } else {
-    console.log(object.validationError);
     printErrors(object.validationError, type);
   }
 };
 
 const formSuccess = function formSuccess(item, form) {
-  const messageBox = $(form.find('.form-messages'));
-  console.log(messageBox);
+  const messageBox = $('#form-messages');
   messageBox.html(`<p class="success">Successfully created ${item}!</p>`);
   form[0].reset();
 }
@@ -177,7 +171,7 @@ const clearErrors = function clearErrors() {
 };
 
 const findElementTripID = function findElementTripID(e) {
-  return $(e.target).closest('li')[0].id;
+  return $(e.target).closest('li.trip-row').attr('id');
 };
 
 $(document).ready( () => {
@@ -202,6 +196,8 @@ $(document).ready( () => {
     $('.on-load').show(500);
   });
 
+  $('#trip-list').on('click', 'li', show);
+
   $('.sort').on('click', sort);
 
   $('#add-trip').on('click', addTripModal);
@@ -210,7 +206,8 @@ $(document).ready( () => {
   $('body').on('keyup', '#trip-search', filter);
   $('#trip-search').on('submit', e => e.preventDefault());
 
-  // $(document).on('submit', '#reservation-form', submitTrip;
+  $('#trip-list').on('click', '#reserve-btn', reserveModal);
+  $(document).on('submit', '#reservation-form', submitReservation);
   $(document).on('submit', '#add-trip-form', submitTrip);
 
 });

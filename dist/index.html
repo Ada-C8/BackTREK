@@ -27,14 +27,10 @@
       <div class="form-holder text-holder small-12 medium-8 large-9 columns">
         <input type="text" name="query" />
       </div>
-      <!--
-      <div class="form-holder submit-holder small-12 medium-2 columns">
-      <input type="submit" class="button" />
-    </div> -->
   </form>
 </header>
 <section id="intro-button">
-  <a class="button intro-button small-10 medium-5 columns" id="show-trips">Show Trips</a>
+  <a class="button intro-button small-10 medium-5 columns" id="show-trips">See The World</a>
 </section>
 <main class="on-load">
   <div id="loading">
@@ -57,7 +53,7 @@
 </footer>
 
 <script id="trip-template" type="text/template">
-  <li id="<%- id %>" class="trip-row">
+  <li id="<%- id %>" class="trip-row" data-foo="bar">
     <h6 class="name-col">
       <%- name %>
     </h6>
@@ -101,8 +97,8 @@
       <div class="modal-body small-11 medium-7 large-4 columns">
         <a class="modal-close close-btn">X</a>
         <h2>Make a Reservation</h2>
-        <form id="reservation-form" class="<%- id %>">
-          <span class="form-messages"></span>
+        <form id="reservation-form" data-id="<%- id %>">
+          <span id="form-messages"></span>
           <div id="reservation-name" class="reservation-form-holder small-12 columns">
             <label for="name">Name:</label>
             <input type="text" name="name" />
@@ -127,7 +123,7 @@
         <a class="modal-close close-btn">X</a>
         <h2>Create A Trip</h2>
         <form id="add-trip-form">
-          <span class="form-messages"></span>
+          <span id="form-messages"></span>
           <div id="trip-name" class="add-trip-form-holder small-12 columns">
             <label for="name">Name:</label>
             <input type="text" name="name" />
