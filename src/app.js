@@ -14,7 +14,6 @@ const TRIP_FIELDS = ['name', 'continent', 'category', 'weeks', 'cost'];
 let tripList;
 let tripTemplate;
 let tripDetailsTemplate;
-let statusMessageTemplate;
 
 console.log('it loaded!');
 
@@ -30,14 +29,8 @@ const render = function render(tripList) {
   $(`th.sort.${ tripList.comparator }`).addClass('current-sort-field');
 };
 
-const reportStatus = function reportStatus(status, message) {
-  const generatedHTML = statusMessageTemplate({
-    status: status,
-    message: message,
-  });
-
-  $('#status-messages ul').append(generatedHTML);
-  $('#status-messages').show();
+const failLoad = function failLoad(model, response) {
+  updateStatusMessageFrom(response.responseJSON.errors);
 };
 
 const loadTrips = function loadTrips() {
@@ -46,18 +39,90 @@ const loadTrips = function loadTrips() {
   $('#trips').show();
 };
 
+const addTrip = function addTrip(event) {
+  event.preventDefault();
+
+  const tripData = readForm();
+  const trip = new Trip(tripData);
+  if (trip.isValid()) {
+    trip.save({}, {
+      success: successfulSave,
+      error: failedSave,
+    });
+  } else {
+    updateStatusMessageFrom(trip.validationError);
+  }
+
+  tripList.fetch();
+};
+
+const readForm = function readForm() {
+  const tripData = {};
+  TRIP_FIELDS.forEach((field) => {
+    const inputElement = $(`#new-trip input[name="${ field }"]`);
+    tripData[field] = inputElement.val();
+  });
+  return tripData;
+};
+
+const clearForm = function clearForm() {
+  $('#new-trip input[name]').val('');
+};
+
+const updateStatusMessageFrom = (messageHash) => {
+  $('#status-messages ul').empty();
+  for (let messageType in messageHash) {
+    messageHash[messageType].forEach((message) => {
+      $('#status-messages ul').append($(`<li>${ messageType }: ${ message }</li>`));
+    })
+  }
+  $('#status-messages').show();
+};
+
+const updateStatusMessagesWith = (message) => {
+  $('#status-messages ul').empty();
+  $('#status-messages ul').append(`<li>${ message }</li>`);
+  $('#status-messages').show();
+};
+
+const successfulSave = function(trip, response) {
+  updateStatusMessagesWith(`${trip.get('name')} added!`)
+  clearForm();
+  $('#add-trip').css("display", "none");
+};
+
+const failedSave = function(trip, response) {
+  updateStatusMessageFrom(response.responseJSON.errors);
+  trip.destroy();
+};
+
 const loadTrip = function loadTrip(trip) {
-  $('#trips').hide();
   $('#trip').empty();
-  console.log(trip);
   $('#trip').append(tripDetailsTemplate(trip.attributes));
+  $('#reservation').hide();
+  $('#trip').on('click', 'button', function() {
+    $('#reservation').slideToggle();
+  });
+
+  $('#reservation').submit(function(e) {
+    e.preventDefault();
+    const url = $(this).attr('action')
+    const formData = $(this).serialize();
+
+    $.post(url, formData, (response) => {
+      $('#message').html('<p>Spot reserved!</p>');
+      $('#reservation').hide();
+      clearForm();
+    }).fail(() => {
+      $('#message').html('<p>Reservation failed to save.</p>');
+    });
+  });
 };
 
 $(document).ready( () => {
   $('#trips').hide();
   tripTemplate = _.template($('#trip-template').html());
   tripDetailsTemplate = _.template($('#trip-details-template').html());
-  statusMessageTemplate = _.template($('#status-message-template').html());
 
   tripList = new TripList();
 
@@ -67,12 +132,25 @@ $(document).ready( () => {
   $('button#search').on('click', loadTrips);
   $('#trip-list').on('click', 'tr', function() {
     const trip = tripList.get($(this).attr('data-id'));
-    console.log('clicked!');
-    trip.fetch({}, {
-    success: loadTrip(trip),
-    error: reportStatus,
+    trip.fetch({
+    success: loadTrip,
+    error: failLoad,
     });
   });
+
+  $('button#add').click(function() {
+    $('#add-trip').css("display", "block");
+  });
+  $('span.close').click(function() {
+    $('#add-trip').css("display", "none");
+  });
+  $('body').click(function(event) {
+    if (event.target == $('#add-trip')) {
+      $('#add-trip').css("display", "none");
+    }
+  });
+
+  $('#new-trip').on('submit', addTrip);
 
   TRIP_FIELDS.forEach((field) => {
     const headerElement = $(`.sort.${ field }`);

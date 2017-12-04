@@ -1,5 +1,69 @@
 
 /* Your styles go here! */
+header {
+  background-image: url("../../images/crater_lake.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: #eeeeee;
+  height: 20em;
+  padding: 2em;
+  text-align: center;
+}
+
+header h2 {
+  font-family: 'Dosis', sans-serif;
+  font-size: 6em;
+  text-shadow: 2px 2px #054d01;
+}
+
+header h3 {
+  font-family: 'Indie Flower', cursive;
+}
+
+button, p, table {
+  font-family: 'Dosis', sans-serif;
+}
+
+p {
+  font-size: 1.25em;
+  font-weight: bold;
+}
+
+#trips {
+  display: inline-block;
+  width: 45%;
+  padding: .5em .5em .5em 1em;
+}
+
+#trip {
+  border: 2px #054d01 solid;
+  border-radius: 4px;
+  display: inline-block;
+  width: 45%;
+  position: absolute;
+  margin: 3em 1em;
+  top: 20em;
+  right: 0;
+  padding: .5em 1em .5em .5em;
+}
+
+button#search, button#add {
+  font-size: 2em;
+  border: 2px white solid;
+  border-radius: 6px;
+  padding: 10px;
+}
+
+button#reserve, button[type="submit"] {
+  background-color: #eee;
+  border: 4px black #054d01;
+  border-radius: 4px;
+  color: #054d01;
+  margin: 4px;
+  padding: 1em;
+}
+
 th.sort {
   cursor: pointer;
 }
@@ -7,4 +71,38 @@ th.sort {
 .current-sort-field {
   background-color: darkgrey;
   color: white;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover, .close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
 }

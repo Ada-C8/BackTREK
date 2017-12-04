@@ -13,11 +13,33 @@
     <h1>Trek!</h1>
     <h3>Adventure awaits...</h3>
     <button type="button" id="search">Find Trips</button>
+    <button type="button" id="add">Add a New Trip</button>
   </header>
   <main>
-
-    <div id="trips">
+    <div id="status-messages"><ul></ul></div>
+    <div id="add-trip" class="modal">
+      <div class="modal-content">
+      <span class="close">&times;</span>
+      <form id="new-trip" method="post">
+        <label>Trip Name</label>
+        <input type="text" id="name" name="name"></input>
+        <label>Continent</label>
+        <input type="text" id="continent" name="continent"></input>
+        <label>Weeks</label>
+        <input type="text" id="weeks" name="weeks"></input>
+        <label>Category</label>
+        <input type="text" id="category" name="category"></input>
+        <label>Cost</label>
+        <input type="text" id="cost" name="cost"></input>
+        <label>Description</label>
+        <input type="text" id="about" name="label"></input>
+        <button type="submit">Add Trip</button>
+      </form>
+      </div>
+    </div>
+    <article id="trips">
       <table>
+        <caption>Trips</caption>
       <thead>
         <th class="sort name">Name</th>
         <th class="sort continent">Continent</th>
@@ -28,8 +50,8 @@
       <tbody id="trip-list">
       </tbody>
     </table>
-  </div>
-    <aside id="trip"></aside>
+  </article>
+  <aside id="trip"></aside>
 
   </main>
   <footer>
@@ -63,12 +85,21 @@
     <p>Cost: $<%- cost.toFixed(2) %></p>
     <p>Category: <%- category %></p>
     <h4>About</h4>
-    <p><%- trip.about %></p>
+    <p><%- about %></p>
+    <button id="reserve">Reserve Your Spot Now!</button>
+    <section id="message"></section>
+    <form id="reservation" action="https://ada-backtrek-api.herokuapp.com/trips/<%- id %>/reservations" method="post">
+      <label>Name</label>
+      <input type="text" id="name" name="name"></input>
+      <label>Email</label>
+      <input type="text" id="email" name="email"></input>
+      <button type="submit">Reserve</button>
+    </form>
   </script>
-  <script type="text/template" id="status-message-template">
+<!--  <script type="text/template" id="status-message-template">
     <li class="<%- status %>">
       <%- message %>
     </li>
-  </script>
+  </script> -->
 </body>
 </html>
