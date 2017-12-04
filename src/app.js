@@ -23,6 +23,11 @@ const render = function render(tripList) {
   });
 };
 
+const seeTrip = function seeTrip(id){
+  trip = tripList.get(id);
+  
+}
+
 const events = {
   showTrips() {
     $('#trips-table').toggle({'display': 'block'});
