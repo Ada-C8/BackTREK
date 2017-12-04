@@ -9,7 +9,7 @@
 <body>
   <header>
     <h1>Welcome to BackBoneTREK!</h1>
-    <h3>Don't think too hard about your next adventure. Get out of your comfort zone and explore!</h3>
+    <h3>Don't think too hard about your next adventure, because I'll start melting.</h3>
     <a id="load-trips" href="#"></a>
   </header>
   <main>
@@ -20,6 +20,28 @@
       </ul>
     </section>
     <!-- END ERROR AND SUCCESS MESSAGES -->
+
+    <!-- ADD TRIP FORM  -->
+    <form id="add-trip-form">
+      <h1>Use this form to add a new trip or browse all trips below.</h1>
+      <label for="name">Name</label>
+      <input type="text" name="name"></input>
+
+      <label for="Category">Category</label>
+      <input type="text" name="category"></input>
+
+      <label for="Continent">Continent</label>
+      <input type="text" name="continent"></input>
+
+      <label for="Weeks">Weeks</label>
+      <input type="number" name="weeks"></input>
+
+      <label for="Cost">Cost</label>
+      <input type="number" name="cost"></input>
+
+      <input type="submit" value="Create Trip" class="button"></input>
+    </form>
+    <!-- END ADD TRIP FORM  -->
 
     <!-- THIS FORM WILL FILTER ON KEYUP -->
        <form id="filterForm">
@@ -59,26 +81,7 @@
 
     <!-- END TRIP LIST TABLE  -->
 
-    <!-- ADD TRIP FORM  -->
-    <form id="add-trip-form">
-      <label for="name">Name</label>
-      <input type="text" name="name"></input>
 
-      <label for="Category">Category</label>
-      <input type="text" name="category"></input>
-
-      <label for="Continent">Continent</label>
-      <input type="text" name="continent"></input>
-
-      <label for="Weeks">Weeks</label>
-      <input type="number" name="weeks"></input>
-
-      <label for="Cost">Cost</label>
-      <input type="number" name="cost"></input>
-
-      <input type="submit" value="Create Trip" class="button"></input>
-    </form>
-    <!-- END ADD TRIP FORM  -->
 
     <!-- RESERVE TRIP FORM  -->
 
