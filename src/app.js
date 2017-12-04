@@ -55,6 +55,9 @@ const renderTrips = function renderTrips(list) {
 
   }
 
+  $('th.sort').removeClass('current-sort-field');
+  $(`th.sort.${tripList.comparator}`).addClass('current-sort-field');
+
   const readFormData = function readFormData() {
     const tripData = {};
 
@@ -99,6 +102,7 @@ const renderTrips = function renderTrips(list) {
     tripTemplate = _.template($('#trip-template').html());
     reserveTemplate = _.template($('#reserve-template').html());
 
+    tripList.on('sort', renderTrips);
     tripList.fetch();
 
     $('#trips').on('click', (event) => {
@@ -106,5 +110,15 @@ const renderTrips = function renderTrips(list) {
     }); // end tripsList event handler
 
     $('#add-trip-form').on('submit', addTripHandler);
+
+    TRIP_FIELDS.forEach((field) => {
+      const headerElement = $(`th.sort.${field}`);
+      console.log(headerElement);
+        headerElement.on('click', (event) => {
+          console.log(`sorting table by ${field}`);
+          tripList.comparator = field;
+          tripList.sort();
+        });
+    });
 
   }); // end doc.ready
