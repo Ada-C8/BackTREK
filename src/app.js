@@ -117,9 +117,7 @@ const events = {
     $(this).addClass('current-sort-field');
   },
   filterTrips(event) {
-
     event.preventDefault();
-
     const $tripQuery = $('#trip-query option:selected');
     const query = $tripQuery.val();
 
@@ -166,9 +164,8 @@ const events = {
     $resModal.css('display', 'block');
   },
   addReservation() {
-    const resData = {};
     event.preventDefault();
-
+    const resData = {};
     const formfields = ['name', 'age', 'email', 'tripID']
 
     formfields.forEach( (field) => {
