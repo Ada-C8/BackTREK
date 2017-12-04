@@ -103,8 +103,8 @@ const renderTrips = function renderTrips(list) {
     return tripData;
   };
 
-  // TODO: does not work currently 
-  const outputValidationFailures = function outputValidationFailures() {
+
+  const outputValidationFailures = function outputValidationFailures(errors) {
     for (let field in errors) {
       for (let problem of errors[field]) {
         reportStatus('error', `${field}: ${problem}`);
@@ -116,6 +116,10 @@ const renderTrips = function renderTrips(list) {
 
     const trip = new Trip(readFormData());
 
+    if (!trip.isValid()) {
+      outputValidationFailures(trip.validationError);
+      return;
+    }
     tripList.add(trip);
 
     trip.save({}, {
