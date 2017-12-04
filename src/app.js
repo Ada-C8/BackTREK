@@ -17,7 +17,6 @@ const reservationFields = ['name', 'age', 'email'];
 
 const events = {
   sortTrips(event){
-    console.log('Tried to sort!');
     $('.sort').removeClass('current-sort-field');
     $(this).addClass('current-sort-field');
     let classes = $(this).attr('class').split(/\s+/);
@@ -63,10 +62,8 @@ const events = {
     $tripDetails.append(tripDetailsTemplate(trip.attributes));
   },
   failedTripFetch() {
-    console.log('failed trip fetch');
   },
   hideModal(){
-    console.log('hid modal!');
     $('.status-title').empty();
     $('.status-messages section ul').empty();
     $('.status-messages').hide();
@@ -79,43 +76,31 @@ const events = {
       const val = $(`#create-trip-form input[name=${field}]`).val();
       if (val != '') tripData[field] = val;
     });
-    console.log('in addTrip in app.js');
-    console.log(tripData);
     const trip = new Trip(tripData);
     if (trip.isValid()) {
-      console.log('it is valid!');
       trip.save({}, {
         success: events.successfulSaveTrip,
         error: events.failSaveTrip
       });
     } else { // save is invalid
-      console.log('Trip Validation Error');
-      console.log(trip.validationError);
       events.addStatusMessagesFromHash('#modal-status-messages', 'errors', trip.validationError);
     }
   },
   successfulSaveTrip(trip, response){
-    console.log('in successfulSaveTrip');
     $('#create-trip-form .input').val('');
     events.hideModal();
     tripList.add(trip);
     events.addStatusMessagesFromHash('#page-status-messages', 'success', {message: 'Trip has been successfully added'});
   },
   failSaveTrip(trip, response){
-    console.log('inside failSaveTrip');
-    console.log('Response Validation Errors');
-    console.log(response);
     events.addStatusMessagesFromHash('#modal-status-messages', 'errors', response.responseJSON.errors);
     trip.destroy();
   },
   addStatusMessagesFromHash(jquerySelector, statusTitle, collection){
     let tripAttributes = collection;
     tripAttributes['status'] = statusTitle;
-    console.log('Trip Attributes');
-    console.log(tripAttributes);
     $('.status-title').empty();
     $(jquerySelector).empty();
-    console.log('inside addStatusMessagesFromHash method');
     $(jquerySelector).append(statusMessageTemplate({trip: tripAttributes}));
     if (statusTitle === 'success'){
       $(jquerySelector).show().delay(3000).fadeOut();
@@ -125,13 +110,11 @@ const events = {
   },
   addReservation(event){
     event.preventDefault();
-    console.log('submitted a reservation!');
     const reservationData = {};
     reservationFields.forEach( (field) => {
       const val = $(`#create-reservation-form input[name=${field}]`).val();
       if (val != '') reservationData[field] = val;
     });
-    console.log(reservationData);
     const reservation = new Reservation(reservationData);
     if (reservation.isValid()) {
       const tripID = $(this).data('id');
@@ -141,19 +124,14 @@ const events = {
         error: events.failSaveReservation,
       });
     } else { // save is invalid
-      console.log('Reservation Validation Error');
-      console.log(reservation.validationError);
       events.addStatusMessagesFromHash('#reservation-status-messages', 'errors', reservation.validationError);
     }
   },
   successfulSaveReservation(reservation, response){
     $('#create-reservation-form .input').val('');
     events.addStatusMessagesFromHash('#reservation-status-messages', 'success', {message: 'Reservation has been successfully added'});
-    console.log('successfully saved a resrevation');
   },
   failSaveReservation(reservation, response){
-    console.log('Response Validation Errors');
-    console.log(response.responseJSON.errors);
     events.addStatusMessagesFromHash('#reservation-status-messages', 'errors', reservation.validationError);
     reservation.destroy();
   },
@@ -171,7 +149,6 @@ const render = function render(tripList) {
   tripList.forEach((trip) => {
     $tripList.append(allTripsTemplate(trip.attributes));
   });
-  console.log('rendered it');
 };
 
 $(document).ready( () => {
