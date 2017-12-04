@@ -144,6 +144,10 @@ $(document).ready(() => {
 
         // RENDER 'RESERVATION' FORM TO DOM
         $('#new-reservation-btn').on('click', function() {
+
+          $('#trip-about').animate({
+             scrollTop: $('#trip-about')[0].scrollHeight}, 2000);
+
           const newReservationElement = $('#new-reservation');
           newReservationElement.html('');
           const generatedHTML = $(newReservationTemplate());
