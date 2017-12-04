@@ -23,7 +23,7 @@ const TripList = Backbone.Collection.extend({
         TRIPFIELDS.forEach((field) => {
           if(filters[field] != "") {
             if(field == 'weeks' || field== 'cost') {
-              if(model.get(field) >= parseInt(filters[field]) ) {
+              if(model.get(field) > parseInt(filters[field]) ) {
                 matched = false
               }
             }

@@ -24,7 +24,7 @@ const Reservation = Backbone.Model.extend({
     }
     return errors;
   }
-  
+
 });
 
 //makes Book available to any file that imports book.js
