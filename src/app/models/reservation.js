@@ -1,11 +1,11 @@
 import Backbone from 'backbone';
 
-const Trip = Backbone.Model.extend({
+const Reservation = Backbone.Model.extend({
   url() {
     return this.url;
   },
   initialize(attributes, options) {
-    this.url = options.url;
+    this.url = `https://ada-backtrek-api.herokuapp.com/trips/${options.trip}/reservations`;
   },
   validate(attributes) {
     const errors = {};
@@ -26,4 +26,4 @@ const Trip = Backbone.Model.extend({
   },
 });
 
-export default Trip;
+export default Reservation;

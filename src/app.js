@@ -37,17 +37,13 @@ const syncReferenceList = function syncReferenceList() {
 
 const renderTrips = function renderTrips(list) {
   $('#all-trips').empty();
-  list.forEach((trip) => {
-    $('#all-trips').append(allTripsTemplate(trip.attributes));
-  });
+  list.forEach((trip) => $('#all-trips').append(allTripsTemplate(trip.attributes)));
 };
 
 const loadTripsTable = function loadTripsTable(list) {
   $('#trip-headers').html('');
   clearContent();
-  tableFields.forEach((field) => {
-    $('#trip-headers').append(tripHeadersTemplate({header: field}))
-  });
+  tableFields.forEach((field) => $('#trip-headers').append(tripHeadersTemplate({header: field})));
   renderTrips(list);
   loadFilters();
 };
@@ -75,18 +71,14 @@ const filterTrips = function filterTrips(event) {
     case 'category':
     case 'continent':
       filterInput = filterInput.toLowerCase();
-      filteredTrips = tripList.models.filter(function(trip) {
-        return trip.attributes[filterCategory].toLowerCase().includes(filterInput);
-      });
+      filteredTrips = tripList.models.filter(trip => trip.attributes[filterCategory].toLowerCase().includes(filterInput));
       referenceList.reset(filteredTrips);
       renderTrips(referenceList);
       break;
     case 'weeks':
     case 'cost':
       filterInput = parseFloat(filterInput);
-      filteredTrips = tripList.models.filter(function(trip) {
-        return trip.attributes[filterCategory] <= filterInput;
-      });
+      filteredTrips = tripList.models.filter(trip => trip.attributes[filterCategory] <= filterInput);
       referenceList.reset(filteredTrips);
       renderTrips(referenceList);
       break;
@@ -120,11 +112,7 @@ const showTrip = function showTrip(event) {
   const tripId = event.currentTarget.id;
   const tripUrl = `${url}/${tripId}`;
   $.get(tripUrl, (response) => {
-    if (response.weeks === 1) {
-      response.plural = ''
-    } else {
-      response.plural = 's'
-    }
+    response.plural = (response.weeks === 1) ? '' : 's';
     $('#show-trip').append(showTripTemplate(response));
   })
 };
@@ -138,22 +126,24 @@ const clearMessages = function clearMessages() {
   $('#status-messages').hide();
 };
 
-const addTripForm = function addTripForm() {
+const loadFormFields = function loadFormFields(formId, formFieldsArray) {
   clearContent();
-  $('#add-trip-header').append('Add Trip');
-  addTripFields.forEach((item) => {
-    $('#add-trip-form').append(formTemplate({field: item}));
+  formFieldsArray.forEach((item) => {
+    $(`#${formId}`).append(formTemplate({field: item}));
   });
-  $('#add-trip-form').append('<section><button type="submit" class="button">Submit</button></section>');
+  $(`#${formId}`).append('<section><button type="submit" class="button">Submit</button></section>');
+}
+
+const addTripForm = function addTripForm() {
+  loadFormFields('add-trip-form', addTripFields);
+  $('#add-trip-header').append('Add Trip');
 }
 
 const saveTrip = function saveTrip(event) {
   event.preventDefault();
-  const tripData = {};
-  addTripFields.forEach((field) => {
-    tripData[field] = $(`#add-trip-form input[name=${field}]`).val();
-  });
-  const trip = new Trip(tripData);
+  const data = {};
+  addTripFields.forEach((field) => data[field] = $(`#add-trip-form input[name=${field}]`).val());
+  const trip = new Trip(data);
   if (trip.isValid()) {
     trip.save({}, {
       success: successfulTripSave,
@@ -197,26 +187,17 @@ const failedTripSave = function failedTripSave(model, response) {
 }
 
 const reserveForm = function reserveForm(event) {
-  clearContent();
-  $('#reserve-header').append('Reserve');
-  const tripId = $(event.currentTarget.attributes.tripid).val();
-  $('#reserve-trip-form').attr('tripid', tripId);
-  reservationFields.forEach((item) => {
-    $('#reserve-trip-form').append(formTemplate({field: item, lowercaseField: item}));
-  });
-  $('#reserve-trip-form').append('<section><button type="submit" class="button">Submit</button></section></form>');
+  loadFormFields('reserve-trip-form', reservationFields);
+  $('#reserve-trip-header').append('Reserve');
+  $('#reserve-trip-form').attr('tripid', $(event.currentTarget.attributes.tripid).val());
 };
 
 const saveReservation = function saveReservation(event) {
   event.preventDefault();
-  const baseUrl = 'https://ada-backtrek-api.herokuapp.com/trips';
   const tripId = $(event.currentTarget.attributes.tripid).val();
-  const finalUrl = `${baseUrl}/${tripId}/reservations`
-  const reservationData = {};
-  reservationFields.forEach((field) => {
-    reservationData[field] = $(`#reserve-trip-form input[name=${field}]`).val();
-  });
-  const reservation = new Reservation(reservationData, {url: finalUrl});
+  const data = {};
+  reservationFields.forEach((field) => data[field] = $(`#reserve-trip-form input[name=${field}]`).val());
+  const reservation = new Reservation(data, {trip: tripId});
   if (reservation.isValid()) {
     reservation.save({}, {
       success: successfulReservationSave,
@@ -228,9 +209,7 @@ const saveReservation = function saveReservation(event) {
 }
 
 const successfulReservationSave = function successfulReservationSave(reservation, response) {
-  reservationFields.forEach((field) => {
-    $(`#reserve-trip-form input[name=${field}]`).val('');
-  });
+  reservationFields.forEach((field) => $(`#reserve-trip-form input[name=${field}]`).val(''));
   displayStatusMessages(reservation);
   const fakeEvent = {currentTarget: {id: response.trip_id}};
   showTrip(fakeEvent);
@@ -243,25 +222,16 @@ const failedReservationSave = function failedReservationSave(model, response) {
 
 const sortTrips = function sortTrips() {
   const classes = $(this).attr('class').split(/\s+/);
-  let sortClass;
-  for (let i = 0; i < classes.length && sortClass === undefined; i += 1) {
-    if (tableFields.includes(classes[i])) {
-      sortClass = classes[i];
-    }
-  }
-  referenceList.comparator = sortClass;
+  referenceList.comparator = classes.find(thisClass => tableFields.includes(thisClass));
   $('.sortorder').empty();
   if (classes.includes('desc')) {
-    const descModels = referenceList.models.reverse();
-    renderTrips(descModels);
+    renderTrips(referenceList.models.reverse());
     $(this).removeClass('desc');
-    $(`.${sortClass} .sortorder`).html('&#x25B2');
   } else {
-    referenceList.sort();
+    renderTrips(referenceList.sort());
     $(this).addClass('desc').siblings().removeClass('desc');
-    renderTrips(referenceList);
-    $(`.${sortClass} .sortorder`).html('&#x25BC');
   }
+  $(`.${referenceList.comparator} .sortorder`).html($(this).hasClass('desc') ? '&#x25BC': '&#x25B2');
   $(this).addClass('current-sort-field').siblings().removeClass('current-sort-field');
 }
 
@@ -276,9 +246,6 @@ $(document).ready( () => {
     fetchTrips();
     loadTripsTable(referenceList);
   });
-  // $('#load-trips').on('click', unSplitScreen);
-  // $('#load-trips').on('click', fetchTrips);
-  // $('#load-trips').on('click', loadTripsTable, referenceList);
   tripList.on('update', syncReferenceList);
   referenceList.on('update', loadTripsTable, referenceList);
   $('#filter-select').on('change', setFilterCategory);
