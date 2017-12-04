@@ -38,7 +38,7 @@ const render = function render(tripList) {
 
 const fields = ['name', 'category', 'continent', 'weeks', 'cost', 'about'];
 
-const reservationFields = ['name', 'email', 'tripID'];
+const reservationFields = ['name', 'email', 'id'];
 
 const events = {
   // Add a bloody trip
@@ -101,8 +101,8 @@ const events = {
     const reserveData = {};
 
     reservationFields.forEach((field) => {
-      reserveData[field] = $(`input[name=${field}`],$reservationTripForm).val();
-    });
+      reserveData[field] = $(`input[name=${field}]` ,$reservationTripForm).val();
+      });
 
     // reservationFields.forEach((field) =>{
     //   reserveData[field] = $(`input[name=${field}]`).val();
@@ -166,6 +166,10 @@ $(document).ready( () => {
   tripDetailsTemplate = _.template($('#trip-details-template').html());
 
   $('#add-trip-form').submit(events.addTrip);
+
+  // $reservationTripForm.submit( function submit(event) {
+  // const resData = {};
+  // event.preventDefault();
 
   $('.sort').click(events.sortTrips);
   tripList.on('sort', render, tripList);
