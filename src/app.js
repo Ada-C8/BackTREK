@@ -71,10 +71,6 @@ const events = {
       });
     } else {
       renderErrors(trip.validationError);
-      // Object.keys(trip.validationError).forEach((error) => {
-      //   $('#status-messages').append(`${error}: ${trip.validationError[error]}`)
-      // });
-      // $statusMessages.css('display', 'block');
     }
   },
   successfullSave(trip) {
@@ -102,12 +98,6 @@ const events = {
   },
   failedReservation(reservation, response) {
     renderErrors(response.responseJSON.errors)
-    // for (let key in response.responseJSON.errors) {
-    //   response.responseJSON.errors[key].forEach((error) => {
-    //     $('#status-messages').append(`<p>${key}: ${error}</p>`);
-    //   });
-    // }
-    // $('#status-messages').show();
     reservation.destroy();
   },
   sortTrips(event) {
@@ -157,14 +147,7 @@ const events = {
     console.log(filteredTrips);
     render(filteredTrips);
   },
-}
-
-$(document).ready( () => {
-  tripTemplate = _.template($('#trip-template').html());
-
-  // Clears modal(s) when user clicks outside the box
-  // Not a great user experience -- should be changed so that it goes back to the filled in modal (or even better warns user as they are typing)
-  $(document).on('click', function() {
+  clearModals() {
     const modal = document.getElementById('res-modal');
     const modal2 = document.getElementById('new-trip-modal');
     const modal3 = document.getElementById('status-messages-modal');
@@ -173,7 +156,38 @@ $(document).ready( () => {
       (event.target).style.display = 'none';
       modal3.style.display = 'none';
     }
-  });
+  },
+}
+
+$(document).ready( () => {
+  tripTemplate = _.template($('#trip-template').html());
+
+  // Clears modal(s) when user clicks outside the box
+  // Not a great user experience -- should be changed so that it goes back to the filled in modal (or even better warns user as they are typing)
+
+  // $(document).on('click', function() {
+  //   const modal = document.getElementById('res-modal');
+  //   const modal2 = document.getElementById('new-trip-modal');
+  //   const modal3 = document.getElementById('status-messages-modal');
+  //
+  //   if (event.target == modal || event.target == modal2 || event.target == modal3) {
+  //     (event.target).style.display = 'none';
+  //     modal3.style.display = 'none';
+  //   }
+  // });
+
+  $(document).on('click', events.clearModals)
+
+  // function() {
+  //   const modal = document.getElementById('res-modal');
+  //   const modal2 = document.getElementById('new-trip-modal');
+  //   const modal3 = document.getElementById('status-messages-modal');
+  //
+  //   if (event.target == modal || event.target == modal2 || event.target == modal3) {
+  //     (event.target).style.display = 'none';
+  //     modal3.style.display = 'none';
+  //   }
+  // });
 
   // User Events
   $('.sort').click(events.sortTrips);
