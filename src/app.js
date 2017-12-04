@@ -161,23 +161,33 @@ const events = {
       modal3.style.display = 'none';
     }
   },
-}
-
-$(document).ready( () => {
-  tripTemplate = _.template($('#trip-template').html());
-
-  $(document).on('click', events.clearModals)
-
-  // User Events
-  $sort.click(events.sortTrips);
-
-  $tripsList.on('click', 'tr', function getTrip() {
+  getTrip() {
     const trip = new Trip({ id: $(this).attr('data-id') })
     $tripDescription.empty();
     trip.fetch().done(() => {
       $tripDescription.append(tripDetailsTemplate(trip.attributes));
     });
-  });
+  }
+}
+
+$(document).ready( () => {
+  tripTemplate = _.template($('#trip-template').html());
+
+
+
+  // User Events
+  $sort.click(events.sortTrips);
+  $(document).on('click', events.clearModals)
+
+  $tripsList.on('click', 'tr', events.getTrip)
+
+  // $tripsList.on('click', 'tr', function getTrip() {
+  //   const trip = new Trip({ id: $(this).attr('data-id') })
+  //   $tripDescription.empty();
+  //   trip.fetch().done(() => {
+  //     $tripDescription.append(tripDetailsTemplate(trip.attributes));
+  //   });
+  // });
 
   $tripDescription.on('click', 'button', function showResForm() {
     const tripID = $(this).attr('data-id');
