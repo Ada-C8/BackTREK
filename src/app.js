@@ -16,7 +16,6 @@ import Reservation from './app/models/reservation'
 
 
 const TEXT_SEARCH = ['name', 'continent', 'category'];
-
 const TRIP_FIELDS = ['name', 'about', 'continent', 'category', 'weeks', 'cost'];
 const RESERVATION_FIELDS = ['tripId', 'name', 'email', 'age'];
 
@@ -46,7 +45,7 @@ const reportStatus = function reportStatus(status, message) {
   $('#status-messages').show();
 };
 
-// TODO: pull out into function so can DRY saving reservation and trip models
+// function for saving model
 const saveModel = function saveModel(modelToAdd, collection = 'none') {
   modelToAdd.save({}, {
     success: (model, response) => {
@@ -114,16 +113,16 @@ const showTrip = function showTrip(id) {
   console.log(`this is the show trip id ${id}`);
 };
 
-const readFormData = function readFormData() {
-  const tripData = {};
+// for any form where reading fields
+const readFormData = function readFormData(elementId, fields) {
+  const Data = {};
 
-  TRIP_FIELDS.forEach((field) => {
+  fields.forEach((field) => {
 
-
-    const inputElement = $(`#add-trip-form input[name="${ field }"]`);
+    const inputElement = $(`#${elementId} input[name="${ field }"]`);
     const value = inputElement.val();
 
-    tripData[field] = value;
+    Data[field] = value;
     // TODO: see below
     // clears the field
     // break this out into a clear inputs and a method that reads inputs and one that does both
@@ -135,7 +134,7 @@ const readFormData = function readFormData() {
 
   });
 
-  return tripData;
+  return Data;
 };
 
 const handleValidationFailures = function handleValidationFailures(errors) {
@@ -147,66 +146,27 @@ const handleValidationFailures = function handleValidationFailures(errors) {
 };
 
 const addReservationHandler = function(ev) {
-  console.log('in addReservationHandler')
-  const reservationData = {};
-
-  RESERVATION_FIELDS.forEach((field) => {
-
-    const inputElement = $(`#reserve-trip-form input[name="${ field }"]`);
-
-    const value = inputElement.val();
-    console.log(field);
-    console.log(value);
-
-    reservationData[field] = value;
-    // clears the field
-    // break this out into a clear inputs and a method that reads inputs and one that does both
-    // methods that don't have side effects
-    // pure functions are guaranteed to be idempotent
-    //TODO: check
-    // inputElement.val('');
-  });
-
-  console.log(reservationData)
-  const reservation = new Reservation(reservationData);
+  const reservation = new Reservation(readFormData('reserve-trip-form', RESERVATION_FIELDS));
 
   if (!reservation.isValid()) {
     handleValidationFailures(reservation.validationError);
     return;
   }
   console.log(reservation);
-
   saveModel(reservation);
 }
 
 const addTripHandler = function(event) {
   event.preventDefault();
-  // const tripData = {};
-  // console.log('in trip handler');
-  //
-  // TRIP_FIELDS.forEach((field) => {
-  //
-  //   const inputElement = $(`#add-trip-form input[name="${ field }"]`);
-  //   const value = inputElement.val();
-  //   tripData[field] = value;
-  //   // clears the field
-  //   inputElement.val('');
-  // });
 
+  const trip = new Trip(readFormData('add-trip-form', TRIP_FIELDS));
 
-  console.log('read trip data');
-  // console.log(readFormData());
-
-  const trip = new Trip(readFormData());
-  //const trip = trips.add(tripData);
   if (!trip.isValid()) {
     handleValidationFailures(trip.validationError);
     return;
   }
+
   console.log(trip);
-  // console.log(trip.url)
-
-
   saveModel(trip, trips);
 };
 
@@ -219,27 +179,18 @@ $(document).ready( () => {
   trips.on('sort', render);
 
   trips.fetch();
-  // console.log(trips);
 
   $('#add-trip-form').on('submit', addTripHandler);
-  // TODO: FIX LOAD TRIPS BUTTON
-  // $('#load-trips').on('click', render);
 
   $('#load-add-trip').on('click', () => $('#add-trip').toggle());
   $('#load-trips').on('click', () => $('#trips table').toggle());
 
 
   $('#trip-list').on('click', 'tr td', function () {
-    // event.preventDefault();
-    // event.stopPropagation();
     let tripId = $(this).attr('data-id');
     console.log(`this is the trip id ${$(this).attr('data-id')}`);
-    // render();
     showTrip(tripId);
   });
-
-
-
 
   TRIP_FIELDS.forEach((field) => {
     const headerElement = $(`th.sort.${ field }`)
