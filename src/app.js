@@ -33,9 +33,6 @@ const render = function render(tripList) {
 const renderDetails = function renderDetails(trip){
   const detailsDiv = $('#trip-details');
   detailsDiv.html('');
-
-  console.log(trip.attributes);
-
   trip.fetch({
     success: (model) => {
       const generatedHTML = $(tripDetails(trip.attributes));
@@ -66,43 +63,27 @@ $(document).ready( () => {
       tripList.sort();
     })
   });
-});
 
-$('tbody#trip-list').on('click', 'a', function() {
-  let tripID = $(this).attr('data-id');
-  trip = tripList.get(tripID);
-  console.log(trip);
-  console.log(trip.attributes);
-  trip.on('click', renderDetails(trip));
-  // trip.fetch();
-});
+  // Show individual trip details
+  $('tbody#trip-list').on('click', 'a', function() {
+    let tripID = $(this).attr('data-id');
+    trip = tripList.get(tripID);
+    trip.on('click', renderDetails(trip));
+  });
 
-// $('tbody#trip-list').on('click', 'a', function() {
-//   // where you will go
-//   const tripDiv = $('#trip-details');
-//   tripDiv.html('');
-//
-//   // who are you
-//   let tripID = $(this).attr('data-id');
-//   let thisTrip = new Trip({ id: `${tripID}` });
-//   thisTrip.fetch();
-//   // console.log(thisTrip);
-//   // let tripInf = trip.fetch(tripID);
-//   // console.log(tripList.models);
-//   // let thisTrip = Trip.where({ id: `${tripID}` });
-//   // console.log(thisTrip);
-//   // let tripInf = tripList.where({ id: `${tripID}` });
-//
-//   // console.log(tripID);
-//   // console.log(tripInf);
-//   console.log(thisTrip);
-//   console.log(thisTrip.attributes);
-//   // console.log(thisTrip.attributes.get('name'));
-//   console.log(thisTrip.attributes.name);
-//   console.log(thisTrip.attributes['continent']);
-//
-//   // append that
-//   const generatedHtml = $(tripDetails(thisTrip.attributes));
-//   // const generatedHtml = tripDetails(thisTrip.attributes);
-//   tripDiv.append(generatedHtml);
-// });
+  // Listen for form submissions
+  $('#add-trip-form').on('submit', (event) => {
+    event.preventDefault();
+
+    const tripData = readForm();
+    const trip = tripList.add(tripData);
+    console.log(tripData);
+    console.log(trip);
+    trip.save({}, {
+      // success: clearForm,
+      // error: booksApiErrorHandler
+    });
+
+  });
+
+});

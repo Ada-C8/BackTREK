@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="shortcut icon" type="image/ico" href="./favicon.ico">
+  <link rel="shortcut icon" type="image/ico" href="/favicon.ico">
 </head>
 <body>
   <header class="row header">
@@ -31,7 +31,8 @@
         <section class="col-sm-12 col-md-6 all-trips">
           <div class="row search-wrapper">
             <form class="col-sm-12 form-inline" action="">
-              <div class="col-sm-12 col-md-5 form-group">
+              <i class="col-sm-1 col-md-1 fa fa-search fa-lg"></i>
+              <div class="col-sm-11 col-md-4 form-group">
                 <select class="form-control" id="search-select">
                   <option name="name">Name</option>
                   <option name="continent">Place</option>
@@ -41,7 +42,7 @@
               <div class="col-sm-12 col-md-5 form-group">
                 <input type="text" name="search-query" id="search-query">
               </div>
-              <button type="submit" class="col-sm-12 col-md-2 btn btn-primary">Submit</button>
+              <button type="submit" class="col-sm-12 col-md-2 btn btn-warning">Submit</button>
             </form>
           </div>
           <div class="row table-wrapper">
@@ -63,7 +64,7 @@
         <section class="col-sm-12 col-md-6 trip-deets">
           <div class="row justify-content-end">
             <div class="col-12 add-wrapper">
-              <button id="add-trip" class="btn btn-primary" data-toggle="modal" data-target="#addTripModal">Add Trip</button>
+              <button id="add-trip" class="btn btn-warning" data-toggle="modal" data-target="#addTripModal">Add Trip</button>
             </div>
             <div class="modal fade" id="addTripModal" tabindex="-1" role="dialog" aria-labelledby="addTripModal" aria-hidden="true">
               <div class="modal-dialog" role="document">
@@ -75,7 +76,7 @@
                     </button>
                   </div>
                   <div class="modal-body">
-                    <form id="newTripForm" action="">
+                    <form id="add-trip-form" action="">
                       <div class="form-group">
                         <label for="new-name">Name</label>
                         <input type="text" name="new-name"></input>
@@ -85,16 +86,32 @@
                         <input type="text" name="new-category"></input>
                       </div>
                       <div class="form-group">
+                        <label for="select-continent">Continent</label>
                         <select class="form-control" id="select-continent">
+                          <option name="africa">Africa</option>
                           <option name="asia">Asia</option>
                           <option name="australasia">Australasia</option>
-                          <option name="weeks">Weeks</option>
+                          <option name="europe">Europe</option>
+                          <option name="north_america">North America</option>
+                          <option name="south_america">South America</option>
                         </select>
+                      </div>
+                      <div class="form-group">
+                        <label for="new-budget">Budget</label>
+                        <input type="number" name="new-budget"></input>
+                      </div>
+                      <div class="form-group">
+                        <label for="new-weeks">Number of Weeks</label>
+                        <input type="number" name="new-weeks"></input>
+                      </div>
+                      <div class="form-group">
+                        <label for="new-desc">Description</label>
+                        <textarea name="new-desc"></textarea>
                       </div>
                     </form>
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                   </div>
                 </div>
@@ -130,22 +147,22 @@
 
   <script type="text/template" id="detail-template">
     <div class="col-sm-12">
-      <h2 class="detail-name"><%- name %></h2>
+      <h2 class="detail-name"><i class="fa fa-map-marker"></i> <%- name %></h2>
     </div>
     <div class="col-sm-12 col-md-6">
-      <h3 class="detail-continent">Continent: <%- continent %></h3>
+      <h5 class="detail-continent"><i class="fa fa-globe"></i> Continent: <%- continent %></h5>
     </div>
     <div class="col-sm-12 col-md-6">
-      <h3 class="detail-weeks">Weeks: <%- weeks %></h3>
+      <h5 class="detail-weeks"><i class="fa fa-calendar"></i> Weeks: <%- weeks %></h5>
     </div>
     <div class="col-sm-12 col-md-6">
-      <h3 class="detail-category">Category: <%- category %></h3>
+      <h5 class="detail-category"><i class="fa fa-tags"></i> Category: <%- category %></h5>
     </div>
     <div class="col-sm-12 col-md-6">
-      <h3 class="detail-cost">Cost: $<%- cost %></h3>
+      <h5 class="detail-cost"><i class="fa fa-usd"></i> Cost: $<%- cost %></h5>
     </div>
     <div class="col-12">
-      <h4 class="about-label">About: </h4>
+      <h5 class="about-label"><i class="fa fa-info-circle"></i> About: </h5>
       <p class="detail-about"><%- about %></p>
     </div>
   </script>
