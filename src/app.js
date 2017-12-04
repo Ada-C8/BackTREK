@@ -40,6 +40,23 @@ const fields = ['name', 'category', 'continent', 'weeks', 'cost', 'about'];
 
 const reservationFields = ['name', 'email', 'id'];
 
+// const updateStatusMessageFrom = (messageHash) => {
+//   $('#status-messages ul').empty();
+//   for(let messageType in messageHash) {
+//     messageHash[messageType].forEach((message) => {
+//       $('#status-messages ul').append($(`<li>${messageType}:  ${message}</li>`));
+//       console.log(`<li>${messageType}:  ${message}</li>`);
+//     })
+//   }
+//   $('#status-messages').show();
+// }
+//
+// const updateStatusMessageWith = (message) => {
+//   $('#status-messages ul').empty();
+//   $('#status-messages ul').append(`<li>${message}</li>`);
+//   $('#status-messages').show();
+// }
+
 const events = {
   // Add a bloody trip
   addTrip(event) {
@@ -102,7 +119,7 @@ const events = {
 
     reservationFields.forEach((field) => {
       reserveData[field] = $(`input[name=${field}]` ,$reservationTripForm).val();
-      });
+    });
 
     console.log('Your reservation has been added!');
     console.log(reserveData);
@@ -110,19 +127,18 @@ const events = {
     const reservation = new Reservation(reserveData);
 
     reservationList.add(reservation);
-    console.log(reservationList);
+
     reservation.save({
       success: events.successfulSave,
       error: events.failedSave
     })
-    this.reset();
   },
 
   // Sort Trips
   sortTrips(event) {
     console.log(event);
     console.log(this);
-  // Get the class list of the selected element
+    // Get the class list of the selected element
     const classes = $(this).attr('class').split(/\s+/);
 
     classes.forEach((className) => {
