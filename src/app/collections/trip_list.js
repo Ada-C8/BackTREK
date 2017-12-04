@@ -5,9 +5,6 @@ const Triplist = Backbone.Collection.extend({
   model: Trip,
   url: 'https://ada-backtrek-api.herokuapp.com/trips',
   comparator: 'name',
-  parse: function(response){
-    return response;
-  }
 });
 
-export default Triplist; 
+export default Triplist;
