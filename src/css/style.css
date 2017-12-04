@@ -34,3 +34,58 @@
 #status-messages .success {
   color: green;
 }
+
+th.sort {
+  cursor: pointer;
+}
+
+.current-sort-field {
+  background-color: darkgrey;
+  color: white;
+}
+
+header {
+  background-color: #4285f4;
+  color: white;
+  padding: 40px;
+}
+
+header h1, section .button {
+  margin-left: 20px;
+}
+
+a {
+  color: #ff8008;
+}
+
+#load-trips {
+  margin-top: 20px;
+  background-color: white;
+  color: #1a0dab;
+  font-size: 20px;
+}
+
+
+#load-trips:hover {
+  background-color: white;
+  color: #1a0dab;
+  text-decoration: underline;
+}
+
+#trips {
+  margin-left: 20px;
+  overflow-x: scroll;
+}
+
+#trips ul{
+  list-style-type: none;
+  font-size: 18px;
+}
+
+div #trip {
+  margin: 20px;
+}
+
+.bold {
+  font-weight: bold;
+}

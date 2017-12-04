@@ -17,7 +17,7 @@ const tripList = new TripList()
 // const res = new Reservation()
 
 const TRIP_FIELDS = ['name', 'category', 'continent', 'weeks', 'cost', 'about'];
-const RES_FIELDS = ['name', 'email'];
+const RES_FIELDS = ['name', 'email', 'tripId'];
 
 
 let tripsTemplate;
@@ -45,12 +45,16 @@ const render = function render(tripList) {
   const $tripsElement = $('#trip-list');
   $tripsElement.html('');
 
+  let tripId = $(this).attr('data-id');
+  let trip = tripList.get(tripId)
+
   tripList.forEach((trip) => {
     const generatedHTML = $(tripsTemplate(trip.attributes));
     generatedHTML.on('click', (event) => {
-      console.log('testing click');
+      console.log('testing click trip detail');
       $('#trips').hide()
       $('#trip').show()
+      // $('#add-res').show()
       // due to asynchonous api responses we put the renderTrip into the .fetch()
       trip.fetch({
         success(model, response) {
@@ -72,6 +76,12 @@ const renderTrip = function renderTrip(trip) {
 
   const generatedDetailHTML = tripDetailTemplate(trip.attributes);
   $tripElement.html(generatedDetailHTML)
+
+  $('#add-res').on('submit', addResHandler);
+
+  // Provide visual feedback for sorting
+  $('th.sort').removeClass('current-sort-field');
+  $(`th.sort.${ tripList.comparator }`).addClass('current-sort-field');
 }
 
 const loadTrips = function loadTrips() {
@@ -107,7 +117,7 @@ const readTripFormData = function readTripFormData() {
 const readResFormData = function readResFormData() {
   const resData = {};
   RES_FIELDS.forEach((field) => {
-    const $inputResElement = $(`add-res input[name="${ field }"]`);
+    const $inputResElement = $(`#add-res input[name="${ field }"]`);
     const value = $inputResElement.val();
 
     if (value != '') {
@@ -116,8 +126,12 @@ const readResFormData = function readResFormData() {
 
     $inputResElement.val('');
   });
-console.log("Read res data");
-console.log(resData);
+
+
+  console.log("Read res data");
+  console.log(resData);
+
+  return resData;
 };
 
 const handleValidationFailures = function handleValidationFailures(errors) {
@@ -168,6 +182,7 @@ const addTripHandler = function(event) {
 };
 
 const addResHandler = function addResHandler(event) {
+
   event.preventDefault();
   console.log('click into addResHandler');
 
@@ -183,7 +198,7 @@ const addResHandler = function addResHandler(event) {
       console.log('Successfully saved res');
       reportStatus('success', 'Successfully saved reservation!');
     },
-    error: (model, response) => {a
+    error: (model, response) => {
       console.log('Failed to save res. Server response: ');
       console.log(response);
 
@@ -198,16 +213,19 @@ $(document).ready( () => {
   tripDetailTemplate = _.template($('#trip-detail-template').html());
 
   $('#trips').hide();
+  // $('#add-res').hide();
 
-  $('#trip').on('click', 'tr', renderTrip);
+  // $('#trip').on('click', renderTrip);
 
   $('#load-trips').on('click', function (){
     $('#trips').show();
     loadTrips()
-
   });
 
   $('#add-trip-form').on('submit', addTripHandler);
+
+
+  tripList.on('sort', render);
 
   TRIP_FIELDS.forEach((field) => {
     const headerElement = $(`th.sort.${ field }`);
