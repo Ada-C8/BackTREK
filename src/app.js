@@ -19,13 +19,16 @@ const $addTripForm = $('#add-trip-form');
 const $resFormBtn = $('#res-form-btn');
 const $resForm = $('#reservation-form');
 const $queryValue = $('#query-value');
+const $statusMessages = $('#status-messages')
 
 //templates
 let tripTemplate;
 let tripDetailsTemplate;
 
+// create tripList collection of trips
 let tripList = new TripList();
 
+// fields that exist for a trip in the Trek API
 const fields = ['name', 'category', 'continent', 'weeks', 'cost', 'about', 'tripID'];
 
 // render trips table
@@ -38,10 +41,14 @@ const render = function render(tripList) {
   });
 }
 
-// const newTrip = function newTrip() {
-//   console.log('button clicked!');
-// }
-
+const renderErrors = (errors) => {
+  $statusMessages.empty();
+  Object.keys(errors).forEach((error) => {
+    console.log(errors);
+    $statusMessages.append(`<p>${errors[error]}</p>`);
+  })
+  $statusMessages.css('display', 'block');
+}
 
 const events = {
   addTrip(event){
@@ -63,42 +70,44 @@ const events = {
         error: events.failedSave,
       });
     } else {
-      Object.keys(trip.validationError).forEach((error) => {
-        $('#status-messages').append(`${error}: ${trip.validationError[error]}`)
-      });
-      $('#status-messages').show();
+      renderErrors(trip.validationError);
+      // Object.keys(trip.validationError).forEach((error) => {
+      //   $('#status-messages').append(`${error}: ${trip.validationError[error]}`)
+      // });
+      // $statusMessages.css('display', 'block');
     }
   },
-  successfullSave(trip, response) {
-    console.log('Success!');
-    console.log(trip);
-    console.log(response);
-    $('#status-messages').empty();
-    $('#status-messages').append(`${trip.get('name')} added!`)
-    $('#status-messages').show();
+  successfullSave(trip) {
+    $statusMessages.empty();
+    $statusMessages.append(`<p>${trip.get('name')} added!</p>`);
+    $statusMessages.css('display', 'block');
   },
   failedSave(trip, response) {
+    renderErrors(response.responseJSON.errors);
 
-    for (let key in response.responseJSON.errors) {
-      response.responseJSON.errors[key].forEach((error) => {
-        $('#status-messages').append(`<p>${key}: ${error}</p>`)
-      });
-    }
-    $('#status-messages').show();
+    // for (let key in response.responseJSON.errors) {
+    //   response.responseJSON.errors[key].forEach((error) => {
+    //     $('#status-messages').append(`<p>${key}: ${error}</p>`)
+    //   });
+    // }
+    // $statusMessages.css('display', 'block');
+    // $('#status-messages').show();
     trip.destroy();
   },
   successReservation(reservation, response) {
-    $('#status-messages').empty();
-    $('#status-messages').append(`<p>${reservation.get('name')} added!</p>`)
-    $('#status-messages').show();
+    $statusMessages.empty();
+    $statusMessages.append(`<p>${reservation.get('name')} added!</p>`);
+    $statusMessages.css('display', 'block');
+    // $('#status-messages').show();
   },
   failedReservation(reservation, response) {
-    for (let key in response.responseJSON.errors) {
-      response.responseJSON.errors[key].forEach((error) => {
-        $('#status-messages').append(`<p>${key}: ${error}</p>`);
-      });
-    }
-    $('#status-messages').show();
+    renderErrors(response.responseJSON.errors)
+    // for (let key in response.responseJSON.errors) {
+    //   response.responseJSON.errors[key].forEach((error) => {
+    //     $('#status-messages').append(`<p>${key}: ${error}</p>`);
+    //   });
+    // }
+    // $('#status-messages').show();
     reservation.destroy();
   },
   sortTrips(event) {
