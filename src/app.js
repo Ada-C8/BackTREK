@@ -16,6 +16,17 @@ const tripList = new TripList();
 let tripTemplate;
 let showTemplate;
 
+const fields = ['name', 'continent', 'category', 'weeks', 'cost'];
+
+const render = function render(tripList) {
+  const tripListElement = $('#trip-list');
+  tripListElement.empty();
+
+  tripList.forEach((trip) => {
+    tripListElement.append(tripTemplate(trip.attributes));
+  });
+};
+
 const events = {
   allTrips(event) {
     const tripListElement = $('#trip-list');
@@ -32,31 +43,80 @@ const events = {
     const singleTripElement = $('#single-trip');
     singleTripElement.empty();
     const trip = new Trip({id: id});
-    console.log('THIS IS THE TRIP ID');
-    console.log(trip);
 
     $('h3').text('Trip Info');
 
-    console.log("ATTRIBUTES");
-    console.log(trip.attributes);
-    console.log('THIS IS THE TRIP');
-    console.log(trip.attributes.name);
     trip.fetch().done(() => {
       let showHTML = showTemplate(trip.attributes);
-      console.log(showHTML);
       singleTripElement.append($(showHTML));
     });
   },
+
+  addTrip(event) {
+    event.preventDefault();
+
+    const tripData = {};
+    fields.forEach((field) => {
+      const val = $(`input[name=${field}]`).val();
+        if (val != '') {
+          tripData[field] = val;
+        }
+    });
+
+    console.log("THIS IS TRIP DATA");
+    console.log(tripData);
+    console.log('trip added');
+
+    const trip = new Trip(tripData);
+    if (trip.isValid()) {
+      tripList.add(trip);
+      trip.save({}, {
+        success: events.successfulSave,
+        error: events.failedSave,
+    });
+    } else {
+      $('#status-messages ul').append(`<li>Error ${trip.validationError['name'][0]}`);
+      $('#status-messages').show();
+    }
+  },
+
+  successfullSave(trip, response) {
+  console.log('Success!');
+  console.log(trip);
+  console.log(response);
+  $('#status-messages ul').empty();
+  $('#status-messages ul').append(`<li>${trip.get('name')} added!</li>`);
+  $('#status-messages').show();
+},
+failedSave(trip, response) {
+  console.log('Error!');
+  console.log(trip);
+  console.log(response);
+  $('#status-messages ul').empty();
+  console.log(response.responseJSON.errors);
+  for(let key in response.responseJSON.errors) {
+    response.responseJSON.errors[key].forEach((error) => {
+      $('#status-messages ul').append(`<li>${key}: ${error}</li>`);
+    })
+  }
+  $('#status-messages').show();
+  trip.destroy();
+},
 };
 
 $(document).ready( () => {
   tripTemplate = _.template($('#trip-template').html());
   showTemplate = _.template($('#show-template').html());
-
   tripList.fetch();
 
   $('#trips_button').click(events.allTrips);
-
+  $('#add-trip-form').submit((event) => {
+    event.preventDefault();
+    console.log('arrow function triggered');
+  });
+  $('#add-trip-form').submit(events.addTrip);
+  
+  tripList.on('update', render, tripList);
   $('#trip-list').on('click', 'tr', function() {
     const tripID = $(this).attr('trip-id');
     events.loadTrip(tripID);

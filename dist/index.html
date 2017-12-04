@@ -13,6 +13,11 @@
   </header>
   <main>
 
+    <section id="status-messages">
+      <ul>
+      </ul>
+    </section>
+
     <section id="load_trips" class="columns large-8 small-12">
       <h2></h2>
 
@@ -32,6 +37,28 @@
 
     <aside id="single-trip" class="columns large-4 small-12">
       <h3></h3>
+    </aside>
+
+    <aside class="columns large-4 small-12">
+      <h2> Add a Trip</h2>
+      <form id="add-trip-form">
+        <label for="name">Name</label>
+        <input type="text" name="name"></input>
+
+        <label for="continent">Continent</label>
+        <input type="text" name="continent"></input>
+
+        <label for="category">Category</label>
+        <input type="text" name="category"></input>
+
+        <label for="weeks">Number of Weeks</label>
+        <input type="number" name="weeks"></input>
+
+        <label for="cost">Cost</label>
+        <input type="number" name="cost"></input>
+
+        <input type="submit" value="Add trip" class="button"></input>
+      </form>
     </aside>
 
   </main>
@@ -62,6 +89,9 @@
 
     <script id="show-template" type="text/template">
       <h2> Details for <%- name %> </h2>
+      <p>
+        Category: <%- category %>
+      </p>
       <p>
         Continent: <%- continent %>
       </p>
