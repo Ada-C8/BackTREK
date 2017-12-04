@@ -17,7 +17,6 @@ const reservationFields = ['name', 'age', 'email'];
 
 const events = {
   sortTrips(event){
-    // TODO: tell the user that a sort has happened
     console.log('Tried to sort!');
     $('.sort').removeClass('current-sort-field');
     $(this).addClass('current-sort-field');
@@ -35,7 +34,6 @@ const events = {
     });
   },
   filterTrips(event) {
-    // TODO: handle no trip results gracefully
     const query = $('#trip-query').val().toLowerCase();
     const attr = $('#trip-fields').find(':selected').val();
     // name, category, continent needs .includes
@@ -68,9 +66,7 @@ const events = {
     console.log('failed trip fetch');
   },
   hideModal(){
-    // TODO: click out of the modal and close
     console.log('hid modal!');
-    // clear error messages
     $('.status-title').empty();
     $('.status-messages section ul').empty();
     $('.status-messages').hide();
@@ -113,7 +109,6 @@ const events = {
     trip.destroy();
   },
   addStatusMessagesFromHash(jquerySelector, statusTitle, collection){
-    // $tripList.append(allTripsTemplate(trip.attributes));
     let tripAttributes = collection;
     tripAttributes['status'] = statusTitle;
     console.log('Trip Attributes');
@@ -133,7 +128,6 @@ const events = {
     console.log('submitted a reservation!');
     const reservationData = {};
     reservationFields.forEach( (field) => {
-      // needs the #id attribute
       const val = $(`#create-reservation-form input[name=${field}]`).val();
       if (val != '') reservationData[field] = val;
     });
@@ -149,12 +143,10 @@ const events = {
     } else { // save is invalid
       console.log('Reservation Validation Error');
       console.log(reservation.validationError);
-      // events.addStatusMessagesFromHash('Errors', reservation.validationError);
       events.addStatusMessagesFromHash('#reservation-status-messages', 'errors', reservation.validationError);
     }
   },
   successfulSaveReservation(reservation, response){
-    // TODO: add confirmation message in trip-details somewhere
     $('#create-reservation-form .input').val('');
     events.addStatusMessagesFromHash('#reservation-status-messages', 'success', {message: 'Reservation has been successfully added'});
     console.log('successfully saved a resrevation');
@@ -169,7 +161,6 @@ const events = {
     $('#modal-status-messages').empty();
   }
 }
-
 
 // TEMPLATE RENDERING
 const tripList = new TripList();
