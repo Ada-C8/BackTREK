@@ -37,15 +37,18 @@ p {
 }
 
 #trip {
-  border: 2px #054d01 solid;
-  border-radius: 4px;
   display: inline-block;
-  width: 45%;
+  width: 40%;
   position: absolute;
   margin: 3em 1em;
   top: 20em;
   right: 0;
   padding: .5em 1em .5em .5em;
+}
+
+.green-border {
+  border: 2px #054d01 solid;
+  border-radius: 4px;
 }
 
 button#search, button#add {

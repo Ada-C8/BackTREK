@@ -98,6 +98,7 @@ const failedSave = function(trip, response) {
 
 const loadTrip = function loadTrip(trip) {
   $('#trip').empty();
+  $('#trip').addClass('green-border');
   $('#trip').append(tripDetailsTemplate(trip.attributes));
   $('#reservation').hide();
   $('#trip').on('click', 'button', function() {
