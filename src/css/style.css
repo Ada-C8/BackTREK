@@ -1,8 +1,14 @@
 
 /* Your styles go here! */
+body {
+  position: relative;
+}
 
 nav {
+  width: 100%;
+  margin: 0;
   margin-bottom: 2vw;
+  border-bottom: 1px solid black;
 }
 
 h1 {
