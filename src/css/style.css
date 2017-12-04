@@ -1,2 +1,6 @@
 
 /* Your styles go here! */
+
+tr:hover {
+  background-color: #4286f4;
+}
