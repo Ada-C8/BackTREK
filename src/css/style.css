@@ -1,8 +1,17 @@
+body {
+  margin: 20px;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+}
 
 #add-a-trip-form-container {
   display: none;
   position: absolute;
   margin: 100px auto;
+  overflow: auto;
   width: 60%;
   height: 100%;
   padding: 40px;
@@ -13,18 +22,32 @@
   bottom: 0;
   left: 0;
   border: 1px solid black;
-  -mox-border-radius: 10px;
+  /*-mox-border-radius: 10px;*/
   z-index: 1;
 }
-
-#submit-new-trip-button {
-  margin: 10px;
+.close {
+  font-size: 28px;
 }
+
+#add-trip-form {
+  color: white;
+}
+
+/*#submit-new-trip-button {
+  margin: 10px;
+}*/
 
 .new-trip-title {
   color: white;
 }
 
+.trip-ul {
+  list-style: none;
+}
+
+/*.reservation-form-container {
+  margin: 10px;
+}*/
 
 /* STATUS MESSAGE STYLING */
 #status-messages {

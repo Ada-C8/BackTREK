@@ -100,6 +100,8 @@ const events = {
     $('#status-messages ul').empty();
     $('#status-messages ul').append(`<li>${trip.get('name')} added!</li>`)
     $('#status-messages').show();
+    document.getElementByID('#add-a-trip-form-container').style.display = "none";
+    document.getElementByID('#add-trip-form').reset();
   },
   failedTripSave(trip, response) {
     console.log('failedTripSave');
@@ -229,9 +231,10 @@ const submitReservation = function submitReservation() {
 const modalAddTrip = function() {
   const modal = $('#add-a-trip-form-container');
   const openModal = $('#add-new-trip');
-  const closeModal = $('#close');
+  // const closeModal = $('.close');
+  const closeModal = document.getElementsByClassName("close")[0];
   openModal.onclick = function() {
-  modal.style.display = "block";
+    modal.style.display = "block";
   };
   closeModal.onclick = function() {
     modal.style.display = "none";
