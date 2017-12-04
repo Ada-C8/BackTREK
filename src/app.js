@@ -36,7 +36,7 @@ const render = function render(tripList) {
   });
 };
 
-const fields = ['name', 'category', 'continent', 'weeks', 'cost', 'about'];
+const fields = ['name', 'id', 'category', 'continent', 'weeks', 'cost', 'about'];
 
 const reservationFields = ['name', 'email', 'id'];
 
@@ -118,7 +118,7 @@ const events = {
     const reserveData = {};
 
     reservationFields.forEach((field) => {
-      reserveData[field] = $(`input[name=${field}]` ,$reservationTripForm).val();
+      reserveData[field] = $(`input[name=${field}]`,$reservationTripForm).val();
     });
 
     console.log('Your reservation has been added!');
@@ -126,7 +126,7 @@ const events = {
 
     const reservation = new Reservation(reserveData);
 
-    reservationList.add(reservation);
+    // reservationList.add(reservation);
 
     reservation.save({
       success: events.successfulSave,

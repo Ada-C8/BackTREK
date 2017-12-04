@@ -54,8 +54,8 @@
           <label for="email">E-Mail</label>
           <input type="text" name="email"></input>
 
-          <label for="id">Trip ID</label>
-          <input type="number" name="id"></input>
+          <label for="age">Age</label>
+          <input type="number" name="age"></input>
 
           <input type="submit" value="Reserve Trip!" class="button"></input>
         </form>
@@ -68,6 +68,7 @@
           <table>
             <thead>
               <th class="sort name">Name</th>
+              <th class="sort id">Trip ID</th>
               <th class="sort category">Category</th>
               <th class="sort continent">Continent</th>
               <th class="sort weeks">Weeks</th>
@@ -86,6 +87,7 @@
       <script type = "text/template" id="trip-template">
         <tr class="trip" data-id="<%- id %>">
           <td><%- name %></td>
+          <td><%- id %></td>
           <td><%- category %></td>
           <td><%- continent %></td>
           <td><%- weeks %></td>
@@ -95,6 +97,7 @@
 
       <script type = "text/template" id="trip-details-template">
         <h2><%- name %></h2>
+        <p><%- id %></p>
         <p><%- category %></p>
         <p><%- continent %></p>
         <p><%- weeks %></p>

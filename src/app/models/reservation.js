@@ -19,9 +19,9 @@ const Reservation = Backbone.Model.extend({
     }
 
     if (!attributes.id) {
-      error['id'] = 'Trip ID cannot be blank!';
+      error['age'] = 'Age cannot be blank!';
     } else if (isNaN(attributes.id)) {
-      error['id'] = 'Trip ID must be a number!';
+      error['id'] = 'Age must be a number!';
     }
 
     console.log('Error!');
