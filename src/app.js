@@ -103,6 +103,7 @@ const renderTrips = function renderTrips(list) {
     return tripData;
   };
 
+  // TODO: does not work currently 
   const outputValidationFailures = function outputValidationFailures() {
     for (let field in errors) {
       for (let problem of errors[field]) {
