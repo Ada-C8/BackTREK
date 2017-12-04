@@ -138,8 +138,6 @@ $(document).ready(() => {
     singleTrip.fetch({
       success: (model) => {
         const generatedHTML = $(aboutTemplate(model.attributes));
-        console.log(generatedHTML);
-        // console.log(generatedHTML.prop('outerHTML'));
         aboutElement.html(generatedHTML);
 
         // RENDER 'RESERVATION' FORM TO DOM
