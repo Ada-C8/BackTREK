@@ -24,11 +24,13 @@ const render = function render(tripList) {
   });
 };
 const renderOneTrip = function renderOneTrip(trip) {
-  const $trip = $('#one-trip');
+  const $trip = $('#trip-info');
   $trip.empty();
   trip.fetch().then(function () {
     $trip.append(oneTripTemplate(trip.attributes));
-    $trip.append($('#reserve-trip-form'));
+    // console.log('ok!');
+    // console.log($('#reserve-trip-form'));
+    $('#one-trip').append($('#reserve-trip-form'));
     $('#reserve-trip-form').show();
   });
 }
@@ -100,6 +102,7 @@ $(document).ready(() => {
   $('#all-trip-table').on('click', '#trip-row', (event) => {
     const tripName = event['currentTarget']['cells'][0]['innerText']
     const trip = tripList.findWhere({name: tripName});
+    // console.log(trip);
     renderOneTrip(trip);
   });
 
@@ -109,19 +112,19 @@ $(document).ready(() => {
   tripList.fetch();
 
   $('#reserve-trip-form').submit(function(event) {
+    console.log(event);
     event.preventDefault();
-    const tripName = event['currentTarget']['parentElement']['children'][0]['innerText']
+    const tripName = event['currentTarget']['parentElement']['children'][0]['firstElementChild']['innerText']
     const trip = tripList.findWhere({name: tripName});
     const id = trip.id;
     const url = `https://ada-backtrek-api.herokuapp.com/trips/${id}/reservations`;
-    
+
     const formData = $(this).serialize();
     $.post(url, formData, (response) => {
       $('#status-messages').append('<p> Reservation confirmed! </p>');
     }).fail(() => {
       $('#status-messages ul').empty();
       $('#status-messages').append('<p>Reservation Failed</p>');
-      console.log(event);
       $('#status-messages').show();
     });
   });
