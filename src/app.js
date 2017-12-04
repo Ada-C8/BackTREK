@@ -21,6 +21,7 @@ const $resForm = $('#reservation-form');
 const $queryValue = $('#query-value');
 const $statusMessages = $('#status-messages')
 const $sort = $('.sort');
+const $resModal = $('#res-modal');
 
 //templates
 let tripTemplate;
@@ -52,6 +53,9 @@ const renderErrors = (errors) => {
 }
 
 const events = {
+  showNewTripForm() {
+    $('#new-trip-modal').css('display', 'block');
+  },
   addTrip(event){
     event.preventDefault();
     const tripData = {};
@@ -171,35 +175,9 @@ const events = {
   showResForm() {
     const tripID = $(this).attr('data-id');
     $resForm.append(`<input type="hidden" name="res-tripID" value="${tripID}">`);
-    $('#res-modal').css('display', 'block');
-  }
-}
-
-$(document).ready( () => {
-  tripTemplate = _.template($('#trip-template').html());
-
-
-
-  // User Events
-  $sort.click(events.sortTrips);
-  $(document).on('click', events.clearModals);
-
-  $tripsList.on('click', 'tr', events.getTrip);
-  $tripDescription.on('click', 'button', events.showResForm);
-
-  // $tripDescription.on('click', 'button', function showResForm() {
-  //   const tripID = $(this).attr('data-id');
-  //   $resForm.append(`<input type="hidden" name="res-tripID" value="${tripID}">`);
-  //   $('#res-modal').css('display', 'block');
-  // });
-
-  $newTripBtn.on('click', function showNewTripForm() {
-    $('#new-trip-modal').css('display', 'block');
-  });
-
-  $addTripForm.submit(events.addTrip);
-
-  $resForm.submit( function submit(event) {
+    $resModal.css('display', 'block');
+  },
+  addReservation() {
     const resData = {};
     event.preventDefault();
 
@@ -227,7 +205,55 @@ $(document).ready( () => {
       });
       $('#status-messages').css('display', 'block');
     }
-  });
+  }
+}
+
+$(document).ready( () => {
+  tripTemplate = _.template($('#trip-template').html());
+
+  // Clicking Events
+  $sort.click(events.sortTrips);
+  $(document).on('click', events.clearModals);
+  $tripsList.on('click', 'tr', events.getTrip);
+  $tripDescription.on('click', 'button', events.showResForm);
+  $newTripBtn.on('click', events.showNewTripForm)
+
+  // Form Submitting Events
+  $addTripForm.submit(events.addTrip);
+  $resForm.submit(events.addReservation);
+
+
+
+
+  // $resForm.submit( function submit(event) {
+  //   const resData = {};
+  //   event.preventDefault();
+  //
+  //   const formfields = ['name', 'age', 'email', 'tripID']
+  //   event.preventDefault();
+  //
+  //   formfields.forEach( (field) => {
+  //     const val = $(`form input[name=res-${field}]`).val();
+  //     if (val !== '') {
+  //       resData[field] = val;
+  //     }
+  //   });
+  //
+  //   const reservation = new Reservation(resData)
+  //
+  //
+  //   if (reservation.isValid()) {
+  //     reservation.save({}, {
+  //       success: events.successReservation,
+  //       error: events.failedReservation,
+  //     });
+  //   } else {
+  //     Object.keys(reservation.validationError).forEach((error) => {
+  //       $('#status-messages').append(`<p>${error}: ${reservation.validationError[error]}<p>}`)
+  //     });
+  //     $('#status-messages').css('display', 'block');
+  //   }
+  // });
 
   $queryValue.on('keyup', events.filterTrips);
 
