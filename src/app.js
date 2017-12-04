@@ -226,6 +226,8 @@ const filterResults = () => {
 
 $(document).ready(() => {
 
+
+
   $('#create-trip-form').hide();
   tripList.fetch();
 
