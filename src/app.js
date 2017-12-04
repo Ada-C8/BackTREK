@@ -124,3 +124,27 @@ const render = function render(tripList) {
   $('th.sort').removeClass('current-sort-field');
   $(`th.sort.${ tripList.comparator }`).addClass('current-sort-field');
 };
+
+$(document).ready( () => {
+  let modal = $('#myModal');
+
+  detailsTemplate = _.template($('#details-template').html());
+  tripTemplate = _.template($('#trip-template').html());
+  statusTemplate = _.template($('#status-message-template').html());
+
+  tripList.on('update', render);
+
+  tripList.fetch();
+
+  $('#add-trip-form').on('submit', addTripHandler);
+
+  $('#add-trip-button').on('click', function() {
+    modal.css("display", "block");
+  });
+
+  $('body').on('click', '.modal-close', function(event){
+    if($(event.target).hasClass('modal-close')) {
+      modal.hide();
+      clearFormMessages();
+    }
+  });
