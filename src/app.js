@@ -9,8 +9,6 @@ import './css/style.css';
 import Trip from './app/models/trip';
 import TripList from './app/collections/trip_list';
 
-console.log('it loaded!');
-
 const tripList = new TripList();
 
 let tripTemplate;
@@ -28,19 +26,6 @@ const render = function render(tripList) {
 };
 
 const events = {
-  allTrips(event) {
-    const tripListElement = $('#trip-list');
-    tripListElement.empty();
-    $('h2').text('Trip Options');
-    $('#load_trips').show();
-    tripList.forEach((trip) => {
-      let tripHTML = tripTemplate(trip.attributes);
-      tripListElement.append($(tripHTML));
-    });
-    $('#load_trips').show();
-    console.log(tripList);
-  },
-
   loadTrip(id) {
     const singleTripElement = $('#single-trip');
     singleTripElement.empty();
@@ -65,15 +50,9 @@ const events = {
         }
     });
 
-    console.log("THIS IS TRIP DATA");
-    console.log(tripData);
-    console.log('trip added');
-
     const trip = new Trip(tripData);
     if (trip.isValid()) {
       tripList.add(trip);
-      console.log("THIS IS THE TRIP THAT IS ADDED");
-      console.log(trip);
       trip.save({}, {
         success: events.successfulSave,
         error: events.failedSave,
@@ -85,7 +64,8 @@ const events = {
     console.log(tripList);
   },
 
-  successfullSave(trip, response) {
+  successfulSave(trip, response) {
+
     console.log('Success!');
     console.log(trip);
     console.log(response);
@@ -116,7 +96,10 @@ $(document).ready( () => {
 
   tripList.fetch();
 
-  $('#trips_button').click(events.allTrips);
+  $('#trips_button').click(() => {
+    render(tripList);
+    $('h2').text('Trip Options');
+  });
 
   $('#trip-list').on('click', 'tr', function() {
     const tripID = $(this).attr('trip-id');
