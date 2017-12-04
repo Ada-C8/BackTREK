@@ -120,7 +120,9 @@ const events = {
     $('#status-messages ul').empty();
     $('#status-title').text(`${statusTitle}`);
     for (let key in collection) {
-      $('#status-messages ul').append(`<li>${key}: ${collection[key]}</li>`);
+      if (collection[key].length > 0) {
+        $('#status-messages ul').append(`<li>${key}: ${collection[key]}</li>`);
+      }
     }
     $('#status-messages').css('background-color', 'pink');
     $('#status-messages').show();

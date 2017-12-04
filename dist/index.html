@@ -16,6 +16,7 @@
     <!-- Modal HTML embedded directly into document -->
     <div id="create-trip-modal" class="modal">
       <!-- ERROR MESSAGES -->
+      <section id="modal-status-messages"></section>
       <section id="status-messages" class="large-8 large-centered small-12 columns">
         <h2 id="status-title"></h2>
         <ul></ul>
@@ -42,6 +43,9 @@
 
       <!-- ALL TRIPS SECTION -->
       <section class="large-6 small-12 columns">
+        <!-- ERROR MESSAGES WITHOUT MODAL -->
+        <section id="page-status-messages"></section>
+
         <!-- SORTING AND FILTERING SECTION -->
         <section>
           <form id="filter-form" class="row">
