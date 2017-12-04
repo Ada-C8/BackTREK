@@ -7,12 +7,6 @@ const TripList = Backbone.Collection.extend({
   parse(response) {
     return response
   },
-  byAttribute: function(attribute, value) {
-    const filtered = this.filter(function (trip) {
-      return trip.get(attribute) === value;
-    });
-    return new TripList(filtered);
-  }
 });
 
 export default TripList;

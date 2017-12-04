@@ -36,7 +36,7 @@ const Trip = Backbone.Model.extend({
     if (!attributes.cost) {
       errors['cost'] = 'cost cannot be blank';
     } else if (isNaN(attributes.cost)) {
-      errors['cost'] = 'cost must be a number'
+      errors['cost'] = 'cost must be a number';
     }
 
     if (Object.keys(errors).length > 0) {
