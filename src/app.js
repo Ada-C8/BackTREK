@@ -62,7 +62,7 @@ const loadFilters = function loadFilters() {
   $('#filter-select').prop('selectedIndex', -1);
 };
 
-const setfilterCategory = function setfilterCategory() {
+const setFilterCategory = function setFilterCategory() {
   const capital = $('#filter-select').find(':selected').text();
   filterCategory = capital.charAt(0).toLowerCase() + capital.slice(1);
 };
@@ -175,6 +175,12 @@ const displayFormErrors = function displayFormErrors(formId, errors) {
   }
 }
 
+const displayStatusMessages = function displayStatusMessages(model) {
+  $('#status-messages ul').empty();
+  $('#status-messages ul').append(`<li>${model.get('name')} added!</li>`);
+  $('#status-messages').show();
+};
+
 const successfulTripSave = function successfulTripSave(trip) {
   $.modal.close();
   tripList.add(trip);
@@ -182,9 +188,7 @@ const successfulTripSave = function successfulTripSave(trip) {
   addTripFields.forEach((field) => {
     $(`#add-trip-form input[name=${field}]`).val('');
   });
-  $('#status-messages ul').empty();
-  $('#status-messages ul').append(`<li>${trip.get('name')} added!</li>`);
-  $('#status-messages').show();
+  displayStatusMessages(trip);
 }
 
 const failedTripSave = function failedTripSave(model, response) {
@@ -227,9 +231,7 @@ const successfulReservationSave = function successfulReservationSave(reservation
   reservationFields.forEach((field) => {
     $(`#reserve-trip-form input[name=${field}]`).val('');
   });
-  $('#status-messages ul').empty();
-  $('#status-messages ul').append(`<li>A space reserved for ${reservation.get('name')}!</li>`);
-  $('#status-messages').show();
+  displayStatusMessages(reservation);
   const fakeEvent = {currentTarget: {id: response.trip_id}};
   showTrip(fakeEvent);
 }
@@ -274,7 +276,7 @@ $(document).ready( () => {
   $('#load-trips').on('click', loadTripsTable, referenceList);
   tripList.on('update', syncReferenceList);
   referenceList.on('update', loadTripsTable, referenceList);
-  $('#filter-select').on('change', setfilterCategory);
+  $('#filter-select').on('change', setFilterCategory);
   $('#filter-input').on('input', filterTrips);
   $('#all-trips').on('click', '.trip', showTrip);
   $('thead').on('click', '.sort', sortTrips);
