@@ -94,5 +94,40 @@
     <footer>
 
     </footer>
-
+    <script type="text/template" id="trip-template">
+      <tr class="bookTrip">
+        <td>
+          <%- name %>
+        </td>
+        <td>
+          <%- continent %>
+        </td>
+        <td>
+          <%- category %>
+        </td>
+        <td>
+          <%- weeks %>
+        </td>
+        <td>
+          <%- cost %>
+        </td>
+      </tr>
+    </script>
+    <script type="text/template" id="details-template">
+      <h3><%- name %></h3>
+      <ul>
+        <li><strong>Continent: </strong><%- continent %></li>
+        <li><strong>Category:</strong> <%- category %></li>
+        <li><strong>Weeks:</strong> <%- weeks %></li>
+        <li><strong>Cost:</strong> $<%- cost %></li>
+        <li><strong>About:</strong> <%- about %></li>
+      </ul>
+    </script>
+    <script type="text/template" id="status-message-template">
+      <span class='errorForm'>
+        <%- problem %>
+      </span>
+    </script>
+    <script src="app.bundle.js" type="text/javascript"></script>
+  </body>
 </html>
