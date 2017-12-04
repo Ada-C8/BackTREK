@@ -271,9 +271,14 @@ $(document).ready( () => {
   showTripTemplate = _.template($('#show-trip-template').html());
   formTemplate = _.template($('#form-template').html());
   filterTemplate = _.template($('#filter-trips-template').html());
-  $('#load-trips').on('click', unSplitScreen);
-  $('#load-trips').on('click', fetchTrips);
-  $('#load-trips').on('click', loadTripsTable, referenceList);
+  $('#load-trips').on('click', function() {
+    unSplitScreen();
+    fetchTrips();
+    loadTripsTable(referenceList);
+  });
+  // $('#load-trips').on('click', unSplitScreen);
+  // $('#load-trips').on('click', fetchTrips);
+  // $('#load-trips').on('click', loadTripsTable, referenceList);
   tripList.on('update', syncReferenceList);
   referenceList.on('update', loadTripsTable, referenceList);
   $('#filter-select').on('change', setFilterCategory);
