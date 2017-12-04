@@ -110,6 +110,7 @@ $(document).ready( () => {
     $('#bookingForm form').attr('action', `https://ada-backtrek-api.herokuapp.com/trips/${trip.id}/reservations`);
 
     $('#bookingForm').show();
+    $('#trip-description').modal();
   });
 
   const $bookingForm = $('#bookingForm form')
