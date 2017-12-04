@@ -4,17 +4,159 @@
   <meta charset="utf-8">
   <title>My JavaScript App</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- StyleSheets -->
+<link href="https://fonts.googleapis.com/css?family=Bahiana" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Reenie+Beanie" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Jura" rel="stylesheet">
+
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
   <header>
+    <h2>BackTREK</h2>
+    <nav>
+      <button href="index.html" class="button">HOME</button>
+      <button id="all-trips" class="button">ALL TRIPS</button>
+      <button data-open="newTripModal" class="button">NEW TRIP</button>
+    </nav>
 
   </header>
+
   <main>
+    <div id="newTripModal" class="reveal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+      <h2 id="modalTitle">Add A New Trip</h2>
+      <form id="new-trip-form">
+        <label for="name">Name</label>
+        <input type="text" name="name" class="user-input"></input>
+
+        <label for="continent">Continent</label>
+        <!-- <input type="text" name="continent" class="user-input"></input> -->
+        <select name="continent">
+          <option value="" disabled selected>Select a Continent</option>
+          <option value="Africa">Africa</option>
+          <option value="Antartica">Antartica</option>
+          <option value="Asia">Asia</option>
+          <option value="Australasia">Australasia</option>
+          <option value="Europe">Europe</option>
+          <option value="North America">North America</option>
+          <option value="South America">South America</option>
+        </select>
+
+        <label for="about">About</label>
+        <input type="text" name="about" class="user-input"></input>
+
+        <label for="category">Category</label>
+        <input type="text" name="category" class="user-input"></input>
+
+        <label for="weeks">Weeks</label>
+        <input type="number" name="weeks" min="0" class="user-input"></input>
+
+        <label for="cost">Cost</label>
+        <input type="number" name="cost" min="0" step="0.01" class="user-input"></input>
+
+        <input type="submit" value="ADD TRIP" class="button new-trip-button"></input>
+      </form>
+
+      <button class="close-button" data-close aria-label="Close modal" type="button">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div id="statusMessageModal" class="reveal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+      <h2 id="modalTitle"></h2>
+        <p></p>
+        <ul>
+
+        </ul>
+
+      <button class="close-button" data-close aria-label="Close modal" type="button">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <section id="all-trips-table" class="columns large-7 small-12">
+      <h2>Trips</h2>
+      <table class="hover">
+        <thead>
+          <th class="sort name">Name</th>
+          <th class="sort continent">Continent</th>
+          <th class="sort category">Category</th>
+          <th class="sort weeks">Weeks</th>
+          <th class="sort cost">Cost</th>
+        </thead>
+        <tbody id="trip-list">
+        </tbody>
+      </table>
+    </section>
+
+    <aside class="columns large-5 small-12" id="single-trip-details">
+
+    </aside>
 
   </main>
+
   <footer>
 
   </footer>
+  <script type="text/template" id="trip-template">
+    <tr class="trip" data-id="<%- id %>" >
+      <td>
+        <%- name %>
+      </td>
+      <td>
+        <%- continent %>
+      </td>
+      <td>
+        <%- category %>
+      </td>
+      <td>
+        <%- weeks %>
+      </td>
+      <td>
+        <%- cost %>
+      </td>
+    </tr>
+  </script>
+
+  <script type="text/template" id="single-trip-template">
+    <h2><%- name %></h2>
+    <h6>ID: <%- id %></h6>
+
+    <h6>Name: <%- name %></h6>
+
+    <h6>Continent: <%- continent %></h6>
+
+    <h6>Category: <%- category %></h6>
+
+    <h6>Weeks: <%- weeks %></h6>
+
+    <h6>Cost: <%- cost %></h6>
+
+    <h5>About:</h5>
+    <p><%- about %></p>
+
+    <button id="reserve-trip-button" class="button expanded"><strong>MAKE A RESERVATION</strong></button>
+
+    <section id="reservation-form">
+      <form id="reservation" data-id="<%- id %>">
+
+        <label for="name">Name:</label>
+        <input type="text" name="name" class="user-input" placeholder="Firstname Lastname"></input>
+
+        <label for="age">Age:</label>
+        <input type="number" name="age" class="user-input"></input>
+
+        <label for="email">Email:</label>
+        <input type="text" name="email" class="user-input"></input>
+
+        <button class="button expanded" type="submit"><strong>RESERVE TRIP</strong></button>
+      </form>
+    </section>
+
+  </script>
+
   <script src="app.bundle.js" type="text/javascript"></script>
+
 </body>
 </html>
