@@ -4,8 +4,15 @@ body {
   padding: 0;
   background: #FDD02C;
 }
+img {
+  height: 20px;
+}
 h1 {
   text-align: center;
+}
+li {
+  /*display: inline;*/
+  /*list-style: circle url("http://www.pvhc.net/img223/xeiwtpbbgpmyhtcnjvwt.png");*/
 }
 table {
   display: none;
@@ -36,28 +43,14 @@ button {
   height: 800px;
   text-align: center;
 }
-table {
-
-  /*height: 100%;*/
-  /*overflow: scroll;*/
-  /*position:fixed;*/
-
-  /*margin-bottom: 0;*/
-}
 #summary {
   background: #4EAD6E;
 
   overflow: scroll;
   height: 800px;
   align-items: center;
-  /*display: block;*/
-  /*position:absolute;*/
-  /*max-width: 50%;*/
-  /*padding: 20px;*/
-  /*padding-top: 50px;*/
-  /*overflow: scroll;*/
-}
 
+}
 .info {
   /*padding: 5px;*/
   /*height: 100%;*/
@@ -67,3 +60,12 @@ table {
 .info p {
   /*padding: 10px;*/
 }
+.add-trip {
+  background: #F4A927;
+}
+#add-trip-form {
+  display: none;
+}
+/*#status-messages li {
+  list-style: circle;
+}*/

@@ -10,41 +10,51 @@
     <h1>BackTrek</h1>
   </header>
 
-  <main class='row'>
+<main class='row'>
 
-    <section id="summary" class='columns medium-5 small-12'>
-      <section id="status-messages">
-        <button class="clear float-right">
-          <img src="http://www.pvhc.net/img223/xeiwtpbbgpmyhtcnjvwt.png" alt="Clear">
-        </button>
-
-    <ul></ul>
+  <aside class='add-trip columns medium-12'>
+    <section class='row'>
+      <h2 class='add columns small-12'>Add a Trip</h2>
     </section>
-      <aside class='add-trip'>
-        <h2>Add a Trip</h2>
-        <form id="add-trip-form">
+    <section id="status-messages">
+      <ul class='columns medium-12'></ul>
+      <!-- <button class="clear float-right columns medium-2">
+        <img src="http://www.pvhc.net/img223/xeiwtpbbgpmyhtcnjvwt.png" alt="Clear">
+      </button> -->
+    </section>
+    <form id="add-trip-form">
+      <section class='row'>
+        <section class='columns medium-6 small-12'>
           <label for="name">name</label>
           <input type="text" name="name"></input>
-
+        </section>
+        <section class='columns medium-3 small-12'>
           <label for="continent">continent</label>
           <input type="text" name="continent"></input>
-
+        </section>
+      <section class='columns medium-3 small-12'>
+        <label for="category">category</label>
+        <input type="text" name="category"></input>
+      </section>
+        <section class='columns medium-6 small-12'>
           <label for="about">about</label>
           <input type="text" name="about"></input>
-
-          <label for="category">category</label>
-          <input type="text" name="category"></input>
-
+        </section>
+        <section class='columns medium-3 small-12'>
           <label for="weeks">weeks</label>
           <input type="number" name="weeks"></input>
-
+        </section>
+        <section class='columns medium-3 small-12'>
           <label for="cost">cost</label>
           <input type="number" name="cost"></input>
+        </section>
+          <input type="submit" value="Add It!" class="columns large-12 button"></input>
+      </section>
+      </form>
+    </aside>
 
-          <input type="submit" value="Add It!" class="button"></input>
-        </form>
-      </aside>
-
+<!-- <main class='row'> -->
+    <section id="summary" class='columns medium-5 small-12'>
       <section class='info'>
         <p>Summary goes here</p>
       </section>
