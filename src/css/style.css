@@ -18,6 +18,10 @@ header {
   padding-right: 40px;
 }
 
+.current-sort-field {
+  background-color: blue;
+  color: white;
+}
 /*#status-messages {
   background-color: #dfdfdf;
   display: none;

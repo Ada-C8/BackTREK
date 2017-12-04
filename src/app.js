@@ -20,6 +20,7 @@ const $resFormBtn = $('#res-form-btn');
 const $resForm = $('#reservation-form');
 const $queryValue = $('#query-value');
 const $statusMessages = $('#status-messages')
+const $sort = $('.sort');
 
 //templates
 let tripTemplate;
@@ -119,6 +120,9 @@ const events = {
         }
       }
     });
+
+    $('.current-sort-field').removeClass('current-sort-field');
+    $(this).addClass('current-sort-field');
   },
   filterTrips(event) {
 
@@ -162,35 +166,10 @@ const events = {
 $(document).ready( () => {
   tripTemplate = _.template($('#trip-template').html());
 
-  // Clears modal(s) when user clicks outside the box
-  // Not a great user experience -- should be changed so that it goes back to the filled in modal (or even better warns user as they are typing)
-
-  // $(document).on('click', function() {
-  //   const modal = document.getElementById('res-modal');
-  //   const modal2 = document.getElementById('new-trip-modal');
-  //   const modal3 = document.getElementById('status-messages-modal');
-  //
-  //   if (event.target == modal || event.target == modal2 || event.target == modal3) {
-  //     (event.target).style.display = 'none';
-  //     modal3.style.display = 'none';
-  //   }
-  // });
-
   $(document).on('click', events.clearModals)
 
-  // function() {
-  //   const modal = document.getElementById('res-modal');
-  //   const modal2 = document.getElementById('new-trip-modal');
-  //   const modal3 = document.getElementById('status-messages-modal');
-  //
-  //   if (event.target == modal || event.target == modal2 || event.target == modal3) {
-  //     (event.target).style.display = 'none';
-  //     modal3.style.display = 'none';
-  //   }
-  // });
-
   // User Events
-  $('.sort').click(events.sortTrips);
+  $sort.click(events.sortTrips);
 
   $tripsList.on('click', 'tr', function getTrip() {
     const trip = new Trip({ id: $(this).attr('data-id') })
