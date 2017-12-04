@@ -5,18 +5,17 @@ const Trip = Backbone.Model.extend({
   parse: function(response) {
     return response;
   },
-  // defaults: {
-  //   cost: 5000,
-  // },
   initialize: function(attributes) {
-    console.log(`In initialize for the trip ${this.get('name')}`);
+    console.log('Attributes from initialize function:');
+    console.log(attributes);
+    console.log(`In initialize for the trip ${attributes.name}`);
   },
   validate: function(attributes) {
     console.log('in the Trip validate function');
+    console.log(attributes); //UNDEFINED
+    //CAUSES ERROR- CANNOT READ PROPERTY OF 'NAME' OF UNDEFINED: console.log(attributes.name);
     const errors = {};
 
-    //TODO: Refactor the below to be a loop that loops through attributes and outputs all needed errors.
-    //TODO: Figure out how to display these erros in the form as opposed to up top (like in the wireframe)
     if (!attributes.name) {
       errors['name'] = ["Trip name cannot be blank"];
     }
@@ -37,10 +36,11 @@ const Trip = Backbone.Model.extend({
     if (CONTINENTS.includes(attributes.continent)) {
       console.log('valid continent');
     } else {
-      // errors['continent'] = ["Continent must be: Africa, Antartica, Asia, Australasia, Europe, North America or South America"];
+      console.log('invalid continent');
+      errors['continent'] = ["Continent must be: Africa, Antartica, Asia, Australasia, Europe, North America or South America"];
     }
 
-    console.log(errors);
+    console.log(`errors: ${errors.keys}`);
     if ( Object.keys(errors).length > 0 ) {
       return errors;
     } else {

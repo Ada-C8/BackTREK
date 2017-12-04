@@ -78,13 +78,14 @@ const events = {
     const trip = new Trip(tripData);
 
     if (trip.isValid()) {
+      console.log("Trip is valid");
       trip.save({}, {
         success: events.successfullTripSave,
         error: events.failedTripSave,
       });
     } else {
-      console.log('NOT VALID')
-      events.failedTripSave(trip, {errors: trip.validate() });
+      console.log('NOT VALID');
+      events.failedTripSave(trip, {errors: trip.isValid() });
     }
 
     console.log('finished')
@@ -101,9 +102,9 @@ const events = {
     $('#status-messages').show();
   },
   failedTripSave(trip, response) {
-    console.log('failedSave');
-    //console.log(trip);
-    //console.log(response);
+    console.log('failedTripSave');
+    console.log(trip);
+    console.log(response);
     $('#status-messages ul').empty();
     $('#status-messages ul').append(`<li>${trip.get('name')} WAS NOT added!</li>`);
     console.log(response.responseJSON);
@@ -223,11 +224,63 @@ const submitReservation = function submitReservation() {
   });
 };
 
+//MODAL
+
+const modalAddTrip = function() {
+  const modal = $('#add-a-trip-form-container');
+  const openModal = $('#add-new-trip');
+  const closeModal = $('#close');
+  openModal.onclick = function() {
+  modal.style.display = "block";
+  };
+  closeModal.onclick = function() {
+    modal.style.display = "none";
+  };
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  };
+}
+// function openDialog(selector) {
+//   $(selector)
+//     .clone()
+//     .show()
+//     .appendTo('#overlay')
+//     .parent()
+//     .fadeIn('fast');
+// }
+
+// function closeDialog(selector) {
+//   $(selector)
+//     .parents('#overlay')
+//     .fadeOut('fast', function() {
+//       $(this)
+//         .find(".dialog")
+//         .remove();
+//       });
+// }
+
+  // window.onload = function onloadFunction() {
+  //       //setup edit person dialog
+  //       console.log('In onloadFunction');
+  //    $('#add-a-trip-form-container').dialog({
+  //            autoOpen: false,
+  //            draggable: true,
+  //            title: "Did This Work?",
+  //            open: function(type, data) {
+  //                $(this).parent().appendTo("#add-trip-form");
+  //            }
+  //        });
+  //    }
+
 $(document).ready( () => {
   $('#reservation-form-container').hide();
   $('#add-a-trip-form-container').hide();
   $('#trips-table-container').hide();
   $('#add-new-trip').hide();
+
+  modalAddTrip();
 
   $('#load-trips').on('click', function(){
     console.log('clicked load');
@@ -251,12 +304,32 @@ $(document).ready( () => {
 
   //show form to Add a Trip
   $('#add-new-trip').on('click', function() {
+    // openDialog('#add-a-trip-form-container');
     $('#add-a-trip-form-container').show();
+    // $('.dialog').dialog();
+    //     return false;
   });
+
+  // $('#add-a-trip-form-container')
+  //   .find('.ok, .cancel')
+  //   .live('click', function() {
+  //     closeDialog(this);
+  //   })
+  //   .end()
+  //   .find('.ok')
+  //   .live('click', function() {
+  //     console.log('Clicked Submit!')
+  //   })
+  //   .end()
+  //   .find('cancel')
+  //   .live('click', function() {
+  //     console.log('Clicked Cancel')
+  // });
 
   //submit form to Add a Trip
   //creates a new instance of the Trip model
-  $('#add-a-trip-form-container').on('submit','#add-trip-form', events.addTrip);
+  //$('#add-a-trip-form-container').on('submit','#add-trip-form', events.addTrip);
+  $('#add-trip-form').on('submit', events.addTrip);
   //tripsTemplate = _.template($('#trips-template').html());
     //THIS WAY DOESN"T WORK- it just performs the submit, rather than waits to hear if a submit event is happening
     //$('#add-trip-form').submit(events.addTrip);

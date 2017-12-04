@@ -1,5 +1,32 @@
 
-/* Your styles go here! */
+#add-a-trip-form-container {
+  display: none;
+  position: absolute;
+  margin: 100px auto;
+  width: 60%;
+  height: 100%;
+  padding: 40px;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.8);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border: 1px solid black;
+  -mox-border-radius: 10px;
+  z-index: 1;
+}
+
+#submit-new-trip-button {
+  margin: 10px;
+}
+
+.new-trip-title {
+  color: white;
+}
+
+
+/* STATUS MESSAGE STYLING */
 #status-messages {
   background-color: #dfdfdf;
 
