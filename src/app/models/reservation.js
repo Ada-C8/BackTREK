@@ -2,11 +2,12 @@ import Backbone from 'backbone';
 
 const Reservation = Backbone.Model.extend({
 
-  initialize: function(attributes) {
-  },
-
   url: function(attributes) {
     return `https://ada-backtrek-api.herokuapp.com/trips/${this.attributes.id}/reservations`
+  },
+  
+  parse(response) {
+    return response
   },
 
   validate: function(attributes) {

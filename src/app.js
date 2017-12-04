@@ -167,9 +167,7 @@ $(document).ready( () => {
 
   $('#add-trip-form').submit(events.addTrip);
 
-  // $reservationTripForm.submit( function submit(event) {
-  // const resData = {};
-  // event.preventDefault();
+  $('#reservation-trip-form').submit(events.addReservation);
 
   $('.sort').click(events.sortTrips);
   tripList.on('sort', render, tripList);
