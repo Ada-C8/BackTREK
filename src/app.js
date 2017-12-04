@@ -91,3 +91,36 @@ const addTripHandler = function(event) {
     },
   });
 };
+
+const readResFormData = function readResFormData(){
+  const tripData = {};
+  TRIP_FIELDS.forEach((field) => {
+    const inputElement = $(`#add-trip-form input[name="${ field }"]`);
+    const value = inputElement.val();
+
+    if (value != '') {
+      tripData[field] = value;
+    }
+
+  });
+  console.log("Read trip data");
+  console.log(tripData);
+
+  return tripData;
+};
+
+const render = function render(tripList) {
+  const tripTableElement = $('#trip-list');
+
+  tripTableElement.html('');
+
+  tripList.forEach((trip) => {
+    const generatedHTML = $(tripTemplate(trip.attributes));
+    generatedHTML.on('click', (event) => {
+      renderDetails(trip);
+    });
+    tripTableElement.append(generatedHTML);
+  });
+  $('th.sort').removeClass('current-sort-field');
+  $(`th.sort.${ tripList.comparator }`).addClass('current-sort-field');
+};
