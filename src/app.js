@@ -9,7 +9,7 @@ import './css/style.css';
 // Models and collections.
 import Trip from './app/models/trip';
 import TripList from './app/collections/trip_list';
-// import Reservation from './app/models/reservation';
+import Reservation from './app/models/reservation';
 
 // DOM Selectors.
 const $tripsList = $('#trips-list')
@@ -104,16 +104,13 @@ const events = {
       reserveData[field] = $(`input[name=${field}]` ,$reservationTripForm).val();
       });
 
-    // reservationFields.forEach((field) =>{
-    //   reserveData[field] = $(`input[name=${field}]`).val();
-    // });
-
     console.log('Your reservation has been added!');
     console.log(reserveData);
 
     const reservation = new Reservation(reserveData);
 
     reservationList.add(reservation);
+    console.log(reservationList);
     reservation.save({
       success: events.successfulSave,
       error: events.failedSave
