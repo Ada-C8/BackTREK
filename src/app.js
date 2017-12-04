@@ -41,18 +41,13 @@ const events = {
     const trip = new Trip(tripData);
 
     if (trip.isValid()){
-      console.log("THIS TRIP IS BEING CHECKED FOR VALIDITY")
       trip.save({}, {
         success: events.successfulSave,
         error: events.failedSave,
       });
-
     } else {
-      console.log("What's on trip is invalid on the client side")
-      console.log(trip.validationError)
-
       for (let key in trip.validationError) {
-        $('#status-messages ul').append(`<li>Error returned by client-side validations! ${key} ${trip.validationError[key]}</li>`);
+        $('#status-messages ul').append(`<li>${key}:  ${trip.validationError[key]}</li>`);
         $('#status-messages').show();
       }
     }
@@ -82,6 +77,7 @@ const events = {
 $(document).ready( () => {
   $('#newTripForm').hide();
   $('#bookingForm').hide();
+  $('#status-messages').hide();
   $('#all-trips').hide();
   tripList.on('update', render, tripList);
   tripList.fetch();
