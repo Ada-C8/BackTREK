@@ -57,23 +57,13 @@ const makeReservation = function makeReservation(bookTripID, reservationFormData
 const readAddTripForm = function readAddTripForm() {
   const addTripData = {};
   //select field
-
   TRIP_FIELDS.forEach( (field) => {
     const inputElement = $(`add-trip-form input[name="${ field }"]`);
     //get field value
     addTripData[field] = inputElement.val();
-
   });
   return addTripData;
 }; // read form function
-
-// const addTrip = function addTrip(addTripFormData) {
-//   let addTripURL = 'https://ada-backtrek-api.herokuapp.com/trips';
-//   console.log(addTripURL);
-//   $.post(addTripURL, addTripFormData);
-//   console.log("Trip Added");
-// }
-
 
 
 const clearForm = function clearForm() {
@@ -108,14 +98,18 @@ $(document).ready( () => {
 
   // add a new trip
 
+
+
   $('#add-trip-form').on('submit', (event) => {
     event.preventDefault();
+
     console.log("You're adding a trip");
 
-    const addTripFormData =  readAddTripForm();
-    const trip = tripList.add(addTripFormData)
-    trip.save();
-    clearForm();
+    const newTrip = new Trip(readAddTripForm);
+    // const addTripFormData = readAddTripForm();
+    tripList.add(newTrip);
+    newTrip.save();
+    // clearForm();
   });
 
   // make reservations
