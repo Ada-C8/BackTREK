@@ -1,2 +1,67 @@
 
 /* Your styles go here! */
+.button, .status-messages {
+  border-radius: 5px;
+}
+
+.trip:hover {
+  background: #ccc;
+  cursor: pointer;
+}
+
+.right{
+  float: right;
+}
+
+.left{
+  float: left;
+}
+
+#create-trip-btn{
+  margin: 40px;
+}
+
+header{
+  background: steelblue;
+}
+
+.site-title{
+  margin: 30px;
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#status-messages {
+  display: none;
+}
+
+/* Sort CSS */
+th.sort {
+  cursor: pointer;
+}
+
+.current-sort-field {
+  background-color: darkgrey;
+  color: white;
+}
+
+.success{
+  background-color: rgb(140, 234, 189);
+}
+
+.errors{
+  background-color: pink;
+}

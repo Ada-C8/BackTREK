@@ -2,19 +2,149 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>My JavaScript App</title>
+  <title>BackTREK</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-  <header>
-
+  <header class="panel clearfix">
+    <h1 class="left site-title">BackTREK</h1>
+    <a href="#create-trip-modal" rel="modal:open" class="button right" id="create-trip-btn">Create Trip</a>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
   </header>
   <main>
+    <!-- MODAL -->
+    <!-- Modal HTML embedded directly into document -->
+    <div id="create-trip-modal" class="modal">
+      <!-- ERROR MESSAGES -->
+      <section id="modal-status-messages" class="status-messages"></section>
 
+      <form id="create-trip-form">
+        <label for="name">Name:</label>
+        <input type="text" class="input" name="name" placeholder="Name">
+        <label for="continent">Continent:</label>
+        <input type="text" class="input" name="continent" placeholder="ex. Asia">
+        <label for="about">About:</label>
+        <input type="text" class="input" name="about" placeholder="ex. This place is really fun!">
+        <label for="category">Category:</label>
+        <input type="text" class="input" name="category" placeholder="ex. exploration">
+        <label for="weeks">Weeks:</label>
+        <input type="number" class="input" name="weeks">
+        <label for="cost">Cost:</label>
+        <input type="number" class="input" name="cost">
+        <input type="submit" value="Create Trip" class="button"></input>
+      </form>
+      <a href="#" rel="modal:close">Close</a>
+    </div>
+
+    <section class="row">
+
+      <!-- ALL TRIPS SECTION -->
+      <section class="large-6 small-12 columns">
+        <!-- ERROR MESSAGES WITHOUT MODAL -->
+        <section id="page-status-messages" class="status-messages"></section>
+
+        <!-- SORTING AND FILTERING SECTION -->
+        <section>
+          <form id="filter-form" class="row">
+            <label for="trip-fields" class="large-6 small-12 columns">
+              Field:
+              <select id="trip-fields">
+                <option value="name">Trip Name</option>
+                <option value="continent">Continent</option>
+                <option value="category">Category</option>
+                <option value="weeks">Weeks</option>
+                <option value="cost">Cost</option>
+              </select>
+            </label>
+
+            <label for="trip-query" class="large-6 small-12 columns">
+              Query:
+              <input id="trip-query" type="text" placeholder="Type query here!">
+            </label>
+          </form>
+        </section>
+
+        <h1>View All Trips</h1>
+        <table>
+          <thead>
+            <!-- <th>ID</th> -->
+            <th class="sort name">Name</th>
+            <th class="sort continent">Continent</th>
+            <th class="sort category">Category</th>
+            <th class="sort weeks">Weeks</th>
+            <th class="sort cost">Cost</th>
+          </thead>
+          <tbody id="trip-list">
+          </tbody>
+        </table>
+      </section>
+
+      <!-- TRIP DETAILS SECTION -->
+      <section class="large-5 small-12 columns" id="trip-details">
+      </section>
+
+    </section>
   </main>
   <footer>
 
   </footer>
+
+  <!-- TEMPLATES -->
   <script src="app.bundle.js" type="text/javascript"></script>
+  <script type="text/template" id="all-trips-template">
+    <tr class="trip" data-id="<%- id %>">
+      <!-- <td><%- id %></td> -->
+      <td class="show-details"><%- name %></td>
+      <td><%- continent %></td>
+      <td><%- category %></td>
+      <td><%- weeks %></td>
+      <td><%- cost %></td>
+    </tr>
+  </script>
+
+  <script type="text/template" id="trip-details-template">
+    <section class="large-12 columns">
+      <h1>Details:</h1>
+      <h2><%- name %></h2>
+      <p>Continent: <%- continent %></p>
+      <p>Category: <%- category %></p>
+      <p>Number of Weeks: <%- weeks %></p>
+      <p>Cost: $<%- cost %></p>
+      <p><%- about %></p>
+    </section>
+
+    <section class="large-12 columns">
+      <section id="reservation-status-messages" class="status-messages"></section>
+
+      <h2>Make a Reservation:</h2>
+      <form id="create-reservation-form" data-id="<%- id %>">
+        <label for="name">Name:</label>
+        <input type="text" name="name" placeholder="Name">
+        <label for="age">Age:</label>
+        <input type="number" name="age">
+        <label for="email">E-mail:</label>
+        <input type="text" name="email">
+        <input type="submit" value="Make A Reservation" class="button"></input>
+      </form>
+    </section>
+  </script>
+
+  <script type="text/template" id="status-message-template">
+      <section class="large-10 large-centered small-12 columns <%- trip.status %>">
+        <h2 class="status-title"><%- trip.status.toUpperCase() %></h2>
+        <ul>
+          <% Object.keys(trip).forEach((attribute) => { %>
+            <% if (attribute != 'status' && trip[attribute].length > 0) { %>
+            <li>
+              <% if (attribute != 'message') { %>
+              <%- attribute %> :
+              <% } %>
+               <%- trip[attribute] %>
+            </li>
+            <% } %>
+          <% }); %>
+        </ul>
+      </section>
+  </script>
 </body>
 </html>
