@@ -57,23 +57,36 @@
         <h2>Create your own Adventure!</h2>
         <form id="add-trip-form" method="post">
           <label for="name">Name of Trip</label>
-          <input type="text" name="name"></input>
+          <input type="text" id="name" name="name"></input>
 
           <label for="continent">Continent</label>
-          <!-- <input type="text" name="continent"></input> -->
-          <select continent="select">
+          <input type="text" id="continent" name="continent"></input>
+
+          <!-- <select continent="select">
+          <option></option>
           <option value="Asia">Asia</option>
           <option value="Africa">Africa</option>
-          </select>
+          <option value="Australasia">Australasia</option>
+          <option value="North America">North America</option>
+          <option value="South America">South America</option>
+          </select> -->
 
-          <label for="Category">Category</label>
-          <input type="text" name="category"></input>
+          <label for="category">Category</label>
+          <input type="text" id="category" name="category"></input>
+          <!-- <select category="select">
+            <option value="adventure">Adventure</option>
+            <option value="culture">Culture</option>
+            <option value="entertainment">Entertainment</option>
+            <option value="everything">Everything</option>
+            <option value="historical">Historical</option>
+            <option value="nature">Nature</option>
+          </select> -->
 
           <label for="weeks">Number of Weeks</label>
-          <input type="integer" name="weeks"></input>
+          <input type="integer" id="weeks" name="weeks"></input>
 
           <label for="cost">Cost</label>
-          <input type="float" name="cost"></input>
+          <input type="float" id="cost" name="cost"></input>
 
           <input type="submit" value="Add a Trip" class="button"></input>
         </form>

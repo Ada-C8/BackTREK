@@ -172,6 +172,7 @@ $(document).ready( () => {
 
   const allTrips = $('#load-trips');
   allTrips.on('click', () => {
+
     tripList.fetch();
     $('#all-trips').show();
   })
