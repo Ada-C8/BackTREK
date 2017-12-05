@@ -1,2 +1,38 @@
 
-/* Your styles go here! */
+.hero-section {
+  background: url('https://i.pinimg.com/originals/df/d0/00/dfd0000f193a9aa0864277462c6b063e.jpg') 50% no-repeat;
+  background-size: cover;
+  height: 300px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+th.sort {
+  cursor: pointer;
+}
+
+.current-sort-field {
+  background-color: darkgrey;
+  color: white;
+}
+
+.success {
+  background-color: #ade9ff;
+  font-size: 1.2em;
+}
+
+.error {
+  background-color: #fcc4d0;
+  font-size: 1.2em;
+}
+
+li {
+  list-style-type: none;
+  width: 100%;
+}
+
+#status-messages {
+  margin: 0%;
+}

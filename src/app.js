@@ -20,8 +20,7 @@ const TRIP_FIELDS = ['name', 'continent', 'about', 'category', 'weeks', 'cost'];
 const RESERVATION_FIELDS = ['name', 'trip_id', 'email' ];
 
 const render = function render(tripList) {
-  // iterate through the bookList, generate HTML
-  // for each model and attatch it to the DOM
+  $('.clear').hide();
   const tripTableElement = $('#trip-list');
   tripTableElement.html('');
 
@@ -30,30 +29,21 @@ const render = function render(tripList) {
     tripTableElement.append(generatedHTML);
     $(`#trip${trip.attributes.id}`).on('click', (event) => {
       let tripDetails = new Trip({id: `${trip.attributes.id}`});
-      // console.log(tripDetails.url());
-      // tripDetails.on('update', renderDetails);
       tripDetails.fetch({
         success: renderDetails
       });
-      // console.log(tripDetails);
-
-
-      // renderDetails(tripDetails);
     });
-
+    $('th.sort').removeClass('current-sort-field');
+    $(`th.sort.${ tripList.comparator }`).addClass('current-sort-field');
   });
 };
 
 const renderDetails = function renderDetails(tripDetails){
-  // tripDetails= new Trip()
   const $detailsElement = $('#oneTrip');
   console.log('found detailsElement?', $detailsElement)
   $detailsElement.html('');
 
-  // const generatedHTML = $(detailsTemplate(tripDetails.attributes));
   const generatedHTML = detailsTemplate(tripDetails.attributes);
-  // console.log(generatedHTML);
-  // console.log(tripDetails.attributes);
   $detailsElement.append(generatedHTML);
 
   $('#goReservationForm').on('click', function(event) {
@@ -62,8 +52,7 @@ const renderDetails = function renderDetails(tripDetails){
 };
 
 const renderReservationForm = function renderReservationForm(event, tripDetails){
-  // console.log('In renderReservationForm');
-  // console.log(tripDetails.attributes);
+  $('#goReservationForm').hide();
   const tripId = tripDetails.attributes.id
   const $spaceReservationForm = $('#spaceReservationForm');
   $spaceReservationForm.html('');
@@ -74,7 +63,6 @@ const renderReservationForm = function renderReservationForm(event, tripDetails)
   event.preventDefault();
   $('#submitForm').on('click', reserveTripHandler);
 };
-
 
 const  reserveTripHandler = function reserveTripHandler(event){
   event.preventDefault();
@@ -105,7 +93,6 @@ const  reserveTripHandler = function reserveTripHandler(event){
 });
 };
 
-
 const addTripHandler = function(event) {
   event.preventDefault();
 
@@ -118,40 +105,20 @@ const addTripHandler = function(event) {
 
     inputElement.val('');
   });
-
-
-  // const tripEnterUser = tripList.new(tripData);
   const tripEnterUser =  new Trip(tripData);
-  // The first argument to .save is the attributes to save.
-  // If we leave it blank, it will save all the attributes!
-  // (Think of model.update in Rails, where it updates the
-  // model and saves to the DB in one step). We need the second
-  // argument for callbacks, so we pass in {} for the first.
+
   tripEnterUser.save({}, {
     success: (model, response) => {
       console.log('Successfully saved trip!');
       reportStatus('success', 'Successfully saved trip!');
-      // tripList.add(model);
     },
     error: (model, response) => {
       const errors = response.responseJSON["errors"];
       for (let field in errors) {
         for (let problem of errors[field]) {
           reportStatus('error', `${field}: ${problem}`);
-
-
-
-
         }
       }
-      // Since these errors come from a Rails server, the strucutre of our
-      // error handling looks very similar to what we did in Rails.
-      // const errors = response.responseJSON["errors"];
-      // for (let field in errors) {
-      //   for (let problem of errors[field]) {
-      //     reportStatus('error', `${field}: ${problem}`);
-      //   }
-      // }
     },
   });
 };
@@ -163,6 +130,7 @@ let reservationTemplate;
 
 // Clear status messages
 const clearStatus = function clearStatus() {
+  $('.clear').hide();
   $('#status-messages ul').html('');
   $('#status-messages').hide();
 };
@@ -170,27 +138,20 @@ const clearStatus = function clearStatus() {
 // Add a new status message
 const reportStatus = function reportStatus(status, message) {
   console.log(`Reporting ${ status } status: ${ message }`);
+  $('.clear').show();
 
-  // Should probably use an Underscore template here.
   const statusHTML = `<li class="${ status }">${ message }</li>`;
-  // const close = `<button class="clear float-right">
-  //   close
-  // </button>`;
-  // note the symetry with clearStatus()
-  // $('#status-messages').append(close);
+
   $('#status-messages ul').append(statusHTML);
   $('#status-messages').show();
 };
 
 $(document).ready( () => {
-  // When fetch gets back from the API call, it will add books
-  // to the list and then trigger an 'update' event
+
   tripTemplate = _.template($('#trip-template').html());
   detailsTemplate = _.template($('#details-template').html());
   reservationTemplate = _.template($('#reservationFormTemplate').html());
-  // console.log(`About to fetch data from ${ tripDetails.url() }`);
 
-  // detailsTemplate = _.template($('#details-template').html());
   tripList.on('update', render);
 
   tripList.fetch();
@@ -208,19 +169,6 @@ $(document).ready( () => {
     });
   });
 
-
   $('#status-messages').on('click', clearStatus);
 
-
-
-
-
-
-
-
-
-
-
-  // tripDetails.fetch();
-  // tripDetails.on()
 });
