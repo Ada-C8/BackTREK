@@ -16,16 +16,15 @@
     </nav>
   </header>
   <main class="clearfix">
+
     <section id="status-messages">
       <button class="clear float-right">Close</button>
-
       <ul>
-
       </ul>
     </section>
 
 
-    <section class="row">
+    <section class="row-column">
       <div id="individual-trip" class="small-12 medium-6 large 3">
         <!-- Where the template stuff goes! -->
         <p id="trip-details">
@@ -46,6 +45,13 @@
       </aside>
     </section>
 
+
+    <!-- <select name="select"> Supplement an id here instead of using 'name'-->
+  <!-- <option value="value1">Value 1</option>
+  <option value="value2" selected>Value 2</option>
+  <option value="value3">Value 3</option> -->
+<!-- </select> --> -->
+
     <section id="add-trip">
       <aside class="columns large-4 small-12">
         <h2>Create your own Adventure!</h2>
@@ -54,7 +60,11 @@
           <input type="text" name="name"></input>
 
           <label for="continent">Continent</label>
-          <input type="text" name="continent"></input>
+          <!-- <input type="text" name="continent"></input> -->
+          <select continent="select">
+          <option value="Asia">Asia</option>
+          <option value="Africa">Africa</option>
+          </select>
 
           <label for="Category">Category</label>
           <input type="text" name="category"></input>
@@ -71,7 +81,7 @@
     </section>
 
     <section class="row">
-      <section id="all-trips" class="small-12 medium-6 large-12">
+      <section id="all-trips" class="small-12 medium-6 large-6">
         <table>
           <thead>
             <th class="sort name">Name</th>
@@ -128,7 +138,7 @@
     <h4 class="reservation button" data-id="<%- id %>"> Make a Reservation!</h4>
   </script>
 
-  <script type="text/template" id="status-message-template">
+  <script id="status-message-template" type="text/template" >
     <li class="<%- status %>">
       <%- message %>
     </li>

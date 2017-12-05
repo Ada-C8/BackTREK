@@ -17,6 +17,7 @@ const RES_FIELDS = ['name', 'email'];
 
 let allTripsTemplate;
 let showDetailsTemplate;
+let statusMessageTemplate;
 
 // Render Methods
 
@@ -36,6 +37,8 @@ const renderAll = function renderAll(tripList) {
     }
   }); // for each
 }; // renderAll function
+
+// error messages
 
 const reportStatus = function(status, message) {
   console.log(`Reporting ${ status } message: ${ message } `);
@@ -101,12 +104,13 @@ $(document).ready( () => {
 
   allTripsTemplate = _.template($('#all-trips-template').html() );
   showDetailsTemplate = _.template($('#show-details-template').html() );
-  statusMessageTemplate = _.template($('#status-message-template').html());
+  statusMessageTemplate = _.template($('#status-message-template').html() );
 
   $('#individual-trip').hide();
   $('#all-trips').hide();
   $('#reserve-trip').hide();
   $('#add-trip').hide();
+  $('#status-messages').hide();
 
   const tripList = new TripList();
 
@@ -126,12 +130,14 @@ $(document).ready( () => {
   $('#add-trip-form').on('submit', (event) => {
     event.preventDefault();
 
+    $('#individual-trip').hide();
     const newTrip = new Trip(readAddTripForm);
     tripList.add(newTrip);
     newTrip.save({}, {
       success: clearForm,
-      error: tripsApiErrorHnadler
+      error: tripsApiErrorHandler
     });
+    $('#status-messages').show
   });
 
   // make reservations

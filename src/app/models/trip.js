@@ -5,7 +5,22 @@ import Backbone from 'backbone';
 const Trip = Backbone.Model.extend({
 
 
-  urlRoot: 'https://ada-backtrek-api.herokuapp.com/trips/'
+  urlRoot: 'https://ada-backtrek-api.herokuapp.com/trips/',
+
+  // validate: function(attributes) {
+  //   const errors = {};
+  //   const CONTINENTS = ['Asia', 'Africa', 'Australasia', 'Europe', 'South America', 'North America']
+  //   if (!attributes.name) {
+  //     errors['name'] = ['Trip must have a name.'];
+  //   } //end name attribute
+  //
+  //   if (!attributes.continent) {
+  //     errors[]
+  //   }
+  // } //end validate
+
+
+
 
 
 
