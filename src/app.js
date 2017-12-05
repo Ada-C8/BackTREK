@@ -39,6 +39,7 @@ const renderDetails = function renderDetails(trip){
 };
 
 // Add a new status message
+// Need to make this method work for front and back end validation or need different ones.
 const reportStatus = function reportStatus(status, field, problem) {
   console.log('in reportStatus function');
   console.log(`Reporting ${ status } status: ${ field } problem: ${problem}`);
@@ -77,16 +78,18 @@ const addTripHandler = function(event) {
   trip.save({}, {
     success: (model, response) => {
       console.log('Successfully saved Trip!');
+      console.log('passed server side validation');
       $('#myModal').hide();
       $(`#add-trip-form input`).val('');
       reportStatus('success', 'Successfully saved trip!');
     },
     error: (model, response) => {
       console.log('Failed to save book! Server response:');
+      console.log('Failed server side validation');
+
       console.log(response);
 
-      // Server-side validations failed, so remove this bad
-      // book from the list
+      // Server-side validations failed, so remove this bad trip from the list
       tripList.remove(model);
       console.log(response.responseJSON["errors"]);
       handleValidationFailures(response.responseJSON["errors"]);

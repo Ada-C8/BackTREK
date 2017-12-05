@@ -3,12 +3,12 @@ import Backbone from 'backbone';
 const Trip = Backbone.Model.extend({
 
   validate(attributes) {
-    const CONTINENTS = ['africa', 'antartica', 'asia', 'australasia', 'europe', 'north america', 'south america']
+    // const CONTINENTS = ['africa', 'antartica', 'asia', 'australasia', 'europe', 'north america', 'south america']
 
     const errors = {};
 
     if (!attributes.name) {
-      errors.title = ['cannot be blank'];
+      errors.name = ['cannot be blank!'];
     }
 
     // if (!CONTINENTS.includes(attributes.continent.toLowerCase())){
