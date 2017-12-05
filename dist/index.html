@@ -3,18 +3,107 @@
 <head>
   <meta charset="utf-8">
   <title>My JavaScript App</title>
+  <script src="app.bundle.js" type="text/javascript"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
   <header>
-
+    <button id="trips_button" class="button"> Get trips! </button>
+    <h1>BackTrek</h1>
   </header>
   <main>
 
+    <section id="status-messages">
+      <ul>
+      </ul>
+    </section>
+
+    <section id="load_trips" class="columns large-8 small-12">
+      <h2></h2>
+
+      <table id="trips-all">
+        <thead>
+          <th class="sort name">Trip Name</th>
+          <th class="sort continent">Destination</th>
+          <th class="sort category">Category</th>
+          <th class="sort weeks">Trip Duration</th>
+          <th class="sort cost">Cost</th>
+        </thead>
+
+        <tbody id="trip-list">
+        </tbody>
+      </table>
+    </section>
+
+    <aside id="single-trip" class="columns large-4 small-12">
+      <h3></h3>
+    </aside>
+
+    <aside class="columns large-4 small-12">
+      <h2> Add a Trip</h2>
+      <form id="add-trip-form">
+        <label for="name">Name</label>
+        <input type="text" name="name"></input>
+
+        <label for="continent">Continent</label>
+        <input type="text" name="continent"></input>
+
+        <label for="category">Category</label>
+        <input type="text" name="category"></input>
+
+        <label for="weeks">Number of Weeks</label>
+        <input type="number" name="weeks"></input>
+
+        <label for="cost">Cost</label>
+        <input type="number" name="cost"></input>
+
+        <input type="submit" value="Add trip" class="button"></input>
+      </form>
+    </aside>
+
   </main>
+
+
   <footer>
 
   </footer>
-  <script src="app.bundle.js" type="text/javascript"></script>
-</body>
+
+    <script id="trip-template" type="text/template">
+      <tr class="trip" trip-id=<%- id %> >
+        <td>
+          <%- name %>
+        </td>
+        <td>
+          <%- continent %>
+        </td>
+        <td>
+          <%- category %>
+        </td>
+        <td>
+          <%- weeks %> week(s)
+        </td>
+        <td>
+          $<%- cost %>
+        </td>
+    </script>
+
+    <script id="show-template" type="text/template">
+      <h2> Details for <%- name %> </h2>
+      <p>
+        Category: <%- category %>
+      </p>
+      <p>
+        Continent: <%- continent %>
+      </p>
+      <p>
+        Description: <%- about %>
+      </p>
+      <p>
+        Duration: <%- weeks %> week(s)
+      </p>
+      <p>
+        Cost: $<%- cost %>
+      </p>
+    </script>
+  </body>
 </html>

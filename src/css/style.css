@@ -1,2 +1,12 @@
 
 /* Your styles go here! */
+#trips_button {
+  float: right;
+  margin-top: 2%;
+  margin-right: 5%;
+}
+
+header {
+  background-color: magenta;
+  max-width: 100%;
+}
