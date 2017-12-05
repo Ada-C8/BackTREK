@@ -2,19 +2,108 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>My JavaScript App</title>
+  <title>Aventura</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 </head>
 <body>
-  <header>
-
+  <header class="row">
+    <h1 class="column small-12 large-10">Camino de Aventura</h1>
+    <button id="newTripBtn" class="button column small-12 large-2">Add a new trip!</button>
   </header>
-  <main>
+  <main class="row">
+    <section class="column small-12 large-4">
+      <article id="trip-description">
+      </article>
+    </section>
+    <section>
+      <form id="filter-form">
+        <select class="column small-6 large-3" id="trip-query" name="field">
+          <option value="name">Name</option>
+          <option value="category">Category</option>
+          <option value="continent">Continent</option>
+          <option value="weeks">Weeks</option>
+          <option value="cost">Cost</option>
+        </select>
+        <div class="column small-6 large-5">
+          <input  id="query-value" type="text" name="filter-req"></input>
+        </div>
+      </form>
+      <table class="column small-12 large-8" summary="Trips that are available through Trek. You can search or sort by priority including category, continent, length of the trip in weeks, or the cost">
+        <thead>
+          <th class="sort name">Name</th>
+          <th class="sort category">Category</th>
+          <th class="sort continent">Continent</th>
+          <th class="sort weeks">Weeks</th>
+          <th class="sort cost">Cost</th>
+        </thead>
+        <tbody id="trips-list">
+        </tbody>
+      </table>
+    </section>
+    <section id="status-messages-modal">
+      <div class="text-center" id="status-messages">
+      </div>
+    </section>
+    <section id="new-trip-modal">
+      <form id="add-trip-form">
+        <h2>Add a New Trip</h2>
+        <label for="title">Name</label>
+        <input type="text" name="name"></input>
+        <label for="category">Category</label>
+        <input type="text" name="category"></input>
+        <label for="continent">Continent</label>
+        <select name="continent">
+          <option value="Africa">Africa</option>
+          <option value="Antartica">Antartica</option>
+          <option value="Asia">Asia</option>
+          <option value="Australasia">Australasia</option>
+          <option value="Europe">Europe</option>
+          <option value="North America">North America</option>
+          <option value="South America">South America</option>
+        </select>
 
+        <label for="weeks">Weeks</label>
+        <input type="number" name="weeks" min="0"></input>
+        <label for="cost">Cost</label>
+        <input type="number" name="cost" min="0"></input>
+        <label for="about">About</label>
+        <input type="text" name="about"></input>
+        <input type="submit" value="Submit Trip!" class="button"></input>
+      </form>
+    </section>
+    <section id="res-modal">
+      <form class="form" id="reservation-form">
+        <label>Name</label>
+        <input type="text" name="res-name" id="res-name" />
+        <label>Age</label>
+        <input type="number" name="res-age" id="res-age"/>
+        <label>Email</label>
+        <input type="email" name="res-email" id="res-email"/>
+        <input id="submit-res" type="submit" value="Make Reservation!" class="button" />
+      </form>
+    </section>
   </main>
   <footer>
-
   </footer>
+  <script type = "text/template" id="trip-template">
+    <tr class="trip" data-id="<%- id %>">
+      <td><%- name %></td>
+      <td><%- category %></td>
+      <td><%- continent %></td>
+      <td><%- weeks %></td>
+      <td><%- parseFloat(cost).toFixed(2) %></td>
+    </tr>
+  </script>
+  <script type = "text/template" id="trip-details-template">
+    <h3><%- name %></h3>
+    <p>Cateogy: <%- category %></p>
+    <p>Continent: <%- continent %></p>
+    <p>Length: <%- weeks %> weeks</p>
+    <p>Cost: $<%- parseFloat(cost).toFixed(2) %></p>
+    <p class="text-justify"><%- about %></p>
+    <button class="button" id="res-form-btn" data-id="<%- id %>">Reserve a spot on this trip!</button>
+  </script>
   <script src="app.bundle.js" type="text/javascript"></script>
 </body>
 </html>
