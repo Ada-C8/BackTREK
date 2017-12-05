@@ -15,7 +15,21 @@ h1 {
 }
 
 table, th, td {
-    border: 1px solid black;
+  border: 1px solid black;
+}
+
+table{
+  table-layout: fixed;
+  width: 100%;
+  white-space: nowrap;
+}
+
+td{
+  max-width: 200px;
+  white-space: nowrap;
+  word-wrap:break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 #status-messages ul {
