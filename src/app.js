@@ -30,8 +30,8 @@ const render = function render(tripList) {
   tripListElement.empty();
 
   tripList.forEach((trip) => {
-    console.log(trip);
-    // console.log(`Rendering trip ${trip.get('name')}`);
+    // console.log(trip);
+    console.log(`Rendering trip ${trip.get('name')}`);
 
     // STILL A PROBLEM. SHOULD THIS BE HERE.
     // if (!trip.attributes.id) {
@@ -39,6 +39,7 @@ const render = function render(tripList) {
     //   trip.attributes.id = parseInt(stringId);
     // }
 
+    console.log(trip.attributes.id);
     const tripHTML = tripTemplate(trip.attributes);
     tripListElement.append($(tripHTML));
   });
@@ -115,29 +116,45 @@ const events = {
   addTrip(event) {
     event.preventDefault();
     const tripData = {};
+    // original
+    // fields.forEach((field) => {
+    //   tripData[field] = $(`input[name=${field}]`).val();
+    // });
+
     fields.forEach((field) => {
-      tripData[field] = $(`input[name=${field}]`).val();
+      const val = $(`input[name=${field}]`).val();
+
+      if (val != '') {
+        tripData[field] = val;
+      }
     });
 
-    console.log('trip added');
-    console.log(tripData);
-
     const trip = new Trip(tripData);
-    tripList.add(trip);
-    trip.save({}, {
-      success: events.successfulSave,
-      error: events.failedSave
-    })
+    trip.collection = tripList;
+    // console.log('trip added');
+    // console.log(tripData);
+    if (trip.isValid()) {
+      // tripList.add(trip);
+      trip.save({}, {
+        success: events.successfulSave,
+        error: events.failedSave
+      })
+    } else {
+      $('#status-messages ul').append(`<li> ${trip.validationError['name'][0]}</li>`);
+      $('#status-messages').show();
+    }
     this.reset();
   },
 
   successfulSave(trip, response) {
+
     console.log('success!');
     console.log(trip);
     console.log(response);
     $('#status-messages ul').empty();
     $('#status-messages ul').append(`<li>${trip.get('name')} added!</li>`);
     $('#status-messages').show();
+    tripList.fetch();
   },
   failedSave(trip, response) {
     console.log('ERROR');
