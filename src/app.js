@@ -54,18 +54,31 @@ const makeReservation = function makeReservation(bookTripID, reservationFormData
   console.log("Posted!");
 }
 
-const addTrip = function addTrip(addTripFormData) {
-  let addTripURL = 'https://ada-backtrek-api.herokuapp.com/trips';
-  console.log(addTripUrl);
-  $.post(addTripURL, addTripFormData);
-  console.log("Trip Added");
-}
+const readAddTripForm = function readAddTripForm() {
+  const addTripData = {};
+  //select field
+
+  TRIP_FIELDS.forEach( (field) => {
+    const inputElement = $(`add-trip-form input[name="${ field }"]`);
+    //get field value
+    addTripData[field] = inputElement.val();
+
+  });
+  return addTripData;
+}; // read form function
+
+// const addTrip = function addTrip(addTripFormData) {
+//   let addTripURL = 'https://ada-backtrek-api.herokuapp.com/trips';
+//   console.log(addTripURL);
+//   $.post(addTripURL, addTripFormData);
+//   console.log("Trip Added");
+// }
 
 
 
 const clearForm = function clearForm() {
-  $('#reservation-form input[name]').val('');
-}
+  $('#add-trip-form input[name]').val('');
+};
 
 
 // Document Ready
@@ -86,13 +99,24 @@ $(document).ready( () => {
 
   //Events
 
+  // show add trip form
+
+  $('#create-trip').on('click', function() {
+    console.log("You clicked to see the add trip form");
+    $('#add-trip').show();
+  });
+
   // add a new trip
 
   $('#add-trip-form').on('submit', (event) => {
-    let addTripFormData = $('#add-trip-form').serialize();
-    console.log(addTripFormData);
-    addTrip()
-  })
+    event.preventDefault();
+    console.log("You're adding a trip");
+
+    const addTripFormData =  readAddTripForm();
+    const trip = tripList.add(addTripFormData)
+    trip.save();
+    clearForm();
+  });
 
   // make reservations
 
@@ -102,7 +126,7 @@ $(document).ready( () => {
     let reservationFormData =
      $('#reservation-form').serialize();
      console.log(reservationFormData);
-    makeReservation(addTripFormData);
+    makeReservation(reservationFormData);
   }) //end book trip
 
   // show trip reservation form
@@ -114,6 +138,7 @@ $(document).ready( () => {
     // add the current trip id to the form
     $('#reserve-trip').show();
   })
+
 
   //  show trip details
   $('#trips-list').on('click', '.trips', (event) => {
