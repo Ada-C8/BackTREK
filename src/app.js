@@ -20,6 +20,8 @@ console.log(tripList);
 let tripTemplate;
 let showTemplate;
 
+let filteredList;
+
 const reservationFields = ['name', 'age', 'email'];
 const newTripFields = ['name', 'continent', 'about', 'category', 'weeks', 'cost']
 
@@ -75,7 +77,7 @@ const events = {
     $showTrip.show();
     const trip = new Trip({id: id});
     const resForm = `<h2>Reserve Your Spot</h2>
-    <form id="reserve-trip-form" " action="https://trektravel.herokuapp.com/trips/${id}/reservations" method="post">
+    <form id="reserve-trip-form" " action="https://trektravel.herokuapp.com/trips/${id}/reservations" method="post" onsubmit="return validateForm()">
     <label for="name">Name</label>
     <input type="text" name="name"></input>
 
@@ -87,6 +89,14 @@ const events = {
 
     <input id="submitResButton" type="submit" value="Reserve it!" class="button"></input>
     </form>`
+
+    function validateForm() {
+        var x = document.forms["reserve-trip-form"]["name"].value;
+        if (x == "") {
+            alert("Name must be filled out");
+            return false;
+        }
+    }
 
     trip.fetch({}).done(() => {
       $showTrip.append(resForm);
@@ -146,8 +156,23 @@ const events = {
     // Get the class list of the selected element
     const classes = $(this).attr('class').split(/\s+/);
     classes.forEach((className) => {
-      if (newTripFields.includes(className)) {
+      if (filteredList) {
+         console.log("IN FILTERED CONDITIONAL")
+        if (newTripFields.includes(className)) {
+          console.log(filteredList.comparator);
+          if (className === filteredList.comparator) {
+            filteredList.models.reverse();
+            renderFiltered(filteredList);
+          } else {
+            filteredList.comparator = className;
+            console.log(filteredList);
+            filteredList.sort();
+            renderFiltered(filteredList);
+          }
+        }
+      } else if (newTripFields.includes(className)) {
         if (className === tripList.comparator) {
+          console.log(tripList);
           tripList.models.reverse();
           tripList.trigger('sort', tripList);
         } else {
@@ -172,8 +197,9 @@ const events = {
   } else if (numericSearches.includes(searchCategory.toLowerCase())) {
     filteredTrips = tripList.filter(trip => trip.get(searchCategory.toLowerCase()) <= (searchTerm));
   }
-  const filteredList = new TripList(filteredTrips);
+  filteredList = new TripList(filteredTrips);
   renderFiltered(filteredList);
+
 },
 };
 
@@ -199,8 +225,6 @@ $(document).ready( () => {
 
   $('.sort').click(events.sortTrips);
   tripList.on('sort', render, tripList);
-
   $('#searchBar').on('change keyup', renderFiltered, events.filterTrips)
-  // tripList.on('filterTrips', render, tripList);
 
 });
