@@ -10,7 +10,7 @@
 
 h1 h2 {
   text-align: center;
-  border: 2px solid red;
+  /*border: 2px solid red;*/
 }
 
 h3 {
@@ -33,7 +33,7 @@ nav {
 }
 
 #all-trips {
-  border: 2px solid green;
+  /*border: 2px solid green;*/
 }
 .trip-details {
   /*border: 2px solid blue;*/

@@ -15,7 +15,15 @@
       <button class="button" id="create-trip">Create Your Own Trip</button>
     </nav>
   </header>
-  <main>
+  <main class="clearfix">
+    <section id="status-messages">
+      <button class="clear float-right">Close</button>
+
+      <ul>
+
+      </ul>
+    </section>
+
 
     <section class="row">
       <div id="individual-trip" class="small-12 medium-6 large 3">
@@ -118,6 +126,12 @@
       <%- about %>
     </p>
     <h4 class="reservation button" data-id="<%- id %>"> Make a Reservation!</h4>
+  </script>
+
+  <script type="text/template" id="status-message-template">
+    <li class="<%- status %>">
+      <%- message %>
+    </li>
   </script>
 
 

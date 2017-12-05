@@ -37,6 +37,34 @@ const renderAll = function renderAll(tripList) {
   }); // for each
 }; // renderAll function
 
+const reportStatus = function(status, message) {
+  console.log(`Reporting ${ status } message: ${ message } `);
+  const generatedHTML = statusMessageTemplate({
+    status: status,
+    message: message,
+  });
+
+  $('#status-messsages ul').append(generatedHTML);
+  $('status-messages').show()
+}
+
+const tripsApiErrorHandler = function(model, response) {
+  model.destroy();
+
+  if (response.responseJSON['errors']) {
+    const errors = response.responseJSON['errors'];
+    for (const field in errors) {
+      for (const problem of errors[field]) {
+        reportStatus('error', ` ${ field }: ${ problem }`);
+      } // for problem
+    } // error
+
+  } else {
+   reportStatus('error', 'Could not save trip');
+   console.log('Error response from server:')
+   console.log(response);
+ } // end else
+} //handler
 
 const renderDetails = function renderDetails(id) {
   const tripDetails = $('#trip-details');
@@ -49,17 +77,13 @@ const renderDetails = function renderDetails(id) {
 
 const makeReservation = function makeReservation(bookTripID, reservationFormData) {
   let reserveURL = 'https://trektravel.herokuapp.com/trips/' + bookTripID + '/reservations';
-  console.log(reserveURL);
   $.post(reserveURL, reservationFormData);
-  console.log("Posted!");
 }
 
 const readAddTripForm = function readAddTripForm() {
   const addTripData = {};
-  //select field
   TRIP_FIELDS.forEach( (field) => {
     const inputElement = $(`add-trip-form input[name="${ field }"]`);
-    //get field value
     addTripData[field] = inputElement.val();
   });
   return addTripData;
@@ -77,6 +101,7 @@ $(document).ready( () => {
 
   allTripsTemplate = _.template($('#all-trips-template').html() );
   showDetailsTemplate = _.template($('#show-details-template').html() );
+  statusMessageTemplate = _.template($('#status-message-template').html());
 
   $('#individual-trip').hide();
   $('#all-trips').hide();
@@ -98,18 +123,15 @@ $(document).ready( () => {
 
   // add a new trip
 
-
-
   $('#add-trip-form').on('submit', (event) => {
     event.preventDefault();
 
-    console.log("You're adding a trip");
-
     const newTrip = new Trip(readAddTripForm);
-    // const addTripFormData = readAddTripForm();
     tripList.add(newTrip);
-    newTrip.save();
-    // clearForm();
+    newTrip.save({}, {
+      success: clearForm,
+      error: tripsApiErrorHnadler
+    });
   });
 
   // make reservations
@@ -119,7 +141,6 @@ $(document).ready( () => {
     const bookTripID = $(event.target).attr('data-id');
     let reservationFormData =
      $('#reservation-form').serialize();
-     console.log(reservationFormData);
     makeReservation(reservationFormData);
   }) //end book trip
 
@@ -129,7 +150,6 @@ $(document).ready( () => {
     console.log(this);
     const bookTripID = $(this).attr('data-id');
     $('#reservation-form').attr("data-id", bookTripID);
-    // add the current trip id to the form
     $('#reserve-trip').show();
   })
 
@@ -150,6 +170,12 @@ $(document).ready( () => {
     $('#all-trips').show();
   })
 
+  // Clear error messages
+  $('#status-messages button.clear').on('click', (event) => {
+    $('#status-messages ul').html('');
+    $('#status-messages').hide
+  })
+
   // Sort Fields
   TRIP_FIELDS.forEach((field) => {
     const headerElement = $(`.sort.${ field }`);
@@ -162,49 +188,4 @@ $(document).ready( () => {
     }); // click event handler
   }); // fields for each
 
-
-
-
-
-
-
 }); // end document ready
-
-
-
-const sampleHandler = (event) => {
-  console.log("this is just a test");
-  console.log(event);
-}
-
-
-
-// https://ada-backtrek-api.herokuapp.com/trips/1/reservations
-// let reserveTrip = function reserveTrip(id, formData) {
-//   reserveURL = (baseURL+'/'+ id + '/reservations');
-//   console.log(reserveURL);
-//   $.post(reserveURL, formData, (response) => {
-//     $('#makeReservation').html('<p> Reservation added! </p>');
-//     console.log(response);
-//     alert("Your Trip is Reserved!");
-//     $('#book-trip-form').hide();
-//     $('.trip-details').children().hide();
-//   })
-//   .fail(function(response){
-//     $('#fail').html('<p>Request was unsuccessful</p>')
-//   })
-//   .always(function(){
-//     console.log('always even if we have success or failure');
-//   });
-// };
-
-// const makeReservation = function makeReservation() {
-//   const resData = {};
-//   RES_FIELDS.forEach((field) => {
-//     const inputElement = $(`#reservation-form input[name="{ field }"]`);
-//     resData[field] = inputElement.val();
-//   });
-//
-//   return resData;
-//
-// };
