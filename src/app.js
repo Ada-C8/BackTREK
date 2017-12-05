@@ -40,13 +40,30 @@ const renderDetails = function renderDetails(trip){
 
 // Add a new status message
 // Need to make this method work for front and back end validation or need different ones.
+
+// const reportSuccess = function reportSuccess(status, message){
+//
+// };
+
 const reportStatus = function reportStatus(status, field, problem) {
   console.log('in reportStatus function');
-  console.log(`Reporting ${ status } status: ${ field } problem: ${problem}`);
-  const errorSpanElement = $(`#form-${field}`)
-  errorSpanElement.html('');
-  const generatedHTML = $(statusTemplate({'problem': problem }));
-  errorSpanElement.append(generatedHTML);
+  // fail status
+  if (status === 'error') {
+    console.log('error');
+    console.log(`Reporting ${ status } status: ${ field } problem: ${problem}`);
+    const errorSpanElement = $(`#form-${field}`)
+    errorSpanElement.html('');
+    const generatedHTML = $(statusTemplate({'problem': problem }));
+    errorSpanElement.append(generatedHTML);
+  } else {
+    // success status
+    console.log('success');
+    console.log(`Reporting ${ status } status: ${ field } `);
+    const messageHook = $('#success p')
+    messageHook.html('');
+    const generatedHTML = `${field}`
+    messageHook.append(generatedHTML);
+  }
 };
 
 const clearFormMessages = function clearFormMessages() {
