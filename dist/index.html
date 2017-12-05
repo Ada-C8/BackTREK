@@ -4,13 +4,81 @@
   <meta charset="utf-8">
   <title>My JavaScript App</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 </head>
 <body>
   <header>
-
+    <h1 class='columns small-6'>BackTREK</h1>
+    <span id='buttons' class='float-right'>
+      <a id='load-trips' class='button' href='#'>All Trips</a>
+      <a id='add-trip' class='button' href="#add-trip-modal" rel="modal:open">Add Trip</a>
+    </span>
   </header>
-  <main>
+  <main class='row clear'>
+    <section id="status-messages">
+      <button class="clear float-right">[x]</button>
+      <ul></ul>
+    </section>
 
+    <section>
+      <div id='filter-container' class='columns small-12'>
+        <form id='filter' class='columns small-5'>
+          <select id='filter-select' class='width35'>
+            <script type="text/template" id="filter-trips-template">
+              <option value='<%- item %>'><%- capitalized %></option>
+            </script>
+          </select>
+          <input type='text' id='filter-input' class='width55'/>
+        </form>
+      </div>
+      <table class='left-half'>
+        <thead class='table'>
+          <tr id='trip-headers'>
+            <script type="text/template" id="trip-headers-template">
+              <th class='sort <%- header %>'><a><%- header %></a><span class='sortorder'></span></th>
+            </script>
+          </tr>
+        </thead>
+        <tbody id='all-trips'>
+          <script type="text/template" id="all-trips-template">
+            <tr>
+              <td><a id=<%- id %> class='trip' href='#'><%- name %></a></td>
+              <td><%- category %></td>
+              <td><%- continent %></td>
+              <td><%- weeks %></td>
+              <td>$<%- cost.toFixed(2) %></td>
+            </tr>
+          </script>
+        </tbody>
+      </table>
+    </section>
+
+
+    <section id='show-trip' class='content right-half'>
+      <script type="text/template" id="show-trip-template">
+        <h3><%- name %></h3>
+        <a id='reserve' tripid=<%- id %> href='#'>Reserve</a>
+        <h5><%- weeks %> week<%- plural %></h5>
+        <h5>$<%- cost.toFixed(2) %></h5>
+        <p class='scrollable'><%- about %></p>
+      </script>
+    </section>
+    <section>
+      <h2 id='reserve-trip-header' class='content right-half'></h2>
+      <form id='reserve-trip-form' class='content right-half'>
+      </form>
+    </section>
+    <section class='modal' id='add-trip-modal'>
+      <h2 id='add-trip-header' class='content'></h2>
+      <form id='add-trip-form' class='content'>
+        <script type="text/template" id="form-template">
+          <section>
+            <label><%- field %><span id=<%- `label-${field}` %>></span></label>
+            <input type='text' id=<%- field %> name=<%- field %> />
+          </section>
+        </script>
+      </form>
+    </section>
   </main>
   <footer>
 

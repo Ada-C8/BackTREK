@@ -1,2 +1,96 @@
+/* general */
+body {
+  max-height: 99vh;
+}
 
-/* Your styles go here! */
+.row {
+  min-width: 100vw;
+}
+
+.float-left {
+  float: left;
+}
+
+.float-right {
+  float: right;
+}
+
+.clear {
+  clear: both;
+}
+
+thead {
+  display: table;
+  overflow-y: scroll;
+  table-layout: fixed;
+}
+
+tbody {
+  display: block;
+  height: 76vh;
+  overflow: auto;
+}
+
+tr {
+  display: table;
+  table-layout: fixed;
+  text-align: left;
+  width: 100%;
+}
+
+td, th {
+  overflow-x: hidden;
+}
+
+.scrollable {
+  max-height: 60vh;
+  overflow-y: scroll;
+}
+
+#status-messages {
+  background-color: #dfdfdf;
+  border-radius: 1rem;
+  display: none;
+  margin: 1rem;
+  padding: .8rem;
+}
+
+.input-error {
+  background-color: #ffbbb7;
+}
+
+.input-error:focus {
+  background-color: #ffbbb7;
+}
+
+/* filter form styling */
+.width35 {
+  display: inline-block;
+  width: 35%;
+}
+
+.width55 {
+  display: inline-block;
+  width: 55%;
+}
+
+/* table sorting styling */
+.current-sort-field {
+  background-color: darkgrey;
+  color: white;
+}
+
+th a {
+  color: inherit; /* blue colors for links too */
+  text-decoration: inherit; /* no underline */
+}
+
+.current-trip {
+  background-color: darkgrey;
+  color: white;
+}
+
+/* filter form */
+#filter {
+  display: none;
+}
