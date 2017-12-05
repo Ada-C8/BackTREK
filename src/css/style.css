@@ -1,2 +1,274 @@
+:root {
+--white: #fefefe;
+--transpwhite: rgba(254, 254, 254, 0.7);
+--dkwhite: #f0f0f0;
+--transpdkwhite: rgba(240, 240, 240, 0.7);
+--black: #333333;
+--transpblack: rgba(51, 51, 51, 0.5);
+--peach: #fec0aa;
+--ltblue: #98C1D9;
+--transpltblue: rgba(152, 193, 217, 0.7);
+--salmon: #EE6352;
+--indigo: #223843;
+--dkgrey: #6D696A;
+--grey: #E3E4E8;
+--transpgrey: rgba(227, 227, 232, 0.7);
+}
 
-/* Your styles go here! */
+body {
+  background-attachment: fixed;
+  background-color: var(--white);
+  background-image: url('../app/images/michal-parzuchowski-40545.jpg');
+  background-size: cover;
+  background-position: center center;
+}
+
+h1 {
+  /* website title */
+  color: var(--white);
+  display: inline-block;
+  font-family: 'Comfortaa', sans-serif;
+}
+
+h2 {
+  /* modal titles */
+  color: var(--indigo);
+  font-size: 2rem;
+  font-family: 'Comfortaa', sans-serif;
+}
+
+h3 {
+  /* loading message */
+  color: var(--transpwhite);
+  font-size: 3rem;
+  text-align: center;
+  font-family: 'Comfortaa', sans-serif;
+}
+
+h4 {
+  /* list headers */
+  color: var(--indigo);
+  display: inline-block;
+  font-family: 'Comfortaa', sans-serif;
+  margin: 0;
+  overflow: hidden;
+  padding: .5rem 0 0;
+}
+
+h6 {
+  /* list data */
+  color: var(--black);
+  display: inline-block;
+  overflow: hidden;
+}
+
+p, label {
+  color: var(--black);
+}
+
+ul {
+  list-style: none;
+}
+
+form {
+  overflow: auto;
+}
+
+.row {
+  max-width: 100%;
+}
+
+.button {
+  border-radius: 1rem;
+  background-color: var(--ltblue);
+  font-family: 'Comfortaa', sans-serif;
+}
+
+.button:hover {
+  background-color: var(--peach);
+}
+
+.has-errors {
+  color: tomato;
+  font-weight: bold;
+}
+
+p.error {
+  color: tomato;
+  display: inline;
+  font-style: italic;
+  font-weight: normal;
+  margin-left: 1rem;
+}
+
+p.success {
+  color: mediumseagreen;
+  font-style: italic;
+  font-weight: normal;
+  margin-left: 1rem;
+}
+
+/**********/
+/* HEADER */
+/**********/
+
+header {
+  overflow: auto;
+  padding: 1rem;
+}
+
+.add-trip {
+  border-radius: 50%;
+  float: right;
+  font-size: 2rem;
+  height: 3rem;
+  line-height: 3rem;
+  padding: 0;
+  width: 3rem;
+}
+
+.form-holder {
+  padding: 1rem .5rem 0 .5rem;
+}
+
+.form-holder input, .form-holder select {
+  border-radius: 1rem;
+}
+
+/* SEARCH */
+
+header form {
+  float: none !important;
+  margin: auto;
+  overflow: auto;
+}
+
+[type="submit"] {
+  width: 100%;
+}
+
+/*************/
+/* TRIP LIST */
+/*************/
+
+.intro-button {
+  align-items: center;
+  display: flex;
+  float: none;
+  font-size: 8vh;
+  height: 30vh;
+  justify-content: center;
+  margin: 1rem auto;
+}
+
+.trip-list ul {
+  margin: 0 auto;
+  width: 95%;
+}
+
+.trip-list li {
+  padding: 1rem 2rem;
+}
+
+.headers {
+  background-color: var(--transpgrey);
+  overflow: auto;
+}
+
+.trip-row {
+  background-color: var(--transpwhite);
+}
+
+.trip-row:nth-of-type(odd) {
+  background-color: var(--transpdkwhite);
+}
+
+.name-col {
+  width: 23%;
+}
+
+.cont-col {
+  text-align: center;
+  width: 20%;
+}
+
+.cat-col {
+  text-align: center;
+  width: 20%;
+}
+
+.weeks-col {
+  text-align: center;
+  width: 15%;
+}
+
+.cost-col {
+  text-align: right;
+  width: 15%;
+}
+
+.current-sort {
+  color: var(--salmon);
+  text-decoration: underline;
+}
+
+.empty-col {
+  color: var(--dkgrey);
+  display: block;
+  font-size: 1.25rem;
+  font-style: italic;
+  margin: auto;
+  text-align: center;
+}
+
+/* TRIP DISPLAY */
+
+.show h6 {
+  font-weight: bold;
+}
+
+.reserve-btn {
+  background-color: var(--indigo);
+  margin-bottom: 0;
+}
+
+.reserve-holder {
+  text-align: center;
+}
+
+/**********/
+/* MODALS */
+/**********/
+
+.modal-shadow {
+  background-color: var(--transpblack);
+  height: 100vh;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+
+.modal-body {
+  background-color: var(--white);
+  border-radius: 1rem;
+  box-shadow: 5px 5px 20px var(--black);
+  float: none;
+  margin: 10% auto;
+  padding: 2rem;
+}
+
+.close-btn {
+  border: 1px solid var(--grey);
+  border-radius: 5rem;
+  float: right;
+  font-weight: bold;
+  height: 2rem;
+  line-height: 1.75;
+  text-align: center;
+  width: 2rem;
+}
+
+a.close-btn {
+  color: var(--grey);
+}
