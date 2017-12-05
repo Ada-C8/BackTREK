@@ -1,20 +1,144 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>My JavaScript App</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body>
-  <header>
+  <head>
+    <meta charset="utf-8" />
+    <title>Trek</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="../src/css/style.css">
+  </head>
 
-  </header>
-  <main>
+  <body>
+    <header>
+      <div class="logo">Trek</div>
+      <div id="view-all-trips">View All Trips</div>
+      <div id="make-a-trip">Create a Trip</div>
+      <span id='status-messages'></span>
+    </header>
 
-  </main>
-  <footer>
+    <div id="all-trips">
+      <form id="filter-form">
+        <span>
+          <select id="filter-query" name="filter-query">
+            <option value="Name">Name</option>
+            <option value="Category">Category</option>
+            <option value="Continent">Continent</option>
+            <option value="Weeks">Weeks</option>
+            <option value="Cost">Cost</option>
+          </select>
+        </span>
+        <input type="text" id="myInput" placeholder="Search trips..">
+        <input type="submit" value="Find your trip!" class="button"></input>
+      </form>
 
-  </footer>
-  <script src="app.bundle.js" type="text/javascript"></script>
-</body>
+      <table id="trips-table">
+        <thead>
+          <th class="sort name">Title </th>
+          <th class="sort continent">Continent</th>
+          <th class="sort category">Category</th>
+          <th class="sort weeks">Weeks</th>
+          <th class="sort cost">Cost</th>
+        </thead>
+        <tbody id="trip-list">
+        </tbody>
+      </table>
+
+    </div>
+
+    <div id="the-modal">
+      <form id="new-trip-form">
+        <span class="close">&times;</span>
+        <span>
+          <label>Name<span class="errors-name"></span></label>
+          <input type="text" id="name" name="name"></input>
+        </span>
+        <span>
+          <label>Cost<span class="errors-cost"></span></label>
+          <input type="text" id="cost" name="cost"></input>
+        </span>
+        <span>
+          <label>Weeks<span class="errors-weeks"></span></label>
+          <input type="text" id="weeks" name="weeks"></input>
+        </span>
+        <span>
+          <label>Continent<span class="errors-continent"></span></label>
+          <select id="continent" name="continent">
+            <option value="Antartica">Antartica</option>
+            <option value="Africa">Africa</option>
+            <option value="Asia">Asia</option>
+            <option value="Australsia">Asia</option>
+            <option value="Europe">Austrailasia</option>
+            <option value="North America">North America</option>
+            <option value="South America">South America</option>
+          </select>
+        </span>
+        <span>
+          <label>About</label>
+          <input type="text" id="about" name="about"></input>
+        </span>
+        <span>
+          <label>Category<span class="errors-name"></span></label>
+          <input type="text" id="category" name="category"></input>
+        </span>
+        <span>
+          <input type="submit" value="Create your trip!" class="button"></input>
+        </span>
+      </form>
+    </div>
+
+    <section class="show">
+      <section id="trip-info">
+      </section>
+      <form class="reservation-form">
+        <span>
+          <label>Name</label>
+          <input type="text" id="name" name="name" required></input>
+        </span>
+        <span>
+          <label>Age</label>
+          <input type="text" id="age" name="age" required></input>
+        </span>
+        <span>
+          <label>Email</label>
+          <input type="text" id="email" name="email" required></input>
+        </span>
+        <span>
+          <input type="submit" value="Reserve your spot!" class="button"></input>
+        </span>
+      </form>
+    </section>
+
+    <script type="text/template" id="trip-template">
+      <tr id="trip-row" data-id=<%- id %> >
+        <td class="see-trip">
+          <%- name %>
+        </td>
+        <td>
+          <%- continent %>
+        </td>
+        <td>
+          <%- category %>
+        </td>
+        <td>
+          <%- weeks %>
+        </td>
+        <td>
+          <%- cost %>
+        </td>
+      </tr>
+    </script>
+
+    <script type="text/template" id="single-trip-template">
+      <span class="trip" data-id=<%- id %> >
+        <h3><%- name %></h3>
+        <h4><%- continent %></h4>
+        <h4>$<%- cost %></h4>
+        <h4><%- weeks %> Weeks</h4>
+        <br />
+      </span>
+
+      <p><%- about %></p>
+    </script>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="app.bundle.js" type="text/javascript"></script>
+  </body>
 </html>
