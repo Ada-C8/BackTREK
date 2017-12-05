@@ -6,8 +6,6 @@ import _ from 'underscore';
 import './css/foundation.css';
 import './css/style.css';
 
-console.log('it loaded!');
-
 // models and collections
 import Trip from './app/models/trip';
 // import Reservation from './app/models/reservation';
@@ -55,6 +53,8 @@ const makeReservation = function makeReservation(bookTripID, reservationFormData
   $.post(reserveURL, reservationFormData);
   console.log("Posted!");
 }
+
+const addTrip = function addTrip()
 
 // https://ada-backtrek-api.herokuapp.com/trips/1/reservations
 // let reserveTrip = function reserveTrip(id, formData) {
