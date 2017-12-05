@@ -1,20 +1,111 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <title>My JavaScript App</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body>
-  <header>
 
-  </header>
-  <main>
+    <head>
+      <meta charset="utf-8">
+      <title>Trekkin'</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
 
-  </main>
-  <footer>
+    <body>
 
-  </footer>
-  <script src="app.bundle.js" type="text/javascript"></script>
-</body>
+      <header>
+        <h1>Trekkin' - Go Global!</h1>
+
+        <section id="status-messages">
+          <ul>
+          </ul>
+        </section>
+      </header>
+
+      <aside class="columns large-6 small-12">
+        <section id="trip-description"></section>
+
+        <h3>Reserve a Trip!</h3>
+
+        <form id="reservation-trip-form" method="post">
+          <label for="name">Full Name</label>
+          <input type="text" name="name"></input>
+
+          <label for="email">E-Mail</label>
+          <input type="text" name="email"></input>
+
+          <label for="age">Age</label>
+          <input type="number" name="age"></input>
+
+          <input type="submit" value="Reserve Trip!" class="button"></input>
+        </form>
+
+        <h3>Add a Trip!</h3>
+
+        <form id="add-trip-form">
+          <label for="name">Trip Name</label>
+          <input type="text" name="name"></input>
+
+          <label for="category">Category</label>
+          <input type="text" name="category"></input>
+
+          <label for="continent">Continent</label>
+          <input type="text" name="continent"></input>
+
+          <label for="weeks">Weeks</label>
+          <input type="number" name="weeks"></input>
+
+          <label for="cost">Cost</label>
+          <input type="number" name="cost"></input>
+
+          <label for="about">About</label>
+          <input type="text" name="about"></input>
+
+          <input type="submit" value="Add Trip!" class="button"></input>
+        </form>
+
+      </aside>
+
+      <main class="row">
+        <section class="trips column large-4 small-12">
+          <table>
+            <thead>
+              <th class="sort name">Name</th>
+              <th class="sort id">Trip ID</th>
+              <th class="sort category">Category</th>
+              <th class="sort continent">Continent</th>
+              <th class="sort weeks">Weeks</th>
+              <th class="sort cost">Cost</th>
+            </thead>
+            <tbody id="trips-list"></tbody>
+          </table>
+        </section>
+
+      </main>
+
+      <footer>
+        &copy; 2017, Stef - Keeping it simple.
+      </footer>
+
+      <script type = "text/template" id="trip-template">
+        <tr class="trip" data-id="<%- id %>">
+          <td><%- name %></td>
+          <td><%- id %></td>
+          <td><%- category %></td>
+          <td><%- continent %></td>
+          <td><%- weeks %></td>
+          <td><%- cost %></td>
+        </tr>
+      </script>
+
+      <script type = "text/template" id="trip-details-template">
+        <h2><%- name %></h2>
+        <p><%- id %></p>
+        <p><%- category %></p>
+        <p><%- continent %></p>
+        <p><%- weeks %></p>
+        <p><%- cost %></p>
+        <p><%- about %></p>
+      </script>
+
+      <script src="app.bundle.js" type="text/javascript"></script>
+
+  </body>
+
 </html>
