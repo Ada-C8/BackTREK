@@ -12,6 +12,7 @@
     <h2>Choose Your Own Adventure</h2>
     <nav>
       <button class="button" id="load-trips">See All of Our Trips</button>
+      <button class="button" id="create-trip">Create Your Own Trip</button>
     </nav>
   </header>
   <main>
@@ -40,17 +41,26 @@
     <section id="add-trip">
       <aside class="columns large-4 small-12">
         <h2>Create your own Advenutre!</h2>
-        <form id="reservation-form" data-id="12">
-          <label for="name">Name</label>
+        <form id="add-trip-form">
+          <label for="name">Name of Trip</label>
           <input type="text" name="name"></input>
-          <label for="email">Email</label>
-          <input type="text" name="email"></input>
-          <input type="submit" value="Book Trip" class="button"></input>
+
+          <label for="continent">Continent</label>
+          <input type="text" name="continent"></input>
+
+          <label for="Category">About</label>
+          <input type="text" name="category"></input>
+
+          <label for="weeks">Number of Weeks</label>
+          <input type="integer" name="weeks"></input>
+
+          <label for="category">Cost</label>
+          <input type="float" name="cost"></input>
+
+          <input type="submit" value="Add a Trip" class="button"></input>
         </form>
       </aside>
     </section>
-
-
 
     <section class="row">
       <section id="all-trips" class="small-12 medium-6 large-12">
