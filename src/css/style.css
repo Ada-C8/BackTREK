@@ -1,2 +1,134 @@
 
 /* Your styles go here! */
+
+
+/* ==== HOME PAGE ==== */
+body.init {
+  background: linear-gradient(
+       rgba(0, 0, 0, 0.4),
+       rgba(0, 0, 0, 0.4)
+     ), url('./mts-cow.jpg');
+  /*background-image: url('./mts-cow.jpg');*/
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  height: 100vh;
+}
+
+body > div.init {
+  margin: 0 auto;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+button.start {
+  margin: 0;
+  text-align: center;
+  padding: 1.5rem 3.5rem;
+  font-size: 3rem;
+  font-weight: bold;
+  color: white;
+  background-color: transparent;
+  border: 2px solid white;
+  border-radius: 5px;
+  font-family: "Roboto", sans-serif;
+}
+
+button.start:hover {
+  background-color: rgba(255, 255, 255, .3)
+}
+
+header {
+  background: linear-gradient(
+       rgba(0, 0, 0, 0.4),
+       rgba(0, 0, 0, 0.4)
+     ), url('./mts-cow.jpg');
+  background-size: cover;
+  background-position: center;
+  /*text-align: center;*/
+  color: white;
+}
+
+/*div.wrapper-left {
+  margin-left: 15px;
+}*/
+
+#filter {
+  margin-right: 5px;
+}
+
+/* ==== FONTS ==== */
+h1 {
+  font-family: "Roboto", sans-serif;
+}
+
+h2, h3, h4, p, a, a[href], table td, table th, button {
+  font-family: "Kanit", sans-serif;
+}
+
+/* ==== TABLE ==== */
+/*th.weeks {
+  width: 100px;
+}*/
+/*th:nth-of-type(4), tr:nth-of-type(4) {
+  width: 100px
+}*/
+
+.all-trips {
+  overflow-x: scroll;
+}
+.all-trips table {
+  /*overflow: auto;*/
+}
+
+table {
+  overflow: auto;
+  overflow-y: scroll;
+  width: 100%;
+  table-layout: fixed;
+}
+
+@media screen and (min-width: 64em) {
+  table {
+    table-layout: fixed;
+    overflow: auto;
+    width: 100%;
+  }
+}
+
+input[type], select, textarea {
+  border-radius: 5px;
+}
+
+a[href] {
+  color: white;
+}
+
+#trip-list > tr:focus, #trip-list > tr:hover {
+  background-color: darkgrey;
+  cursor: pointer;
+}
+
+.current-sort-field {
+  background-color: darkgrey;
+  color: white;
+}
+
+.current-sort-field:hover {
+  cursor: pointer;
+}
+
+
+.error {
+  border: solid 2px red;
+}
+
+.error-message {
+  color: red;
+  text-align: right;
+}
+
+.success {
+  color: green;
+}
