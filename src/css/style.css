@@ -1,2 +1,60 @@
 
-/* Your styles go here! */
+@import url('https://fonts.googleapis.com/css?family=Abril+Fatface');
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+
+body {
+  margin: 30px ;
+  font-family: 'Raleway', sans-serif;
+}
+
+header h1 {
+text-align: center;
+font-family: 'Abril Fatface', cursive;
+}
+
+* {
+  transition: 7s all;
+}
+*:hover {
+  background-color: rgba(255, 0, 0, 0.15);
+  transform: rotate(1deg);
+  transition: 10s all;
+}
+
+
+header {
+  background-color: black;
+  color: white;
+  padding: 40px;
+}
+
+header h1, section .button {
+  margin-left: 20px;
+}
+
+#trip-list, #trip-list-headers {
+  margin-top: 20px;
+  background-color: white;
+  color: black ;
+  font-size: 20px;
+}
+
+
+#trip-list:hover {
+  background-color: yellow;
+  color: #42b0f4;
+  text-decoration: underline;
+}
+
+div #trip {
+  margin: 20px;
+}
+
+div p {
+  font-weight: bold;
+}
+
+/*
+#add-trip-form {
+  visibility: hidden;
+}*/
