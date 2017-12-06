@@ -1,2 +1,223 @@
+/*COLORS*/
+/*light-blue: #B8E2F7*/
+/*dark-blue: #236384*/
 
-/* Your styles go here! */
+
+/*GENERAL*/
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Berkshire Swash';
+}
+
+body {
+  font-family: 'Barlow', sans-serif;
+  font-size: 16px;
+
+  position: relative;
+  background: -webkit-linear-gradient(left top, #B8E2F7, #236384); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(bottom right, #B8E2F7, #236384); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(bottom right, #B8E2F7, #236384); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(to bottom right, #B8E2F7, #236384); /* Standard syntax */
+
+  background: url(../../images/backTrek.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+
+  min-height: 100%;
+}
+
+h1 {
+  font-family: 'Berkshire Swash';
+  font-size: 6rem;
+  padding-top: 8rem;
+}
+
+h2 {
+  font-family: 'Berkshire Swash';
+  font-size: 4rem;
+}
+
+#trips, #new-trip {
+  display: block;
+  margin: 1.5rem auto;
+}
+
+
+@-webkit-keyframes glowing {
+  0% { background-color: #D4F3FD; -webkit-box-shadow: 0 0 3px #D4F3FD; }
+  50% { background-color: #034A62  ; -webkit-box-shadow: 0 0 40px #034A62  ; }
+  100% { background-color: #D4F3FD; -webkit-box-shadow: 0 0 3px #D4F3FD; }
+}
+
+@-moz-keyframes glowing {
+  0% { background-color: #D4F3FD; -moz-box-shadow: 0 0 3px #D4F3FD; }
+  50% { background-color: #034A62  ; -moz-box-shadow: 0 0 40px #034A62  ; }
+  100% { background-color: #D4F3FD; -moz-box-shadow: 0 0 3px #D4F3FD; }
+}
+
+@-o-keyframes glowing {
+  0% { background-color: #D4F3FD; box-shadow: 0 0 3px #D4F3FD; }
+  50% { background-color: #034A62  ; box-shadow: 0 0 40px #034A62  ; }
+  100% { background-color: #D4F3FD; box-shadow: 0 0 3px #D4F3FD; }
+}
+
+@keyframes glowing {
+  0% { background-color: #D4F3FD; box-shadow: 0 0 3px #D4F3FD; }
+  50% { background-color: #034A62  ; box-shadow: 0 0 40px #034A62  ; }
+  100% { background-color: #D4F3FD; box-shadow: 0 0 3px #D4F3FD; }
+}
+
+.blue {
+  background: -webkit-linear-gradient(left top, #B8E2F7, #236384); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(bottom right, #B8E2F7, #236384); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(bottom right, #B8E2F7, #236384); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(to bottom right, #B8E2F7, #236384); /* Standard syntax */
+  text-shadow: 0 0 .8rem #075B69;
+  -webkit-animation: glowing 1500ms infinite;
+  -moz-animation: glowing 1500ms infinite;
+  -o-animation: glowing 1500ms infinite;
+  animation: glowing 1500ms infinite;
+}
+
+/*CLASSES*/
+.white-text {
+  font-family: 'Berkshire Swash';
+  color: #fff;
+  text-shadow: 0 0 .8rem #075B69;
+}
+
+.sort-field {
+  background: rgba(184,226,247,.8);
+  text-shadow: 0 0 .8rem #075B69;
+}
+
+#status-messages {
+  display: none;
+}
+
+/*NAV*/
+nav {
+  display: none;
+}
+
+/*TRIPS TABLE*/
+.trips {
+  overflow: scroll;
+  max-height: 700px;
+}
+
+.trips table {
+  border-collapse: separate;
+  border-spacing: 0 .4rem;
+  max-width: 100%;
+  table-layout: fixed;
+  word-wrap: normal;
+}
+
+.trips th {
+  text-align: center;
+}
+
+.trips table tr td, .trips table tr th {
+  padding: .8rem;
+  font-size: 1.2rem;
+}
+
+.trips table tbody {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.trips table td {
+  text-align: center;
+}
+
+.trips table tr:hover {
+  text-shadow: 0 0 1rem #075B69;
+  box-shadow: 0 0 1rem #075B69;
+  cursor: pointer;
+}
+
+/*TRIP SECTION*/
+.trip {
+  display: none;
+  /*max-height: 700px;*/
+}
+
+#trip, .trip article {
+
+  overflow: scroll;
+  background: rgba(255, 255, 255, 0.7);
+  margin: 0;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+#trip {
+  height: 369px;
+}
+
+.trip article {
+  height: 315px;
+}
+
+#trip li {
+  text-align: justify;
+  list-style-type: none;
+  margin: .5rem 0;
+}
+
+/*ADD TRIP SECTION*/
+#add-trip {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 30rem;
+  margin: auto;
+  height: 38rem;
+  box-shadow: 0 0 2rem #075B69;
+  background: #fff;
+  overflow: scroll;
+}
+
+#add-trip form {
+  padding: 0 1.2rem 1.2rem 1.2rem;
+}
+
+#add-trip h3 {
+  margin-top: 1.2rem;
+  margin-left: 1.2rem;
+}
+
+.wrapper {
+  min-height: 100%;
+  width: 100%;
+  /*#B8E2F7 --> (184,226,247)*/
+  /*#236384 --> (35,99,132)*/
+  background: -webkit-linear-gradient(left top, rgba(184,226,247,.8), rgba(35,99,132,.8)); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(bottom right, rgba(184,226,247,.8), rgba(35,99,132,.8)); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(bottom right, rgba(184,226,247,.8), rgba(35,99,132,.8)); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(to bottom right, rgba(184,226,247,.8), rgba(35,99,132,.8)); /* Standard syntax */
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: none;
+}
+
+#close {
+  position: relative;
+  height: 2rem;
+  width: 2rem;
+  padding: .3rem;
+  margin: 0;
+  float: right;
+}
+
+/*STATUS MESSAGES*/
+#status-messages {
+  padding-left: 1rem;
+}
