@@ -40,14 +40,18 @@ const tripList = new TripList();
 let tripTemplate;
 let aboutTemplate;
 
+      // $('#' + this.id).after('<tr><td colspan="5" id="trip-about">' + htmlString + '</td></tr>');
+      // console.log(htmlString);
+
+
+
 const loadTrip = function loadTrip(singleTrip) {
-  const aboutTableElement = $('#about');
   const thisTrip = singleTrip.fetch({
     success: (model) => {
-      console.log(model);
-      const generatedHTML = aboutTemplate(model.attributes)
-      aboutTableElement.html('')
-      aboutTableElement.append(generatedHTML);
+      const generatedHTML = aboutTemplate(model.attributes);
+      const htmlString = $('<div>').append(generatedHTML).html();
+      $(`#${singleTrip.attributes.id}`).after(`<tr class = "expanded ${singleTrip.attributes.id}"><td colspan="4" id="trip-about">` + htmlString + '</td></tr>')
+      $(`#${singleTrip.attributes.id}`).addClass('open')
       //why is this automatically submitting?
       $('#add-reservation-form').on('submit', addReservationHandler);
     }
@@ -67,9 +71,17 @@ const loadTrips = function loadTrips(tripList, filters) {
   listOfTrips.forEach((trip) => {
     const generatedHTML = $(tripTemplate(trip.attributes));
     generatedHTML.on('click', (event) => {
-      $('.trip').removeClass('selected-trip')
-      generatedHTML.addClass('selected-trip')
-      loadTrip(trip)
+
+      if($(`#${trip.id}`).hasClass('open')) {
+        $(`.expanded.${trip.id}`).remove(`.expanded.${trip.id}`);
+        $('.status').remove()
+        $('.trip').removeClass('open')
+      }
+      else {
+        $('.trip').removeClass('selected-trip')
+        generatedHTML.addClass('selected-trip')
+        loadTrip(trip);
+      }
     })
     tripTableElement.append(generatedHTML);
   });
@@ -292,16 +304,27 @@ const readFilterForm = function readFilterForm() {
 
 
 $(document).ready(() => {
+  $('main').addClass('hide')
   tripTemplate = _.template($('#trip-template').html());
   aboutTemplate = _.template($('#about-template').html());
   let filters = {}
 
-  tripList.on('update', loadTrips);
+  $('#show-trips').on('click', function() {
+    console.log('in slicke ievent');
+    $('main').removeClass('hide')
+    $('#top').animate({height: '25vw'})
+    loadTrips(tripList, filters)
+  });
+
+  // tripList.on('update', loadTrips);
+
   tripList.on('sort', function() {
+    console.log('in sort');
     loadTrips(tripList, filters)
   });
 
   $('#filter').on('keyup', function(event) {
+    console.log('in filter');
     filters[$('#filter option:selected')[0].innerHTML] = $('#filter input')[0].value;
     loadTrips(tripList, filters)
   })

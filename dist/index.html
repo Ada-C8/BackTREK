@@ -7,10 +7,14 @@
 </head>
 <body>
   <header>
-    <h1>Trek</h1>
+    <div id = "top">
+      <h1>BackTREK</h1>
+      <button type="button" name="button" class = "button" id = "show-trips">Show Trips</button>
+    </div>
   </header>
 
   <main>
+
     <div id = "filter-trip">
         <form id="filter" action="index.html" method="post">
           <select type="text" name="">
@@ -76,7 +80,7 @@
 
 
 
-    <section class="table columns large-6 small-12">
+    <section class="table columns">
       <h2>Trips!</h2>
 
       <table>
@@ -93,11 +97,6 @@
 
       </div>
     </section>
-
-
-    <div id = 'about' class = "columns large-6 small-12">
-
-    </div>
 
 
 
@@ -127,15 +126,15 @@
 
   <script type="text/template" id="about-template">
     <div class = "about" >
-      <p>
+      <tr>
         <%- about %>
-      </p>
+      </tr>
       <form id = "add-reservation-form">
         <label for="name">Name:</label>
         <input id="text" type="text" name="name" value=""></input>
         <label for="name">Email:</label>
         <input id="text" type="text" name="email" value=""></input>
-        <input type="hidden" value= "<%- id %>" name="tripId"> <input/>
+        <input type="hidden" value= "<%- id %>" name="tripId"> </input>
         <input class="button" id="submit" type="submit" name="submit" value="Reserve">
       </form>
       <div id = 'reservation-status'>

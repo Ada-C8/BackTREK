@@ -1,12 +1,26 @@
 
 /* Your styles go here! */
-.about {
-  position: fixed;
+
+#top {
+  background-image: url(https://media.nomadicmatt.com/travelnomoney002.jpg);
+  height: 75vw;
+  background-size: auto;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
-#status-messages {
-  /*height: 10vw;*/
+#top h1 {
+  color: white;
+  font-size: 16vw;
 }
+
+
+/*.about {
+  position: fixed;
+}*/
+
+/* *********************************** SORTING */
 
 
 .current-sort-field {
@@ -18,19 +32,15 @@ tr.trip.selected-trip {
   background-color: darkgrey;
   color: white;
 }
-#about {
+/*#about {
   position: relative;
 
-}
+}*/
 
-.about {
-  height: 35vw;
-  overflow-y: auto;
-}
 
-.about p {
 
-}
+
+/* *********************************** REPORTING */
 
 .failure {
   background-color: red;
