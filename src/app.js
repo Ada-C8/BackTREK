@@ -169,6 +169,7 @@ addTrip(event) {
   }
 },
 successfulSave(trip, response) {
+  $('#message').show();
   $('#message').html('<p> Trip Added! </p>')
   $('#message').delay(2000).hide(1);
   $.modal.close();
