@@ -17,6 +17,12 @@ const Reservation = Backbone.Model.extend({
       errors['email'] = ["Email cannot be blank"];
     }
 
+    if (attributes.email) {
+      if (!attributes.email.includes('@')) {
+        errors['email'] = ["Enter valid email"];
+      }
+    }
+
     if (Object.keys(errors).length > 0) {
       return errors;
     }
