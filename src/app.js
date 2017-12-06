@@ -200,10 +200,32 @@ $(document).ready(() => {
         $('th.sort').removeClass('.current-sort-field');
         $(`th.sort.${tripsList.compator}`).addClass('.current-sort-field');
 
+        ///////
+
+        // want to pass in collection.models -- want to pass in an array of models
+
+        let results = _.filter(tripsList.models, function(trip) {
+          // if (trip.get('continent') === 'Africa') {
+          //   return true;
+          // }
+
+          if (trip.get('weeks') <= parseInt('5')) {
+            return true;
+          }
+
+          return false;
+        });
+
+        renderTrips(results);
+
       });
     });
 
   });
+
+  // filtering
+
+  // var evens = _.filter([1, 2, 3, 4, 5, 6], function(num){ return num % 2 == 0; });
 
 
   // add trip
@@ -220,9 +242,12 @@ $(document).ready(() => {
   })
 });
 
+
+////
+
 // GAME PLAN
 // user needs to be given some sort of visual feedback that the data has been sorted
-  /// tried to add it but having some issues displaying -- need to work on it 
+  /// tried to add it but having some issues displaying -- need to work on it
 /// WAVE 3 ///////// optional
 // filtering --- the challenging piece of the project
 // 1. figure out the modal situation
