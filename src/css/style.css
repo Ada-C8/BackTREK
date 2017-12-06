@@ -1,2 +1,66 @@
 
 /* Your styles go here! */
+
+.title {
+  /*font-family: 'Erica One', cursive;*/
+  font-family: 'Vast Shadow', cursive;
+  text-align: center;
+  font-size: 5rem;
+}
+
+.top-buttons {
+  text-align: center;
+}
+
+ .button, table {
+  font-family: 'Poiret One', cursive;
+  text-align: center;
+/*font-family: 'Gruppo', cursive;*/
+}
+
+.trips-table th {
+  font-family: 'Poiret One', cursive;
+  background-color: grey;
+}
+
+.trip-details ul{
+  width: 100%;
+  font-family: 'Poiret One', cursive;
+}
+
+li{
+  font-family: 'Poiret One', cursive;
+  list-style: none;
+}
+
+li form {
+  display:block;
+  /*max-width: 400px;*/
+}
+
+.sort-field {
+  background-color: #2199e8;
+  color: white;
+}
+
+.sort-field:hover {
+  background-color: #1583cc;
+  color: white;
+}
+
+.hidden {
+  display: none;
+}
+
+.show {
+  display: inline;
+}
+
+
+footer {
+  padding-top: 5px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: white;
+}
