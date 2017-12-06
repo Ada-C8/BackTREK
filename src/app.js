@@ -11,18 +11,19 @@ import './css/style.css';
 
 import Trip from './app/models/trip';
 import TripList from './app/collections/trip_list';
+import Reservation from './app/models/reservation';
+
 
 console.log('it loaded!');
 
 const tripList = new TripList();
-console.log(tripList);
 
 let tripTemplate;
 let showTemplate;
 
 let filteredList;
 
-const reservationFields = ['name', 'age', 'email'];
+const reservationFields = ['person', 'age', 'email', 'trip_id'];
 const newTripFields = ['name', 'continent', 'about', 'category', 'weeks', 'cost']
 
 const render = function render(tripList) {
@@ -57,7 +58,6 @@ const updateStatusMessageFrom = (messageHash) => {
 const updateStatusMessageWith = (message) => {
   $('#status-messages ul').empty();
   $('#status-messages ul').append(`${message}</li>`);
-  console.log($('#status-messages ul'))
   $('#status-messages').show();
 }
 
@@ -77,27 +77,21 @@ const events = {
     $showTrip.show();
     const trip = new Trip({id: id});
     const resForm = `<h2>Reserve Your Spot</h2>
-    <form id="reserve-trip-form" " action="https://trektravel.herokuapp.com/trips/${id}/reservations" method="post" onsubmit="return validateForm()">
-    <label for="name">Name</label>
-    <input type="text" name="name"></input>
+    <form id="reserve-trip-form" "action="https://trektravel.herokuapp.com/trips/${trip.id}/reservations" method="post">
+
+    <label for="person">Name</label>
+    <input type="text" name="person" placeholder="Enter Name"></input>
 
     <label for="age">Age</label>
-    <input type="number" name="age"></input>
+    <input type="number" name="age" placeholder="Enter Age"></input>
 
     <label for="email">Email</label>
-    <input type="text" name="email"></input>
+    <input type="text" name="email" placeholder="Enter Email"></input>
+
+    <input type="hidden" value="${trip.id}" name="trip_id" />
 
     <input id="submitResButton" type="submit" value="Reserve it!" class="button"></input>
     </form>`
-
-    function validateForm() {
-        var x = document.forms["reserve-trip-form"]["name"].value;
-        if (x == "") {
-            alert("Name must be filled out");
-            return false;
-        }
-    }
-
     trip.fetch({}).done(() => {
       $showTrip.append(resForm);
       $showTrip.append(showTemplate(trip.attributes));
@@ -107,98 +101,126 @@ const events = {
   finalizeReservation(event) {
     event.preventDefault();
     const url = $(this).attr('action'); // Retrieve the action from the form
-    const formData = $(this).serialize();
-
-    $('#show_trip').hide();
-    $.post(url, formData, function(response) {
-      $('#message').empty();
-      $('#message').html('<p> Trip Reserved! </p>');
-      $('#message').delay(1000).hide(1);
-    }).fail(() => {
-      $('#message').empty();
-      $('#message').html('<p>Reserving Trip Failed</p>');
-      $('#message').delay(2000).hide(1);
-    });
-  },
-  addTrip(event) {
-    event.preventDefault();
-    const tripData = {};
-    newTripFields.forEach( (field) => {
+    const resData = {};
+    reservationFields.forEach( (field) => {
+      if (field === 'person') {
+        const val = $(`input[name='person']`).val();
+      }
       const val = $(`input[name=${field}]`).val();
       if (val !== '') {
-        tripData[field] = val;
+        resData[field] = val;
       }
     });
-    const trip = new Trip(tripData);
-    console.log(trip);
-    if (trip.isValid()) {
-      tripList.add(trip);
-      trip.save({}, {
-        success: events.successfulSave,
-        error: events.failedSave,
-      });
-    } else {
-      // getting here means there were client-side validation errors reported
-      updateStatusMessageFrom(trip.validationError);
+    resData['name'] = $(`input[name='person']`).val();
+    delete resData['person'];
+    const res = new Reservation(resData);
+    if (res.isValid()) {
+      res.save({}, {
+        success: events.succesfulResSave,
+        error: events.failedResSave,
+    });
+  } else {
+    // getting here means there were client-side validation errors reported
+    $('#message').empty();
+    let messageObj = res.validationError;
+    for(let messageType in messageObj) {
+      messageObj[messageType].forEach((message) => {
+        $('#message').append($(`<p>${message}</p>`));
+      })
     }
-  },
-  successfulSave(trip, response) {
-    $('#message').html('<p> Trip Added! </p>')
+    $('#message').show();
+    $('#message').addClass('errors');
     $('#message').delay(2000).hide(1);
-    $.modal.close();
-    $.modal.empty;
-  },
-  failedSave(trip, response) {
-    updateStatusMessageFrom(response.responseJSON.errors);
-    trip.destroy();
-  },
-  sortTrips(event) {
-    // Get the class list of the selected element
-    const classes = $(this).attr('class').split(/\s+/);
-    classes.forEach((className) => {
-      if (filteredList) {
-         console.log("IN FILTERED CONDITIONAL")
-        if (newTripFields.includes(className)) {
-          console.log(filteredList.comparator);
-          if (className === filteredList.comparator) {
-            filteredList.models.reverse();
-            renderFiltered(filteredList);
-          } else {
-            filteredList.comparator = className;
-            console.log(filteredList);
-            filteredList.sort();
-            renderFiltered(filteredList);
-          }
-        }
-      } else if (newTripFields.includes(className)) {
-        if (className === tripList.comparator) {
-          console.log(tripList);
-          tripList.models.reverse();
-          tripList.trigger('sort', tripList);
+    console.log("RESERVATION VALIDATION ERRORS!!")
+  }
+},
+succesfulResSave() {
+  $('#show_trip').hide();
+  $('#message').show();
+  $('#message').empty();
+  $('#message').removeClass('errors');
+  $('#message').html('<p> Trip Reserved! </p>');
+  $('#message').delay(1000).hide(1);
+},
+failedResSave() {
+  $('#message').empty();
+  $('#message').html('<p>Reserving Trip Failed</p>');
+  $('#message').delay(2000).hide(1);
+},
+addTrip(event) {
+  event.preventDefault();
+  const tripData = {};
+  newTripFields.forEach( (field) => {
+    const val = $(`input[name=${field}]`).val();
+    if (val !== '') {
+      tripData[field] = val;
+    }
+  });
+  const trip = new Trip(tripData);
+  if (trip.isValid()) {
+    tripList.add(trip);
+    trip.save({}, {
+      success: events.successfulSave,
+      error: events.failedSave,
+    });
+  } else {
+    // getting here means there were client-side validation errors reported
+    updateStatusMessageFrom(trip.validationError);
+  }
+},
+successfulSave(trip, response) {
+  $('#message').html('<p> Trip Added! </p>')
+  $('#message').delay(2000).hide(1);
+  $.modal.close();
+  $.modal.empty;
+},
+failedSave(trip, response) {
+  updateStatusMessageFrom(response.responseJSON.errors);
+  trip.destroy();
+},
+sortTrips(event) {
+  // Get the class list of the selected element
+  const classes = $(this).attr('class').split(/\s+/);
+  classes.forEach((className) => {
+    if (filteredList) {
+      if (newTripFields.includes(className)) {
+        if (className === filteredList.comparator) {
+          filteredList.models.reverse();
+          renderFiltered(filteredList);
         } else {
-          tripList.comparator = className;
-          tripList.sort();
+          filteredList.comparator = className;
+          filteredList.sort();
+          renderFiltered(filteredList);
         }
       }
-    });
-    $('.current-sort-field').removeClass('current-sort-field');
-    $(this).addClass('current-sort-field');
-  },
-  filterTrips(event) {
-    const e = document.getElementById('filterSelector');
-    const searchCategory = e.options[e.selectedIndex].text;
-    const searchTerm = document.getElementById('searchBar').value;
-    let filteredTrips = tripList;
-    const wordSearches = ['name', 'category', 'continent'];
-    const numericSearches = ['weeks', 'cost'];
-    if (wordSearches.includes(searchCategory.toLowerCase())) {
-      filteredTrips = tripList.filter(trip => trip.get(searchCategory.toLowerCase()).includes(searchTerm)
-    )
-  } else if (numericSearches.includes(searchCategory.toLowerCase())) {
-    filteredTrips = tripList.filter(trip => trip.get(searchCategory.toLowerCase()) <= (searchTerm));
-  }
-  filteredList = new TripList(filteredTrips);
-  renderFiltered(filteredList);
+    } else if (newTripFields.includes(className)) {
+      if (className === tripList.comparator) {
+        tripList.models.reverse();
+        tripList.trigger('sort', tripList);
+      } else {
+        tripList.comparator = className;
+        tripList.sort();
+      }
+    }
+  });
+  $('.current-sort-field').removeClass('current-sort-field');
+  $(this).addClass('current-sort-field');
+},
+filterTrips(event) {
+  const e = document.getElementById('filterSelector');
+  const searchCategory = e.options[e.selectedIndex].text;
+  const searchTerm = document.getElementById('searchBar').value;
+  let filteredTrips = tripList;
+  const wordSearches = ['name', 'category', 'continent'];
+  const numericSearches = ['weeks', 'cost'];
+  if (wordSearches.includes(searchCategory.toLowerCase())) {
+    filteredTrips = tripList.filter(trip => trip.get(searchCategory.toLowerCase()).includes(searchTerm)
+  )
+} else if (numericSearches.includes(searchCategory.toLowerCase())) {
+  filteredTrips = tripList.filter(trip => trip.get(searchCategory.toLowerCase()) <= (searchTerm));
+}
+filteredList = new TripList(filteredTrips);
+renderFiltered(filteredList);
 
 },
 };

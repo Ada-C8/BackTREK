@@ -56,3 +56,7 @@ td{
 #filterSelector {
   background-position: right -0.5rem center;
 }
+
+#message.errors {
+  color: red;
+}
