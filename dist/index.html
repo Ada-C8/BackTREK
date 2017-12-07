@@ -2,19 +2,183 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>My JavaScript App</title>
+  <title>BackTREK </title>
+  <!--[if lt IE 9]>
+  <script src = "http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" type="image/ico" href="/favicon.ico">
 </head>
 <body>
-  <header>
+  <div class="container-fluid body-wrapper">
+    <header class="row header">
+      <h1 class="col">BackTREK</h1>
+    </header>
 
-  </header>
-  <main>
+    <main class="row clearfix main">
+      <!-- <section id="status" class="col-12">
+        <div class="button-wrapper row">
+          <i class="fa fa-close fa-lg"></i>
+        </div>
+        <ul class="msg-list row">
+          <li>error or something</li>
+        </ul>
+      </section> -->
 
-  </main>
-  <footer>
+      <section class="col-12 main-content">
+        <div class="row content-wrapper">
+          <section class="col-sm-12 col-md-6 all-trips">
+            <div class="row search-wrapper">
+              <form class="col-sm-12 form-inline" action="">
+                <i class="col-sm-1 col-md-1 fa fa-search fa-lg"></i>
+                <div class="col-sm-11 col-md-4 form-group">
+                  <select class="form-control" id="search-select">
+                    <option name="name">Name</option>
+                    <option name="continent">Place</option>
+                    <option name="weeks">Weeks</option>
+                  </select>
+                </div>
+                <div class="col-sm-12 col-md-5 form-group">
+                  <input type="text" name="search-query" id="search-query">
+                </div>
+                <button type="submit" class="col-sm-12 col-md-2 btn btn-warning">Submit</button>
+              </form>
+            </div>
+            <div class="row table-wrapper">
+              <table id="trip-table" class="col-sm-12">
+                <thead>
+                  <tr>
+                    <th class="sort name">Name</th>
+                    <th class="sort continent">Place</th>
+                    <th class="sort weeks">Weeks</th>
+                  </tr>
+                </thead>
 
-  </footer>
+                <tbody id="trip-list"></tbody>
+
+              </table>
+            </div>
+          </section>
+
+          <section class="col-sm-12 col-md-6 trip-deets">
+            <div class="row justify-content-end">
+              <div class="col-12 add-wrapper">
+                <button id="add-trip" class="btn btn-warning" data-toggle="modal" data-target="#addTripModal">Add Trip</button>
+              </div>
+              <div class="modal fade" id="addTripModal" tabindex="-1" role="dialog" aria-labelledby="addTripModal" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Add Trip</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <form id="add-trip-form" action="">
+                        <div class="form-group">
+                          <label for="name">Name</label>
+                          <input type="text" name="name"></input>
+                        </div>
+                        <div class="form-group">
+                          <label for="category">Category</label>
+                          <input type="text" name="category"></input>
+                        </div>
+                        <div class="form-group">
+                          <label for="continent">Continent</label>
+                          <select class="form-control" name="continent">
+                            <option name="Africa">Africa</option>
+                            <option name="Asia">Asia</option>
+                            <option name="Australasia">Australasia</option>
+                            <option name="Europe">Europe</option>
+                            <option name="North America">North America</option>
+                            <option name="South America">South America</option>
+                          </select>
+                        </div>
+                        <div class="form-group">
+                          <label for="budget">Budget</label>
+                          <input type="number" name="budget"></input>
+                        </div>
+                        <div class="form-group">
+                          <label for="weeks">Number of Weeks</label>
+                          <input type="number" name="weeks"></input>
+                        </div>
+                        <div class="form-group">
+                          <label for="about">Description</label>
+                          <textarea name="about"></textarea>
+                        </div>
+                        <div>
+                          <button type="submit" class="btn btn-primary">Submit</button>
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        </div>
+                      </form>
+                    </div>
+                    <!-- <div class="modal-footer">
+
+                    </div> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="trip-details" class="row details-wrap">
+            </div>
+
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <footer class="row justify-content-center align-content-center footer">
+      <p class="col align-self-center copyright">Copyright &copy; 2017 Kee Nam <i class="fa fa-birthday-cake"></i></p>
+    </footer>
+  </div>
+
+
+
+
+
+  <script type="text/template" id="trip-template">
+    <tr class="trip-item">
+      <td id="trip<%- id %>">
+        <a class="trip-title" data-id="<%- id %>"><%- name %></a>
+      </td>
+      <td>
+        <%- continent %>
+      </td>
+      <td>
+        <%- weeks %>
+      </td>
+    </tr>
+  </script>
+
+  <script type="text/template" id="detail-template">
+    <div class="col-sm-12">
+      <h2 class="detail-name"><i class="fa fa-map-marker"></i> <%- name %></h2>
+    </div>
+    <div class="col-sm-12 col-md-6">
+      <h5 class="detail-continent"><i class="fa fa-globe"></i> Continent: <%- continent %></h5>
+    </div>
+    <div class="col-sm-12 col-md-6">
+      <h5 class="detail-weeks"><i class="fa fa-calendar"></i> Weeks: <%- weeks %></h5>
+    </div>
+    <div class="col-sm-12 col-md-6">
+      <h5 class="detail-category"><i class="fa fa-tags"></i> Category: <%- category %></h5>
+    </div>
+    <div class="col-sm-12 col-md-6">
+      <h5 class="detail-cost"><i class="fa fa-usd"></i> Cost: $<%- cost %></h5>
+    </div>
+    <div class="col-12">
+      <h5 class="about-label"><i class="fa fa-info-circle"></i> About: </h5>
+      <p class="detail-about"><%- about %></p>
+    </div>
+  </script>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
   <script src="app.bundle.js" type="text/javascript"></script>
 </body>
 </html>

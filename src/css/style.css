@@ -1,2 +1,74 @@
-
 /* Your styles go here! */
+
+@import url('https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css');
+@import url('https://fonts.googleapis.com/css?family=Judson|Quando');
+
+/*---------- test ----------*/
+/** { border: 1px solid red !important; }*/
+
+
+
+html { box-sizing: border-box; }
+*, *:before, *:after { box-sizing: inherit; }
+html, body { height: 100%; }
+body {
+  width: 100%;
+  padding: 0;
+  font-size: 16px;
+  background: linear-gradient(to bottom, #6790c6 0%,#343789 100%);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  font-family: 'Quando', serif;
+}
+h1, h2, button { font-family: 'Judson', serif; }
+a:hover,
+button:hover {
+  cursor: pointer;
+}
+header, main, footer { width: 100%; max-width: 100%; }
+.row { margin: 0; max-width: 100%; }
+.row .row { margin: 0; }
+
+div.add-wrapper { text-align: right; }
+
+/*header.header { margin: 0.5% 2% 1%; }*/
+section.main-content { margin-top: 1%; }
+
+i.fa { margin-right: 2%; }
+i.fa-search { margin: 0; }
+
+
+h1.col {
+  margin-left: 1%;
+  padding: 0;
+  color: #fefefe;
+}
+
+
+
+/*---------- table ----------*/
+table#trip-table { margin-top: 5%; }
+table#trip-table { width: 100%; overflow: scroll; }
+
+/*---------- form ----------*/
+input#search-query { margin: 0; }
+select#search-select { width: 100%; }
+
+/*---------- trip details ----------*/
+div#trip-details {
+  margin-top: 5%;
+  background: #fafafa;
+  /*padding: 2% 4%;*/
+  border-radius: 4px;
+}
+div#trip-details div { padding: 2% 4% 1%;}
+h2.detail-name {
+  margin-bottom: 2%;
+  padding: 1% 1% 2%;
+  border-bottom: 2px solid #ededed;
+}
+
+
+
+/*---------- footer ----------*/
+p.copyright { text-align: center; }
