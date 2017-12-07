@@ -11,6 +11,9 @@ const Trip = Backbone.Model.extend({
       errors.name = ['cannot be blank!'];
     }
 
+    // if (!attributes.title) {
+    //   errors.title = ['cannot be blank!'];
+    // }
     // if (!CONTINENTS.includes(attributes.continent.toLowerCase())){
     //   errors.continent = ["that isn't a continent"];
     // }
@@ -46,6 +49,8 @@ const Trip = Backbone.Model.extend({
     if (Object.keys(errors).length < 1) {
       return false;
     }
+    console.log('errors');
+    console.log(errors);
     return errors;
   }
 });

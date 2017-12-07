@@ -40,6 +40,25 @@
         <div id="right" class='small-6 columns'>
           <section id="trip-details">
           </section>
+          <div id="reserve">
+            <h2>Reserve</h2>
+            <form id='reservation-form'>
+
+              <div id="clear-me">
+                <input type="hidden" id="trip_id" name="trip_id" value="">
+                
+                <label for="name">Name: <span class='form-name'></span></label>
+                <input type="text" name="name"></input>
+
+                <label for="email">Email: <span class='form-email'></span></label>
+                <input type="text" name="email"></input>
+              </div>
+
+
+              <input id='myBtn' type="submit" class='button' value="Reserve a spot!"></input>
+
+            </form>
+          </div>
         </div>
       </div>
       <!-- The Modal -->
@@ -57,27 +76,27 @@
           <form id="add-trip-form">
             <div class="row">
               <div class="small-12 columns">
-                <label for="name">Name:<span id='form-name'></span></label>
+                <label for="name">Name:<span class='form-name'></span></label>
                 <input type="text" name="name" placeholder="trip name"></input>
               </div>
             </div>
             <div class="row">
               <div class="small-4 columns">
-                <label for="category">Category: <span id='form-category'></span></label>
+                <label for="category">Category: <span class='form-category'></span></label>
                 <input type="text" name="category" placeholder="category"></input>
               </div>
               <div class="small-4 columns">
-                <label for="weeks">Weeks: <span  id='form-weeks'></span></label>
+                <label for="weeks">Weeks: <span  class='form-weeks'></span></label>
                 <input type="number" name="weeks" placeholder="1" min="1"></input>
               </div>
               <div class="small-4 columns">
-                <label for="cost" >Cost: <span id='form-cost'></span></label>
+                <label for="cost" >Cost: <span class='form-cost'></span></label>
                 <input type="number" name="cost" placeholder="10.00"></input>
               </div>
             </div>
             <div class="row">
               <div class="small-12 columns">
-                <label for="continent">Continent:<span  id='form-continent'></span></label>
+                <label for="continent">Continent:<span  class='form-continent'></span></label>
                 <input type="text" name="continent" placeholder="continent"></input>
                 <!-- <select>
                   <option value="Africa">Africa</option>
@@ -92,7 +111,7 @@
             </div>
             <div class="row">
               <div class="small-12 columns">
-                <label for="about">About: <span id='form-about'></span></label>
+                <label for="about">About: <span class='form-about'></span></label>
                 <input type="text" name="about" placeholder="trip description"></input>
               </div>
             </div>
@@ -138,20 +157,7 @@
         <li><strong>About:</strong> <%- about %></li>
       </ul>
       <hr>
-      <div id="reserve">
-        <h2>Reserve</h2>
-        <form id='reserve-form'>
-          <input type="hidden" id="trip_id" name="trip_id" value="<%- id %>">
 
-          <label for="name">Name:</label>
-          <input type="text" name="name"></input>
-
-          <label for="email">Email:</label>
-          <input type="text" name="email"></input>
-
-          <input id='myBtn' type="submit" class='button' value="Reserve a spot!"></input>
-        </form>
-      </div>
     </script>
     <script type="text/template" id="status-message-template">
       <span class='errorForm'>

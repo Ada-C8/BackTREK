@@ -35,9 +35,9 @@ const reportStatus = function reportStatus(status, field, problem) {
   if (status === 'error') {
     console.log('error');
     console.log(`Reporting ${ status } status: ${ field } problem: ${problem}`);
-    const errorSpanElement = $(`#form-${field}`)
+    const errorSpanElement = $(`.form-${field}`)
     errorSpanElement.html('');
-    const generatedHTML = $(statusTemplate({'problem': problem }));
+    const generatedHTML = $(statusTemplate({'problem': `${problem}` }));
     errorSpanElement.append(generatedHTML);
   } else {
     // success status
@@ -45,7 +45,7 @@ const reportStatus = function reportStatus(status, field, problem) {
     console.log(`Reporting ${ status } status: ${ field } `);
     const messageHook = $('#success p')
     messageHook.html('');
-    const generatedHTML = `Successfully added trip!`
+    const generatedHTML = `${field}`
     messageHook.append(generatedHTML);
     $('#success').css("display", "inline");
   }
@@ -53,9 +53,11 @@ const reportStatus = function reportStatus(status, field, problem) {
 
 const clearFormMessages = function clearFormMessages() {
   $('#add-trip-form span').html('')
+  $('#reservation-form span').html('')
 };
 
 const handleValidationFailures = function handleValidationFailures(errors) {
+  clearFormMessages();
   console.log('in handleValidationFailures function');
   for (let field in errors) {
     for (let problem of errors[field]) {
@@ -70,6 +72,7 @@ const addTripHandler = function(event) {
   console.log(this);
   event.preventDefault();
 
+  // client side validation
   const trip = new Trip(readFormData(this.id));
   if (!trip.isValid()) {
     console.log(`trip is not valid!`);
@@ -79,6 +82,7 @@ const addTripHandler = function(event) {
 
   tripList.add(trip);
 
+  // server side validation
   trip.save({}, {
     success: (model, response) => {
       console.log('Successfully saved Trip!');
@@ -88,7 +92,7 @@ const addTripHandler = function(event) {
       reportStatus('success', 'Successfully saved trip!');
     },
     error: (model, response) => {
-      console.log('Failed to save book! Server response:');
+      console.log('Failed to save trip! Server response:');
       console.log('Failed server side validation');
 
       console.log(response);
@@ -101,39 +105,20 @@ const addTripHandler = function(event) {
   });
 };
 
-// function to make a reservation
-const addReservationHandler = function(event){
-  console.log('In addReservationHandler function');
 
-  event.preventDefault();
-
-  const resData = {};
-  RES_FIELDS.forEach((field) => {
-    const inputElement = $(`#reserve-form input[name="${ field}"]`);
-    const value = inputElement.val();
-
-    if (value != '') {
-      resData[field] = value;
-    }
-  });
-
-  console.log("Read reservation data");
-  console.log(resData);
-
-  return resData;
-};
-
-
+// function to read form data for both forms, just need to pass in form-id arg
 const readFormData = function readFormData(formId){
-
+  console.log('in readFromData function');
   const data = {};
 
+  // ternary operator to assign which field attributes variable should be used
   let fields = formId.includes("trip") ? TRIP_FIELDS : RES_FIELDS
+  console.log(fields);
   fields.forEach((field) => {
     // select the input corresponding to the field we want
     const inputElement = $(`#${formId} input[name="${ field }"]`);
-    console.log(`inputElement`);
-    console.log(inputElement);
+    // console.log(`inputElement`);
+    // console.log(inputElement);
 
     const value = inputElement.val();
 
@@ -147,8 +132,6 @@ const readFormData = function readFormData(formId){
 
   return data;
 };
-
-
 
 const renderDetails = function renderDetails(trip){
   const detailsElement = $('#trip-details');
@@ -168,6 +151,8 @@ const renderDetails = function renderDetails(trip){
       }
     });
   }
+  // updates reservation from trip id value
+  $('form input#trip_id').attr('value' , `${trip.attributes.id}`);
 };
 
 const render = function render(tripList) {
@@ -187,6 +172,46 @@ const render = function render(tripList) {
   });
 };
 
+// function to make a reservation
+const addReservationHandler = function(event) {
+  console.log('In addReservationHandler function');
+  event.preventDefault();
+  clearFormMessages();
+  const reservation = new Reservation(readFormData(this.id))
+
+  console.log(`reservation`);
+  console.log(reservation);
+
+  // client side validation
+  if (!reservation.isValid()) {
+    console.log(`reservation is not valid!`);
+    handleValidationFailures(reservation.validationError);
+    return;
+  }
+
+  // server side validation
+  reservation.save({}, {
+    success: (model, response) => {
+      console.log('Successfully saved Reservation!');
+      console.log('passed server side validation');
+      $(`#clear-me input`).val('');
+      reportStatus('success', 'Successfully saved reservation!');
+    },
+    error: (model, response) => {
+      console.log('Failed to save reservation! Server response:');
+      console.log('Failed server side validation');
+
+      console.log(response);
+
+      // Server-side validations failed, so remove this bad trip from the list
+      console.log(response.responseJSON["errors"]);
+      handleValidationFailures(response.responseJSON["errors"]);
+    },
+  });
+};
+
+
+
 $(document).ready( () => {
   let modal = $('#myModal');
 
@@ -203,6 +228,7 @@ $(document).ready( () => {
 
   // EVENTS
   $('#add-trip-form').on('submit', addTripHandler);
+  $('#reservation-form').on('submit', addReservationHandler);
 
   // MODAL
   // displays modal on button click
@@ -215,6 +241,7 @@ $(document).ready( () => {
     if($(event.target).hasClass('modal-close')) {
       modal.hide();
       $('#success').hide()
+      // TODO: make it so that when you close modal form resets if you havent finished
       clearFormMessages();
     }
   });
