@@ -22,16 +22,24 @@
         <button class='button' id='view-all-trips'>View All Trips</button>
         <button class='button' id= 'add-trip'>Add a Trip</button>
         <div class="dropdown">
-          <button  class="dropbtn button">Continents</button>
-          <div id="myDropdown" class="dropdown-content ">
-            <a href="#">North America</a>
-            <a href="#">South America</a>
-            <a href="#">Asia</a>
-            <a href="#">Europe</a>
-            <a href="#">Australia</a>
-            <a href="#">Africa</a>
-            <a href="#">Australasia</a>
-            <a href="#">Antarctica</a>
+          <button  class="continent-dropbtn button">Continents</button>
+          <div id="continent-dropdown" class="dropdown-content ">
+            <option value='North America'>North America</option>
+            <option value='South America'>South America</option>
+            <option value='Asia'>Asia</option>
+            <option value='Europe'>Europe</option>
+            <option value='Australia'>Australia</option>
+            <option value='Africa'>Africa</option>
+            <option value='Australasia'>Australasia</option>
+          </div>
+        </div>
+        <div class="dropdown">
+          <button  class="category-dropbtn button">Categories</button>
+          <div id="category-dropdown" class="dropdown-content">
+            <option value="adventure">Adventure</option>
+            <option value="Everything">Everything</option>
+            <option value="fun">Fun</option>
+            <option value="cat">Cat</option>
           </div>
         </div>
       </section>
@@ -40,9 +48,19 @@
 
   <main>
 
+    <!-- The Modal -->
+    <div id="myModal" class="modal hidden">
+
+      <!-- Modal content -->
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <p class='display-status'></p>
+      </div>
+
+    </div>
+
 
     <aside class="side-bar columns large-4 small-12">
-      <h2> some side-bar things </h2>
       <div id="trip-details">
 
       </div>
@@ -50,25 +68,45 @@
 
       </div>
     </aside>
+    <div class="columns large-8 small-12">
 
-    <section class="columns large-8 small-12">
+
+      <section  id="trip-table" class="hidden">
 
 
-      <table>
-        <thead>
-          <h2>Trips</h2>
-          <th class="sort name">Title</th>
-          <th class="sort continent">Continent</th>
-          <th class="sort category">Category</th>
-          <th class="sort weeks">Weeks</th>
-          <th class="sort id">ID</th>
+        <table class = "all-trips">
+          <thead>
+            <h2>Trips</h2>
+            <th class="sort name">Title</th>
+            <th class="sort continent">Continent</th>
+            <th class="sort category">Category</th>
+            <th class="sort weeks">Weeks</th>
+            <th class="sort id">ID</th>
 
-        </thead>
-        <tbody id="trips-list">
-        </tbody>
-      </table>
-    </section>
+          </thead>
+          <tbody id="trips-list">
+          </tbody>
+        </table>
 
+      </section>
+      <section  id="continent-table" class="hidden">
+
+
+        <table class = "continent-trips">
+          <thead>
+            <h2>Trips</h2>
+            <th class="sort name">Title</th>
+            <th class="sort continent">Continent</th>
+            <th class="sort weeks">Weeks</th>
+            <th class="sort id">ID</th>
+
+          </thead>
+          <tbody id="continent-list">
+          </tbody>
+        </table>
+        <!-- "id":7,"name":"Sziget Festival Experience","continent":"Europe","weeks":1 -->
+      </section>
+    </div>
   </main>
   <footer>
 
@@ -98,12 +136,32 @@
     </tr>
   </script>
 
+  <script type="text/template" id="continent-template">
+    <tr class="trip" id = "<%- id %>">
+      <td>
+        <%- name %>
+      </td>
+
+      <td>
+        <%- continent %>
+      </td>
+      <td>
+        <%- weeks %>
+      </td>
+      <td>
+        <%- id %>
+      </td>
+      <div id="trip-show">
+
+      </div>
+    </tr>
+  </script>
 
   <script type="text/template" id="trips-description-template">
     <div class="trip-description">
 
       <article>
-        <h5><%- name %></h5>
+        <h2><%- name %></h2>
         <ul class="list-upper-alpha" id = "<%- id %>" >
           <li><em>Cost:</em> <%- cost %></li>
           <li><em>Continent:</em> <%- continent %></li>
@@ -123,6 +181,7 @@
 </script>
 
 <script type="text/template" id="reserve-trip-form-template">
+  <h2>Reserve a Trip</h2>
   <form id="add-reservation-form">
     <label for="name">Name</label>
     <input type="text" name="name"></input>
@@ -139,12 +198,22 @@
 
 
 <script type="text/template" id="add-trip-form-template">
+  <h2>Add a Trip</h2>
   <form id="add-trip-form">
     <label for="name">Title</label>
     <input type="text" name="name"></input>
 
     <label for="continent"><em>Continent</em></label>
-    <input type="text" name="continent"></input>
+    <!-- <input type="text" name="continent"></input> -->
+    <select name="continent">
+      <option value="Europe">Europe</option>
+      <option value="Asia">Asia</option>
+      <option value="Australia">Australia</option>
+      <option value="Australasia">Australasia</option>
+      <option value="Africa">Africa</option>
+      <option value="South America">South America</option>
+      <option value="North America">North America</option>
+    </select>
 
     <label for="category"><em>Category</em></label>
     <input type="text" name="category"></input>

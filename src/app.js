@@ -9,57 +9,91 @@ import './css/style.css';
 import TripList from './app/collections/trip_list';
 import Trip from './app/models/trip';
 import Reservation from './app/models/reservation';
+// import ContinentQuery from '.app/models/continent_query';
 
 console.log('it loaded!');
 
 let tripsTemplate;
+let continentTemplate
 let tripDescriptionTemplate;
 let reserveFormTemplate;
 let tripFormTemplate;
 
+
 const tripList = new TripList();
 
-// function myFunction() {
-//   $(".myDropdown").toggle("show");
-// }
-//
-// // Close the dropdown if the user clicks outside of it
-// const dropDown = function dropDown(){
-//   // let dropdowns = document.getElementsByClassName("dropdown-content");
-//   let dropdowns = $(".dropdown-content");
-//   let i;
-//   for (i = 0; i < dropdowns.length; i++) {
-//     let openDropdown = dropdowns[i];
-//     if (openDropdown.classList.contains('show')) {
-//       openDropdown.classList.remove('show');
-//     }
-//   }
-// }
-//
-//
-//   }
-// }
+// Get the modal
+const modal = document.getElementById('myModal');
+
+// Get the button that opens the modal
+const btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+const span = document.getElementsByClassName("close")[0];
+
+
+
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modalHide();
+}
+const modalDisplay = function modalDisplay(){
+  $('.modal').addClass('show');
+  $('.modal').removeClass('hidden');
+  console.log('changed modal display to block')
+};
+
+const modalHide = function modalHide(){
+  $('.modal').addClass('hidden');
+  $('.modal').removeClass('show');
+  console.log('changed modal display to hidden')
+};
+
+// $('.display-status').on('change', modalDisplay);
+
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modalHide()
+  }
+}
+const queryContinent = function queryContinent(event){
+  event.preventDefault();
+
+}
 
 const saveReservation = function saveReservation(event){
   event.preventDefault();
+  console.log('saveReservation function');
   let tripNumberID = $('.list-upper-alpha').attr('id');
   let reservationObject = readFormData(reservationForm);
 
   let newReservation = new Reservation(reservationObject);
-  newReservation.save({trip_id: tripNumberID}), {
+  newReservation.save({trip_id: tripNumberID}, {
     success: (model, response) => {
-      console.log('Successfully added reservation!');
-      // reportStatus('success', 'Successfully added reservation!');
+      const reservationSuccess = 'Successfully added reservation!'
+      console.log(reservationSuccess);
+      $('.display-status').html('')
+      $('.display-status').html(response + reservationSuccess);
+      modalDisplay();
     },
     error: (model, response) => {
-      console.log('Failed to save reservation! Server response:');
+      const reservationFailure = 'Failed to save reservation! Server response:';
+      console.log(reservationFailure);
       console.log(response);
+      $('.display-status').html('')
+      $('.display-status').html(reservationFailure + response);
+      modalDisplay();
       // handleValidationFailures(response.responseJSON["errors"]);
     },
-  };
+  });
 }
 
+const displayError = function displayError(errorHash){
 
+}
 const saveTrip = function saveTrip(event){
   event.preventDefault();
 
@@ -71,17 +105,31 @@ const saveTrip = function saveTrip(event){
   console.log('bologna');
   console.log(newTrip);
   console.log(`this is ${this}`);
-  newTrip.save({}), {
+  if(!newTrip.isValid()){
+    $('.display-status').html('')
+    $('.display-status').html(`${newTrip.validationError}`);
+    modalDisplay();
+  }
+  newTrip.save( {}, {
     success: (model, response) => {
-      console.log('Successfully added Trip!');
+      const tripSuccess = 'Successfully added Trip!';
+      console.log(tripSuccess);
+      $('.display-status').html('')
+      console.log(response);
+      $('.display-status').html(tripSuccess);
+      $('#add-trip-form').remove();
+      modalDisplay();
       // reportStatus('success', 'Successfully added reservation!');
     },
     error: (model, response) => {
-      console.log('Failed to save trip! Server response:');
+      const tripFailure = 'Failed to save trip! Server response:';
+      console.log(`validationError ${response.attributes['validationError']}`);
+      $('.display-status').html('')
       console.log(response);
-      // handleValidationFailures(response.responseJSON["errors"]);
+      $('.display-status').html(tripFailure);
+      modalDisplay();
     },
-  };
+  });
 }
 const reservationForm = {
   fields: ['name', 'age', 'email'],
@@ -106,7 +154,7 @@ const readFormData = function readFormData(formType) {
 
     // Don't take empty strings, so that Backbone can
     // fill in default values
-    if (value != '') {
+    if (value != ''){
       formData[field] = value;
     }
 
@@ -149,16 +197,34 @@ const renderReserveForm = function renderReserveForm() {
 };
 
 const renderTrips = function renderTrips(tripList) {
-
+  // let oneTrip = (tripList.first());
+  // let size = 0, key;
+  // for (key in oneTrip) {
+  //   if (oneTrip.hasOwnProperty(key)) size++;
+  // }
+  //
+  // console.log(size);
+  // console.log('trip length');
+  // console.log('triplist length');
   const tripTableElement = $('#trips-list');
+  const continentTableElement = $('#continent-list');
   tripTableElement.html('');
-
+  continentTableElement.html('');
   tripList.forEach((trip) => {
-    const generatedHTML = $(tripsTemplate(trip.attributes));
-    tripTableElement.append(generatedHTML);
-    generatedHTML.on('click', (event) =>{
-      renderTripDetails(trip);
-    });
+    if($('#trip-table').hasClass('show')){
+      const generatedHTML = $(tripsTemplate(trip.attributes));
+      tripTableElement.append(generatedHTML);
+
+      generatedHTML.on('click', (event) =>{
+        renderTripDetails(trip);
+      })
+    } else{
+      const generatedContinentHTML = $(continentTemplate(trip.attributes));
+      continentTableElement.append(generatedContinentHTML);
+      generatedContinentHTML.on('click', (event) =>{
+        renderTripDetails(trip);
+      })
+    };
   });
 
   // Provide visual feedback for sorting
@@ -204,6 +270,7 @@ $(document).ready( () => {
   tripDescriptionTemplate = _.template($('#trips-description-template').html());
   reserveFormTemplate = _.template($('#reserve-trip-form-template').html());
   tripFormTemplate = _.template($('#add-trip-form-template').html());
+  continentTemplate = _.template($('#continent-template').html());
 
   // tripList.fetch();
   $('.sort').on('click', sortTrips);
@@ -212,15 +279,35 @@ $(document).ready( () => {
   tripList.on('update', renderTrips);
   tripList.on('sort', renderTrips);
 
-  $('.dropbtn').on('click', function(){
-
-    $( "#myDropdown" ).slideToggle( "slow", function() {
+  $('.continent-dropbtn').on('click', function(){
+    $("#continent-dropdown").slideToggle( "slow", function() {
       // Animation complete.
     });
   });// end  function
 
+  $('.category-dropbtn').on('click', function(){
+    $("#category-dropdown").slideToggle( "slow", function() {
+      // Animation complete.
+    });
+  });// end  function
+  $("#continent-dropdown").on('click', 'option', function(){
+    $('#trip-table').addClass('hidden');
+    $('#trip-table').removeClass('show');
+    $('#continent-table').removeClass('hidden');
+    $('#continent-table').addClass('show');
+    tripList.fetchContinent({
+      myValue: $(this).attr('value'),
+      success: function(myValue){}
+    });
+  });
+
+
   $('#add-trip').on('click', renderTripForm);
   $('#view-all-trips').on('click', function(){
+    $('#trip-table').addClass('show');
+    $('#trip-table').removeClass('hidden');
+    $('#continent-table').removeClass('show');
+    $('#continent-table').addClass('hidden');
     tripList.fetch({
       success: function(collection, response){}
     });
