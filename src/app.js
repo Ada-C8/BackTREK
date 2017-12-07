@@ -4,8 +4,6 @@
 // TODO: filtering
 // TODO: showing sorting on user click with style feedback
 
-
-
 // Vendor Modules
 import $ from 'jquery';
 import _ from 'underscore';
@@ -22,38 +20,15 @@ import Reservation from './app/models/reservation';
 const tripList = new TripList();
 
 const TRIP_FIELDS = ["id", "about", "name", "continent", "category", "weeks", "cost"];
+const RES_FIELDS = ["trip_id","name","email"];
 
+// variables for underscore templates
 let tripTemplate;
 let detailsTemplate;
 let statusTemplate;
 
-const renderDetails = function renderDetails(trip){
-  const detailsElement = $('#trip-details');
-  detailsElement.html('');
-
-  if (trip.get('about')) {
-    const generatedHTML = $(detailsTemplate(trip.attributes));
-    detailsElement.append(generatedHTML);
-    console.log(`my trip already has info`);
-  } else {
-    trip.fetch({
-      success: (model) => {
-        const generatedHTML = $(detailsTemplate(trip.attributes));
-        detailsElement.append(generatedHTML);
-        console.log(trip);
-        console.log(trip.attributes);
-      }
-    });
-  }
-};
-
-// Add a new status message
-// Need to make this method work for front and back end validation or need different ones.
-
-// const reportSuccess = function reportSuccess(status, message){
-//
-// };
-
+// TODO: make this compatible with the reservation form
+// function to report client and server side user feedback in add a trip form
 const reportStatus = function reportStatus(status, field, problem) {
   console.log('in reportStatus function');
   // fail status
@@ -89,11 +64,13 @@ const handleValidationFailures = function handleValidationFailures(errors) {
   }
 };
 
+// function to add a trip
 const addTripHandler = function(event) {
   console.log('addTripHandler entered');
+  console.log(this);
   event.preventDefault();
 
-  const trip = new Trip(readResFormData());
+  const trip = new Trip(readFormData(this.id));
   if (!trip.isValid()) {
     console.log(`trip is not valid!`);
     handleValidationFailures(trip.validationError);
@@ -122,29 +99,75 @@ const addTripHandler = function(event) {
       handleValidationFailures(response.responseJSON["errors"]);
     },
   });
-  // console.log();
+};
+
+// function to make a reservation
+const addReservationHandler = function(event){
+  console.log('In addReservationHandler function');
+
+  event.preventDefault();
+
+  const resData = {};
+  RES_FIELDS.forEach((field) => {
+    const inputElement = $(`#reserve-form input[name="${ field}"]`);
+    const value = inputElement.val();
+
+    if (value != '') {
+      resData[field] = value;
+    }
+  });
+
+  console.log("Read reservation data");
+  console.log(resData);
+
+  return resData;
 };
 
 
+const readFormData = function readFormData(formId){
 
-const readResFormData = function readResFormData(){
-  const tripData = {};
-  TRIP_FIELDS.forEach((field) => {
+  const data = {};
+
+  let fields = formId.includes("trip") ? TRIP_FIELDS : RES_FIELDS
+  fields.forEach((field) => {
     // select the input corresponding to the field we want
-    const inputElement = $(`#add-trip-form input[name="${ field }"]`);
+    const inputElement = $(`#${formId} input[name="${ field }"]`);
+    console.log(`inputElement`);
+    console.log(inputElement);
+
     const value = inputElement.val();
 
     // Don't take empty strings, so that Backbone can fill in default values
     if (value != '') {
-      tripData[field] = value;
+      data[field] = value;
     }
-
-    // inputElement.val('');
   });
-  console.log("Read trip data");
-  console.log(tripData);
+  console.log(`Read ${formId} data`);
+  console.log(data);
 
-  return tripData;
+  return data;
+};
+
+
+
+const renderDetails = function renderDetails(trip){
+  const detailsElement = $('#trip-details');
+  detailsElement.html('');
+
+  if (trip.get('about')) {
+    const generatedHTML = $(detailsTemplate(trip.attributes));
+    detailsElement.append(generatedHTML);
+    console.log(`my trip already has info`);
+  } else {
+    trip.fetch({
+      success: (model) => {
+        const generatedHTML = $(detailsTemplate(trip.attributes));
+        detailsElement.append(generatedHTML);
+        console.log(trip);
+        console.log(trip.attributes);
+      }
+    });
+  }
 };
 
 const render = function render(tripList) {
