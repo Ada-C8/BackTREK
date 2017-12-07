@@ -40,19 +40,6 @@
         <div id="right" class='small-6 columns'>
           <section id="trip-details">
           </section>
-          <hr>
-          <div id="reserve">
-            <h2>Reserve</h2>
-            <form id='reserve-form'>
-              <label for="name">Name:</label>
-              <input type="text" name="name"></input>
-
-              <label for="email">Email:</label>
-              <input type="text" name="email"></input>
-
-              <input id='myBtn' type="submit" class='button' value="Reserve a spot!"></input>
-            </form>
-          </div>
         </div>
       </div>
       <!-- The Modal -->
@@ -150,6 +137,21 @@
         <li><strong>Cost:</strong> $<%- cost %></li>
         <li><strong>About:</strong> <%- about %></li>
       </ul>
+      <hr>
+      <div id="reserve">
+        <h2>Reserve</h2>
+        <form id='reserve-form'>
+          <input type="hidden" id="trip_id" name="trip_id" value="<%- id %>">
+
+          <label for="name">Name:</label>
+          <input type="text" name="name"></input>
+
+          <label for="email">Email:</label>
+          <input type="text" name="email"></input>
+
+          <input id='myBtn' type="submit" class='button' value="Reserve a spot!"></input>
+        </form>
+      </div>
     </script>
     <script type="text/template" id="status-message-template">
       <span class='errorForm'>
