@@ -1,4 +1,3 @@
-// TODO: build reservations models
 // TODO: styles
 // TODO: better error handling
 // TODO: filtering
@@ -27,8 +26,7 @@ let tripTemplate;
 let detailsTemplate;
 let statusTemplate;
 
-// TODO: make this compatible with the reservation form
-// function to report client and server side user feedback in add a trip form
+// function to report client and server side user feedback for both trip and reservation forms
 const reportStatus = function reportStatus(status, field, problem) {
   console.log('in reportStatus function');
   // fail status
@@ -51,6 +49,7 @@ const reportStatus = function reportStatus(status, field, problem) {
   }
 };
 
+// function to clear inline error handling messages in forms
 const clearFormMessages = function clearFormMessages() {
   $('#add-trip-form span').html('')
   $('#reservation-form span').html('')
@@ -69,7 +68,6 @@ const handleValidationFailures = function handleValidationFailures(errors) {
 // function to add a trip
 const addTripHandler = function(event) {
   console.log('addTripHandler entered');
-  console.log(this);
   event.preventDefault();
 
   // client side validation
@@ -87,19 +85,20 @@ const addTripHandler = function(event) {
     success: (model, response) => {
       console.log('Successfully saved Trip!');
       console.log('passed server side validation');
+      // hide modal and clear form values
       $('#myModal').hide();
       $(`#add-trip-form input`).val('');
+      // show success status
       reportStatus('success', 'Successfully saved trip!');
     },
     error: (model, response) => {
       console.log('Failed to save trip! Server response:');
       console.log('Failed server side validation');
 
-      console.log(response);
-
-      // Server-side validations failed, so remove this bad trip from the list
+      // remove bad trip from the list
       tripList.remove(model);
       console.log(response.responseJSON["errors"]);
+      // show inline errors in form
       handleValidationFailures(response.responseJSON["errors"]);
     },
   });
@@ -113,13 +112,9 @@ const readFormData = function readFormData(formId){
 
   // ternary operator to assign which field attributes variable should be used
   let fields = formId.includes("trip") ? TRIP_FIELDS : RES_FIELDS
-  console.log(fields);
   fields.forEach((field) => {
     // select the input corresponding to the field we want
     const inputElement = $(`#${formId} input[name="${ field }"]`);
-    // console.log(`inputElement`);
-    // console.log(inputElement);
-
     const value = inputElement.val();
 
     // Don't take empty strings, so that Backbone can fill in default values
@@ -127,16 +122,16 @@ const readFormData = function readFormData(formId){
       data[field] = value;
     }
   });
-  console.log(`Read ${formId} data`);
-  console.log(data);
 
   return data;
 };
 
 const renderDetails = function renderDetails(trip){
   const detailsElement = $('#trip-details');
+  // clear details section
   detailsElement.html('');
 
+  // if we already have updated data from API don't make call otherwise fetch new data
   if (trip.get('about')) {
     const generatedHTML = $(detailsTemplate(trip.attributes));
     detailsElement.append(generatedHTML);
@@ -156,8 +151,7 @@ const renderDetails = function renderDetails(trip){
 };
 
 const render = function render(tripList) {
-  // iterate through the bookList, generate HTML
-  // for each model and attatch it to the DOM
+  // iterate through tripList, generate HTML for each model and attatch it to the DOM
   const tripTableElement = $('#trip-list');
 
   // clears the html so when we dynamically render again we get a new list vs just adding on
@@ -179,9 +173,6 @@ const addReservationHandler = function(event) {
   clearFormMessages();
   const reservation = new Reservation(readFormData(this.id))
 
-  console.log(`reservation`);
-  console.log(reservation);
-
   // client side validation
   if (!reservation.isValid()) {
     console.log(`reservation is not valid!`);
@@ -193,15 +184,14 @@ const addReservationHandler = function(event) {
   reservation.save({}, {
     success: (model, response) => {
       console.log('Successfully saved Reservation!');
-      console.log('passed server side validation');
+      // console.log('passed server side validation');
+      // clearn form values
       $(`#clear-me input`).val('');
       reportStatus('success', 'Successfully saved reservation!');
     },
     error: (model, response) => {
       console.log('Failed to save reservation! Server response:');
-      console.log('Failed server side validation');
-
-      console.log(response);
+      // console.log('Failed server side validation');
 
       // Server-side validations failed, so remove this bad trip from the list
       console.log(response.responseJSON["errors"]);
