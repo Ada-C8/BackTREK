@@ -178,8 +178,7 @@ const addReservationHandler = function(event) {
 const filter = function filter(event) {
   console.log(`In typing-search, this: ${this}`);
   console.log(`In #typing-search, event: ${$(this).val()}`);
-  //declare filters
-  // let filters = {};
+
   const letters = $(this).val();
 
   console.log(`Letters:`);
@@ -188,15 +187,6 @@ const filter = function filter(event) {
   console.log(`Selected header: ${$('#select-header').find(":selected").text()}`);
 
   const selectedHeader = $('#select-header').find(":selected").text().toLowerCase();
-  // filters[selectedHeader] = letters;
-  // console.log(`filter: ${filters}`);
-
-  // render(tripList, filters);
-
-  // tripList.filterSearch(filters);
-
-  //filters[$('#filter option:selected')[0].innerHTML] = $('#filter input')[0].value;
-  // loadTrips(tripList, filters)
 
   const filteredList = tripList.filterSearch(letters, selectedHeader);
   render(filteredList);
