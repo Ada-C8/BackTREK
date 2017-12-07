@@ -158,7 +158,7 @@ addTrip(event) {
   });
   const trip = new Trip(tripData);
   if (trip.isValid()) {
-    tripList.add(trip);
+    // tripList.add(trip);
     trip.save({}, {
       success: events.successfulSave,
       error: events.failedSave,
@@ -174,6 +174,7 @@ successfulSave(trip, response) {
   $('#message').delay(2000).hide(1);
   $.modal.close();
   $.modal.empty;
+  tripList.fetch();
 },
 failedSave(trip, response) {
   $('#message').show();
@@ -249,6 +250,9 @@ $(document).ready( () => {
 
   $('.sort').click(events.sortTrips);
   tripList.on('sort', render, tripList);
+
+  tripList.on('update', render, tripList);
+
   $('#searchBar').on('change keyup', renderFiltered, events.filterTrips)
 
 });
