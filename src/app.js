@@ -174,6 +174,34 @@ const addReservationHandler = function(event) {
   });
 };
 
+/////////////////////////filter///////////////////////////
+const filter = function filter(event) {
+  console.log(`In typing-search, this: ${this}`);
+  console.log(`In #typing-search, event: ${$(this).val()}`);
+  //declare filters
+  // let filters = {};
+  const letters = $(this).val().toLowerCase();
+
+  console.log(`Letters:`);
+  console.log(letters);
+
+  console.log(`Selected header: ${$('#select-header').find(":selected").text()}`);
+
+  const selectedHeader = $('#select-header').find(":selected").text().toLowerCase();
+  // filters[selectedHeader] = letters;
+  // console.log(`filter: ${filters}`);
+
+  // render(tripList, filters);
+
+  // tripList.filterSearch(filters);
+
+  //filters[$('#filter option:selected')[0].innerHTML] = $('#filter input')[0].value;
+  // loadTrips(tripList, filters)
+
+  const filteredList = tripList.filterSearch(letters, selectedHeader);
+  render(filteredList);
+};
+
 ///////////render HTML for tripList//////////////
 const render = function render(tripList) {
 
@@ -187,6 +215,7 @@ const render = function render(tripList) {
   // renderDetails(trip);
   // });
   // tripTable.append(genhtml);
+  // const listOfTrips = tripList.filterSearch(filters);
 
   tripList.forEach((trip) => {
     const generatedHTML = tripTemplate(trip.attributes);
@@ -264,16 +293,5 @@ $(document).ready( () => {
 
   //TODO: FILTERING
   // Listen for search typing
-  $('#typing-search').keyup(function (event) {
-    console.log(`In typing-search, this: ${this}`);
-    console.log(`In #typing-search, event: ${$(this).val()}`);
-
-    const letters = $(this).val();
-
-    console.log(`Selected 1: ${$('#select-header').find(":selected").text()}`);
-
-    const selectedHeader = $('#select-header').find(":selected").text();
-
-    tripList.filterSearch(letters, selectedHeader);
-  });
+  $('#typing-search').keyup(filter);
 });

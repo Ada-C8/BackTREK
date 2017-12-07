@@ -3,7 +3,7 @@ import Backbone from 'backbone';
 const Trip = Backbone.Model.extend({
 
   validate(attributes) {
-    const CONTINENTS = ['Africa', 'Antartica', 'Asia', 'Australasia', 'Europe', 'North America', 'South America'];
+    const CONTINENTS = ['Africa', 'Antartica', 'Asia', 'Australasia ', 'Europe ', 'North America', 'South America'];
 
     const errors = {};
     if (!attributes.name) {
