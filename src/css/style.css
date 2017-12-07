@@ -61,3 +61,8 @@
   text-decoration: none;
   cursor: pointer;
 }
+
+/* success message */
+#success {
+  display: none;
+}

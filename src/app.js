@@ -1,3 +1,11 @@
+// TODO: build reservations models
+// TODO: styles
+// TODO: better error handling
+// TODO: filtering
+// TODO: showing sorting on user click with style feedback
+
+
+
 // Vendor Modules
 import $ from 'jquery';
 import _ from 'underscore';
@@ -61,8 +69,9 @@ const reportStatus = function reportStatus(status, field, problem) {
     console.log(`Reporting ${ status } status: ${ field } `);
     const messageHook = $('#success p')
     messageHook.html('');
-    const generatedHTML = `${field}`
+    const generatedHTML = `Successfully added trip!`
     messageHook.append(generatedHTML);
+    $('#success').css("display", "inline");
   }
 };
 
@@ -181,6 +190,7 @@ $(document).ready( () => {
   $('body').on('click', '.modal-close', function(event){
     if($(event.target).hasClass('modal-close')) {
       modal.hide();
+      $('#success').hide()
       clearFormMessages();
     }
   });
