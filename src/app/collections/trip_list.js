@@ -25,13 +25,14 @@ const TripList = Backbone.Collection.extend({
 
     const filteredList = this.filter(function(trip) {
 
-      if (selectedHeader == 'cost' || selectedHeader == 'weeks'){
-        let letters = parseFloat(letters);
-        return letters >= trip.get(selectedHeader);
+      if (selectedHeader === 'cost' || selectedHeader === 'weeks'){
+        console.log('in cost/weeks');
+        let value = parseFloat(letters);
+        return value >= trip.get(selectedHeader);
       } else {
         console.log(`In filteredList func:`);
         console.log(trip.get(selectedHeader));
-        return trip.get(selectedHeader).toLowerCase().includes(letters);
+        return trip.get(selectedHeader).toLowerCase().includes(letters.toLowerCase());
          // trip.attributes.selectedHeader.includes(letters);
          // const selectedHeaderList = trip.attributes.name(selectedHeader);
          //

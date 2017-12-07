@@ -180,7 +180,7 @@ const filter = function filter(event) {
   console.log(`In #typing-search, event: ${$(this).val()}`);
   //declare filters
   // let filters = {};
-  const letters = $(this).val().toLowerCase();
+  const letters = $(this).val();
 
   console.log(`Letters:`);
   console.log(letters);
