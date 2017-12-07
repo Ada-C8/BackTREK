@@ -17,6 +17,7 @@ import './css/style.css';
 // Our components
 import TripList from './app/collections/trip_list';
 import Trip from './app/models/trip';
+import Reservation from './app/models/reservation';
 
 const tripList = new TripList();
 
