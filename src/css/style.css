@@ -1,2 +1,175 @@
+body {
+  font-family: courier;
+  width: 100%;
+  z-index:-999;
+  background: url("https://images.unsplash.com/photo-1511279247506-b74bf93feee4?auto=format&fit=crop&w=1050&q=80&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D") no-repeat center center fixed;
+  margin:0;
+  padding:0;
+  -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
 
-/* Your styles go here! */
+h1 {
+  font-family: courier;
+  color: white;
+  text-align: center;
+  margin-top: 5%;
+}
+
+#top-buttons {
+  text-align: center;
+}
+
+/*Styling for filter form*/
+
+#filter-triplist {
+  display: none;
+  max-width: 225px;
+  margin: auto;
+}
+
+/*TODO: below not working*/
+/*
+#select-header {
+  display: inline-block;
+}
+
+#typing-search {
+  display: inline-block;
+}*/
+
+/*Styling for all trip*/
+
+#trip-table {
+  display: none;
+  max-width: 100%;
+  table-layout: fixed;
+}
+
+#trip-table tr {
+  word-wrap: break-word;
+}
+
+.wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+#trip-table-close:before {
+  content: '✕';
+  color: white;
+}
+
+#trip-table-close {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+}
+
+/*Styling for add trip form*/
+
+#trip-form-message {
+  display: none;
+  max-width: 500px;
+  margin: auto;
+}
+
+#trip-form-button {
+  display: none;
+  float: right;
+  margin-bottom: 3%;
+  width: 2rem;
+}
+
+#add-trip-form-close:before {
+  content: '✕';
+  color: white;
+  float: right;
+  cursor: pointer;
+}
+
+#individual-trip-details-close {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+}
+
+label {
+  color: white;
+}
+
+/*Styling for individual trip details*/
+
+#individual-trip-details {
+  display: none;
+  background-color: grey;
+  padding: 5%;
+}
+
+#individual-trip-details h3 {
+  text-align: center;
+  color: white;
+  font-family: courier;
+}
+
+#individual-trip-details-close:before {
+  content: '✕';
+  color: white;
+}
+
+#individual-trip-details-close {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+}
+
+/* Styles for sorting */
+
+th.sort {
+  cursor: pointer;
+}
+
+.current-sort-field {
+  background-color: darkgrey;
+  color: white;
+}
+
+/* Styles for status messages */
+
+#status-messages {
+  background-color: #dfdfdf;
+
+  /* Hide by default */
+  display: none;
+
+  border-radius: 1rem;
+  margin: 1rem;
+  height: 100%;
+  padding: .8rem;
+  max-width: 400px;
+  margin: auto;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  padding: 2%;
+  /*overflow: auto;*/
+  word-wrap: break-word;
+  /*white-space: initial;*/
+
+}
+
+#status-messages button.clear {
+  margin-top: .2rem;
+  height: 100%;
+}
+
+#status-messages button.clear img {
+  width: 2rem;
+}
