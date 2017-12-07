@@ -1,126 +1,241 @@
-  // Vendor Modules
-  import $ from 'jquery';
-  import _ from 'underscore';
+// Vendor Modules
+import $ from 'jquery';
+import _ from 'underscore';
 
-  // CSS
-  import './css/foundation.css';
-  import './css/style.css';
+// CSS
+import './css/foundation.css';
+import './css/style.css';
 
-  // Our components
-  import Trip from './app/models/trip';
-  import Reservation from './app/models/reservation';
-  import TripList from './app/collections/trip_list';
-  console.log('it loaded!');
+// Our components
+import Trip from './app/models/trip';
+import Reservation from './app/models/reservation';
+import TripList from './app/collections/trip_list';
+console.log('it loaded!');
 
-  const TRIP_FIELDS = ['name', 'continent', 'about', 'category', 'weeks', 'cost'];
-  const RESERVATION_FIELDS = ['name', 'age', 'email'];
-
-  let tripsTemplate;
-  let tripTemplate;
-
-  const render = function render(tripList){
-    const tripsTableElement = $('#trip-list');
-    tripsTableElement.html('');
-
-    tripList.forEach((trip) => {
-      const generatedHTML = $(tripsTemplate(trip.attributes));
-      generatedHTML.on('click',(event) => {
-        trip.fetch({
-          success: function(model, response){
-            renderTrip(model);
-            $('#trips').hide();
-            $('#trip').show();
-          }
-        });
-      }); //.on
-      tripsTableElement.append(generatedHTML);
-    }); //tripList
-  };  // render
+const tripList = new TripList()
 
 
-  const renderTrip = function render(trip){
-    const tripTableElement = $('#trip');
-    tripTableElement.html('');
+const TRIP_FIELDS = ['name', 'continent', 'about', 'category', 'weeks', 'cost'];
+const RESERVATION_FIELDS = ['name', 'email', 'age'];
 
-    const generatedHTML = $(tripTemplate(trip.attributes));
-    tripTableElement.html(generatedHTML);
-  };
+let tripsTemplate;
+let tripTemplate;
+
+// Clear status messages
+const clearStatus = function clearStatus() {
+  $('#status-messages ul').html('');
+  $('#status-messages').hide();
+};
+
+// Add a new status message
+const reportStatus = function reportStatus(status, message) {
+  console.log(`Reporting ${ status } status: ${ message }`);
+
+  const statusHTML = `<li class="${ status }">${ message }</li>`;
+
+  // note the symetry with clearStatus()
+  $('#status-messages ul').append(statusHTML);
+  $('#status-messages').show();
+};
+
+const render = function render(tripList){
+  const $tripsTableElement = $('#trip-list');
+  $tripsTableElement.html('');
+  //
+  // let tripId = $(this).attr('data-trip-id');
+  // let trip = tripList.get(tripId)
+
+  // reserve.set('trip_id', $(this).data('tripId'));
 
 
-  $(document).ready(() => {
-    tripsTemplate = _.template($('#trips-template').html());
-    tripTemplate = _.template($('#trip-template').html());
-
-    const tripList = new TripList();
-    tripList.on('update',render);
-
-    // sorting by header element
-    tripList.on('sort', render);
-    TRIP_FIELDS.forEach((field) => {
-      const headerData = $(`th.sort.${ field }`);
-      headerData.on('click', (event) => {
-        tripList.comparator = field;
-        tripList.sort();
-      });
-    });
-
-    // Retrieving all trips by clicking the button
-    $('#load').on('click', function(){
-      tripList.fetch({
-        success: function(collection, response){
-          $('#trips').show();
-          $('#trip').hide();
-          $('#show_form').hide();
-        }
-      });
-    });
-
-    $('header').on('click', '#add_trip', function(){
-      $('#show_form').show();
+  tripList.forEach((trip) => {
+    const generatedHTML = $(tripsTemplate(trip.attributes));
+    generatedHTML.on('click',(event) => {
       $('#trips').hide();
-      $('#trip').hide();
-    });
-
-
-    
-
-    // Adding trip to the DB
-    $("#add-trip-form").on('submit', function(event){
-      event.preventDefault(); // stops after reading user input, doesn't do anything yet. Prevents default event handling
-      let tripData = {};
-
-      TRIP_FIELDS.forEach((field) => {
-        tripData[field] = $(`#add-trip-form input[name="${field}"]`).val();
-      });
-
-      let trip = new Trip(tripData);
-
-      trip.save({}, {
-        success: function(model, response){
-          tripList.add(model);
-        }
-      })
-    });
-
-    // Reserving a trip
-    $("#trip").on('submit', "#reservation-form", function(event){
-      event.preventDefault();
-      let reservationData = {};
-
-      RESERVATION_FIELDS.forEach((field) => {
-        reservationData[field] = $(`#reservation-form input[name="${ field }"]`).val();
-      });
-
-      let reservation = new Reservation(reservationData);
-      reservation.set('trip_id', $(this).data('tripId'));
-
-      reservation.save({}, {
-        success: function(model, response){
-          console.log(`Thank you, your reservation has been placed successfully`);
+      $('#trip').show();
+      trip.fetch({
+        success (model, response){
+          renderTrip(model);
         }
       });
-    });
+    }) //.on
+    $tripsTableElement.append(generatedHTML);
+  }); //tripList
+};  // render
 
+
+const renderTrip = function renderTrip(trip){
+  const $tripTableElement = $('#trip');
+  $tripTableElement.html('');
+  console.log(trip.attributes);
+
+  const generatedHTML = tripTemplate(trip.attributes);
+  $tripTableElement.html(generatedHTML);
+
+  $('#reservation-form').on('submit', addReservHandler);
+
+  $('th.sort').removeClass('current-sort-field');
+  $(`th.sort.${ tripList.comparator }`).addClass('current-sort-field');
+};
+
+const loadTrips = function loadTrips() {
+  tripList.fetch({
+    success(model, response) {
+    render(model);
+    }
+  });
+};
+
+const readTripFormData = function readTripFormData() {
+  const tripData = {};
+  TRIP_FIELDS.forEach((field) => {
+    const $inputElement = $(`#add-trip-form input[name="${ field }"]`);
+    const value = $inputElement.val();
+
+    // Don't take empty strings, so that Backbone can
+    // fill in default values
+    if (value != '') {
+      tripData[field] = value;
+    }
+
+    $inputElement.val('');
   });
 
- // for ${reservationData['name']}
+  console.log(tripData);
+  return tripData;
+};
+
+// Reserving a trip
+const readReservFormData = function readReservFormData() {
+  const reservData = {};
+  RESERVATION_FIELDS.forEach((field) => {
+    const $inputReservElement = $(`#reservation-form input[name="${ field }"]`);
+    const value = $inputReservElement.val();
+
+    if (value != '') {
+      reservData[field] = value;
+    }
+
+    $inputReservElement.val('');
+  });
+
+  console.log("Read reserve data");
+  console.log(reservData);
+  return reservData;
+};
+
+const handleValidationFailures = function handleValidationFailures(errors) {
+  for (let field in errors) {
+    for (let problem of errors[field]) {
+      reportStatus('error', `${field}: ${problem}`);
+    }
+  }
+};
+
+// Add trip
+const addTripHandler = function(event) {
+  event.preventDefault();
+  // $('#status-messages').html('')
+
+  const trip = new Trip(readTripFormData());
+  // console.log(trip);
+
+
+  if (!trip.isValid()) {
+    handleValidationFailures(trip.validationError);
+    return;
+  }
+
+  tripList.add(trip);
+
+  // console.log('adding trip::::');
+  // console.log(trip);
+
+  trip.save({}, {
+    success: (model, response) => {
+      console.log('Yay, trip was saved successfully!');
+      // $('#status-messages').addClass('success')
+      reportStatus('success', 'Yay, trip was saved successfully!');
+    },
+    error: (model, response) => {
+      console.log('Failed to save trip! Server response:');
+      console.log(response);
+      // $('#status-messages').removeClass('success')
+      // $('#status-messages').addClass('failure')
+      // $('#status-messages').append(`Failed to save trip`)
+      // After server-side validations failed, we have to remove this bad
+      // trip from the list
+      tripList.remove(model);
+
+      handleValidationFailures(response.responseJSON["errors"]);
+    },
+  });
+};
+
+// Add Reservation
+const addReservHandler = function addReservHandler(event) {
+  event.preventDefault();
+  const reserve = new Reservation(readReservFormData());
+  reserve.set('trip_id', $(this).data('tripId'));
+
+
+  if (!reserve.isValid()) {
+    handleValidationFailures(reserve.validationError);
+    return;
+  }
+
+  reserve.save({}, {
+    success: (model, response) => {
+      console.log('Yay, you successfully reserved a trip!');
+      // $('#status-messages').html('');
+      // $('#status-messages').addClass('success');
+      // $('#status-messages').hide('slow');
+      reportStatus('success', 'Yay, you successfully reserved a trip!');
+    },
+    error: (model, response) => {
+      console.log('Failed to save reservation. Server response: ');
+      console.log(response);
+      // $('#status-messages').removeClass('success');
+      // $('#status-messages').addClass('failure');
+      // console.log(response);
+      handleValidationFailures(response.responseJSON["errors"]);
+    }
+  })
+}
+
+$(document).ready(() => {
+  tripsTemplate = _.template($('#trips-template').html());
+  tripTemplate = _.template($('#trip-template').html());
+
+  $('#trips').hide();
+
+  // Retrieving all trips by clicking the button
+  $('#load').on('click', function(){
+    $('#trips').show();
+    loadTrips()
+    $('#show_form').hide();
+  });
+
+  $('header').on('click', '#add_trip', function() {
+    $('#status-messages').hide();
+    $('#show_form').show();
+    $('#trips').hide();
+    $('#trip').hide();
+  });
+
+  $('#add-trip-form').on('submit', addTripHandler, function() {
+    $('#status-messages').show();
+  });
+
+
+  // sorting by header element
+  tripList.on('sort', render);
+  TRIP_FIELDS.forEach((field) => {
+    const headerData = $(`th.sort.${ field }`);
+    headerData.on('click', (event) => {
+      tripList.comparator = field;
+      tripList.sort();
+    });
+  });
+  $('#status-messages button.clear').on('click', clearStatus);
+});

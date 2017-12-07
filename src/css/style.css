@@ -61,6 +61,10 @@ tr:hover td {
   color: #FF5733;
 }
 
+#trip{
+  text-align: center;
+}
+
 .reserve, .tripname, #reservation-form{
   text-align: center;
 }
@@ -111,3 +115,39 @@ th:hover{
   background-color: #efefef;
   text-align: center;
 }*/
+
+
+/* Styles for error section at the top */
+#status-messages {
+  background-color: #dfdfdf;
+
+  /* Hide by default */
+  display: none;
+
+  border-radius: 1rem;
+  margin: 1rem;
+  height: 100%;
+  padding: .8rem;
+}
+
+#status-messages ul {
+  list-style: none;
+  margin-left: 0;
+}
+
+#status-messages button.clear {
+  margin-top: .2rem;
+  height: 100%;
+}
+
+#status-messages button.clear img {
+  width: 2rem;
+}
+
+#status-messages .error {
+  color: red;
+}
+
+#status-messages .success {
+  color: green;
+}
