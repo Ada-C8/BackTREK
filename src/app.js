@@ -34,21 +34,47 @@ const reportStatus = function reportStatus(status, message) {
   $('#status-messages').show();
 };
 
+const filterTrips = function filterTrips(trips) {
+  let filter = $('#filter-value').val().toLowerCase().trim();
+  let filterType = $('#filter-type').val();
+
+  // alert(filterType); // way to test that the input is what we think it will be
+  if (filter === "") {
+    return trips;
+  }
+
+  // want to pass in collection.models -- want to pass in an array of models
+  let results = _.filter(tripsList.models, function(trip) {
+    if (filterType === 'name' || filterType === 'category' || filterType === 'continent') {
+      if (trip.get(filterType).toLowerCase().includes(filter)) {      // string filter
+        return true;
+      }
+    } else {
+      if (trip.get(filterType) <= parseInt(filter)) {   // integer filter
+        return true;
+      }
+    }
+
+    return false;
+  });
+
+  return results;
+}
+
 /////////////////RENDER ALL TRIPS //////////////////
 const renderTrips = function renderTrips(list) {
+  let trips = filterTrips(list);
 
   $('#trips-table').show();
   const tripTableElement = $('#trips-list');
   tripTableElement.html('');
 
-  list.forEach((trip) => {
+  trips.forEach((trip) => {
     const generatedHTML = tripsTemplate(trip.attributes);
     tripTableElement.append(generatedHTML);
   });
 
   $('.see-trips-button').hide();
-
-
 };
 
 //////////// RENDER INDIVIDUAL TRIPS /////////////////
@@ -187,11 +213,11 @@ $(document).ready(() => {
 
   $('.see-trips-button').on('click', function() {
     tripsList.on('update', renderTrips);
-    tripsList.fetch();
-
     tripsList.on('sort', renderTrips); // register an event handler
 
-// sorting handling
+    tripsList.fetch();
+
+    // sorting handling
     TRIP_FIELDS.forEach((field) => {
       const headerElement = $(`th.sort.${field}`);
       headerElement.on('click', (event) => {
@@ -199,44 +225,37 @@ $(document).ready(() => {
         tripsList.sort();
         $('th.sort').removeClass('.current-sort-field');
         $(`th.sort.${tripsList.compator}`).addClass('.current-sort-field');
-
-        ///////
-
-        // want to pass in collection.models -- want to pass in an array of models
-
-        let results = _.filter(tripsList.models, function(trip) {
-          // if (trip.get('continent') === 'Africa') {
-          //   return true;
-          // }
-
-          if (trip.get('weeks') <= parseInt('5')) {
-            return true;
-          }
-
-          return false;
-        });
-
-        renderTrips(results);
-
       });
     });
-
   });
 
-  // filtering
+  ///////////// FILTERING /////////////////
 
-  // var evens = _.filter([1, 2, 3, 4, 5, 6], function(num){ return num % 2 == 0; });
+  // prevent form from refreshing the DOM
+  $('#filter-form').on('submit', function(event) {
+    event.preventDefault();
+  });
 
+  $('#filter-value').on('keyup', function(event) {
+    renderTrips(tripsList.models);
+  });
+
+  // clear input when select another filter type
+
+  $('#filter-type').on('change', function(event) {
+    $('#filter-value').val('');
+    renderTrips(tripsList.models);
+  });
 
   // add trip
   $('#add-trip-form').on('submit', addTripHandler);
 
-  $('#add-trip-button-show').click(function(){
+  $('#add-trip-button-show').click(function() {
     $('#add-trip-form').toggle();
   })
 
 
-  $('#status-messages button.clear').on('click', (event) => {
+  $('#status-messages button.clear').on('click', function(event) {
     $('#status-messages ul').html('');
     $('#status-messages').hide();
   })

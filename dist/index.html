@@ -28,6 +28,20 @@
 <section class="left table large-6 columns ">
 
       <section class="columns large-10 small-12" id="trips-table" style="display: none">
+
+        <!-- input and select box  -->
+
+        <form id="filter-form">
+          <select type="text" id="filter-type" >
+            <option value="name">Name</option>
+            <option value="category">Category</option>
+            <option value="continent">Continent</option>
+            <option value="weeks">Weeks</option>
+            <option value="cost">Cost</option>
+          </select>
+          <input type="text" name="filter" id="filter-value"></input>
+        </form>
+
         <h2>Trips!</h2>
 
         <table>
