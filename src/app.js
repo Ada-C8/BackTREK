@@ -41,12 +41,6 @@ const reportStatus = function reportStatus(status, message) {
 const render = function render(tripList){
   const $tripsTableElement = $('#trip-list');
   $tripsTableElement.html('');
-  //
-  // let tripId = $(this).attr('data-trip-id');
-  // let trip = tripList.get(tripId)
-
-  // reserve.set('trip_id', $(this).data('tripId'));
-
 
   tripList.forEach((trip) => {
     const generatedHTML = $(tripsTemplate(trip.attributes));
@@ -138,7 +132,7 @@ const addTripHandler = function(event) {
   // $('#status-messages').html('')
 
   const trip = new Trip(readTripFormData());
-  // console.log(trip);
+  console.log(trip);
 
 
   if (!trip.isValid()) {
@@ -146,23 +140,16 @@ const addTripHandler = function(event) {
     return;
   }
 
-  tripList.add(trip);
-
-  // console.log('adding trip::::');
-  // console.log(trip);
-
   trip.save({}, {
     success: (model, response) => {
+      tripList.add(model);
       console.log('Yay, trip was saved successfully!');
-      // $('#status-messages').addClass('success')
       reportStatus('success', 'Yay, trip was saved successfully!');
     },
     error: (model, response) => {
       console.log('Failed to save trip! Server response:');
       console.log(response);
-      // $('#status-messages').removeClass('success')
-      // $('#status-messages').addClass('failure')
-      // $('#status-messages').append(`Failed to save trip`)
+
       // After server-side validations failed, we have to remove this bad
       // trip from the list
       tripList.remove(model);
@@ -186,18 +173,14 @@ const addReservHandler = function addReservHandler(event) {
 
   reserve.save({}, {
     success: (model, response) => {
-      console.log('Yay, you successfully reserved a trip!');
-      // $('#status-messages').html('');
-      // $('#status-messages').addClass('success');
-      // $('#status-messages').hide('slow');
-      reportStatus('success', 'Yay, you successfully reserved a trip!');
+      console.log('Congratulations, you successfully reserved a trip!');
+
+      reportStatus('success', 'Congratulations, you successfully reserved a trip!');
     },
     error: (model, response) => {
       console.log('Failed to save reservation. Server response: ');
       console.log(response);
-      // $('#status-messages').removeClass('success');
-      // $('#status-messages').addClass('failure');
-      // console.log(response);
+
       handleValidationFailures(response.responseJSON["errors"]);
     }
   })
@@ -207,7 +190,7 @@ $(document).ready(() => {
   tripsTemplate = _.template($('#trips-template').html());
   tripTemplate = _.template($('#trip-template').html());
 
-  $('#trips').hide();
+  // $('#trips').hide();
 
   // Retrieving all trips by clicking the button
   $('#load').on('click', function(){
@@ -219,15 +202,16 @@ $(document).ready(() => {
   $('header').on('click', '#add_trip', function() {
     $('#status-messages').hide();
     $('#show_form').show();
-    $('#trips').hide();
-    $('#trip').hide();
+
   });
 
-  $('#add-trip-form').on('submit', addTripHandler, function() {
-    $('#status-messages').show();
-  });
+  $('#add-trip-form').on('submit', addTripHandler);
 
-
+  $('#status-messages button.clear').on('click', (event) => {
+    $('#status-messages ul').html('');
+    $('#status-messages').hide();
+    $('#show-form').hide();
+  })
   // sorting by header element
   tripList.on('sort', render);
   TRIP_FIELDS.forEach((field) => {

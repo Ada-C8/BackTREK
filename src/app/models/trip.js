@@ -2,11 +2,11 @@ import Backbone from 'backbone';
 
 const Trip = Backbone.Model.extend({
   urlRoot: 'https://ada-backtrek-api.herokuapp.com/trips/',
-  defaults: {
-    category: 'Unknown',
-    continent: 'Unknown',
-    about: 'Unknown'
-  },
+  // defaults: {
+  //   category: 'Unknown',
+  //   continent: 'Unknown',
+  //   about: 'Unknown'
+  // },
 
   validate(attributes) {
 
@@ -14,14 +14,18 @@ const Trip = Backbone.Model.extend({
     if (!attributes.name) {
       errors.name = ['cannot be blank'];
     }
-    //
-    // if (!attributes.continent) {
-    //   errors.continent = ['cannot be blank'];
-    // }
-    //
-    // if (!attributes.category) {
-    //   errors.category = ['cannot be blank'];
-    // }
+
+    if (!attributes.continent) {
+      errors.continent = ['cannot be blank'];
+    }
+
+    if (!attributes.about) {
+      errors.about = ['cannot be blank'];
+    }
+
+    if (!attributes.category) {
+      errors.category = ['cannot be blank'];
+    }
 
     if (!attributes.weeks) {
       errors.weeks = ['cannot be blank'];

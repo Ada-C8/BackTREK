@@ -90,9 +90,7 @@ p{
 b{
   color: navy;
 }
-strong{
-  color: green; /* Success message */
-}
+
 th:hover{
   background-color: blue;
   color: white;
@@ -115,7 +113,6 @@ th:hover{
   background-color: #efefef;
   text-align: center;
 }*/
-
 
 /* Styles for error section at the top */
 #status-messages {
