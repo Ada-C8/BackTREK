@@ -176,6 +176,7 @@ successfulSave(trip, response) {
   $.modal.empty;
 },
 failedSave(trip, response) {
+  $('#message').show();
   updateStatusMessageFrom(response.responseJSON.errors);
   trip.destroy();
 },
