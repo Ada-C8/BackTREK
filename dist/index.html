@@ -2,15 +2,111 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>My JavaScript App</title>
+  <title>BackTREK</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 </head>
 <body>
   <header>
-
+    <h1>Welcome to BackTREK</h1>
   </header>
-  <main>
+  <main class="row">
+    <section id="allTripsButton">
+      <button class="button" id="trips_button"> See All Trips </button>
+      <a class="button" href="#newTrip" rel="modal:open">Make a New Trip!</a>
+    </section>
 
+    <section id="message">
+    </section>
+
+
+    <div id="newTrip" class="modal">
+      <form id="new-trip-form">
+        <section id="status-messages">
+          <ul></ul>
+        </section>
+        <label for="name">Name</label>
+        <input type="text" name="name"></input>
+
+        <label for="continent">Continent</label>
+        <input type="text" name="continent"></input>
+
+        <label for="about">About</label>
+        <input type="text" name="about"></input>
+
+        <label for="category">Category</label>
+        <input type="text" name="category"></input>
+
+        <label for="weeks">Weeks</label>
+        <input type="number" name="weeks"></input>
+
+        <label for="cost">Cost</label>
+        <input type="number" name="cost"></input>
+
+        <input type="submit" rel="modal:close" value="Reserve it!" class="button"></input>
+      </form>
+      <a class="button" id="modalButton" href="#" rel="modal:close">Cancel</a>
+    </div>
+
+    <section class="small-12 medium-12  large-6 columns" id="all_trips_section">
+      <h2>Trips!</h2>
+      <form id="filterForm">
+        <select id="filterSelector">
+        <option value="null">Search By</option>
+        <option value="name">Name</option>
+        <option value="category">Category</option>
+        <option value="continent">Continent</option>
+        <option value="weeks">Weeks</option>
+        <option value="cost">Cost</option></select>
+        <input type="text" name="searchBar" id="searchBar" placeholder="Filter Results By"></input>
+      </form>
+
+      <table id="tripTable">
+        <thead>
+          <th class="sort name">Name</th>
+          <th class="sort continent">Continent</th>
+          <th class="sort category">Category</th>
+          <th class="sort weeks">Weeks</th>
+          <th class="sort cost">Cost</th>
+        </thead>
+        <tbody id="trip-list">
+        </tbody>
+      </table>
+    </section>
+
+    <section class="small-12 medium-12 large-6 columns" id="show_trip">
+    </section>
+
+    <script type="text/template" id="show-template">
+
+      <h1><%- name %></h1>
+      <p><strong>Description:</strong> <%- about %></p>
+      <p><strong>Continent:</strong> <%- continent %></p>
+      <p><strong>Category:</strong> <%- category %></p>
+      <p><strong>Length:</strong> <%- weeks %> week(s)</p>
+      <p><strong>Cost:</strong> $<%- cost %></p>
+    </script>
+
+
+    <script type="text/template" id="trip-template">
+      <tr class="trip"  data-id=<%- id %> >
+        <td>
+          <%- name %>
+        </td>
+        <td>
+          <%- continent %>
+        </td>
+        <td>
+          <%- category %>
+        </td>
+        <td>
+          <%- weeks %>
+        </td>
+        <td>
+          <%- cost %>
+        </td>
+      </tr>
+    </script>
   </main>
   <footer>
 

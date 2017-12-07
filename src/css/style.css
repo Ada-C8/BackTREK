@@ -1,2 +1,62 @@
 
 /* Your styles go here! */
+
+.current-select-row, .current-select-row:nth-of-type(even), .current-select-row:nth-of-type(odd), .current-sort-field {
+  background-color: darkgrey;
+  color: white;
+}
+
+h1 {
+  text-align: center;
+}
+
+#allTripsButton {
+  text-align: center;
+}
+
+table, th, td {
+  border: 1px solid black;
+}
+
+table{
+  table-layout: fixed;
+  width: 100%;
+  white-space: nowrap;
+}
+
+td{
+  max-width: 200px;
+  white-space: nowrap;
+  word-wrap:break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#status-messages ul {
+  color: red;
+}
+
+#message {
+  color: green;
+  font-size: 2rem;
+}
+
+#modalButton {
+  background-color: red;
+  color: white;
+}
+
+#tripTable {
+  overflow: auto;
+}
+
+#searchBar {
+}
+
+#filterSelector {
+  background-position: right -0.5rem center;
+}
+
+#message.errors {
+  color: red;
+}
