@@ -31,18 +31,24 @@ header, main, footer { width: 100%; max-width: 100%; }
 
 div.add-wrapper { text-align: right; }
 
-header.header { margin: 0.5% 2% 1%; }
+/*header.header { margin: 0.5% 2% 1%; }*/
 section.main-content { margin-top: 1%; }
 
 i.fa { margin-right: 2%; }
 i.fa-search { margin: 0; }
 
-h1.col { color: #fefefe; }
+
+h1.col {
+  margin-left: 1%;
+  padding: 0;
+  color: #fefefe;
+}
 
 
 
 /*---------- table ----------*/
 table#trip-table { margin-top: 5%; }
+table#trip-table { width: 100%; overflow: scroll; }
 
 /*---------- form ----------*/
 input#search-query { margin: 0; }

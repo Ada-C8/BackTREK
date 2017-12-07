@@ -38,8 +38,12 @@ const renderDetails = function renderDetails(trip){
       const generatedHTML = $(tripDetails(trip.attributes));
       detailsDiv.append(generatedHTML);
       console.log(trip);
+    },
+    error: (status, response) => {
+      const errors = ($.parseJSON(response.responseText))['errors'];
     }
   });
+  console.log(trip);
 };
 
 // JQUERY
@@ -79,11 +83,14 @@ $(document).ready( () => {
     const trip = tripList.add(tripData);
     console.log(tripData);
     console.log(trip);
+
+    const newTrip = new Trip(formData);
     trip.save({}, {
-      // success: clearForm,
-      // error: booksApiErrorHandler
+      success: console.log("Success!"),
+      error: console.log("Oh no!")
     });
 
   });
+
 
 });
