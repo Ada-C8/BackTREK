@@ -131,6 +131,13 @@ $(document).ready( () => {
   tripList.on('sort', render, tripList);
 
   $('button#search').on('click', loadTrips);
+  $('#filters input').on('keyup', function() {
+   const query = $(this).val().toLowerCase();
+   const filterCategory = $('#filters select').val().toLowerCase();
+   const filteredList = tripList.filterBy(filterCategory, query);
+   render(filteredList);
+ });
+
   $('#trip-list').on('click', 'tr', function() {
     const trip = tripList.get($(this).attr('data-id'));
     trip.fetch({
@@ -146,7 +153,7 @@ $(document).ready( () => {
     $('#add-trip').css("display", "none");
   });
   $('body').click(function(event) {
-    if (event.target == $('#add-trip')) {
+    if (event.target === $('body')) {
       $('#add-trip').css("display", "none");
     }
   });
