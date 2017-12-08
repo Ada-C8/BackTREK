@@ -85,6 +85,13 @@ const clearForm = function clearForm() {
   $('#new-trip input[name]').val('');
 };
 
+const clearFilter = function clearFilter() {
+  $('#filters input').val('');
+  $('#filters option').prop('selected', function() {
+    return this.defaultSelected;
+  });
+};
+
 const updateStatusMessageFrom = (messageHash) => {
   $('span.error').empty();
   for (let messageType in messageHash) {
@@ -137,6 +144,7 @@ const loadTrip = function loadTrip(trip) {
 
 $(document).ready( () => {
   $('#trips').hide();
+  clearFilter();
   tripTemplate = _.template($('#trip-template').html());
   tripDetailsTemplate = _.template($('#trip-details-template').html());
 
