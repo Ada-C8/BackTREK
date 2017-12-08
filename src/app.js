@@ -24,9 +24,6 @@ const render = function render(tripList) {
   tripList.forEach((trip) => {
     tripListElement.append(tripTemplate(trip.attributes));
   });
-
-  $('th.sort').removeClass('current-sort-field');
-  $(`th.sort.${ tripList.comparator }`).addClass('current-sort-field');
 };
 
 const failLoad = function failLoad(model, response) {
@@ -89,13 +86,12 @@ const clearForm = function clearForm() {
 };
 
 const updateStatusMessageFrom = (messageHash) => {
-  $('#status-messages ul').empty();
+  $('span.error').empty();
   for (let messageType in messageHash) {
     messageHash[messageType].forEach((message) => {
-      $('#status-messages ul').append($(`<li>${ messageType }: ${ message }</li>`));
-    })
+      $(`#new-trip label[for="${ messageType }"]`).append(`  <span>${ message }</span>`);
+    });
   }
-  $('#status-messages').show();
 };
 
 const updateStatusMessagesWith = (message) => {
@@ -151,19 +147,20 @@ $(document).ready( () => {
 
   $('button#search').on('click', loadTrips);
   $('#filters input').on('keyup', function() {
-   const query = $(this).val().toLowerCase();
-   const filterCategory = $('#filters select').val().toLowerCase();
-   const filteredList = tripList.filterBy(filterCategory, query);
-   render(filteredList);
- });
+    const query = $(this).val().toLowerCase();
+    const filterCategory = $('#filters select').val().toLowerCase();
+    const filteredList = tripList.filterBy(filterCategory, query);
+    render(filteredList);
+  });
 
- $('.sort').click(sortTrips);
+  $('.sort').click(sortTrips);
+  $('#new-trip').on('submit', addTrip);
 
   $('#trip-list').on('click', 'tr', function() {
     const trip = tripList.get($(this).attr('data-id'));
     trip.fetch({
-    success: loadTrip,
-    error: failLoad,
+      success: loadTrip,
+      error: failLoad,
     });
   });
 
@@ -178,6 +175,4 @@ $(document).ready( () => {
       $('#add-trip').css("display", "none");
     }
   });
-
-  $('#new-trip').on('submit', addTrip);
 });
