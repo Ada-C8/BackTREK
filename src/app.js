@@ -214,7 +214,6 @@ const renderTrips = function renderTrips(tripList) {
     if($('#trip-table').hasClass('show')){
       const generatedHTML = $(tripsTemplate(trip.attributes));
       tripTableElement.append(generatedHTML);
-
       generatedHTML.on('click', (event) =>{
         renderTripDetails(trip);
       })
@@ -285,21 +284,55 @@ $(document).ready( () => {
     });
   });// end  function
 
-  $('.category-dropbtn').on('click', function(){
-    $("#category-dropdown").slideToggle( "slow", function() {
+  $('.cost-dropbtn').on('click', function(){
+    $("#cost-dropdown").slideToggle( "slow", function() {
       // Animation complete.
     });
   });// end  function
-  $("#continent-dropdown").on('click', 'option', function(){
+  // $("#continent-dropdown").on('click', 'option', function(){
+  //   $('#trip-table').addClass('hidden');
+  //   $('#trip-table').removeClass('show');
+  //   $('#continent-table').removeClass('hidden');
+  //   $('#continent-table').addClass('show');
+  //   tripList.fetchContinent({
+  //     myValue: $(this).attr('value'),
+  //     success: function(myValue){}
+  //   });
+  // });
+
+  $("#continent-dropdown, #cost-dropdown").on('click', 'option', function(){
+    console.log($(this).attr('id'));
+    let queryUrlSnippet;
+    let parentElement = $(this).parent();
+    if ($(parentElement).attr('id') === 'continent-dropdown'){
+      queryUrlSnippet = 'continent';
+    }else{
+      queryUrlSnippet = 'cost';
+    }
+    // console.log(queryUrlSnippet);
+    console.log('that is queryUrlSnippet')
     $('#trip-table').addClass('hidden');
     $('#trip-table').removeClass('show');
     $('#continent-table').removeClass('hidden');
     $('#continent-table').addClass('show');
     tripList.fetchContinent({
+      queryType: queryUrlSnippet,
       myValue: $(this).attr('value'),
       success: function(myValue){}
     });
   });
+
+  // $("#cost-dropdown").on('click', 'option', function(){
+  //   $('#trip-table').addClass('hidden');
+  //   $('#trip-table').removeClass('show');
+  //   $('#continent-table').removeClass('hidden');
+  //   $('#continent-table').addClass('show');
+  //   tripList.fetchContinent({
+  //     queryType: 'cost',
+  //     myValue: $(this).attr('value'),
+  //     success: function(myValue){}
+  //   });
+  // });
 
 
   $('#add-trip').on('click', renderTripForm);

@@ -34,12 +34,14 @@
           </div>
         </div>
         <div class="dropdown">
-          <button  class="category-dropbtn button">Categories</button>
-          <div id="category-dropdown" class="dropdown-content">
-            <option value="adventure">Adventure</option>
-            <option value="Everything">Everything</option>
-            <option value="fun">Fun</option>
-            <option value="cat">Cat</option>
+          <button  class="cost-dropbtn button">Maximum Cost</button>
+          <div id="cost-dropdown" class="dropdown-content">
+            <option value="50">$50</option>
+              <option value="100">$100</option>
+              <option value="1000">$1000</option>
+            <option value="5000">$5000</option>
+              <option value="10000">$10000</option>
+            <option value="1000000000">$1,000,000,000</option>
           </div>
         </div>
       </section>
@@ -94,7 +96,7 @@
 
         <table class = "continent-trips">
           <thead>
-            <h2>Trips</h2>
+            <h2 id='api-query'></h2>
             <th class="sort name">Title</th>
             <th class="sort continent">Continent</th>
             <th class="sort weeks">Weeks</th>
