@@ -189,12 +189,31 @@ const addReservationHandler = function(event) {
   })
 };
 
+///////MODAL FUNCTIONS////////////
+let modal = document.getElementById('tripModal');
+
+
+const openModal = function openModal() {
+  modal.style.display = 'block';
+}
+
+const closeModal = function closeModal() {
+  modal.style.display = "none";
+}
+
+const clickOutside = function clickOutside(event) {
+  if(event.target == modal){
+    modal.style.display = 'none';
+  }
+}
+
+
 //// DOCUMENT READY ////////
 
 $(document).ready(() => {
 
   $('#trips-table').hide();
-  $('#add-trip-form').hide();
+  // $('#add-trip-form').hide();
   //underscore
   tripsTemplate = _.template($('#trips-list-template').html());
   tripTemplate = _.template($('#trip-template').html());
@@ -259,6 +278,15 @@ $(document).ready(() => {
     $('#status-messages ul').html('');
     $('#status-messages').hide();
   })
+
+/////////MODAL EVENT LISTENING ////////
+  $('#modalBtn').on('click', openModal);
+
+  $('.closeBtn').on('click', closeModal);
+
+  $('.submit-button').on('click', closeModal);
+
+  window.addEventListener('click', clickOutside); // here i learned that i could not use .on to get the result I wanted 
 });
 
 
@@ -266,7 +294,7 @@ $(document).ready(() => {
 
 // GAME PLAN
 // user needs to be given some sort of visual feedback that the data has been sorted
-  /// tried to add it but having some issues displaying -- need to work on it
+/// tried to add it but having some issues displaying -- need to work on it
 /// WAVE 3 ///////// optional
 // filtering --- the challenging piece of the project
 // 1. figure out the modal situation
