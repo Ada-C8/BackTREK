@@ -39,6 +39,25 @@ const loadTrips = function loadTrips() {
   $('#trips').show();
 };
 
+const sortTrips = function sortTrips(event) {
+  $('.current-sort-field').removeClass('current-sort-field');
+  $(this).addClass('current-sort-field');
+
+  const classes = $(this).attr('class').split(/\s+/);
+
+  classes.forEach((className) => {
+    if (TRIP_FIELDS.includes(className)) {
+      if (className === tripList.comparator) {
+        tripList.models.reverse();
+        tripList.trigger('sort', tripList);
+      } else {
+        tripList.comparator = className;
+        tripList.sort();
+      }
+    }
+  });
+};
+
 const addTrip = function addTrip(event) {
   event.preventDefault();
 
@@ -138,6 +157,8 @@ $(document).ready( () => {
    render(filteredList);
  });
 
+ $('.sort').click(sortTrips);
+
   $('#trip-list').on('click', 'tr', function() {
     const trip = tripList.get($(this).attr('data-id'));
     trip.fetch({
@@ -159,12 +180,4 @@ $(document).ready( () => {
   });
 
   $('#new-trip').on('submit', addTrip);
-
-  TRIP_FIELDS.forEach((field) => {
-    const headerElement = $(`.sort.${ field }`);
-    headerElement.on('click', () => {
-      tripList.comparator = field;
-      tripList.sort();
-    });
-  });
 });
