@@ -32,19 +32,19 @@ p {
 
 #trips {
   display: inline-block;
-  width: 45%;
-  padding: .5em .5em .5em 1em;
-  position: relative;
+  margin: 1em;
+  padding: .5em;
   top: -37em;
+}
+
+table {
+  table-layout: fixed;
 }
 
 #trip {
   display: inline-block;
-  width: 40%;
-  position: relative;
   margin: 1em;
-  right: -10em;
-  padding: .5em 1em .5em .5em;
+  padding: .5em;
 }
 
 .green-border {
@@ -57,6 +57,7 @@ button#search, button#add {
   border: 2px white solid;
   border-radius: 6px;
   padding: 10px;
+  margin: 8px;
 }
 
 button#reserve, button[type="submit"] {
@@ -113,4 +114,9 @@ th.sort {
 
 #new-trip label span {
   color: red;
+}
+
+footer {
+  clear: both;
+  padding: 1em;
 }

@@ -159,6 +159,9 @@ $(document).ready( () => {
     const filterCategory = $('#filters select').val().toLowerCase();
     const filteredList = tripList.filterBy(filterCategory, query);
     render(filteredList);
+    if (filteredList.length === 0) {
+      $('#trips').append('<p>No trips match your search</p>');
+    }
   });
 
   $('.sort').click(sortTrips);
