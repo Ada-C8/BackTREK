@@ -14,6 +14,7 @@ console.log('it loaded!');
 const tripList = new TripList();
 let tripTemplate;
 let atripTemplate;
+let trip;
 
 const render = function render(tripList) {
   const $tripList = $('#trip-list');
@@ -25,13 +26,22 @@ const render = function render(tripList) {
 
 const seeTrip = function seeTrip(id){
   trip = tripList.get(id);
-  
+  console.log(trip)
+  trip.fetch({success: events.getTrip});
 }
+
+
 
 const events = {
   showTrips() {
     $('#trips-table').toggle({'display': 'block'});
-  }
+  },
+  getTrip(trip) {
+  const $onetrip = $('.onetrip');
+      $onetrip.empty();
+      $onetrip.append(atripTemplate(trip.attributes));
+  },
+
 };
 
 $(document).ready( () => {
@@ -42,5 +52,10 @@ $(document).ready( () => {
   });
   tripList.on('update', render, tripList);
   tripList.fetch();
+
+  $('#trips-table').on('click', '.trip', function() {
+    let tripID = $(this).attr('atrip-id');
+    seeTrip(tripID);
+  })
   // $('main').html('<h1>Hello World!</h1>');
 });

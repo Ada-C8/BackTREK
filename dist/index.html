@@ -33,6 +33,7 @@
           <th class="sort continent">Continent</th>
           <th class="sort weeks">Weeks</th>
           <th class="sort cost">Cost</th>
+          <th class="sort id">ID</th>
         </thead>
         <tbody id="trip-list">
         </tbody>
@@ -40,7 +41,11 @@
     </section>
 
     <section class="columns large-8 small-12" id="trip">
+      <section class="onetrip">
+        <p>
 
+        </p>
+      </section>
     </section>
 
   </main>
@@ -49,14 +54,16 @@
   </footer>
 
   <script type="text/template" id="atrip-template">
+    <section class="onetrip">
     <h2 class="name"><%- name %></h2>
-    <p class="description"><%- description %></p>
+    <p class="about"><%- about %></p>
     <p class="weeks"><%- weeks %></p>
     <p class="cost"><%- cost %></p>
+    </section>
   </script>
 
   <script type="text/template" id="trip-template">
-    <tr class="trip">
+    <tr class="trip" atrip-id="<%- id %>" >
       <td>
         <%- name %>
       </td>
@@ -71,6 +78,9 @@
       </td>
       <td>
         <%- cost %>
+      </td>
+      <td>
+        <%- id %>
       </td>
     </tr>
   </script>
