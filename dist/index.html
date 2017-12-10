@@ -6,10 +6,117 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-  <header>
-
+  <header class='hero-section'>
+    <!-- <button class="button" id="createTrip"> Create trip! </button> -->
   </header>
   <main>
+    <section id="status-messages">
+        <button class="button clear float-right">
+          Hide
+        </button>
+
+        <ul>
+        </ul>
+      </section>
+    <aside class="columns large-4 small-12">
+  <h2>Add a Trip</h2>
+  <form id="add-trip-form">
+    <label for="name">Name</label>
+    <input type="text" name="name"></input>
+
+    <label for="continent">Continent</label>
+    <input type="text" name="continent"></input>
+
+    <label for="about">About</label>
+    <input type="text" name="about"></input>
+
+    <label for="category">Category</label>
+    <input type="text" name="category"></input>
+
+    <label for="weeks">Weeks</label>
+    <input type="number" name="weeks"></input>
+
+    <label for="cost">Cost</label>
+    <input type="number" name="cost"></input>
+
+    <input type="submit" value="Add it!" class="button"></input>
+  </form>
+</aside>
+<section id="oneTrip" class="columns large-8 small-12">
+</section>
+    <section class="columns large-8 small-12">
+      <h2>Trip Options!</h2>
+
+      <table>
+        <thead>
+          <th class="sort name">Name</th>
+          <th class="sort continent">Continent</th>
+          <th class="sort category">Category</th>
+          <th class="sort weeks">Weeks</th>
+          <th class="sort cost">Cost</th>
+        </thead>
+        <tbody id="trip-list">
+        </tbody>
+      </table>
+    </section>
+
+    <script type="text/template" id="trip-template">
+  <tr class="trip" id="<%- `trip${id }`%>" >
+    <td >
+      <%- name %>
+    </td>
+    <td>
+      <%- continent %>
+    </td>
+    <td>
+      <%- category %>
+    </td>
+    <td>
+      <%- weeks %>
+    </td>
+    <td>
+      <%- cost %>
+    </td>
+  </tr>
+</script>
+
+
+<script type="text/template" id="details-template" class="columns large-4 small-8">
+
+<h2>
+  <%- name %>
+</h2>
+
+<!-- <p class = 'tripId' id= `${<% id %>}`> -->
+<p>
+  <%- about %>
+</p>
+<button class="button" id="goReservationForm">
+  Reserve this trip!
+</button>
+
+<div id="spaceReservationForm">
+</div>
+
+</script>
+
+
+
+<script type="text/template" id="reservationFormTemplate" class="columns large-4 small-8">
+<form id="reservation-form">
+<label for="name">Name:</label>
+<input type="text" name="name" required></input>
+<input type="hidden" name="trip_id" value = "<%- tripId %>"  >
+</input>
+<label for="email">Email:</label>
+<input type="email" name="email" required></input>
+<input id="submitForm" type="submit" class="button" value="Reserve Trip"></input>
+
+
+</script>
+
+
+
 
   </main>
   <footer>
