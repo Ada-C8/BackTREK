@@ -2,19 +2,218 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>My JavaScript App</title>
+  <title>Trekking</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-  <header>
 
+  <header class="main-header">
+    <section class="row margin-zero-auto">
+      <h1 class="logo">TREK</h1>
+      <button id="create-trip" class="button to-reserve">Create a Trip</button>
+    </section>
   </header>
-  <main>
 
+  <main class="row">
+
+    <!-- DISPLAY ERRORS HERE! -->
+    <section id="display-errors" class="small-12 large-12 columns">
+    </section>
+
+    <div class="content-wrapper">
+
+      <!-- TRIP INFO HERE WITH THE RESERVE FORM -->
+      <section class="small-12 large-6 columns">
+
+        <!-- DEFAULT LOGO -->
+        <section id="default-logo">
+          <h1 class="align-center">CHOOSE YOUR TREK</h1>
+        </section>
+
+        <!-- TRIP-INFO -->
+        <section id="trip-info">
+        </section>
+
+        <!-- CREATE TRIP FORM -->
+        <div id="create-trip-form" class="align-center">
+          <header>
+            <h4 class="header-styling cardo-font padding">Create New Trip</h4>
+          </header>
+
+          <form id="new-trip-form" class="small-11 small-centered columns cardo-font padding">
+            <label>Name</label>
+            <input type="text" id="name" name="name"></input>
+
+            <label>Continent</label>
+            <input type="text" id="continent" name="continent"></input>
+
+            <label>About</label>
+            <input type="text" id="about" name="about"></input>
+
+            <label>Category</label>
+            <input type="text" id="category" name="category"></input>
+
+            <label>Weeks</label>
+            <input type="text" id="weeks" name="weeks"></input>
+
+            <label>Cost</label>
+            <input type="text" id="cost" name="cost"></input>
+
+            <button class="button to-reserve-black" type="submit">Reserve</button>
+          </form>
+        </div>
+      </section>
+
+      <section id="table-select-wrapper" class="small-12 large-6 columns">
+        <p class="color-white align-center">
+          Filter by choosing from the dropdown menu
+          <br>
+          Click the table column name below to sort the list
+        </p>
+        <div class="set-width">
+          <select id="filter">
+            <option value="id">ID</option>
+            <option value="name">Name</option>
+            <option value="continent">Continent</option>
+            <option value="category">Category</option>
+            <option value="weeks">Weeks</option>
+            <option value="cost">Cost</option>
+          </select>
+          <input type="text" id="search-bar" placeholder="Search for a trip..." title="Search">
+        </div>
+
+        <div class="table-wrapper">
+          <table id="all-trips" class="hover striped stack">
+            <thead>
+              <th class="sort id">ID</th>
+              <th class="sort name">Name</th>
+              <th class="sort continent">Continent</th>
+              <th class="sort category">Category</th>
+              <th class="sort weeks">Weeks</th>
+              <th class="sort cost">Cost</th>
+            </thead>
+
+            <!-- APPEND ALL TRIPS  -->
+            <tbody id="trip-list">
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </div> <!-- Content Wrapper -->
   </main>
-  <footer>
 
+  <footer class="align-center">
+    <p>
+      COPYRIGHT &copy; ID 2017
+    </p>
   </footer>
+
+  <!-- ALL TRIP TEMPLATE -->
+
+  <script id="trip-template" type="text/template">
+    <tr id="trip<%-id%>">
+      <td>
+        <%- id %>
+      </td>
+      <td>
+        <%- name %>
+      </td>
+      <td>
+        <%- continent %>
+      </td>
+      <td>
+        <%- category %>
+      </td>
+      <td>
+        <%- weeks %>
+      </td>
+      <td>
+        <%- cost %>
+      </td>
+    </tr>
+  </script>
+
+  <!-- TRIP TEMPLATE -->
+
+  <script id="trip-info-template" type="text/template">
+    <section class="padding align-center">
+      <header>
+        <h1>
+          <%- name %>
+        </h1>
+        <small>
+          <%- continent %>
+        </small>
+      </header>
+
+      <section>
+        <p>
+          <%- about %>
+        </p>
+      </section>
+    </section>
+
+    <div id="reserve-wrapper">
+      <header>
+        <h4 class="header-styling cardo-font align-center">Please enter your information below</h4>
+      </header>
+
+      <form id="reserve-form" class="small-11 small-centered columns cardo-font padding">
+        <!-- <small class="error">FIELDS CANNOT BE BLANK</small> -->
+        <input type="hidden" name="tripId" value="<%-id%>"></input>
+
+        <label>Name:</label>
+        <input type="text" id="name" name="name"></input>
+
+        <label>Age:</label>
+        <input type="number" id="age" name="age"></input>
+
+        <label>Email:</label>
+        <input type="text" id="email" name="email"></input>
+
+        <button class="button to-reserve-black" type="submit">Reserve</button>
+      </form>
+    </div>
+  </script>
+
+  <!-- ERROR TEMPLATE -->
+  <script id="error-template" type= "text/template">
+    <section class="alert callout error align-center">
+      <p>
+        <% if (obj.name) { %> Name: <%- name %><% } %>
+      </p>
+
+      <p>
+        <% if (obj.email) { %> Email: <%- email %><% } %>
+      </p>
+
+      <p>
+        <% if (obj.continent) { %> Continent: <%- continent %><% } %>
+      </p>
+
+      <p>
+        <% if (obj.category) { %> Category: <%- category %><% } %>
+      </p>
+
+      <p>
+        <% if (obj.weeks) { %> Weeks: <%- weeks %><% } %>
+      </p>
+
+      <p>
+        <% if (obj.cost) { %> Cost: <%- cost %><% } %>
+      </p>
+
+      <button class="close-button" aria-label="Dismiss alert" type="button">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </section>
+
+  </script>
+
   <script src="app.bundle.js" type="text/javascript"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/js/foundation.js"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/js/plugins/foundation.reveal.min.js"></script> -->
+  <!-- Other JS plugins can be included here -->
 </body>
 </html>

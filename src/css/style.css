@@ -1,2 +1,137 @@
+/******* ALL STYLES *******/
 
-/* Your styles go here! */
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url('https://fonts.googleapis.com/css?family=Arvo');
+
+body, html {
+  max-width: 100%;
+  margin: 0;
+}
+
+body {
+  background: url('https://static.pexels.com/photos/33688/delicate-arch-night-stars-landscape.jpg');*/
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  font-family: 'Nunito', sans-serif;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Arvo', serif;
+}
+
+.padding {
+  padding: 1em;
+}
+.color-white {
+  color: white;
+}
+
+.to-reserve-black {
+  background-color: transparent;
+  border: 1px solid black;
+  border-radius: 5%;
+  color: black;
+}
+
+.align-center {
+  text-align: center;
+  /*padding: 10px;*/
+}
+
+
+/******* HEADER *******/
+
+.main-header {
+  text-align: center;
+  height: 150px;
+  padding: 30px;
+}
+
+@media screen and (min-width: 64em) {
+  .main-header {
+    text-align: center;
+    height: 200px;
+  }
+}
+
+h1.logo {
+  color: white;
+  top: 50%;
+  font-family: 'Arvo', serif;
+  font-size: 4em;
+}
+
+.to-reserve {
+  background-color: transparent;
+  border: 1px solid white;
+  border-radius: 5%;
+  color: white;
+}
+
+/******* MAIN *******/
+
+#default-logo {
+  color: white;
+  padding-top: 20%;
+}
+
+main {
+  overflow: scroll;
+  margin: 0 auto;
+}
+
+.set-width {
+  width: 100%;
+}
+
+/******* TABLE *******/
+
+table {
+  table-layout: fixed;
+  width: 100%;
+  text-align: center;
+}
+
+table thead th {
+  text-align: center;
+}
+
+@media screen and (max-width: 39.9375em) {
+  table {
+    font-size: 1em;
+  }
+}
+
+.current-sort-field {
+  background-color: darkgrey;
+  color: white;
+}
+
+/******* TRIP INFO *******/
+
+#trip-info {
+  background-color: white;
+}
+
+#trip-info small {
+  font-size: 1em;
+}
+
+@media screen and (min-width: 64em) {
+  #trip-info small {
+    font-size: 2em;
+  }
+}
+
+/******* CREATE TRIP FORM *******/
+
+#create-trip-form {
+  background-color: white;
+}
+
+/******* FOOTER *******/
+
+footer {
+  color: white;
+}
