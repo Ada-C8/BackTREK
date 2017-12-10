@@ -307,7 +307,7 @@ $(document).ready( () => {
     if ($(parentElement).attr('id') === 'continent-dropdown'){
       queryUrlSnippet = 'continent';
     }else{
-      queryUrlSnippet = 'cost';
+      queryUrlSnippet = 'budget';
     }
     // console.log(queryUrlSnippet);
     console.log('that is queryUrlSnippet')
