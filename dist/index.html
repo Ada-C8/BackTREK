@@ -10,11 +10,164 @@
 
   </header>
   <main>
+    <section>
+      <form id="add-trip-form">
+        <label for="name">Name:</label>
+        <input type="text" name="name"></input>
 
+        <label for="continent">Continent:</label>
+        <input type="text" name="continent"></input>
+
+        <label for="about">About:</label>
+        <input type="text" name="about"></input>
+
+        <label for="category">Category:</label>
+        <input type="text" name="category"></input>
+
+        <label for="weeks">Weeks:</label>
+        <input type="number" name="weeks" min="0"></input>
+
+        <label for="cost">Cost:</label>
+        <input type="number" name="cost" min="0" step=".01"></input>
+
+        <input type="submit" value="Add Trip"></input>
+      </form>
+    </section>
+
+    <section>
+      <button id="search-trips">Search Trips</button>
+    </section>
+
+    <section id"trip" class="row"></section>
+
+    <section id="trips" class="row">
+      <table>
+        <thead >
+          <!-- <th class="sort id">Id</th> -->
+          <th class="sort name">Name</th>
+          <th class="sort continent">Continent</th>
+          <th class="sort category">Category</th>
+          <th class="sort weeks">Weeks</th>
+          <th class="sort cost">Cost</th>
+        </thead>
+        <tbody id="trip-list">
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <form id="add-trip-form">
+        <label for="name">Name:</label>
+        <input type="text" name="name"></input>
+
+        <label for="continent">Continent:</label>
+        <input type="text" name="continent"></input>
+
+        <label for="about">About:</label>
+        <input type="text" name="about"></input>
+
+        <label for="category">Category:</label>
+        <input type="text" name="category"></input>
+
+        <label for="weeks">Weeks:</label>
+        <input type="number" name="weeks" min="0"></input>
+
+        <label for="cost">Cost:</label>
+        <input type="number" name="cost" min="0" step=".01"></input>
+
+        <input type="submit" value="Add Trip"></input>
+      </form>
+    </section>
+    <div class="row">
+      <!-- <columns medium="6" large="3"> -->
+      <button id="search-trips">Search Trips</button>
+      <!-- </columns> -->
+    </div>
+
+
+    <section id="trip" class="row"></section>
+
+    <section id="trips" class="row">
+      <table>
+        <thead >
+          <th class="sort id">Id</th>
+          <th class="sort name">Name</th>
+          <th class="sort continent">Continent</th>
+          <th class="sort category">Category</th>
+          <th class="sort weeks">Weeks</th>
+          <th class="sort cost">Cost</th>
+        </thead>
+        <tbody id="trip-list">
+        </tbody>
+      </table>
+    </section>
   </main>
   <footer>
 
   </footer>
+
+  <script type="text/template" id="trips-template">
+    <tr>
+      <!-- <td>
+        <%- id %>
+      </td> -->
+      <td>
+        <%- name %>
+      </td>
+      <td>
+        <%- continent %>
+      </td>
+      <td>
+        <%- category %>
+      </td>
+      <td>
+        <%- weeks %>
+      </td>
+      <td>
+        <%- cost %>
+      </td>
+    </tr>
+  </script>
+
+  <script type="text/template" id="trip-template">
+    <p>
+      <%- name %>
+    </p>
+
+    <p>
+      <%- about %>
+    </p>
+
+    <p>
+      <%- continent %>
+    </p>
+
+    <p>
+      <%- category %>
+    </p>
+
+    <p>
+      <%- weeks %>
+    </p>
+
+    <p>
+      <%- cost %>
+    </p>
+
+    <form id="reservation-form" data-trip-id="<%- id %>">
+      <label for="name">Name:</label>
+      <input type="text" name="name"></input>
+
+      <label for="age">Age:</label>
+      <input type="number" name="age"></input>
+
+      <label for="email">Email:</label>
+      <input type="text" name="email"></input>
+
+      <input type="submit" value="Reserve"></input>
+    </form>
+  </script>
+
   <script src="app.bundle.js" type="text/javascript"></script>
 </body>
 </html>
