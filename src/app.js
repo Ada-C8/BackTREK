@@ -52,56 +52,67 @@ $(document).ready( () => {
     $('#createTripSection').show();
   });
 
+  const getData = function getData(target, values) {
+  const data = {};
+  values.forEach((value) => {
+    let targetElement = target.find(`[name="${ value }"]`);
+    data[value] = targetElement.val();
+  });
+  return data;
+};
+
   $('#createTripForm').on('submit', (e) => {
     e.preventDefault();
-    let valid = true;
-    if ($('#nameField').val() === '') {
-      $('#nameField').css('background-color','red');
-      valid = false;
-    } else {
-      $('#nameField').css('background-color','white');
-    }
+     const data = getData($(e.target), ['name', 'continent', 'category', 'weeks', 'cost', 'about']);
 
-    if ($('#aboutField').val() === '') {
-      $('#aboutField').css('background-color','red');
-      valid = false;
-    } else {
-      $('#aboutField').css('background-color','white');
-    }
-
-    if ($('#categoryField').val() === '') {
-      $('#categoryField').css('background-color','red');
-      valid = false;
-    } else {
-      $('#categoryField').css('background-color','white');
-    }
-
-    if ($('#weeksField').val() === '') {
-      $('#weeksField').css('background-color','red');
-      valid = false;
-    } else {
-      $('#weeksField').css('background-color','white');
-    }
-
-    if ($('#costField').val() === '') {
-      $('#costField').css('background-color','red');
-      valid = false;
-    } else {
-      $('#costField').css('background-color','white');
-    }
-
-    if (valid){
-      const url = 'https://ada-backtrek-api.herokuapp.com/trips';
-      const data = $('#createTripForm').serialize();
-
-      $.post(url, data, (response) => {
-        const newTrip = new Trip(response);
-        tripList.add(newTrip);
-        $('#createTripSection').hide();
-      }).fail(() => {
-        console.log('The post call failed');
+    const newTrip = new Trip(data);
+    if (newTrip.isValid()){
+      newTrip.save({}, {
+        success: (model, response) => {
+          tripList.add(model);
+          console.log('Yay, trip was saved successfully!');
+        },
+        error: (model, response) => {
+          console.log('Failed to save trip! Server response:');
+          console.log(response);
+        },
       });
-      return false;
+
+    }else {
+      if ($('#nameField').val() === '') {
+        $('#nameField').css('background-color','red');
+
+      } else {
+        $('#nameField').css('background-color','white');
+      }
+
+      if ($('#aboutField').val() === '') {
+        $('#aboutField').css('background-color','red');
+
+      } else {
+        $('#aboutField').css('background-color','white');
+      }
+
+      if ($('#categoryField').val() === '') {
+        $('#categoryField').css('background-color','red');
+
+      } else {
+        $('#categoryField').css('background-color','white');
+      }
+
+      if ($('#weeksField').val() === '') {
+        $('#weeksField').css('background-color','red');
+
+      } else {
+        $('#weeksField').css('background-color','white');
+      }
+
+      if ($('#costField').val() === '') {
+        $('#costField').css('background-color','red');
+
+      } else {
+        $('#costField').css('background-color','white');
+      }
     }
   });
 
