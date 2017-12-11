@@ -12,6 +12,15 @@
   display: block;
 }
 
+th.sort {
+  cursor: pointer;
+}
+
+.current-sort-field {
+  background-color: darkgrey;
+  color: white;
+}
+
 
 #status-messages {
   background-color: #dfdfdf;

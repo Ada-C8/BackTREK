@@ -113,11 +113,11 @@ const events = {
    trip.destroy();
  },
  sortTrips(event) {
-    $('.sort').removeClass('current-sort-field');
+    $('.current-sort-field').removeClass('current-sort-field');
     $(this).addClass('current-sort-field');
 
 
-    const classes = $(this).attr('class').split(/\s+/);
+    let classes = $(this).attr('class').split(/\s+/);
 
     classes.forEach((className) => {
       if (tripFields.includes(className)) {
@@ -153,6 +153,7 @@ $(document).ready( () => {
   });
 
   $('.sort').click(events.sortTrips);
+  tripList.on('sort', render, tripList);
 
   $('#newtrip').submit(events.addTrip);
   $(document).on('submit', '#rezform', events.makeReservation);
