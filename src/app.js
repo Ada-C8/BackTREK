@@ -99,7 +99,7 @@ const events = {
        error: events.failedTripSave,
      });
    } else {
-     
+
      updateStatusMessageWith('Trip was invalid.');
    }
 
@@ -112,6 +112,26 @@ const events = {
    updateStatusMessageWith('Trip failed!');
    trip.destroy();
  },
+ sortTrips(event) {
+    $('.sort').removeClass('current-sort-field');
+    $(this).addClass('current-sort-field');
+
+
+    const classes = $(this).attr('class').split(/\s+/);
+
+    classes.forEach((className) => {
+      if (tripFields.includes(className)) {
+        if (className === tripList.comparator) {
+          tripList.models.reverse();
+          tripList.trigger('sort', tripList);
+        }
+        else {
+          tripList.comparator = className;
+          tripList.sort();
+        }
+      }
+    });
+  },
 
 };
 
@@ -131,6 +151,9 @@ $(document).ready( () => {
   $('#newtripform').on('click', function() {
       events.showNewForm();
   });
+
+  $('.sort').click(events.sortTrips);
+
   $('#newtrip').submit(events.addTrip);
   $(document).on('submit', '#rezform', events.makeReservation);
   // $('main').html('<h1>Hello World!</h1>');
