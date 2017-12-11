@@ -36,6 +36,7 @@ const updateStatusMessageWith = (message) => {
   $('#status-messages').show();
 }
 
+const tripFields = ['name', 'continent', 'about', 'category', 'weeks', 'cost'];
 const rezFields = ['name', 'age', 'email'];
 const events = {
   showTrips() {
@@ -80,6 +81,37 @@ const events = {
     updateStatusMessageWith('reservation failed!');
     reservation.destroy();
   },
+  addTrip(event) {
+   event.preventDefault();
+   const tripData = {};
+   tripFields.forEach( (field) => {
+     const val = $(`#newtrip input[name=${field}]`).val();
+     if (val != '') {
+       tripData[field] = val;
+     }
+   });
+   const trip = new Trip(tripData);
+
+   if (trip.isValid()) {
+
+     trip.save({}, {
+       success: events.successfullTripSave,
+       error: events.failedTripSave,
+     });
+   } else {
+     
+     updateStatusMessageWith('Trip was invalid.');
+   }
+
+ },
+ successfullTripSave(trip, response) {
+   $('#newtrip.input').val('');
+   updateStatusMessageWith('Trip added!')
+ },
+ failedTripSave(trip, response) {
+   updateStatusMessageWith('Trip failed!');
+   trip.destroy();
+ },
 
 };
 
@@ -99,6 +131,7 @@ $(document).ready( () => {
   $('#newtripform').on('click', function() {
       events.showNewForm();
   });
+  $('#newtrip').submit(events.addTrip);
   $(document).on('submit', '#rezform', events.makeReservation);
   // $('main').html('<h1>Hello World!</h1>');
 });
