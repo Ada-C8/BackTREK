@@ -2,7 +2,9 @@
 import $ from 'jquery';
 import _ from 'underscore';
 import Trip from './app/models/trip';
+import Reservation from './app/models/reservations';
 import TripList from './app/collections/tripList';
+
 
 // CSS
 import './css/foundation.css';
@@ -63,7 +65,7 @@ $(document).ready( () => {
 
   $('#createTripForm').on('submit', (e) => {
     e.preventDefault();
-     const data = getData($(e.target), ['name', 'continent', 'category', 'weeks', 'cost', 'about']);
+    const data = getData($(e.target), ['name', 'continent', 'category', 'weeks', 'cost', 'about']);
 
     const newTrip = new Trip(data);
     if (newTrip.isValid()){
@@ -81,73 +83,73 @@ $(document).ready( () => {
     }else {
       if ($('#nameField').val() === '') {
         $('#nameField').css('background-color','red');
-
       } else {
         $('#nameField').css('background-color','white');
       }
 
       if ($('#aboutField').val() === '') {
         $('#aboutField').css('background-color','red');
-
       } else {
         $('#aboutField').css('background-color','white');
       }
 
       if ($('#categoryField').val() === '') {
         $('#categoryField').css('background-color','red');
-
       } else {
         $('#categoryField').css('background-color','white');
       }
 
       if ($('#weeksField').val() === '') {
         $('#weeksField').css('background-color','red');
-
       } else {
         $('#weeksField').css('background-color','white');
       }
 
       if ($('#costField').val() === '') {
         $('#costField').css('background-color','red');
-
       } else {
         $('#costField').css('background-color','white');
       }
     }
   });
 
-  $('#reservationForm').on('submit', () => {
-    let valid = true;
-    if ($('#reservationName').val() === '') {
-      $('#reservationName').css('background-color','red');
-      valid = false;
-    } else {
-      $('#reservationName').css('background-color','white');
-    }
+  $('#reservationForm').on('submit', (e) => {
+    e.preventDefault();
+    const data = getData($(e.target), ['name', 'email']);
+    const id = $('#singleTrip li')[0].id;
+    data['tripID'] = id;
+    const newReservation = new Reservation(data);
+    console.log(newReservation.isValid());
 
-    if ($('#reservationEmail').val() === '') {
-      $('#reservationEmail').css('background-color','red');
-      valid = false;
-    } else {
-      $('#weeksField').css('background-color','white');
-    }
-
-    if (valid) {
-      const id = $('#singleTrip li')[0].id;
-
-      const url = `https://ada-backtrek-api.herokuapp.com/trips/${id}/reservations`
-      const data = $('#reservationForm').serialize();
-
-      $.post(url, data, () => {
-        $('#reservationName').val('');
-        $('#reservationEmail').val('');
-        $('#reservationForm').hide();
-        $('#singleTripSection').hide();
-      }).fail(() => {
-        console.log('The post call failed');
+    if (newReservation.isValid()) {
+      newReservation.save({}, {
+        success: (response) => {
+          console.log('Yay, trip was saved successfully!');
+        },
+        error: (status, response) => {
+          console.log('Failed to save trip! Server response:');
+          console.log(response);
+        },
       });
+
+    } else {
+      if ($('#reservationName').val() === '') {
+        $('#reservationName').css('background-color','red');
+        console.log('name is now red');
+      } else {
+        $('#reservationName').css('background-color','white');
+        console.log('name is now white');
+      }
+
+      if ($('#reservationEmail').val() === '') {
+        $('#reservationEmail').css('background-color','red');
+        console.log('email is now red');
+      } else {
+        $('#reservationEmail').css('background-color','white');
+        console.log('email is now white');
+      }
     }
-    return false;
+
   });
 
   TRIP_FIELDS.forEach((field) => {
