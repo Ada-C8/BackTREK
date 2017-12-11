@@ -60,6 +60,27 @@
     <p class="weeks"><%- weeks %></p>
     <p class="cost"><%- cost %></p>
     </section>
+    <h2>Make a Reservation!</h2>
+    <section class="form">
+      <form id="rezform" atrip-id="<% id %>" >
+    <section>
+      <label>Name</label>
+      <input type="text" id="name" name="name"></input>
+    </section>
+    <section>
+      <label>Age</label>
+      <input type="text" id="age" name="age"></input>
+    </section>
+    <section>
+      <label>Email</label>
+      <input type="text" id="email" name="email"></input>
+    </section>
+
+    <section class="button">
+      <button type="submit">Make Reservation</button>
+    </section>
+  </form>
+    </section>
   </script>
 
   <script type="text/template" id="trip-template">

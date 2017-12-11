@@ -7,6 +7,7 @@ import './css/foundation.css';
 import './css/style.css';
 
 import Trip from './app/models/trip';
+import Reservation from './app/models/reservation';
 import TripList from './app/collections/trip_list';
 
 console.log('it loaded!');
@@ -26,12 +27,16 @@ const render = function render(tripList) {
 
 const seeTrip = function seeTrip(id){
   trip = tripList.get(id);
-  console.log(trip)
   trip.fetch({success: events.getTrip});
 }
 
+const updateStatusMessageWith = (message) => {
+  $('#status-messages ul').empty();
+  $('#status-messages ul').append(`<li>${message}</li>`);
+  $('#status-messages').show();
+}
 
-
+const rezFields = ['name', 'age', 'email'];
 const events = {
   showTrips() {
     $('#trips-table').toggle({'display': 'block'});
@@ -40,6 +45,39 @@ const events = {
   const $onetrip = $('.onetrip');
       $onetrip.empty();
       $onetrip.append(atripTemplate(trip.attributes));
+  },
+  makeReservation(event){
+    event.preventDefault();
+    const rezData = {};
+    rezFields.forEach( (field) => {
+      const val = $(`input[name=${field}]`).val();
+      if (val != '') {
+        rezData[field] = val;
+      }
+    });
+    const reservation = new Reservation(rezData);
+
+    if (reservation.isValid()) {
+      const tripID = $(this).data('id');
+      reservation.urlRoot = `${(new Trip()).urlRoot}${tripID}/reservations`;
+      reservation.save({}, {
+        success: events.successfullSave,
+        error: events.failedSave,
+      });
+    } else {
+      // getting here means there were client-side validation errors reported
+      // console.log("What's on book in an invalid book?");
+      // console.log(book);
+      updateStatusMessageWith('reservation is invalid');
+    }
+  },
+  successfullSave(reservation, response) {
+    $('#rezform.input').val('');
+    updateStatusMessageWith('reservation added!')
+  },
+  failedSave(reservation, response) {
+    updateStatusMessageWith('reservation failed!');
+    reservation.destroy();
   },
 
 };
