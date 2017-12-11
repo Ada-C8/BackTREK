@@ -2,19 +2,116 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>My JavaScript App</title>
+  <title>Trek!</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css?family=Dosis|Indie+Flower" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/foundation/6.2.4/foundation.min.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header>
-
+    <h1>Trek!</h1>
+    <h3>Adventure awaits...</h3>
+    <button type="button" id="search">Find Trips</button>
+    <button type="button" id="add">Add a New Trip</button>
   </header>
   <main>
+    <div id="status-messages"><ul></ul></div>
+    <div id="add-trip" class="modal">
+      <div class="modal-content">
+      <span class="close">&times;</span>
+      <form id="new-trip" method="post">
+        <h3>Add a Trip</h3>
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name"></input>
+        <label for="continent">Continent</label>
+        <input type="text" id="continent" name="continent"></input>
+        <label for="weeks">Weeks</label>
+        <input type="text" id="weeks" name="weeks"></input>
+        <label for="category">Category</span></label>
+        <input type="text" id="category" name="category"></input>
+        <label for="cost">Cost</label>
+        <input type="text" id="cost" name="cost"></input>
+        <label for="about">Description</label>
+        <input type="text" id="about" name="label"></input>
+        <button type="submit">Add Trip</button>
+      </form>
+      </div>
+    </div>
+    <article id="trips" class="small-12 large-6 columns">
+      <form id="filters">
+        <select>
+          <option value="null">Search By...</option>
+          <option value="name">Name</option>
+          <option value="continent">Continent</option>
+          <option value="weeks">Weeks</option>
+          <option value="category">Category</option>
+          <option value="cost">Cost</option>
+        </select>
+        <input type="text"></input>
+      </form>
+      <table>
+        <caption>Trips</caption>
+      <thead>
+        <th class="sort name">Name</th>
+        <th class="sort continent">Continent</th>
+        <th class="sort weeks">Weeks</th>
+        <th class="sort category">Category</th>
+        <th class="sort cost">Cost</th>
+      </thead>
+      <tbody id="trip-list">
+      </tbody>
+    </table>
+  </article>
+  <aside id="trip" class="small-12 large-5 columns"></aside>
 
   </main>
   <footer>
-
+    &copy; 2017 LAC
   </footer>
   <script src="app.bundle.js" type="text/javascript"></script>
+  <script type="text/template" id="trip-template">
+    <tr class="trip" data-id="<%- id %>">
+      <td class="name">
+        <%- name %>
+      </td>
+      <td class="continent">
+        <%- continent %>
+      </td>
+      <td class="weeks">
+        <%- weeks %>
+      </td>
+      <td class="category">
+        <%- category %>
+      </td>
+      <td class="cost">
+        $<%- cost.toFixed(2) %>
+      </td>
+    </tr>
+  </script>
+  <script type="text/template" id="trip-details-template">
+    <h3 data-id="<%- id %>"><%- name %></h3>
+    <p>Trip ID: <%- id %></p>
+    <p>Destination: <%- continent %></p>
+    <p>Weeks: <%- weeks %></p>
+    <p>Cost: $<%- cost.toFixed(2) %></p>
+    <p>Category: <%- category %></p>
+    <h4>About</h4>
+    <p><%- about %></p>
+    <button id="reserve">Reserve Your Spot Now!</button>
+    <section id="message"></section>
+    <form id="reservation" action="https://ada-backtrek-api.herokuapp.com/trips/<%- id %>/reservations" method="post">
+      <label for="name">Name</label>
+      <input type="text" id="cust-name" name="name"></input>
+      <label for="email">Email</label>
+      <input type="text" id="email" name="email"></input>
+      <button type="submit">Reserve</button>
+    </form>
+  </script>
+<!--  <script type="text/template" id="status-message-template">
+    <li class="<%- status %>">
+      <%- message %>
+    </li>
+  </script> -->
 </body>
 </html>
