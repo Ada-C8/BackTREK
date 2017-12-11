@@ -58,7 +58,8 @@ const events = {
     const reservation = new Reservation(rezData);
 
     if (reservation.isValid()) {
-      const tripID = $(this).data('id');
+      const tripID = $(event.currentTarget.attributes.atripid).val();
+      console.log(tripID)
       reservation.urlRoot = `${(new Trip()).urlRoot}${tripID}/reservations`;
       reservation.save({}, {
         success: events.successfullSave,
