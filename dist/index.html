@@ -2,19 +2,131 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>My JavaScript App</title>
+  <title>Back Trekking</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css?family=Abril+Fatface|Roboto" rel="stylesheet">
 </head>
 <body>
-  <header>
 
+  <header class="hero">
+    <div class="hero-section-text">
+      <h1>Back Trekking</h1>
+      <span><h5>
+        <button id="show-trips" class="button secondary hollow">Show Trips</button>
+        <button id="trip-create-new-btn" class="button secondary hollow">Create New Trip</button>
+      </h5></span>
+    </div>
   </header>
+
   <main>
+<!-- MESSAGES -->
+    <span id="status-msg"></span>
+    <span id="confirmation-msg"></span>
 
+<!-- ADD TRIP #trip-create-new -->
+    <article id="trip-create-new" class="columns large-12 small-12">
+      <!-- create new trip form -->
+    </article>
+
+    <!-- SINGLE TRIP #trip-about -->
+    <article id="trip-about" class="columns large-4 small-4 hidden">
+    </article>
   </main>
-  <footer>
+<!-- TRIP LIST #trip-list -->
+    <div id="list">
+      <section>
+        <table id="trip-list-table" class="hover stack">
+          <thead>
+            <th class="sort name" id="trip-name">Name</th>
+            <th class="sort continent">Continent</th>
+            <th class="sort category">Category</th>
+            <th class="sort weeks">Trip Length</th>
+            <th class="sort cost">Cost (in USD)</th>
+          </thead>
+          <tbody id="trip-list">
+          </tbody>
+        </table>
+      </section>
+    </div>
 
-  </footer>
+<!--
+  <footer>
+    &copy; 2017 Sara Frandsen
+  </footer> -->
+
+<!-------------------------->
+<!-------------------------->
+
+<!-- STATUS MESSAGE -->
+  <script type="text/template" id="status-msg-template">
+
+  </script>
+
+<!-- SINGLE TRIP TEMPLATE -->
+  <script type="text/template" id="trip-template">
+    <h2><%- name %></h2>
+    <p><%- about %></p>
+    <button id="new-reservation-btn" class="button secondary hollow">Reserve This Trip</button>
+    <section id="new-reservation"><!-- reservation form --></section>
+  </script>
+
+<!-- TRIPS TEMPLATE -->
+  <script type="text/template" id="trips-template">
+    <tr data-id="<%- id %>" id="<%- id %>" class="trips">
+      <td>
+        <%- name %>
+      </td>
+      <td>
+        <%- continent %>
+      </td>
+      <td>
+        <%- category %>
+      </td>
+      <td>
+        <%- weeks %> week(s)
+      </td>
+      <td>
+        $<%- cost %>
+      </td>
+    </tr>
+  </script>
+
+<!-- CREATE NEW TRIP TEMPLATE -->
+  <script type="text/template" id="create-new-trip-template">
+    <h2>Add a Trip</h2>
+    <form id="add-trip-form">
+      <label for="name">Name</label>
+      <input type="text" name="name"></input>
+      <label for="continent">Continent</label>
+      <input type="text" name="continent"></input>
+      <label for="about">About</label>
+      <input type="text" name="about"></input>
+      <label for="category">Category</label>
+      <input type="text" name="category"></input>
+      <label for="weeks">Weeks</label>
+      <input type="number" name="weeks"></input>
+      <label for="cost">Cost</label>
+      <input type="number" name="cost"></input>
+
+      <input type="submit" value="Create New Trip" class="button"></input>
+    </form>
+  </script>
+
+<!-- NEW RESERVATION TEMPLATE -->
+  <script type="text/template" id="new-reservation-template">
+    <h2>Make Reservation</h2>
+    <form id="reservation-form">
+      <label for="name" id="reservation-name">Name</label>
+      <input type="text" name="name"></input>
+      <label for="age" id="reservation-age">Age</label>
+      <input type="number" name="age"></input>
+      <label for="email" id="reservation-email">Email</label>
+      <input type="text" name="email"></input>
+
+      <input type="submit" value="Make Reservation" class="button"></input>
+    </form>
+  </script>
+
   <script src="app.bundle.js" type="text/javascript"></script>
 </body>
 </html>

@@ -1,2 +1,78 @@
+/*
+header:
+font-family: 'Abril Fatface', cursive;
+body:
+font-family: 'Roboto', sans-serif;
+*/
 
-/* Your styles go here! */
+body{
+  font-family: 'Roboto', sans-serif;
+}
+
+/* header */
+.hero {
+  background: url('https://i.imgur.com/cq3UAle.jpg') 30% no-repeat;
+  /* img of canyons with several hot air balloons */
+  /* Photo by Egzon Bytyqi on Unsplash */
+  background-size: cover;
+  height: 100vh;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-section-text h1 {
+  font-size: 5rem;
+  color: #20333e;
+  text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+  font-family: 'Abril Fatface', cursive;
+}
+
+#show-trips, #trip-create-new-btn {
+  color: white;
+  border-color: white;
+}
+
+#show-trips:hover, #trip-create-new-btn:hover {
+  color: #20333e;
+}
+
+#list {
+  height: 60vh;
+  overflow: scroll;
+}
+
+.hidden {
+  display: none;
+}
+
+#trip-about {
+  overflow: scroll;
+  position: relative;
+  height: 60vh;
+}
+
+/* table */
+#trip-list-table {
+  display: none;
+  /*float:left;*/
+}
+
+th.sort {
+  cursor: pointer;
+  background-color: #A7CCA7;
+}
+
+th.current-sort-field {
+  background-color: #647A6C;
+  color: white;
+}
+
+#trip-list-table tr:nth-child(even) {
+  background-color: #EDE3E4;
+}
+
+#trip-list-table tr:nth-child(odd) {
+  background-color: #F1EAEB;
+}
