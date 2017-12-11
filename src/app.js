@@ -41,6 +41,9 @@ const events = {
   showTrips() {
     $('#trips-table').toggle({'display': 'block'});
   },
+  showNewForm() {
+    $('#new-form').toggle({'display': 'block'});
+  },
   getTrip(trip) {
   const $onetrip = $('.onetrip');
       $onetrip.empty();
@@ -66,9 +69,6 @@ const events = {
         error: events.failedSave,
       });
     } else {
-      // getting here means there were client-side validation errors reported
-      // console.log("What's on book in an invalid book?");
-      // console.log(book);
       updateStatusMessageWith('reservation is invalid');
     }
   },
@@ -96,7 +96,9 @@ $(document).ready( () => {
     let tripID = $(this).attr('atrip-id');
     seeTrip(tripID);
   })
-
+  $('#newtripform').on('click', function() {
+      events.showNewForm();
+  });
   $(document).on('submit', '#rezform', events.makeReservation);
   // $('main').html('<h1>Hello World!</h1>');
 });

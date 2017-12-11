@@ -4,6 +4,45 @@
   display: none;
 }
 
+#new-form {
+  display: none;
+}
+
 .active {
   display: block;
+}
+
+
+#status-messages {
+  background-color: #dfdfdf;
+
+  /* Hide by default */
+  display: none;
+
+  border-radius: 1rem;
+  margin: 1rem;
+  height: 100%;
+  padding: .8rem;
+}
+
+#status-messages ul {
+  list-style: none;
+  margin-left: 0;
+}
+
+#status-messages button.clear {
+  margin-top: .2rem;
+  height: 100%;
+}
+
+#status-messages button.clear img {
+  width: 2rem;
+}
+
+#status-messages .error {
+  color: red;
+}
+
+#status-messages .success {
+  color: green;
 }
