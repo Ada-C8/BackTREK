@@ -50,7 +50,7 @@ const events = {
     event.preventDefault();
     const rezData = {};
     rezFields.forEach( (field) => {
-      const val = $(`input[name=${field}]`).val();
+      const val = $(`#rezform input[name=${field}]`).val();
       if (val != '') {
         rezData[field] = val;
       }
@@ -95,5 +95,7 @@ $(document).ready( () => {
     let tripID = $(this).attr('atrip-id');
     seeTrip(tripID);
   })
+
+  $(document).on('submit', '#rezform', events.makeReservation);
   // $('main').html('<h1>Hello World!</h1>');
 });
