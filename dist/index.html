@@ -95,7 +95,7 @@
   </script>
 
   <script type="text/template" id="info-template">
-    <section class="info" name="info">
+    <section class="info" name="info" data-id=<%- id %>>
       <p><%- name %></p>
       <p>
         <%- continent %>
@@ -117,21 +117,22 @@
       </p>
     </section>
     <section id='message'></section>
-      <form action='https://trektravel.herokuapp.com/trips/${id}/reservations' method='post'>
+
+    <form id ='add-reservation-form' dataid=<%- id %>>
       <section>
         <label>Name</label>
-        <input type="text" id="name" name="name"></input>
+        <input type="text" name="name"></input>
       </section>
       <section>
         <label>Age</label>
-        <input type="text" id="age" name="age"></input>
+        <input type="text" name="age"></input>
       </section>
       <section>
         <label>Email</label>
-        <input type="text" id="email" name="email"></input>
+        <input type="text" name="email"></input>
       </section>
-      <section class='button'>
-        <button class='reserve' type='submit'>Reserve Now</button>
+      <section>
+        <input type='submit' value='Reserve Now'></input>
       </section>
       </form>
     </section>

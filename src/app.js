@@ -11,7 +11,6 @@ import TripList from './app/collections/trip_list'
 import Reservation from './app/models/reservation'
 
 
-
 const tripList = new TripList();
 let trip;
 let tripTemplate;
@@ -39,6 +38,12 @@ const loadTripDetails = function loadTripDetails(id) {
   });
 };
 
+const updateStatusMessageWith = (message) => {
+  $('#status-messages ul').empty();
+  $('#status-messages ul').append(`<li>${message}</li>`);
+  $('#status-messages').show();
+}
+
 const fields = ['name', 'continent', 'about', 'category', 'weeks', 'cost'];
 const resFields = ['name', 'age', 'email'];
 const events = {
@@ -46,13 +51,26 @@ const events = {
     event.preventDefault();
     const resData = {};
     resFields.forEach( (field) => {
-      const val = $(`input[name=${field}]`).val();
+      const val = $(`#add-reservation-form input[name=${field}]`).val();
       if (val != '') {
         resData[field] = val;
       }
     });
 
-    
+  const reservation = new Reservation(resData);
+    if (reservation.isValid()) {
+      // debugger;
+      let tripID = $(this).attr('dataid');
+      // const getTripNumber = $(event.currentTarget.attributes.tripId).val();
+      reservation.urlRoot = `${(new Trip()).urlRoot}${tripID}/reservations`;
+      reservation.save({}, {
+        success: events.successfulSave,
+        error: events.failedSave,
+      });
+    } else {
+      updateStatusMessageWith('reservation is invalid');
+      reservation.destroy();
+    }
   },
   addTrip(event) {
     event.preventDefault();
@@ -95,19 +113,19 @@ const events = {
   });
 }},
   successfulRender(trip, response) {
-    console.log('success render::::');
+    // console.log('success render::::');
     console.log(response)
-
     const $info = $('.info');
     $info.empty();
     $info.append(infoTemplate(trip.attributes));
-    console.log('last line of renderTrip');
+    // console.log('last line of renderTrip');
   },
   failedRender(trip, response) {
-    console.log('failed render:::::');
-    console.log(response);
+    // console.log('failed render:::::');
+    // console.log(response);
   }
 };
+
 
 $(document).ready( () => {
   tripTemplate = _.template($('#trip-template').html());
@@ -128,4 +146,25 @@ $(document).ready( () => {
   });
 
   $('#add-trip-form').submit(events.addTrip);
+
+//   $('#add-reservation-form').submit( function(e {
+//     e.preventDefault();
+//     console.log('when you click submit...');
+//     console.log(this);
+//     let tripId = $(this).attr('data-id');
+//
+//     const url = `https://ada-backtrek-api.herokuapp.com/trips/${tripId}/reservations`;
+//     const formData = $(this).serialize();
+//
+//     $.post(url, formData, (response) => {
+//       $('#status-messages ul').append('<p>Spot reserved!</p>');
+//       console.log(response);
+//       document.getElementById("new-trip-form").reset();
+//     }).fail(() => {
+//       $("#message").html("<p>Unable to complete reservation</p>")
+//     });
+// });
+$(document).on('submit', '#add-reservation-form', events.addReservation)
+
+
 });
