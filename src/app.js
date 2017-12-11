@@ -68,8 +68,6 @@ const addTrip = function addTrip(event) {
   } else {
     updateStatusMessageFrom(trip.validationError);
   }
-
-  tripList.fetch();
 };
 
 const readForm = function readForm() {
@@ -111,6 +109,7 @@ const successfulSave = function(trip, response) {
   updateStatusMessagesWith(`${trip.get('name')} added!`)
   clearForm();
   $('#add-trip').css("display", "none");
+  tripList.fetch();
 };
 
 const failedSave = function(trip, response) {
@@ -129,16 +128,33 @@ const loadTrip = function loadTrip(trip) {
 
   $('#reservation').submit(function(e) {
     e.preventDefault();
+
     const url = $(this).attr('action')
     const formData = $(this).serialize();
 
-    $.post(url, formData, (response) => {
-      $('#message').html('<p>Spot reserved!</p>');
-      $('#reservation').hide();
-      clearForm();
-    }).fail(() => {
-      $('#message').html('<p>Reservation failed to save.</p>');
-    });
+    if ($('#cust-name').val() === '' || $('#email').val() === '') {
+      $('#reservation span').remove();
+      $('#reservation').slideToggle();
+      if ($('#cust-name').val() === '') {
+        console.log('appending name error');
+        console.log($('#name').val());
+        $(`#reservation label[for="name"]`).append(`  <span>Cannot be blank</span>`);
+      }
+      if ($('#email').val() === '') {
+        console.log('appending email error');
+        $(`#reservation label[for="email"]`).append(`  <span>Cannot be blank</span>`);
+      }
+      console.log('before hide');
+    } else {
+      $.post(url, formData, (response) => {
+        $('#message').html('<p>Spot reserved!</p>');
+        $('#reservation').hide();
+        console.log('after hide');
+        clearForm();
+      }).fail(() => {
+        $('#message').html('<p>Reservation failed to save.</p>');
+      });
+    }
   });
 };
 
@@ -158,9 +174,10 @@ $(document).ready( () => {
     const query = $(this).val().toLowerCase();
     const filterCategory = $('#filters select').val().toLowerCase();
     const filteredList = tripList.filterBy(filterCategory, query);
-    render(filteredList);
     if (filteredList.length === 0) {
       $('#trips').append('<p>No trips match your search</p>');
+    } else {
+      render(filteredList);
     }
   });
 

@@ -1,12 +1,7 @@
 import Backbone from 'backbone';
 
 const Trip = Backbone.Model.extend({
-  url: function() {
-    if (this.get('id')) {
-    return `https://ada-backtrek-api.herokuapp.com/trips/${ this.get('id')}`;
-  }
-    return 'https://ada-backtrek-api.herokuapp.com/trips/';
-  },
+  urlRoot: 'https://ada-backtrek-api.herokuapp.com/trips/',
   validate: function(attributes) {
     const errors = {};
     const CONTINENTS = ['Africa', 'Antartica', 'Asia', 'Australasia', 'Europe', 'North America', 'South America'];

@@ -112,7 +112,7 @@ th.sort {
   cursor: pointer;
 }
 
-#new-trip label span {
+label span {
   color: red;
 }
 
