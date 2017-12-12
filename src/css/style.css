@@ -1,2 +1,71 @@
+body {
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  background: #FDD02C;
+}
+img {
+  height: 20px;
+}
+h1 {
+  text-align: center;
+}
+li {
+  /*display: inline;*/
+  /*list-style: circle url("http://www.pvhc.net/img223/xeiwtpbbgpmyhtcnjvwt.png");*/
+}
+table {
+  display: none;
+}
+.active {
+  display: block;
 
-/* Your styles go here! */
+}
+table.active {
+  height: 90%;
+  position: static;
+  overflow: scroll;
+}
+
+button {
+  /*font-size: 3em;*/
+  /*padding: 20px;*/
+}
+.row {
+  /*height: 800px;*/
+
+}
+.trips-table {
+
+  background: #B0C13E;
+  /*padding: 20px;*/
+  /*padding-top: 30px;*/
+  height: 800px;
+  text-align: center;
+}
+#summary {
+  background: #4EAD6E;
+
+  overflow: scroll;
+  height: 800px;
+  align-items: center;
+
+}
+.info {
+  /*padding: 5px;*/
+  /*height: 100%;*/
+  /*overflow: scroll;*/
+  background: #FD4B5C;
+}
+.info p {
+  /*padding: 10px;*/
+}
+.add-trip {
+  background: #F4A927;
+}
+#add-trip-form {
+  display: none;
+}
+/*#status-messages li {
+  list-style: circle;
+}*/

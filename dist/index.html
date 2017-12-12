@@ -7,11 +7,137 @@
 </head>
 <body>
   <header>
-
+    <h1>BackTrek</h1>
   </header>
-  <main>
+
+<main class='row'>
+
+  <aside class='add-trip columns medium-12'>
+    <section class='row'>
+      <h2 class='add columns small-12'>Add a Trip</h2>
+    </section>
+    <section id="status-messages">
+      <ul class='columns medium-12'></ul>
+      <!-- <button class="clear float-right columns medium-2">
+        <img src="http://www.pvhc.net/img223/xeiwtpbbgpmyhtcnjvwt.png" alt="Clear">
+      </button> -->
+    </section>
+    <form id="add-trip-form">
+      <section class='row'>
+        <section class='columns medium-6 small-12'>
+          <label for="name">name</label>
+          <input type="text" name="name"></input>
+        </section>
+        <section class='columns medium-3 small-12'>
+          <label for="continent">continent</label>
+          <input type="text" name="continent"></input>
+        </section>
+      <section class='columns medium-3 small-12'>
+        <label for="category">category</label>
+        <input type="text" name="category"></input>
+      </section>
+        <section class='columns medium-6 small-12'>
+          <label for="about">about</label>
+          <input type="text" name="about"></input>
+        </section>
+        <section class='columns medium-3 small-12'>
+          <label for="weeks">weeks</label>
+          <input type="number" name="weeks"></input>
+        </section>
+        <section class='columns medium-3 small-12'>
+          <label for="cost">cost</label>
+          <input type="number" name="cost"></input>
+        </section>
+          <input type="submit" value="Add It!" class="columns large-12 button"></input>
+      </section>
+      </form>
+    </aside>
+
+<!-- <main class='row'> -->
+    <section id="summary" class='columns medium-5 small-12'>
+      <section class='info'>
+        <p>Summary goes here</p>
+      </section>
+    </section>
+
+    <section class='trips-table columns medium-7 small-12'>
+      <button class='all-trips'>View All Trips</button>
+
+      <table>
+        <thead>
+          <th class="sort name">name</th>
+          <th class="sort id">id</th>
+          <th class="sort continent">continent</th>
+          <th class="sort category">category</th>
+          <th class="sort weeks">weeks</th>
+        </thead>
+        <tbody id="trip-list">
+        </tbody>
+      </table>
+      <!-- <button id='top'>Return to Top</button> -->
+    </section>
+
 
   </main>
+
+  <script type="text/template" id="trip-template">
+    <tr class="trip" data-id="<%- id %>">
+      <td><%- name %></td>
+      <td><%- id %></td>
+      <td> <%- continent %></td>
+      <td>
+        <%- category %>
+      </td>
+      <td>
+        <%- weeks %>
+      </td>
+    </tr>
+  </script>
+
+  <script type="text/template" id="info-template">
+    <section class="info" name="info" data-id=<%- id %>>
+      <p><%- name %></p>
+      <p>
+        <%- continent %>
+      </p>
+      <p>
+        <%- about %>
+      </p>
+      <p>
+        <%- category %>
+      </p>
+      <p>
+        <%- weeks %>
+      </p>
+      <p>
+        <%- cost %>
+      </p>
+      <p>
+        <%- id %>
+      </p>
+    </section>
+    <section id='message'></section>
+
+    <form id ='add-reservation-form' dataid=<%- id %>>
+      <section>
+        <label>Name</label>
+        <input type="text" name="name"></input>
+      </section>
+      <section>
+        <label>Age</label>
+        <input type="text" name="age"></input>
+      </section>
+      <section>
+        <label>Email</label>
+        <input type="text" name="email"></input>
+      </section>
+      <section>
+        <input type='submit' value='Reserve Now'></input>
+      </section>
+      </form>
+    </section>
+  </script>
+
   <footer>
 
   </footer>
