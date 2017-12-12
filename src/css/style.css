@@ -1,2 +1,173 @@
+body#foundation-override {
+  font-family: 'Trirong', serif;
+  font-weight: 400;
+  background-image: url(https://source.unsplash.com/HC6Gkb9x4Ro/2144×1424);
+  background-blend-mode: color;
+  background-size: cover;
+  height: 100vh;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.1);
 
-/* Your styles go here! */
+}
+
+body {
+  text-align: center;
+}
+
+header {
+  height: 15vh;
+  padding-top: 5vh;
+}
+
+footer {
+  height: 0vh;
+}
+
+#foundation-override h1 {
+  font-family: 'Bungee', sans-serif;
+  font-weight: 900;
+  font-size: 3rem;
+}
+
+#foundation-override h3, {
+  font-family: 'Bungee', sans-serif;
+  font-size: 2.5rem;
+}
+
+#foundation-override h4 {
+  font-family: 'Trirong', serif;
+  font-weight: 500;
+  font-style: italic;
+  font-size: 1.6rem;
+}
+
+#foundation-override th {
+  font-family: 'Bungee', sans-serif;
+  font-weight: 500;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+#trip-data {
+  border-collapse: collapse;
+  text-align: center;
+}
+
+#trip-data th {
+  text-align: center;
+}
+
+th.sort {
+  cursor: pointer;
+}
+
+.alpha-sort {
+  background-color: darkgrey;
+  color: white;
+}
+
+.omega-sort {
+  background-color: orange;
+  color: white;
+}
+
+footer h6 {
+  font-family: 'Bungee', sans-serif;
+  font-weight: 500;
+  font-size: .8rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+footer a {
+  color: lightblue;
+}
+
+.hide {
+  display: none;
+}
+
+.home {
+  height: 70vh;
+  padding-top: 35vh;
+  color: white;
+}
+
+#foundation-override .home h1 {
+  font-size: 15vw;
+}
+
+footer.home {
+  height: 80vh;
+  padding: 0;
+
+}
+
+.scrollbox {
+  height: 80vh;
+  overflow: auto;
+  overflow-x: auto;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+#trip-detail {
+  background-color: rgba(255, 255, 255, .8);
+}
+
+#confirmation {
+  max-height: 10vh;
+  overflow: auto;
+  overflow-x: hidden;
+}
+
+#details {
+  max-height: 50vh;
+  overflow: auto;
+  overflow-x: hidden;
+}
+
+#about {
+  text-align: justify;
+}
+
+#reservation-form {
+  max-width: 85%;
+  max-height: 30vh;
+  margin: 1vh auto;
+}
+
+#list-wrapper {
+  padding-bottom: 5vh;
+}
+
+.fields label {
+  margin-bottom: 16px; /* To match Foundation input field */
+  font-family: 'Bungee';
+}
+
+#reservation-form .button {
+  font-size: 1.2rem;
+  width: 100%;
+}
+
+#reservation-form button[type="submit"] {
+  color: white;
+  font-family: 'Bungee';
+}
+
+#form-submit {
+  padding: 0;
+}
+
+.failure {
+  background-color: red;
+  color: white;
+  font-size: 2rem;
+  text-align: center;
+}
+
+.success {
+  background-color: green;
+  color: white;
+  font-size: 2rem;
+  text-align: center;
+}

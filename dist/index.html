@@ -2,19 +2,148 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>My JavaScript App</title>
+  <title>TrekBACK</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css?family=Bungee|Zilla+Slab+Highlight|Trirong:400,500i,900" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.1/css/foundation-flex.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+
+
 </head>
-<body>
-  <header>
 
+<body id="foundation-override">
+  <header class="row align-middle">
+    <section class="column small-12 hide" id="filters">
+      <div>filters a coming</div>
+    </section>
+    <section class="column small-12 home">
+      <h1 id="get-list">TREK ON!</h1>
+    </section>
+    <section class="column small-12">
+      <a href="#new-trip-form" rel="modal:open" id="add-trip" class="button">Choose Your Adventure!</a>
+    </section>
+    <section class="column small-12" id="message">
+      <ul>
+        <!-- Error Messaging goes here -->
+      </ul>
+    </section>
   </header>
-  <main>
+  <main class="row">
+    <div id="list-wrapper" class="small-12 column small-order-2 large-order-1">
+      <section id="list" class="scrollbox hide">
+        <table id="trip-data" class="responsive" role="grid">
+          <!-- TODO: Change Table to Flex rows and columns for better responsiveness and fix 'header' -->
+          <thead>
+            <th id="name" class="sort name" scope="column">Name</th>
+            <th id="category" class="sort category" scope="column">Category</th>
+            <th id="continent" class="sort continent" scope="column">Continent</th>
+            <th id="weeks" class="sort weeks" scope="column">Weeks</th>
+            <th id="cost" class="sort cost" scope="column">Cost</th>
+          </thead>
+          <tbody id="trip-list">
+            <!--  template goes here -->
+          </tbody>
+        </table>
 
+      </section>
+    </div>
+    <div class="small-12 large-7 column small-order-1 large-order-2">
+      <section id="trip-detail">
+        <section id="details">
+          <!-- Trip Template goes here -->
+        </section>
+        <section id="reservation-form">
+          <form class="row align-center">
+            <section class="fields column small-12 medium-9">
+              <section class="row align-middle">
+                <label class="column small-2 text-left">Name</label>
+                <input class="column small-10" placeholder="Jamie Doe" type="text" name="name" required />
+              </section>
+              <section class="row align-middle">
+                <label class="column small-2 text-left">Age</label>
+                <input class="column small-10" placeholder="18" type="number" name="age" required />
+              </section>
+              <section class="row align-middle">
+                <label class="column small-2 text-left">Email</label>
+                <input class="column small-10" placeholder="jdoe@somewhere.com" type="email" name="email" required />
+              </section>
+            </section>
+            <section id="form-submit" class="column small-12 text-center">
+              <section class="button">
+                <button id="price" type="submit">Reserve!</button>
+              </section>
+            </section>
+          </form>
+        </section>
+      </section>
+    </div>
   </main>
-  <footer>
-
+  <footer class="home row align-bottom text-center">
+    <div class="column small-12 text-center">
+      <h6>&copy; Copyright 2017 J. Owens |
+        <a href="https://unsplash.com/photos/HC6Gkb9x4Ro"> photograph by Ezra Jeffrey</a>
+      </h6>
+    </div>
   </footer>
+
+  <!-- Modals -->
+  <form id="new-trip-form" class="modal">
+    <section id="modal-message">
+      <ul>
+        <!-- Modal Messages go here -->
+      </ul>
+    </section>
+    <section class="fields">
+      <label>Name</label>
+      <input placeholder="Your Next Great Adventure" type="text" Xid="name" name="name" required />
+      <label>Category</label>
+      <input placeholder="Adventure" type="text" Xid="category" name="category" required />
+      <label>Continent</label>
+      <input placeholder="Antartica" type="text" Xid="continent" name="continent" required />
+      <label>Weeks</label>
+      <input placeholder="3" type="number" Xid="weeks" name="weeks" required />
+      <label>Cost</label>
+      <input placeholder="850.00" type="number" Xid="cost" name="cost" required />
+      <label>About</label>
+      <input placeholder="Enter a short description here." type="text" Xid="about" name="about" />
+    </section>
+    <section>
+      <button type="submit" >Choose Your Adventure!</button>
+    </section>
+  </form>
+  <!-- END Modals -->
+
+  <!-- _Underscore Templates -->
+  <script type="text/template" id="trip-list-template">
+    <tr id="<%- id %>" class="trip">
+      <td headers="name trip-<%- id %>" class="name">
+        <%- name %>
+      </td>
+      <td headers="category trip-<%- id %>" class="category">
+      </td>
+      <td headers="continent trip-<%- id %>" class="continent">
+        <%- continent %>
+      </td>
+      <td headers="weeks trip-<%- id %>" class="weeks">
+        <%- weeks %>
+      </td>
+      <td headers="cost trip-<%- id %>" class="cost">
+      </td>
+    </tr>
+  </script>
+
+  <script type="text/template" id="trip-detail-template">
+    <h3><%- attributes.name %></h3>
+    <h4><%- attributes.weeks %> <%- sPluralize('week', attributes.weeks) %> | <%- attributes.continent %> | <%- capitalize(attributes.category) %></h4>
+    <div id="about"><%- attributes.about %></div>
+  </script>
+  <!-- END _Underscore Templates -->
+
+  <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
   <script src="app.bundle.js" type="text/javascript"></script>
+
 </body>
 </html>
