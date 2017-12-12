@@ -1,8 +1,16 @@
 
 /* Your styles go here! */
+* {
+  padding: 0;
+  margin: 0;
+}
+.trips {
+  overflow: scroll;
+}
 #trips-table {
   display: none;
 }
+
 
 #new-form {
   display: none;
@@ -25,7 +33,7 @@ th.sort {
 #status-messages {
   background-color: #dfdfdf;
 
-  /* Hide by default */
+
   display: none;
 
   border-radius: 1rem;
