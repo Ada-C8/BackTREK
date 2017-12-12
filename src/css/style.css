@@ -1,2 +1,61 @@
 
 /* Your styles go here! */
+.current-sort-field {
+  color: blue;
+}
+
+#reservation-form {
+  border: 10px solid purple;
+}
+
+h1 h2 {
+  text-align: center;
+  /*border: 2px solid red;*/
+}
+
+h3 {
+  padding: 8%;
+  text-align: center;
+}
+
+h4 {
+  display: block;
+  text-align: center;
+  width: 100%;
+}
+
+nav {
+  text-align: center;
+}
+
+#individual-trip {
+  border: 2px solid blue;
+}
+
+#all-trips {
+  /*border: 2px solid green;*/
+}
+.trip-details {
+  /*border: 2px solid blue;*/
+  margin: 10px;
+  padding: 10px;
+}
+
+#trips {
+  margin: 10px;
+}
+
+/*#book-trip-form {
+  border: 2px solid green;
+  margin: 10px;
+}*/
+
+#weeks {
+  text-align: center;
+}
+
+/*.show-trip-form {
+  border: 2px solid black;
+  display: block;
+  margin: 10px;
+}*/
