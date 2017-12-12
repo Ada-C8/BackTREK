@@ -4,17 +4,136 @@
   <meta charset="utf-8">
   <title>My JavaScript App</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="app.bundle.js" type="text/javascript"></script>
 </head>
 <body>
   <header>
-
+    <h1>Wanderlust Expeditions:</h1>
+    <h2>Choose Your Own Adventure</h2>
+    <nav>
+      <button class="button" id="load-trips">See All of Our Trips</button>
+      <button class="button" id="create-trip">Create Your Own Trip</button>
+    </nav>
   </header>
-  <main>
+  <main class="clearfix">
+
+    <section id="status-messages">
+      <button class="clear float-right">Close</button>
+      <ul>
+      </ul>
+    </section>
+
+
+    <section class="row-column">
+      <div id="individual-trip" class="small-12 medium-6 large 3">
+        <!-- Where the template stuff goes! -->
+        <p id="trip-details">
+        </p>
+      </div>
+    </section>
+
+    <section id="reserve-trip">
+      <aside class="columns large-4 small-12">
+        <h2>Take a Trip</h2>
+        <form id="reservation-form" data-id="12">
+          <label for="name">Name</label>
+          <input type="text" name="name"></input>
+          <label for="email">Email</label>
+          <input type="text" name="email"></input>
+          <input type="submit" value="Book Trip" class="button"></input>
+        </form>
+      </aside>
+    </section>
+
+
+    <section id="add-trip">
+      <aside class="columns large-4 small-12">
+        <h2>Create your own Adventure!</h2>
+        <form id="add-trip-form" method="post">
+          <label for="name">Name of Trip</label>
+          <input type="text" id="name" name="name"></input>
+
+          <label for="continent">Continent</label>
+          <input type="text" id="continent" name="continent"></input>
+
+          <label for="category">Category</label>
+          <input type="text" id="category" name="category"></input>
+
+          <label for="weeks">Number of Weeks</label>
+          <input type="integer" id="weeks" name="weeks"></input>
+
+          <label for="cost">Cost</label>
+          <input type="float" id="cost" name="cost"></input>
+
+          <input type="submit" value="Add a Trip" class="button"></input>
+        </form>
+      </aside>
+    </section>
+
+    <section class="row">
+      <section id="all-trips" class="small-12 medium-6 large-6">
+        <table>
+          <thead>
+            <th class="sort name">Name</th>
+            <th class="sort continent">Continent</th>
+            <th class="sort category">Category</th>
+            <th class="sort weeks">Weeks</th>
+            <th class="sort price">Price</th>
+          </thead>
+
+          <!-- Where the template stuff goes! -->
+          <tbody id="trips-list">
+          </tbody>
+        </table>
+      </section>
+    </section>
+
+
 
   </main>
   <footer>
 
+
   </footer>
-  <script src="app.bundle.js" type="text/javascript"></script>
+
+  <script id="all-trips-template" type="text/template">
+
+    <tr class="trips"  >
+      <td  id="trip-selector" data-id="<%- id %>" >
+        <%- name %>
+      </td>
+      <td>
+        <%- continent %>
+      </td>
+      <td>
+        <%- category %>
+      </td>
+      <td>
+        <%- weeks %>
+      </td>
+      <td>
+        <%- cost %>
+      </td>
+    </tr>
+  </script>
+
+  <script id="show-details-template" type="text/template" >
+    <h2> <%- name %> </h2>
+    <p id="weeks">
+      <%- weeks %> in <%- continent %> for $<%- cost %>
+    </p>
+    <p>
+      <%- about %>
+    </p>
+    <h4 class="reservation button" data-id="<%- id %>"> Make a Reservation!</h4>
+  </script>
+
+  <script id="status-message-template" type="text/template" >
+    <li class="<%- status %>">
+      <%- message %>
+    </li>
+  </script>
+
+
 </body>
 </html>
