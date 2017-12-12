@@ -1,2 +1,85 @@
+body {
+  margin: 20px;
+}
 
-/* Your styles go here! */
+.title {
+  display: flex;
+  justify-content: center;
+}
+
+#add-a-trip-form-container {
+  display: none;
+  position: absolute;
+  margin: 100px auto;
+  overflow: auto;
+  width: 60%;
+  height: 100%;
+  padding: 40px;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.8);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border: 1px solid black;
+  /*-mox-border-radius: 10px;*/
+  z-index: 1;
+}
+.close {
+  font-size: 28px;
+}
+
+#add-trip-form {
+  color: white;
+}
+
+/*#submit-new-trip-button {
+  margin: 10px;
+}*/
+
+.new-trip-title {
+  color: white;
+}
+
+.trip-ul {
+  list-style: none;
+}
+
+/*.reservation-form-container {
+  margin: 10px;
+}*/
+
+/* STATUS MESSAGE STYLING */
+#status-messages {
+  background-color: #dfdfdf;
+
+  /* Hide by default */
+  display: none;
+
+  border-radius: 1rem;
+  margin: 1rem;
+  height: 100%;
+  padding: .8rem;
+}
+
+#status-messages ul {
+  list-style: none;
+  margin-left: 0;
+}
+
+#status-messages button.clear {
+  margin-top: .2rem;
+  height: 100%;
+}
+
+#status-messages button.clear img {
+  width: 2rem;
+}
+
+#status-messages .error {
+  color: red;
+}
+
+#status-messages .success {
+  color: green;
+}
