@@ -44,6 +44,7 @@ const events = {
         error: events.failedSave,
       });
     } else {
+      $('#status-messages').empty();
       for (let key in trip.validationError) {
         $('#status-messages ul').append(`<li>${key}:  ${trip.validationError[key]}</li>`);
         $('#status-messages').show();
