@@ -116,15 +116,17 @@ $(document).ready( () => {
   const $bookingForm = $('#bookingForm form')
   $bookingForm.submit(function(event){
     event.preventDefault()
+    $('#status-messages ul').empty();
     const formData = $(this).serialize();
 
     $.post($bookingForm.attr('action'), formData, (response)=>{
-      $('#trips').html(`Booked your trip!`)
+      $('#status-messages ul').append(`<li>Booked your trip!</li>`)
     }).fail(() => {
-      $('#trips').html('<p>Booking Trip Failed</p>')
+      $('#status-messages ul').html('<li>Booking Trip Failed</li>')
     }).always(()=> {
       console.log("You did something with a reservation form!")
     })
+    $('#status-messages').show();
   });
 
   $('#new-trip').on('focus', function(){
