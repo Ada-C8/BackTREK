@@ -1,2 +1,65 @@
 
 /* Your styles go here! */
+* {
+  padding: 0;
+  margin: 0;
+}
+.trips {
+  overflow: scroll;
+}
+#trips-table {
+  display: none;
+}
+
+
+#new-form {
+  display: none;
+}
+
+.active {
+  display: block;
+}
+
+th.sort {
+  cursor: pointer;
+}
+
+.current-sort-field {
+  background-color: darkgrey;
+  color: white;
+}
+
+
+#status-messages {
+  background-color: #dfdfdf;
+
+
+  display: none;
+
+  border-radius: 1rem;
+  margin: 1rem;
+  height: 100%;
+  padding: .8rem;
+}
+
+#status-messages ul {
+  list-style: none;
+  margin-left: 0;
+}
+
+#status-messages button.clear {
+  margin-top: .2rem;
+  height: 100%;
+}
+
+#status-messages button.clear img {
+  width: 2rem;
+}
+
+#status-messages .error {
+  color: red;
+}
+
+#status-messages .success {
+  color: green;
+}
